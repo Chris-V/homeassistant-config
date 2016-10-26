@@ -1,8 +1,0 @@
-group.default_view:
-  order: 0
-
-group.upstairs:
-  order: 5
-
-group.system:
-  order: 10

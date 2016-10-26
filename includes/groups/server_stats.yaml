@@ -1,6 +1,0 @@
-name: Server Stats
-icon: 'mdi:chart-scatterplot-hexbin'
-entities:
-  - sensor.cpu_use
-  - sensor.ram_use
-  - sensor.since_last_boot

@@ -1,5 +1,0 @@
-name: Occupants
-icon: 'mdi:account'
-entities:
-  - device_tracker.chris_mobile_nexus5x
-  - device_tracker.karine_android

@@ -2,4 +2,6 @@
   sensors:
     hue_hub:
       friendly_name: 'Hue Hub'
-      value_template: {% if is_state("device_tracker.hue_hub", "home") %}Online{% else %}Offline{% endif %}
+      entity_id:
+        - device_tracker.hue_hub
+      value_template: '{% if is_state("device_tracker.hue_hub", "home") %}Online{% else %}Offline{% endif %}'

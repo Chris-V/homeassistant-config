@@ -1,0 +1,5 @@
+system_devices:
+  name: 'System Devices'
+  icon: 'mdi:laptop'
+  entities:
+    - sensor.hue_hub

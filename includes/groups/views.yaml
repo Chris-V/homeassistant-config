@@ -1,0 +1,27 @@
+default_view:
+  view: yes
+  entities:
+    #- persistent_notification.http-login
+    - persistent_notification.hass_update_available
+    - group.family
+    - group.weather
+
+upstairs:
+  name: Upstairs
+  view: yes
+  entities:
+    - group.master_bedroom
+    - media_player.top_living_room
+
+system:
+  name: System
+  icon: mdi:settings
+  view: yes
+  entities:
+    - updater.updater
+    - configurator.philips_hue
+    - group.server_stats
+    - group.system_devices
+    - group.all_lights
+    - group.all_automations
+    - group.all_scripts

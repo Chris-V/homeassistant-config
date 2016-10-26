@@ -1,38 +1,38 @@
-alias: Wake Up
-trigger:
-  - platform: time
-    hours: 6
-    minutes: 0
-    seconds: 0
-  - platform: time
-    hours: 7
-    minutes: 50
-    seconds: 0
-condition:
-  condition: and
-  conditions:
-    - condition: state
-      entity_id: 'group.occupants'
-      state: 'home'
-    - condition: or
-      conditions:
-      - condition: time
-        after: '05:59:59'
-        before: '06:00:01'
-        weekday:
-          - mon
-          - tue
-      - condition: time
-        after: '07:49:59'
-        before: '07:50:01'
-        weekday:
-          - wed
-          - thu
-          - fri
-action:
-  service: light.turn_on
-  entity_id: group.master_bedroom
-  data:
-    color_temp: 333
-    brightness: 200
-    transition: 600
+- alias: Wake Up
+  trigger:
+    - platform: time
+      hours: 6
+      minutes: 0
+      seconds: 0
+    - platform: time
+      hours: 7
+      minutes: 50
+      seconds: 0
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'group.family'
+        state: 'home'
+      - condition: or
+        conditions:
+        - condition: time
+          after: '05:59:59'
+          before: '06:00:01'
+          weekday:
+            - mon
+            - tue
+        - condition: time
+          after: '07:49:59'
+          before: '07:50:01'
+          weekday:
+            - wed
+            - thu
+            - fri
+  action:
+    service: light.turn_on
+    entity_id: 'group.master_bedroom'
+    data:
+      color_temp: 333
+      brightness: 200
+      transition: 600

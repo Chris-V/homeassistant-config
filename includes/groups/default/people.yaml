@@ -1,0 +1,6 @@
+family:
+  name: 'Family'
+  icon: 'mdi:account-multiple'
+  entities:
+    - device_tracker.chris_mobile
+    - device_tracker.karine_mobile

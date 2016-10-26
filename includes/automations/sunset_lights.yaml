@@ -1,16 +1,16 @@
-alias: Sunset Lights
-trigger:
-  - platform: sun
-    event: sunset
-    offset: '-00:30:00'
-condition:
-  - condition: state
-    entity_id: group.occupants
-    state: 'home'
-action:
-  - service: light.turn_on
-    entity_id: group.master_bedroom
-    data:
-      rgb_color: [100, 100, 255]
-      brightness: 35
-      transition: 5
+- alias: Sunset Lights
+  trigger:
+    - platform: sun
+      event: 'sunset'
+      offset: '-00:30:00'
+  condition:
+    - condition: state
+      entity_id: 'group.family'
+      state: 'home'
+  action:
+    - service: light.turn_on
+      entity_id: 'group.master_bedroom_light_bedside'
+      data:
+        rgb_color: [100, 100, 255]
+        brightness: 35
+        transition: 5
