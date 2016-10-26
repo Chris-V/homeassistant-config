@@ -1,0 +1,15 @@
+- alias: 'Notification: System Device State'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.hue_hub
+        - sensor.avatar_media
+  action:
+    service: notify.admin
+    data_template:
+      message: '{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!'
+      data:
+        tag: '{{ trigger.entity_id }}_{{ trigger.to_state.state | lower }}'
+    data:
+      url: 'https://github.com/home-assistant/home-assistant/releases/latest'
