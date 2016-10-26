@@ -1,0 +1,5 @@
+view: yes
+entities:
+  - persistent_notification.update_available
+  - group.occupants
+  - group.climate

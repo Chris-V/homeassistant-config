@@ -1,0 +1,51 @@
+homeassistant:
+  name: Home
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
+  elevation: !secret zone_home_elevation
+  unit_system: metric
+  time_zone: America/Toronto
+  customize: !include_dir_merge_named includes/customize/
+
+automation: !include_dir_list includes/automations/
+conversation:
+device_tracker: !include includes/device_trackers.yaml
+discovery:
+frontend:
+group: !include_dir_named includes/groups/
+history:
+http:
+  server_port: !secret http_port
+  api_password: !secret http_password
+  cors_allowed_origins:
+    - !secret http_public_host
+light:
+  - platform: hue
+    host: !secret light_hue_host
+logbook:
+  exclude:
+    entities:
+      - sensor.since_last_boot
+      - sensor.since_last_boot_templated
+logger:
+  default: warn
+media_player:
+  - platform: cast
+    host: !secret media_player_cast_host
+mqtt:
+  broker: !secret mqtt_broker
+  port: !secret mqtt_port
+  client_id: home_assistant
+  keepalive: 60
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+notify: !include includes/notifiers.yaml
+recorder:
+  purge_days: 14
+scene: !include_dir_list includes/scenes/
+script: !include_dir_named includes/scripts/
+sensor: !include_dir_merge_list includes/sensors/
+sun:
+switch: !include_dir_list includes/switches/
+updater:
+zone: !include includes/zones.yaml

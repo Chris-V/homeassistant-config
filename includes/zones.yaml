@@ -1,0 +1,11 @@
+- name: Home
+  icon: mdi:home-variant
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
+  radius: 50
+
+- name: !secret zone_work1_name
+  icon: mdi:mouse
+  latitude: !secret zone_work1_latitude
+  longitude: !secret zone_work1_longitude
+  radius: 100

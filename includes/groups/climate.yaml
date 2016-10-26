@@ -1,0 +1,7 @@
+name: Climate
+icon: 'mdi:weather-sunny'
+entities:
+  - sun.sun
+  - sensor.yr_humidity
+  - sensor.yr_temperature
+  - sensor.yr_symbol

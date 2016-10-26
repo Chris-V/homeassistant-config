@@ -1,0 +1,8 @@
+group.default_View:
+  order: 0
+
+group.upstairs:
+  order: 5
+
+group.config:
+  order: 10

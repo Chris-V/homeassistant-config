@@ -1,0 +1,16 @@
+alias: 'Notification: Failed Login Attempts'
+hide_entity: True
+trigger:
+  - platform: event
+    event_type: call_service
+    event_data:
+      domain: persistent_notification
+      service: create
+condition:
+  - condition: template
+    value_template: '{{ trigger.event_data.service_data.notification_id == "http-login" }}'
+action:
+  service: notify.pushbullet
+  data:
+    title: '{{ trigger.event_data.service_data.title }}'
+    message: '{{ trigger.event_data.service_data.message }}'

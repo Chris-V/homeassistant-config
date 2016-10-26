@@ -1,0 +1,11 @@
+group.all_automations:
+  hidden: false
+  icon: mdi:playlist-play
+
+group.all_lights:
+  hidden: false
+  icon: mdi:lightbulb
+
+group.all_scripts:
+  hidden: false
+  icon: mdi:playlist-check

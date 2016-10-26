@@ -1,0 +1,10 @@
+- platform: template
+  sensors:
+    hue_hub:
+      friendly_name: 'Hue Hub'
+      value_template: >-
+          {%- if is_state("device_tracker.hue_hub", "home") %}
+              Online
+          {% else %}
+              Offline
+          {%- endif %}

@@ -1,0 +1,11 @@
+name: Config
+icon: mdi:settings
+view: yes
+entities:
+  #  - persistent_notification.http-login
+  - updater.updater
+  - configurator.philips_hue
+  - group.server_stats
+  - group.all_lights
+  - group.all_automations
+  - group.all_scripts

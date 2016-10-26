@@ -1,0 +1,18 @@
+alias: 'Notification: Update Available'
+hide_entity: True
+trigger:
+  platform: state
+  entity_id: updater.updater
+action:
+  - service: persistent_notification.create
+    data:
+      title: 'Home Assistant Update'
+      message: "Home Assistant  {{ states('updater.updater') }}  is now available."
+      notification_id: update_available
+  - service: notify.pushbullet
+    data:
+      title: 'Home Assistant Update'
+      message: "Home Assistant  {{ states('updater.updater') }}  is now available."
+      data:
+        url: https://github.com/home-assistant/home-assistant/releases/latest
+        tag: update_available

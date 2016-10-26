@@ -1,0 +1,11 @@
+*.log
+*.bkp
+*.backup
+
+deps/
+known_devices.yaml
+secrets.yaml
+*.conf
+*.db
+.HA_VERSION
+.uuid
