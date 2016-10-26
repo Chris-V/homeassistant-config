@@ -2,13 +2,19 @@ master_bedroom:
   name: 'Master Bedroom'
   icon: 'mdi:hotel'
   entities:
-    - group.master_bedroom_light
+    - light.hue_color_lamp_1
+    - light.hue_color_lamp_3
 
 master_bedroom_light:
+  name: 'Master Bedroom - Lights'
+  icon: 'mdi:lightbulb'
   entities:
-    - group.master_bedroom_light_bedside
+    - light.hue_color_lamp_1
+    - light.hue_color_lamp_3
 
 master_bedroom_light_bedside:
+  name: 'Master Bedroom - Lights - Bedside'
+  icon: 'mdi:lightbulb'
   entities:
     - light.hue_color_lamp_1
     - light.hue_color_lamp_3
