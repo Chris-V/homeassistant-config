@@ -1,0 +1,5 @@
+name: Config
+icon: mdi:laptop
+view: yes
+entities:
+  - sensors.hue_hub

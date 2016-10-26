@@ -1,4 +1,4 @@
-name: Config
+name: System
 icon: mdi:settings
 view: yes
 entities:
@@ -6,6 +6,7 @@ entities:
   - updater.updater
   - configurator.philips_hue
   - group.server_stats
+  - group.system_devices
   - group.all_lights
   - group.all_automations
   - group.all_scripts
