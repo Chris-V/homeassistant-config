@@ -1,2 +1,5 @@
 sensor.hue_hub:
   icon: mdi:lightbulb
+
+sensor.avatar_media:
+  icon: mdi:movie

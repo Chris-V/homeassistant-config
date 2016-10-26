@@ -2,4 +2,5 @@ system_devices:
   name: 'System Devices'
   icon: 'mdi:laptop'
   entities:
+    - sensor.avatar_media
     - sensor.hue_hub
