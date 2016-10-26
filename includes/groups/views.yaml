@@ -20,8 +20,8 @@ system:
   entities:
     - updater.updater
     - configurator.philips_hue
-    - group.server_stats
-    - group.system_devices
+    - group.system_stats
+    - group.network_devices
     - group.all_lights
     - group.all_automations
     - group.all_scripts

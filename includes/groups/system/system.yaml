@@ -1,7 +1,8 @@
-server_stats:
-  name: 'Server Stats'
+system_stats:
+  name: 'System'
   icon: 'mdi:chart-scatterplot-hexbin'
   entities:
     - sensor.cpu_use
     - sensor.ram_use
+    - sensor.cpu_temperature
     - sensor.since_last_boot

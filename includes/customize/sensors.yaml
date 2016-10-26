@@ -3,3 +3,7 @@ sensor.hue_hub:
 
 sensor.avatar_media:
   icon: mdi:movie
+
+sensor.cpu_temperature:
+  friendly_name: CPU Temperature
+  icon: mdi:fire
