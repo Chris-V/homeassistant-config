@@ -1,17 +1,3 @@
-- platform: group
-  name: 'admin'
-  services:
-    - service: pushbullet
-    - service: html5
-      data:
-        target: ['chris chrome', 'chris mobile']
-
-- platform: group
-  name: 'default'
-  services:
-    - service: pushbullet
-    - service: html5
-
 - platform: pushbullet
   name: 'pushbullet'
   api_key: !secret notifier_pushbullet_key
