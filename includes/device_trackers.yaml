@@ -8,6 +8,10 @@
   max_gps_accuracy: 100
   waypoints: False
 
+- platform: nmap_tracker
+  home_interval: 4
+  hosts: !secret device_tracker_wired_hosts
+
   # Options shared by all trackers
   track_new_devices: no
   interval_seconds: 12 # seconds between each scan

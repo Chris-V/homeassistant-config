@@ -1,6 +1,6 @@
 # TODOs
 ## Bugs
-- Hue Hub incorrectly reports as offline
+_Yay! Everything works!_
 
 ## Scenes
 _Maybe with more devices 😟_
