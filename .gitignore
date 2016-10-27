@@ -7,5 +7,6 @@ known_devices.yaml
 secrets.yaml
 *.conf
 *.db
+*.db-journal
 .HA_VERSION
 .uuid
