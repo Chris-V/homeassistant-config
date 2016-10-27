@@ -1,10 +1,4 @@
 # TODOs
-## Bugs
-_Yay! Everything works!_
-
-## Scenes
-_Maybe with more devices 😟_
-
 ## Automations
 - Turn off everything when no one is home
 
@@ -19,7 +13,3 @@ _Maybe with more devices 😟_
 ### Turn off porch light:
 - Midnight
 
-### Wake Up
-- Contribute weekday support in triggers?
-- Light temp. is too cold
-- Wed-Fri times are too late

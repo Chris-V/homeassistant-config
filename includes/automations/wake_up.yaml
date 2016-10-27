@@ -1,38 +1,83 @@
-- alias: Wake Up
+- alias: 'Wake Up Monday'
   trigger:
-    - platform: time
-      hours: 6
-      minutes: 0
-      seconds: 0
-    - platform: time
-      hours: 7
-      minutes: 50
-      seconds: 0
+    - platform: template
+      value_template: "{{ is_state('input_select.wake_up_monday', states('sensor.time')) }}"
   condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: 'group.family'
-        state: 'home'
-      - condition: or
-        conditions:
-        - condition: time
-          after: '05:59:59'
-          before: '06:00:01'
-          weekday:
-            - mon
-            - tue
-        - condition: time
-          after: '07:49:59'
-          before: '07:50:01'
-          weekday:
-            - wed
-            - thu
-            - fri
+    - condition: state
+      entity_id: 'group.family'
+      state: 'home'
+    - condition: time
+      weekday: 'mon'
   action:
-    service: light.turn_on
-    entity_id: 'group.master_bedroom'
-    data:
-      color_temp: 333
-      brightness: 200
-      transition: 600
+    service: scene.turn_on
+    entity_id: 'scene.wake_up'
+
+- alias: 'Wake Up Tuesday'
+  trigger:
+    - platform: template
+      value_template: "{{ is_state('input_select.wake_up_tuesday', states('sensor.time')) }}"
+  condition:
+    - condition: state
+      entity_id: 'group.family'
+      state: 'home'
+    - condition: time
+      weekday: 'tue'
+  action:
+    service: scene.turn_on
+    entity_id: 'scene.wake_up'
+
+- alias: 'Wake Up Wednesday'
+  trigger:
+    - platform: template
+      value_template: "{{ is_state('input_select.wake_up_wednesday', states('sensor.time')) }}"
+  condition:
+    - condition: state
+      entity_id: 'group.family'
+      state: 'home'
+    - condition: time
+      weekday: 'wed'
+  action:
+    service: scene.turn_on
+    entity_id: 'scene.wake_up'
+
+- alias: 'Wake Up Thursday'
+  trigger:
+    - platform: template
+      value_template: "{{ is_state('input_select.wake_up_thursday', states('sensor.time')) }}"
+  condition:
+    - condition: state
+      entity_id: 'group.family'
+      state: 'home'
+    - condition: time
+      weekday: 'thu'
+  action:
+    service: scene.turn_on
+    entity_id: 'scene.wake_up'
+
+- alias: 'Wake Up Friday'
+  trigger:
+    - platform: template
+      value_template: "{{ is_state('input_select.wake_up_friday', states('sensor.time')) }}"
+  condition:
+    - condition: state
+      entity_id: 'group.family'
+      state: 'home'
+    - condition: time
+      weekday: 'fri'
+  action:
+    service: scene.turn_on
+    entity_id: 'scene.wake_up'
+
+- alias: 'Wake Up Saturday'
+  trigger:
+    - platform: template
+      value_template: "{{ is_state('input_select.wake_up_saturday', states('sensor.time')) }}"
+  condition:
+    - condition: state
+      entity_id: 'group.family'
+      state: 'home'
+    - condition: time
+      weekday: 'sat'
+  action:
+    service: scene.turn_on
+    entity_id: 'scene.wake_up'

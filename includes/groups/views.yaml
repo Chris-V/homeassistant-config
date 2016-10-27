@@ -22,6 +22,4 @@ system:
     - configurator.philips_hue
     - group.system_stats
     - group.network_devices
-    - group.all_lights
-    - group.all_automations
-    - group.all_scripts
+    - group.wake_up_alarm

@@ -1,0 +1,113 @@
+wake_up_monday:
+  name: 'Monday'
+  icon: 'mdi:bell-ring'
+  initial: '06:00'
+  options:
+    - 06:00
+    - 06:15
+    - 06:30
+    - 06:45
+    - 07:00
+    - 07:15
+    - 07:30
+    - 07:45
+    - 08:00
+    - 08:15
+    - 08:30
+    - 08:45
+    - 09:00
+
+wake_up_tuesday:
+  name: 'Tuesday'
+  icon: 'mdi:bell-ring'
+  initial: '06:00'
+  options:
+    - 06:00
+    - 06:15
+    - 06:30
+    - 06:45
+    - 07:00
+    - 07:15
+    - 07:30
+    - 07:45
+    - 08:00
+    - 08:15
+    - 08:30
+    - 08:45
+    - 09:00
+
+wake_up_wednesday:
+  name: 'Wednesday'
+  icon: 'mdi:bell-ring'
+  initial: '07:15'
+  options:
+    - 06:00
+    - 06:15
+    - 06:30
+    - 06:45
+    - 07:00
+    - 07:15
+    - 07:30
+    - 07:45
+    - 08:00
+    - 08:15
+    - 08:30
+    - 08:45
+    - 09:00
+
+wake_up_thursday:
+  name: 'Thursday'
+  icon: 'mdi:bell-ring'
+  initial: '07:15'
+  options:
+    - 06:00
+    - 06:15
+    - 06:30
+    - 06:45
+    - 07:00
+    - 07:15
+    - 07:30
+    - 07:45
+    - 08:00
+    - 08:15
+    - 08:30
+    - 08:45
+    - 09:00
+
+wake_up_friday:
+  name: 'Friday'
+  icon: 'mdi:bell-ring'
+  initial: '07:15'
+  options:
+    - 06:00
+    - 06:15
+    - 06:30
+    - 06:45
+    - 07:00
+    - 07:15
+    - 07:30
+    - 07:45
+    - 08:00
+    - 08:15
+    - 08:30
+    - 08:45
+    - 09:00
+
+wake_up_saturday:
+  name: 'Saturday'
+  icon: 'mdi:bell-ring'
+  initial: '07:15'
+  options:
+    - 06:00
+    - 06:15
+    - 06:30
+    - 06:45
+    - 07:00
+    - 07:15
+    - 07:30
+    - 07:45
+    - 08:00
+    - 08:15
+    - 08:30
+    - 08:45
+    - 09:00

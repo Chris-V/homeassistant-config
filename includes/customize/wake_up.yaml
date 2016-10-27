@@ -1,0 +1,12 @@
+automation.wake_up_monday:
+  friendly_name: Monday
+automation.wake_up_tuesday:
+  friendly_name: Tuesday
+automation.wake_up_wednesday:
+  friendly_name: Wednesday
+automation.wake_up_thursday:
+  friendly_name: Thursday
+automation.wake_up_friday:
+  friendly_name: Friday
+automation.wake_up_saturday:
+  friendly_name: Saturday

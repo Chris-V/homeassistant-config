@@ -1,0 +1,7 @@
+- name: Wake Up
+  entities:
+    group.master_bedroom_light_bedside:
+      state: on
+      color_temp: 375
+      brightness: 200
+      transition: 600

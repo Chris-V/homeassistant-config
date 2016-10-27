@@ -1,0 +1,16 @@
+wake_up_alarm:
+  name: 'Wake Up Alarm'
+  icon: 'mdi:bell-ring'
+  entities:
+    - automation.wake_up_monday
+    - input_select.wake_up_monday
+    - automation.wake_up_tuesday
+    - input_select.wake_up_tuesday
+    - automation.wake_up_wednesday
+    - input_select.wake_up_wednesday
+    - automation.wake_up_thursday
+    - input_select.wake_up_thursday
+    - automation.wake_up_friday
+    - input_select.wake_up_friday
+    - automation.wake_up_saturday
+    - input_select.wake_up_saturday
