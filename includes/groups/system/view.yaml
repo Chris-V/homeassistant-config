@@ -3,9 +3,10 @@ system:
   icon: 'mdi:stethoscope'
   view: yes
   entities:
-    - updater.updater
-    - configurator.philips_hue
     #- persistent_notification.http-login
     - persistent_notification.hass_update_available
+    - configurator.philips_hue
+    - updater.updater
     - group.system_stats
     - group.network_devices
+    - group.weather
