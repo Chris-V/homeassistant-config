@@ -5,7 +5,7 @@
       value_template: "{{ is_state('input_select.wake_up_alarm_monday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.family'
+      entity_id: 'group.household'
       state: 'home'
     - condition: time
       weekday: 'mon'
@@ -20,7 +20,7 @@
       value_template: "{{ is_state('input_select.wake_up_alarm_tuesday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.family'
+      entity_id: 'group.household'
       state: 'home'
     - condition: time
       weekday: 'tue'
@@ -35,7 +35,7 @@
       value_template: "{{ is_state('input_select.wake_up_alarm_wednesday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.family'
+      entity_id: 'group.household'
       state: 'home'
     - condition: time
       weekday: 'wed'
@@ -50,7 +50,7 @@
       value_template: "{{ is_state('input_select.wake_up_alarm_thursday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.family'
+      entity_id: 'group.household'
       state: 'home'
     - condition: time
       weekday: 'thu'
@@ -65,7 +65,7 @@
       value_template: "{{ is_state('input_select.wake_up_alarm_friday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.family'
+      entity_id: 'group.household'
       state: 'home'
     - condition: time
       weekday: 'fri'
@@ -80,7 +80,7 @@
       value_template: "{{ is_state('input_select.wake_up_alarm_saturday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.family'
+      entity_id: 'group.household'
       state: 'home'
     - condition: time
       weekday: 'sat'
@@ -95,7 +95,7 @@
       value_template: "{{ is_state('input_select.wake_up_alarm_sunday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.family'
+      entity_id: 'group.household'
       state: 'home'
     - condition: time
       weekday: 'sat'
