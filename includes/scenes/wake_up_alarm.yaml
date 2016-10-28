@@ -1,7 +1,7 @@
-- name: Wake Up
+- name: Wake Up Alarm
   entities:
     group.master_bedroom_light_bedside:
-      state: on
+      state: 'on'
       color_temp: 375
       brightness: 200
       transition: 600

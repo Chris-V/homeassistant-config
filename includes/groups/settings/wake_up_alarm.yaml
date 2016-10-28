@@ -2,15 +2,17 @@ wake_up_alarm:
   name: 'Wake Up Alarm'
   icon: 'mdi:bell-ring'
   entities:
-    - automation.wake_up_monday
-    - input_select.wake_up_monday
-    - automation.wake_up_tuesday
-    - input_select.wake_up_tuesday
-    - automation.wake_up_wednesday
-    - input_select.wake_up_wednesday
-    - automation.wake_up_thursday
-    - input_select.wake_up_thursday
-    - automation.wake_up_friday
-    - input_select.wake_up_friday
-    - automation.wake_up_saturday
-    - input_select.wake_up_saturday
+    - automation.wake_up_alarm_monday
+    - input_select.wake_up_alarm_monday
+    - automation.wake_up_alarm_tuesday
+    - input_select.wake_up_alarm_tuesday
+    - automation.wake_up_alarm_wednesday
+    - input_select.wake_up_alarm_wednesday
+    - automation.wake_up_alarm_thursday
+    - input_select.wake_up_alarm_thursday
+    - automation.wake_up_alarm_friday
+    - input_select.wake_up_alarm_friday
+    - automation.wake_up_alarm_saturday
+    - input_select.wake_up_alarm_saturday
+    - automation.wake_up_alarm_sunday
+    - input_select.wake_up_alarm_sunday

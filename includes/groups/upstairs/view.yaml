@@ -1,0 +1,6 @@
+upstairs:
+  name: 'Upstairs'
+  view: yes
+  entities:
+    - group.master_bedroom
+    - media_player.top_living_room

@@ -1,0 +1,6 @@
+settings:
+  name: 'Public Settings'
+  icon: 'mdi:settings'
+  view: yes
+  entities:
+    - group.wake_up_alarm
