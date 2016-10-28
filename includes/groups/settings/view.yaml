@@ -1,5 +1,5 @@
 settings:
-  name: 'Public Settings'
+  name: 'Settings'
   icon: 'mdi:settings'
   view: yes
   entities:

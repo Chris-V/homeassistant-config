@@ -2,3 +2,5 @@ default_view:
   view: yes
   entities:
     - group.family
+    - group.master_bedroom
+    - media_player.top_living_room
