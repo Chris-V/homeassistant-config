@@ -1,9 +1,9 @@
 guest_mode:
   name: 'Guest Mode'
-  initial: 'off'
   icon: 'mdi:human-greeting'
+  initial: 'off'
 
 publish_state_persistence:
   name: 'Publish State Persistence'
-  initial: 'on'
   icon: 'mdi:content-save'
+  initial: 'on'

@@ -1,4 +1,4 @@
-- alias: 'Notification: Failed Login Attempts'
+- alias: failed_login_attempt
   hide_entity: True
   trigger:
     - platform: event

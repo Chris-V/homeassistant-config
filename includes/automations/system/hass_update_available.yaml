@@ -1,5 +1,5 @@
-- alias: 'Notification: Update Available'
-  hide_entity: True
+- alias: update_available
+  hide_entity: true
   trigger:
     platform: state
     entity_id: updater.updater

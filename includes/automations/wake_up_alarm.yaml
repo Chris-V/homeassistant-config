@@ -1,4 +1,4 @@
-- alias: 'Wake Up Alarm Monday'
+- alias: wake_up_alarm_monday
   initial_state: False
   trigger:
     - platform: template
@@ -13,7 +13,7 @@
     service: scene.turn_on
     entity_id: 'scene.wake_up_alarm'
 
-- alias: 'Wake Up Alarm Tuesday'
+- alias: wake_up_alarm_tuesday
   initial_state: False
   trigger:
     - platform: template
@@ -28,7 +28,7 @@
     service: scene.turn_on
     entity_id: 'scene.wake_up_alarm'
 
-- alias: 'Wake Up Alarm Wednesday'
+- alias: wake_up_alarm_wednesday
   initial_state: False
   trigger:
     - platform: template
@@ -43,7 +43,7 @@
     service: scene.turn_on
     entity_id: 'scene.wake_up_alarm'
 
-- alias: 'Wake Up Alarm Thursday'
+- alias: wake_up_alarm_thursday
   initial_state: False
   trigger:
     - platform: template
@@ -58,7 +58,7 @@
     service: scene.turn_on
     entity_id: 'scene.wake_up_alarm'
 
-- alias: 'Wake Up Alarm Friday'
+- alias: wake_up_alarm_friday
   initial_state: False
   trigger:
     - platform: template
@@ -73,7 +73,7 @@
     service: scene.turn_on
     entity_id: 'scene.wake_up_alarm'
 
-- alias: 'Wake Up Alarm Saturday'
+- alias: wake_up_alarm_saturday
   initial_state: False
   trigger:
     - platform: template
@@ -88,7 +88,7 @@
     service: scene.turn_on
     entity_id: 'scene.wake_up_alarm'
 
-- alias: 'Wake Up Alarm Sunday'
+- alias: wake_up_alarm_sunday
   initial_state: False
   trigger:
     - platform: template

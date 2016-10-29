@@ -1,12 +1,8 @@
 - platform: template
   sensors:
-    avatar_media:
-      friendly_name: 'Avatar Media'
-      entity_id:
-        - device_tracker.avatar_media
+    network_avatar_media:
+      entity_id: device_tracker.avatar_media
       value_template: '{% if is_state("device_tracker.avatar_media", "home") %}Online{% else %}Offline{% endif %}'
-    hue_hub:
-      friendly_name: 'Hue Hub'
-      entity_id:
-        - device_tracker.hue_hub
+    network_hue_hub:
+      entity_id: device_tracker.hue_hub
       value_template: '{% if is_state("device_tracker.hue_hub", "home") %}Online{% else %}Offline{% endif %}'

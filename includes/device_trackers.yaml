@@ -6,13 +6,13 @@
 
 - platform: owntracks
   max_gps_accuracy: 100
-  waypoints: False
+  waypoints: false
 
 - platform: nmap_tracker
   home_interval: 4
   hosts: !secret device_tracker_wired_hosts
 
   # Options shared by all trackers
-  track_new_devices: no
+  track_new_devices: false
   interval_seconds: 12 # seconds between each scan
   consider_home: 300 # seconds unseen but considered home

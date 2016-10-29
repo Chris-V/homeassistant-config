@@ -1,0 +1,7 @@
+zone.home:
+  friendly_name: 'Home'
+  icon: 'mdi:home-variant'
+
+zone.work_chris:
+  friendly_name: !secret zone_work1_name
+  icon: 'mdi:mouse'

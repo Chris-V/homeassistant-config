@@ -1,10 +1,10 @@
-- alias: 'Notification: Network Device State'
-  hide_entity: True
+- alias: network_davice_state
+  hide_entity: true
   trigger:
     - platform: state
       entity_id:
-        - sensor.hue_hub
-        - sensor.avatar_media
+        - sensor.network_avatar_media
+        - sensor.network_hue_hub
   action:
     service: notify.admin
     data_template:

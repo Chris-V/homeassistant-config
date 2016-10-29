@@ -11,4 +11,3 @@
     - service: html5
       data:
         target: ['chris chrome', 'chris mobile']
-

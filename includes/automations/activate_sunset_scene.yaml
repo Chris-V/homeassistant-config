@@ -1,4 +1,4 @@
-- alias: Sunset
+- alias: sunset_arrives
   trigger:
     - platform: sun
       event: 'sunset'
@@ -12,8 +12,8 @@
       - condition: time
         before: '00:00:00'
       - condition: sun
-        before: 'sunset'
-        before_offset: '-00:30:00'
+        after: 'sunset'
+        after_offset: '-00:30:00'
       - condition: state
         entity_id: 'group.household'
         state: 'home'

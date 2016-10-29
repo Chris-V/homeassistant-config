@@ -1,4 +1,4 @@
-- alias: Household Leaves
+- alias: household_leaves
   trigger:
     platform: state
     entity_id: 'group.household'

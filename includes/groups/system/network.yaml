@@ -1,6 +1,6 @@
 network_devices:
   name: 'Network Devices'
-  icon: 'mdi:laptop'
+  icon: 'mdi:ethernet'
   entities:
-    - sensor.avatar_media
-    - sensor.hue_hub
+    - sensor.network_avatar_media
+    - sensor.network_hue_hub

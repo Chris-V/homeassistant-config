@@ -1,4 +1,4 @@
-- name: Wake Up Alarm
+- name: wake_up_alarm
   entities:
     group.master_bedroom_light_bedside:
       state: 'on'

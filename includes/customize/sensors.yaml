@@ -1,9 +1,20 @@
-sensor.hue_hub:
-  icon: mdi:lightbulb
-
-sensor.avatar_media:
-  icon: mdi:movie
-
 sensor.cpu_temperature:
-  friendly_name: CPU Temperature
-  icon: mdi:fire
+  friendly_name: 'CPU Temperature'
+  icon: 'mdi:fire'
+
+sensor.network_avatar_media:
+  friendly_name: 'Avatar Media'
+  icon: 'mdi:movie'
+
+sensor.network_hue_hub:
+  friendly_name: 'Hue Hub'
+  icon: 'mdi:lightbulb'
+
+sensor.yr_humidity:
+  friendly_name: 'Humidity'
+
+sensor.yr_symbol:
+  friendly_name: 'Weather'
+
+sensor.yr_temperature:
+  friendly_name: 'Temperature'
