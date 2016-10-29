@@ -1,0 +1,4 @@
+- name: Empty House
+  entities:
+    group.all_lights:
+      state: 'off'
