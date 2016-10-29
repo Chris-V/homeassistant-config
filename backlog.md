@@ -3,7 +3,6 @@
 _Empty_
 
 ## Improvements
-- Don't store server uptime in history/logbook
 - Improve naming of some entities (mostly add prefixes)
 
 ## Automations
@@ -17,4 +16,3 @@ _Empty_
 
 ### Turn off porch light:
 - Midnight
-

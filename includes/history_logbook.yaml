@@ -1,0 +1,19 @@
+include:
+  domains:
+    - device_tracker
+    - input_boolean
+    - light
+    - media_player
+    - sensor
+    - sun
+    - switch
+  entities:
+    - group.household
+    - group.master_bedroom
+    - group.person_chris
+    - group.person_karine
+exclude:
+  entities:
+    - sensor.date
+    - sensor.since_last_boot
+    - sensor.time

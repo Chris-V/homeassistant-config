@@ -7,7 +7,6 @@
   resources:
     - type: processor_use
     - type: memory_use_percent
-    - type: swap_use_percent
     - type: since_last_boot
 
 - platform: command_line

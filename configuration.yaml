@@ -25,8 +25,8 @@ updater:
 ## Logs and History
 ###############################################################################
 
-history:
-logbook:
+history: !include includes/history_logbook.yaml
+logbook: !include includes/history_logbook.yaml
 logger: !include includes/logger.yaml
 recorder:
   purge_days: 14
