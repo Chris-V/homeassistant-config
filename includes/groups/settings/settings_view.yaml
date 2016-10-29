@@ -1,7 +1,7 @@
 settings:
   name: 'Settings'
   icon: 'mdi:settings'
-  view: yes
+  view: true
   entities:
     - group.global_options
     - group.wake_up_alarm

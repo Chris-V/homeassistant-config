@@ -1,5 +1,5 @@
 - alias: wake_up_alarm_monday
-  initial_state: False
+  initial_state: 'off'
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_monday', states('sensor.time')) }}"
@@ -14,7 +14,7 @@
     entity_id: 'scene.wake_up_alarm'
 
 - alias: wake_up_alarm_tuesday
-  initial_state: False
+  initial_state: 'off'
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_tuesday', states('sensor.time')) }}"
@@ -29,7 +29,7 @@
     entity_id: 'scene.wake_up_alarm'
 
 - alias: wake_up_alarm_wednesday
-  initial_state: False
+  initial_state: 'off'
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_wednesday', states('sensor.time')) }}"
@@ -44,7 +44,7 @@
     entity_id: 'scene.wake_up_alarm'
 
 - alias: wake_up_alarm_thursday
-  initial_state: False
+  initial_state: 'off'
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_thursday', states('sensor.time')) }}"
@@ -59,7 +59,7 @@
     entity_id: 'scene.wake_up_alarm'
 
 - alias: wake_up_alarm_friday
-  initial_state: False
+  initial_state: 'off'
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_friday', states('sensor.time')) }}"
@@ -74,7 +74,7 @@
     entity_id: 'scene.wake_up_alarm'
 
 - alias: wake_up_alarm_saturday
-  initial_state: False
+  initial_state: 'off'
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_saturday', states('sensor.time')) }}"
@@ -89,7 +89,7 @@
     entity_id: 'scene.wake_up_alarm'
 
 - alias: wake_up_alarm_sunday
-  initial_state: False
+  initial_state: 'off'
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_sunday', states('sensor.time')) }}"

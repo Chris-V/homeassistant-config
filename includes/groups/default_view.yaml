@@ -1,5 +1,5 @@
 default_view:
-  view: yes
+  view: true
   entities:
     - group.household
     - group.master_bedroom

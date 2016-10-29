@@ -1,5 +1,5 @@
 - alias: failed_login_attempt
-  hide_entity: True
+  hide_entity: true
   trigger:
     - platform: event
       event_type: 'call_service'

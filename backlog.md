@@ -3,7 +3,7 @@
 _Empty_
 
 ## Improvements
-- Improve naming of some entities (mostly add prefixes). Use customize/friendly_name for those who without a name config
+_Empty_
 
 ## Automations
 ### Turn on porch light:
