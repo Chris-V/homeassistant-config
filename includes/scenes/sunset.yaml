@@ -1,5 +1,6 @@
 - name: sunset
   entities:
     group.master_bedroom_light_bedside:
+      state: "on"
       rgb_color: [100, 100, 255]
       brightness: 35
