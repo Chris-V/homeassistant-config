@@ -1,13 +1,12 @@
 # TODOs
 ## Bugs
-_Nothing_
+_Empty_
 
 ## Improvements
-_Nothing_
+- Don't store server uptime in history/logbook
+- Improve naming of some entities (mostly add prefixes)
 
 ## Automations
-_Nothing_
-
 ### Turn on porch light:
 - Add to sunset scene
 

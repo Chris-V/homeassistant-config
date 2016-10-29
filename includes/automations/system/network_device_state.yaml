@@ -10,7 +10,7 @@
     data_template:
       message: '{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!'
       data:
-        tag: '{{ trigger.entity_id }}_{{ trigger.to_state.state | lower }}'
+        tag: 'state_change_{{ trigger.entity_id }}'
     data:
       data:
         url: !secret http_public_host

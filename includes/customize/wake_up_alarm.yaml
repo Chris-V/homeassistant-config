@@ -1,0 +1,41 @@
+automation.wake_up_alarm_monday:
+  friendly_name: 'Monday'
+  persistent: true
+input_select.wake_up_alarm_monday:
+  persistent: true
+
+automation.wake_up_alarm_tuesday:
+  friendly_name: 'Tuesday'
+  persistent: true
+input_select.wake_up_alarm_tuesday:
+  persistent: true
+
+automation.wake_up_alarm_wednesday:
+  friendly_name: 'Wednesday'
+  persistent: true
+input_select.wake_up_alarm_wednesday:
+  persistent: true
+
+automation.wake_up_alarm_thursday:
+  friendly_name: 'Thursday'
+  persistent: true
+input_select.wake_up_alarm_thursday:
+  persistent: true
+
+automation.wake_up_alarm_friday:
+  friendly_name: 'Friday'
+  persistent: true
+input_select.wake_up_alarm_friday:
+  persistent: true
+
+automation.wake_up_alarm_saturday:
+  friendly_name: 'Saturday'
+  persistent: true
+input_select.wake_up_alarm_saturday:
+  persistent: true
+
+automation.wake_up_alarm_sunday:
+  friendly_name: 'Sunday'
+  persistent: true
+input_select.wake_up_alarm_sunday:
+  persistent: true

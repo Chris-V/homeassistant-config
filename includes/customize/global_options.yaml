@@ -1,0 +1,5 @@
+input_boolean.publish_state_persistence:
+  persistent: true
+
+input_boolean.guest_mode:
+  persistent: true
