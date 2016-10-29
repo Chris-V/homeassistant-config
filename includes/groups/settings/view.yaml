@@ -3,4 +3,5 @@ settings:
   icon: 'mdi:settings'
   view: yes
   entities:
+    - input_boolean.guest_mode
     - group.wake_up_alarm
