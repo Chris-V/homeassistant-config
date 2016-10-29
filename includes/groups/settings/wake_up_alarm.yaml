@@ -1,6 +1,6 @@
 wake_up_alarm:
-  name: 'Wake Up Alarms'
-  icon: 'mdi:bell-ring'
+  name: "Wake Up Alarms"
+  icon: "mdi:bell-ring"
   entities:
     - automation.wake_up_alarm_monday
     - input_select.wake_up_alarm_monday

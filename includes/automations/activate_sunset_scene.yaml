@@ -1,22 +1,22 @@
 - alias: sunset_arrives
   trigger:
     - platform: sun
-      event: 'sunset'
-      offset: '-00:30:00'
+      event: "sunset"
+      offset: "-00:30:00"
     - platform: state
-      entity_id: 'group.household'
-      to: 'home'
+      entity_id: "group.household"
+      to: "home"
   condition:
     condition: and
     conditions:
       - condition: time
-        before: '00:00:00'
+        before: "00:00:00"
       - condition: sun
-        after: 'sunset'
-        after_offset: '-00:30:00'
+        after: "sunset"
+        after_offset: "-00:30:00"
       - condition: state
-        entity_id: 'group.household'
-        state: 'home'
+        entity_id: "group.household"
+        state: "home"
   action:
     service: scene.turn_on
-    entity_id: 'scene.sunset'
+    entity_id: "scene.sunset"

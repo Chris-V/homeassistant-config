@@ -1,14 +1,14 @@
 settings:
-  name: 'Settings'
-  icon: 'mdi:settings'
+  name: "Settings"
+  icon: "mdi:settings"
   view: true
   entities:
     - group.global_options
     - group.wake_up_alarm
 
 global_options:
-  name: 'Global Options'
-  icon: 'mdi:settings-box'
+  name: "Global Options"
+  icon: "mdi:settings-box"
   entities:
     - input_boolean.guest_mode
     - input_boolean.publish_state_persistence

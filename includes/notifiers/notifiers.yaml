@@ -1,8 +1,8 @@
 - platform: pushbullet
-  name: 'pushbullet'
+  name: "pushbullet"
   api_key: !secret notifier_pushbullet_key
 
 - platform: html5
-  name: 'html5'
+  name: "html5"
   gcm_api_key: !secret notifier_gcm_key
   gcm_sender_id: !secret notifier_gcm_sender_id

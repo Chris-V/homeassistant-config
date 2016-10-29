@@ -1,6 +1,6 @@
 weather:
-  name: 'Weather'
-  icon: 'mdi:weather-sunny'
+  name: "Weather"
+  icon: "mdi:weather-sunny"
   entities:
     - sun.sun
     - sensor.yr_humidity

@@ -8,9 +8,9 @@
   action:
     service: notify.admin
     data_template:
-      message: '{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!'
+      message: "{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!"
       data:
-        tag: 'state_change_{{ trigger.entity_id }}'
+        tag: "state_change_{{ trigger.entity_id }}"
     data:
       data:
         url: !secret http_public_host

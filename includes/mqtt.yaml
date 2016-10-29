@@ -1,6 +1,6 @@
 broker: !secret mqtt_broker
 port: !secret mqtt_port
-client_id: 'home_assistant'
+client_id: "home_assistant"
 keepalive: 60
 username: !secret mqtt_username
 password: !secret mqtt_password

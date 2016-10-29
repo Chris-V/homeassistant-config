@@ -1,6 +1,6 @@
 system_stats:
-  name: 'System'
-  icon: 'mdi:chart-scatterplot-hexbin'
+  name: "System"
+  icon: "mdi:chart-scatterplot-hexbin"
   entities:
     - sensor.cpu_use
     - sensor.ram_use

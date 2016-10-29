@@ -10,7 +10,7 @@
     - type: since_last_boot
 
 - platform: command_line
-  name: 'cpu_temperature'
-  command: 'cat /sys/class/thermal/thermal_zone0/temp'
-  value_template: '{{ value|multiply(0.001)|round(1) }}'
-  unit_of_measurement: '°C'
+  name: "cpu_temperature"
+  command: "cat /sys/class/thermal/thermal_zone0/temp"
+  value_template: "{{ value|multiply(0.001)|round(1) }}"
+  unit_of_measurement: "°C"

@@ -1,6 +1,6 @@
 system:
-  name: 'System'
-  icon: 'mdi:stethoscope'
+  name: "System"
+  icon: "mdi:stethoscope"
   view: true
   entities:
     #- persistent_notification.http-login

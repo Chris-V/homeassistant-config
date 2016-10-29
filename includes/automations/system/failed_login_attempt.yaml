@@ -2,19 +2,19 @@
   hide_entity: true
   trigger:
     - platform: event
-      event_type: 'call_service'
+      event_type: "call_service"
       event_data:
-        domain: 'persistent_notification'
-        service: 'create'
+        domain: "persistent_notification"
+        service: "create"
   condition:
     - condition: template
-      value_template: '{{ trigger.event_data.service_data.notification_id == "http-login" }}'
+      value_template: "{{ trigger.event_data.service_data.notification_id == 'http-login' }}"
   action:
     - service: notify.admin
       data_template:
-        title: '{{ trigger.event_data.service_data.title }}'
-        message: '{{ trigger.event_data.service_data.message }}'
+        title: "{{ trigger.event_data.service_data.title }}"
+        message: "{{ trigger.event_data.service_data.message }}"
       data:
         data:
-          tag: 'failed_login_attempt'
+          tag: "failed_login_attempt"
           url: !secret http_public_host

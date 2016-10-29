@@ -1,16 +1,16 @@
 person_chris:
-  name: 'Chris'
+  name: "Chris"
   entities:
     - device_tracker.chris_mobile
 
 person_karine:
-  name: 'Karine'
+  name: "Karine"
   entities:
     - device_tracker.karine_mobile
 
 household:
-  name: 'Household'
-  icon: 'mdi:account-multiple'
+  name: "Household"
+  icon: "mdi:account-multiple"
   entities:
     # Not using person groups because we lose the Gravatar config and groups support only icon.
     - device_tracker.chris_mobile

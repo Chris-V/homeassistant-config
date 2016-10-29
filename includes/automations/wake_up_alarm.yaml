@@ -1,104 +1,104 @@
 - alias: wake_up_alarm_monday
-  initial_state: 'off'
+  initial_state: "off"
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_monday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.household'
-      state: 'home'
+      entity_id: "group.household"
+      state: "home"
     - condition: time
-      weekday: 'mon'
+      weekday: "mon"
   action:
     service: scene.turn_on
-    entity_id: 'scene.wake_up_alarm'
+    entity_id: "scene.wake_up_alarm"
 
 - alias: wake_up_alarm_tuesday
-  initial_state: 'off'
+  initial_state: "off"
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_tuesday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.household'
-      state: 'home'
+      entity_id: "group.household"
+      state: "home"
     - condition: time
-      weekday: 'tue'
+      weekday: "tue"
   action:
     service: scene.turn_on
-    entity_id: 'scene.wake_up_alarm'
+    entity_id: "scene.wake_up_alarm"
 
 - alias: wake_up_alarm_wednesday
-  initial_state: 'off'
+  initial_state: "off"
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_wednesday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.household'
-      state: 'home'
+      entity_id: "group.household"
+      state: "home"
     - condition: time
-      weekday: 'wed'
+      weekday: "wed"
   action:
     service: scene.turn_on
-    entity_id: 'scene.wake_up_alarm'
+    entity_id: "scene.wake_up_alarm"
 
 - alias: wake_up_alarm_thursday
-  initial_state: 'off'
+  initial_state: "off"
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_thursday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.household'
-      state: 'home'
+      entity_id: "group.household"
+      state: "home"
     - condition: time
-      weekday: 'thu'
+      weekday: "thu"
   action:
     service: scene.turn_on
-    entity_id: 'scene.wake_up_alarm'
+    entity_id: "scene.wake_up_alarm"
 
 - alias: wake_up_alarm_friday
-  initial_state: 'off'
+  initial_state: "off"
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_friday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.household'
-      state: 'home'
+      entity_id: "group.household"
+      state: "home"
     - condition: time
-      weekday: 'fri'
+      weekday: "fri"
   action:
     service: scene.turn_on
-    entity_id: 'scene.wake_up_alarm'
+    entity_id: "scene.wake_up_alarm"
 
 - alias: wake_up_alarm_saturday
-  initial_state: 'off'
+  initial_state: "off"
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_saturday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.household'
-      state: 'home'
+      entity_id: "group.household"
+      state: "home"
     - condition: time
-      weekday: 'sat'
+      weekday: "sat"
   action:
     service: scene.turn_on
-    entity_id: 'scene.wake_up_alarm'
+    entity_id: "scene.wake_up_alarm"
 
 - alias: wake_up_alarm_sunday
-  initial_state: 'off'
+  initial_state: "off"
   trigger:
     - platform: template
       value_template: "{{ is_state('input_select.wake_up_alarm_sunday', states('sensor.time')) }}"
   condition:
     - condition: state
-      entity_id: 'group.household'
-      state: 'home'
+      entity_id: "group.household"
+      state: "home"
     - condition: time
-      weekday: 'sat'
+      weekday: "sat"
   action:
     service: scene.turn_on
-    entity_id: 'scene.wake_up_alarm'
+    entity_id: "scene.wake_up_alarm"

@@ -14,7 +14,7 @@
   hide_entity: true
   trigger:
     - platform: event
-      event_type: 'state_changed'
+      event_type: "state_changed"
   condition:
     condition: and
     conditions:
@@ -25,8 +25,8 @@
       - condition: or
         conditions:
           - condition: state
-            entity_id: 'input_boolean.publish_state_persistence'
-            state: 'on'
+            entity_id: "input_boolean.publish_state_persistence"
+            state: "on"
           - condition: template
             value_template: "{{ trigger.event.data.entity_id == 'input_boolean.publish_state_persistence' }} "
   action:
@@ -44,13 +44,13 @@
   hide_entity: true
   trigger:
     - platform: mqtt
-      topic: 'home-assistant/automation/+'
+      topic: "home-assistant/automation/+"
     - platform: mqtt
-      topic: 'home-assistant/input_boolean/+'
+      topic: "home-assistant/input_boolean/+"
     - platform: mqtt
-      topic: 'home-assistant/light/+'
+      topic: "home-assistant/light/+"
     - platform: mqtt
-      topic: 'home-assistant/switch/+'
+      topic: "home-assistant/switch/+"
   condition:
     - condition: and
       conditions:
@@ -67,7 +67,7 @@
   hide_entity: true
   trigger:
     - platform: mqtt
-      topic: 'home-assistant/input_select/+'
+      topic: "home-assistant/input_select/+"
   condition:
     - condition: and
       conditions:
@@ -85,7 +85,7 @@
   hide_entity: true
   trigger:
     - platform: mqtt
-      topic: 'home-assistant/input_slider/+'
+      topic: "home-assistant/input_slider/+"
   condition:
     - condition: and
       conditions:

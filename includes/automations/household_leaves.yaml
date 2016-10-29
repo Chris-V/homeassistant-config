@@ -1,12 +1,12 @@
 - alias: household_leaves
   trigger:
     platform: state
-    entity_id: 'group.household'
-    from: 'home'
+    entity_id: "group.household"
+    from: "home"
   condition:
     condition: state
-    entity_id: 'input_boolean.guest_mode'
-    state: 'off'
+    entity_id: "input_boolean.guest_mode"
+    state: "off"
   action:
     service: scene.turn_on
-    entity_id: 'scene.empty_house'
+    entity_id: "scene.empty_house"

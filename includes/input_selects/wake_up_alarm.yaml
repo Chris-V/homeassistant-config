@@ -1,7 +1,7 @@
 wake_up_alarm_monday:
-  name: 'Monday Time'
-  icon: 'mdi:clock'
-  initial: '06:00'
+  name: "Monday Time"
+  icon: "mdi:clock"
+  initial: "06:00"
   options:
     - 06:00
     - 06:15
@@ -18,9 +18,9 @@ wake_up_alarm_monday:
     - 09:00
 
 wake_up_alarm_tuesday:
-  name: 'Tuesday Time'
-  icon: 'mdi:clock'
-  initial: '06:00'
+  name: "Tuesday Time"
+  icon: "mdi:clock"
+  initial: "06:00"
   options:
     - 06:00
     - 06:15
@@ -37,9 +37,9 @@ wake_up_alarm_tuesday:
     - 09:00
 
 wake_up_alarm_wednesday:
-  name: 'Wednesday Time'
-  icon: 'mdi:clock'
-  initial: '07:15'
+  name: "Wednesday Time"
+  icon: "mdi:clock"
+  initial: "07:15"
   options:
     - 06:00
     - 06:15
@@ -56,9 +56,9 @@ wake_up_alarm_wednesday:
     - 09:00
 
 wake_up_alarm_thursday:
-  name: 'Thursday Time'
-  icon: 'mdi:clock'
-  initial: '07:15'
+  name: "Thursday Time"
+  icon: "mdi:clock"
+  initial: "07:15"
   options:
     - 06:00
     - 06:15
@@ -75,9 +75,9 @@ wake_up_alarm_thursday:
     - 09:00
 
 wake_up_alarm_friday:
-  name: 'Friday Time'
-  icon: 'mdi:clock'
-  initial: '07:15'
+  name: "Friday Time"
+  icon: "mdi:clock"
+  initial: "07:15"
   options:
     - 06:00
     - 06:15
@@ -94,9 +94,9 @@ wake_up_alarm_friday:
     - 09:00
 
 wake_up_alarm_saturday:
-  name: 'Saturday Time'
-  icon: 'mdi:clock'
-  initial: '07:15'
+  name: "Saturday Time"
+  icon: "mdi:clock"
+  initial: "07:15"
   options:
     - 06:00
     - 06:15
@@ -113,9 +113,9 @@ wake_up_alarm_saturday:
     - 09:00
 
 wake_up_alarm_sunday:
-  name: 'Sunday Time'
-  icon: 'mdi:clock'
-  initial: '09:00'
+  name: "Sunday Time"
+  icon: "mdi:clock"
+  initial: "09:00"
   options:
     - 06:00
     - 06:15

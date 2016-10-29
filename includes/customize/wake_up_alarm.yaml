@@ -1,44 +1,44 @@
 scene.wake_up_alarm:
-  friendly_name: 'Wake Up Alarm'
+  friendly_name: "Wake Up Alarm"
 
 automation.wake_up_alarm_monday:
-  friendly_name: 'Monday Alarm'
+  friendly_name: "Monday Alarm"
   persistent: true
 input_select.wake_up_alarm_monday:
   persistent: true
 
 automation.wake_up_alarm_tuesday:
-  friendly_name: 'Tuesday Alarm'
+  friendly_name: "Tuesday Alarm"
   persistent: true
 input_select.wake_up_alarm_tuesday:
   persistent: true
 
 automation.wake_up_alarm_wednesday:
-  friendly_name: 'Wednesday Alarm'
+  friendly_name: "Wednesday Alarm"
   persistent: true
 input_select.wake_up_alarm_wednesday:
   persistent: true
 
 automation.wake_up_alarm_thursday:
-  friendly_name: 'Thursday Alarm'
+  friendly_name: "Thursday Alarm"
   persistent: true
 input_select.wake_up_alarm_thursday:
   persistent: true
 
 automation.wake_up_alarm_friday:
-  friendly_name: 'Friday Alarm'
+  friendly_name: "Friday Alarm"
   persistent: true
 input_select.wake_up_alarm_friday:
   persistent: true
 
 automation.wake_up_alarm_saturday:
-  friendly_name: 'Saturday Alarm'
+  friendly_name: "Saturday Alarm"
   persistent: true
 input_select.wake_up_alarm_saturday:
   persistent: true
 
 automation.wake_up_alarm_sunday:
-  friendly_name: 'Sunday Alarm'
+  friendly_name: "Sunday Alarm"
   persistent: true
 input_select.wake_up_alarm_sunday:
   persistent: true

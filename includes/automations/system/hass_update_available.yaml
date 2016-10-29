@@ -6,15 +6,15 @@
   action:
     - service: persistent_notification.create
       data_template:
-        message: 'Home Assistant  {{ states("updater.updater") }} is available.'
+        message: "Home Assistant {{ states('updater.updater') }} is available."
       data:
-        title: 'Home Assistant Update'
-        notification_id: 'hass_update_available'
+        title: "Home Assistant Update"
+        notification_id: "hass_update_available"
     - service: notify.admin
       data_template:
-        message: 'Home Assistant  {{ states("updater.updater") }} is available.'
+        message: "Home Assistant {{ states('updater.updater') }} is available."
       data:
-        title: 'Home Assistant Update'
+        title: "Home Assistant Update"
         data:
-          tag: 'hass_update_available'
-          url: 'https://github.com/home-assistant/home-assistant/releases/latest'
+          tag: "hass_update_available"
+          url: "https://github.com/home-assistant/home-assistant/releases/latest"
