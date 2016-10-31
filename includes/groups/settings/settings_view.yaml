@@ -11,4 +11,5 @@ global_options:
   icon: "mdi:settings-box"
   entities:
     - input_boolean.guest_mode
+    - input_boolean.debug_mode
     - input_boolean.publish_state_persistence
