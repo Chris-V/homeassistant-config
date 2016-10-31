@@ -1,0 +1,35 @@
+- alias: debug_person_arrives
+  trigger:
+    platform: state
+    entity_id:
+      - group.person_chris
+      - group.person_karine
+    to: "home"
+  condition:
+    condition: state
+    entity_id: "input_boolean.debug_mode"
+    state: "off"
+  action:
+    service: notify.admin
+    data_template:
+      message: "{{ trigger.to_state.name }} arrived home. Household is {{ states('group.household') }}."
+      data:
+        tag: "presence_{{ trigger.to_state.entity_id | replace('.', '_') }}"
+
+- alias: debug_person_leaves
+  trigger:
+    platform: state
+    entity_id:
+      - group.person_chris
+      - group.person_karine
+    from: "home"
+  condition:
+    condition: state
+    entity_id: "input_boolean.debug_mode"
+    state: "off"
+  action:
+    service: notify.admin
+    data_template:
+      message: "{{ trigger.to_state.name }} left home. Household is {{ states('group.household') }}."
+      data:
+        tag: "presence_{{ trigger.to_state.entity_id | replace('.', '_') }}"

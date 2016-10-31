@@ -21,7 +21,7 @@
       - condition: template
         value_template: "{{ trigger.event.data is not none and trigger.event.data.new_state is not none and trigger.event.data.new_state.attributes is not none }}"
       - condition: template
-        value_template: "{{ trigger.event.data.new_state.attributes.persistent|default(false, true) }}"
+        value_template: "{{ trigger.event.data.new_state.attributes.persistent | default(false, true) }}"
       - condition: or
         conditions:
           - condition: state
@@ -32,7 +32,7 @@
   action:
     - service: mqtt.publish
       data_template:
-        topic: "home-assistant/{{ trigger.event.data.entity_id|replace('.', '/') }}"
+        topic: "home-assistant/{{ trigger.event.data.entity_id | replace('.', '/') }}"
         payload: "{{ trigger.event.data.new_state.state }}"
         retain: true
 
@@ -55,13 +55,13 @@
     - condition: and
       conditions:
         - condition: template
-          value_template: "{{ is_state_attr(trigger.topic|replace('home-assistant/', '')|replace('/', '.'), 'persistent', true) }}"
+          value_template: "{{ is_state_attr(trigger.topic | replace('home-assistant/', '') | replace('/', '.'), 'persistent', true) }}"
         - condition: template
-          value_template: "{{ not is_state(trigger.topic|replace('home-assistant/', '')|replace('/', '.'), trigger.payload) }}"
+          value_template: "{{ not is_state(trigger.topic | replace('home-assistant/', '') | replace('/', '.'), trigger.payload) }}"
   action:
-    - service_template: "{{ trigger.topic.split('/')[1] }}.turn_{{ trigger.payload|lower }}"
+    - service_template: "{{ trigger.topic.split('/')[1] }}.turn_{{ trigger.payload | lower }}"
       data_template:
-        entity_id: "{{ trigger.topic|replace('home-assistant/', '')|replace('/', '.') }}"
+        entity_id: "{{ trigger.topic | replace('home-assistant/', '') | replace('/', '.') }}"
 
 - alias: state_persistence_subscribe_select_option
   hide_entity: true
@@ -72,13 +72,13 @@
     - condition: and
       conditions:
         - condition: template
-          value_template: "{{ is_state_attr(trigger.topic|replace('home-assistant/', '')|replace('/', '.'), 'persistent', true) }}"
+          value_template: "{{ is_state_attr(trigger.topic | replace('home-assistant/', '') | replace('/', '.'), 'persistent', true) }}"
         - condition: template
-          value_template: "{{ not is_state(trigger.topic|replace('home-assistant/', '')|replace('/', '.'), trigger.payload) }}"
+          value_template: "{{ not is_state(trigger.topic | replace('home-assistant/', '') | replace('/', '.'), trigger.payload) }}"
   action:
     - service_template: "{{ trigger.topic.split('/')[1] }}.select_option"
       data_template:
-        entity_id: "{{ trigger.topic|replace('home-assistant/', '')|replace('/', '.') }}"
+        entity_id: "{{ trigger.topic | replace('home-assistant/', '') | replace('/', '.') }}"
         option: "{{ trigger.payload }}"
 
 - alias: state_persistence_subscribe_select_slider
@@ -90,11 +90,11 @@
     - condition: and
       conditions:
         - condition: template
-          value_template: "{{ is_state_attr(trigger.topic|replace('home-assistant/', '')|replace('/', '.'), 'persistent', true) }}"
+          value_template: "{{ is_state_attr(trigger.topic | replace('home-assistant/', '') | replace('/', '.'), 'persistent', true) }}"
         - condition: template
-          value_template: "{{ not is_state(trigger.topic|replace('home-assistant/', '')|replace('/', '.'), trigger.payload|float) }}"
+          value_template: "{{ not is_state(trigger.topic | replace('home-assistant/', '') | replace('/', '.'), trigger.payload | float) }}"
   action:
     - service_template: "{{ trigger.topic.split('/')[1] }}.select_value"
       data_template:
-        entity_id: "{{ trigger.topic|replace('home-assistant/', '')|replace('/', '.') }}"
-        value: "{{ trigger.payload|float }}"
+        entity_id: "{{ trigger.topic | replace('home-assistant/', '') | replace('/', '.') }}"
+        value: "{{ trigger.payload | float }}"

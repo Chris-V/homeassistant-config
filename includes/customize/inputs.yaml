@@ -1,5 +1,8 @@
-input_boolean.publish_state_persistence:
+input_boolean.debug_mode:
   persistent: true
 
 input_boolean.guest_mode:
+  persistent: true
+
+input_boolean.publish_state_persistence:
   persistent: true

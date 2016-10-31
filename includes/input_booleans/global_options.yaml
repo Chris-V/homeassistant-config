@@ -1,3 +1,8 @@
+debug_mode:
+  name: "Debug Mode"
+  icon: "mdi:bug"
+  initial: "off"
+
 guest_mode:
   name: "Guest Mode"
   icon: "mdi:human-greeting"
