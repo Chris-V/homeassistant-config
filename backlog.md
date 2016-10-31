@@ -6,6 +6,11 @@ _Empty_
 _Empty_
 
 ## Automations
+### Household presence notification
+- Mostly for debug purposes
+- Notify a member of household is home / somewhere / not home
+- Input boolean to enable / disable debug mode
+
 ### Turn on porch light:
 - Add to sunset scene
 

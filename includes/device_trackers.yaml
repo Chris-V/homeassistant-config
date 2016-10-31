@@ -15,4 +15,4 @@
   # Options shared by all trackers
   track_new_devices: false
   interval_seconds: 12 # seconds between each scan
-  consider_home: 300 # seconds unseen but considered home
+  consider_home: 40 # seconds unseen but considered home
