@@ -1,0 +1,7 @@
+switch.network_hue_hub:
+  friendly_name: "Hue Hub"
+  icon: "mdi:lightbulb"
+
+switch.network_media:
+  friendly_name: "Avatar Media"
+  icon: "mdi:movie"

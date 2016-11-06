@@ -1,0 +1,9 @@
+- platform: wake_on_lan
+  name: "network_hue_hub"
+  mac_address: !secret network_hue_hub_mac
+  host: !secret network_hue_hub_host
+
+- platform: wake_on_lan
+  name: "network_media"
+  mac_address: !secret network_media_mac
+  host: !secret network_media_host

@@ -2,5 +2,5 @@ network_devices:
   name: "Network Devices"
   icon: "mdi:ethernet"
   entities:
-    - sensor.network_avatar_media
-    - sensor.network_hue_hub
+    - switch.network_media
+    - switch.network_hue_hub

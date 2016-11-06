@@ -1,16 +1,16 @@
 # TODOs
 ## Bugs
-_Empty_
+- Push Notifications ar enot working at all
 
 ## Improvements
-_Empty_
+### Network devices
+- OFF should shut the device down.  
+  Contribute to the actual code. turn_off could trigger a service, script, or whatever.    
+  https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/switch/wake_on_lan.py#L76
 
 ## Automations
-### WOL network devices
-- Make network device toggle-able
-- ON should trigger a WOL call.
-- OFF could shut it down.
-- May not work on all devices. Most important one would be media.
+### automation.network_davice_state
+- Should add actions to turn on/off directly from the notif. card. Require push notifications.
 
 ### Turn on porch light:
 - Add to sunset scene

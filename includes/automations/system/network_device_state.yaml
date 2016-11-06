@@ -3,14 +3,14 @@
   trigger:
     - platform: state
       entity_id:
-        - sensor.network_avatar_media
-        - sensor.network_hue_hub
+        - switch.network_hue_hub
+        - switch.network_media
   action:
     service: notify.admin
     data_template:
       message: "{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!"
       data:
-        tag: "network_{{ trigger.entity_id | replace('.', '_') }}"
+        tag: "{{ trigger.entity_id | replace('.', '_') }}"
     data:
       data:
         url: !secret http_public_host
