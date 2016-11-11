@@ -8,12 +8,12 @@
         service: "create"
   condition:
     - condition: template
-      value_template: "{{ trigger.event_data.service_data.notification_id == 'http-login' }}"
+      value_template: "{{ trigger.event.data.service_data.notification_id == 'http-login' }}"
   action:
     - service: notify.admin
       data_template:
-        title: "{{ trigger.event_data.service_data.title }}"
-        message: "{{ trigger.event_data.service_data.message }}"
+        title: "Home Assistant: {{ trigger.event.data.service_data.title }}"
+        message: "{{ trigger.event.data.service_data.message }}"
       data:
         data:
           tag: "failed_login_attempt"

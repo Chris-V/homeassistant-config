@@ -1,12 +1,10 @@
 # TODOs
 ## Bugs
-- Push Notifications ar enot working at all
+- Push Notifications are not working at all
 
 ## Improvements
 ### Network devices
 - OFF should shut the device down.  
-  Contribute to the actual code. turn_off could trigger a service, script, or whatever.    
-  https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/switch/wake_on_lan.py#L76
 
 ## Automations
 ### automation.network_davice_state
