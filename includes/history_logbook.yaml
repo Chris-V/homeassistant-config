@@ -9,9 +9,6 @@ include:
     - switch
   entities:
     - group.household
-    - group.master_bedroom
-    - group.person_chris
-    - group.person_karine
 exclude:
   entities:
     - sensor.date
