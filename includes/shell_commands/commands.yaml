@@ -1,0 +1,1 @@
+shutdown_media: '/home/hass/.homeassistant/includes/shell_commands/shutdown_smb.sh $(/home/hass/.homeassistant/includes/shell_commands/parse_yaml.sh /home/hass/.homeassistant/secrets.yaml network_media_host) $(/home/hass/.homeassistant/includes/shell_commands/parse_yaml.sh /home/hass/.homeassistant/secrets.yaml network_media_samba)'

@@ -7,3 +7,5 @@
   name: "network_media"
   mac_address: !secret network_media_mac
   host: !secret network_media_host
+  turn_off:
+    service: "shell_command.shutdown_media"
