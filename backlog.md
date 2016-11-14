@@ -1,9 +1,5 @@
 # TODOs
-## Bugs
-- Push Notifications are not working at all
-
 ## Improvements
-### Network devices
 - WOL for Hue Hub. Note: May not work at all, requires research.
 
 ## Automations
@@ -13,7 +9,7 @@
 - Start media when power is back up for 30 seconds.
 
 ### automation.network\_davice\_state
-- Add notification card actions to turn device on/off. Requires push notifications to work.
+- Add notification card actions to turn device on/off.
 
 ### Turn on porch light:
 - Add to sunset scene
