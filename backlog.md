@@ -3,12 +3,6 @@
 - Push Notifications are not working at all
 
 ## Improvements
-### Shell Commands
-- Prettycize the usage. Maybe:
-   - /home/hass/.homeassistant/includes/shell\_commands/exec.sh "shutdown\_smb" "secret:network\_media\_host" "secret:network\_media\_samba"
-      - exec.sh will run $1 with the parameters that follow
-      - Parameters prefixed with "secret:" are loaded from secrets.yaml
-
 ### Network devices
 - WOL for Hue Hub. Note: May not work at all, requires research.
 
