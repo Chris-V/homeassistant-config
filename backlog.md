@@ -8,9 +8,6 @@
 - Shutdown media when power is down for 30 seconds.
 - Start media when power is back up for 30 seconds.
 
-### automation.network\_davice\_state
-- Add notification card actions to turn device on/off.
-
 ### Turn on porch light:
 - Add to sunset scene
 

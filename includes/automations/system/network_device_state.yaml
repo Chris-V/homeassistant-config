@@ -1,16 +1,47 @@
 - alias: network_davice_state
   hide_entity: true
   trigger:
-    - platform: state
-      entity_id:
-        - switch.network_hue_hub
-        - switch.network_media
+    platform: state
+    entity_id:
+      - switch.network_hue_hub
+      - switch.network_media
   action:
     service: notify.admin
     data_template:
       message: "{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!"
       data:
+        entity_id: "{{ trigger.entity_id }}"
         tag: "{{ trigger.entity_id | replace('.', '_') }}"
     data:
       data:
-        url: !secret http_public_host
+        actions:
+          - action: &power_off "power_off"
+            title: "Power Off"
+            ìcon: "/local/icons/power-plug-off.png"
+          - action: &power_on "power_on"
+            title: "Power On"
+            ìcon: "/local/icons/power-plug.png"
+
+- alias: action_power_on_device
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: "html5_notification.clicked"
+    event_data:
+      action: *power_on
+  action:
+    service: switch.turn_on
+    data_template:
+      entity_id: "{{ trigger.event.data.data.entity_id }}"
+
+- alias: action_power_off_device
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: "html5_notification.clicked"
+    event_data:
+      action: *power_off
+  action:
+    service: switch.turn_off
+    data_template:
+      entity_id: "{{ trigger.event.data.data.entity_id }}"
