@@ -1,0 +1,2 @@
+host: !secret ups_host
+port: !secret ups_port

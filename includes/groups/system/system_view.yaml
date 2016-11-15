@@ -1,4 +1,4 @@
-system:
+system_view:
   name: "System"
   icon: "mdi:stethoscope"
   view: true
@@ -9,4 +9,4 @@ system:
     - updater.updater
     - group.system_stats
     - group.network_devices
-    - group.weather
+    - group.ups

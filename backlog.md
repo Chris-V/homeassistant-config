@@ -5,7 +5,8 @@
 ## Automations
 ### UPS
 - Notify when power is down / back up.
-- Shutdown media when power is down for 30 seconds.
+- Shutdown media when power is down for 70 seconds.
+   - UPS is polled every 60 secs, so the poweroff *must* be higher than that or we risk shutting down for short power outages.
 - Start media when power is back up for 30 seconds.
 
 ### Turn on porch light:

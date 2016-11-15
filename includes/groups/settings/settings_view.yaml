@@ -1,13 +1,13 @@
-settings:
+settings_view:
   name: "Settings"
   icon: "mdi:settings"
   view: true
   entities:
-    - group.global_options
+    - group.global_settings
     - group.wake_up_alarm
 
-global_options:
-  name: "Global Options"
+global_settings:
+  name: "Global Settings"
   icon: "mdi:settings-box"
   entities:
     - input_boolean.guest_mode

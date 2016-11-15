@@ -1,0 +1,6 @@
+weather_view:
+  name: "Weather"
+  icon: "mdi:weather-partlycloudy"
+  view: true
+  entities:
+    - group.weather
