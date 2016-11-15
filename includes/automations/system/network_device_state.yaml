@@ -15,10 +15,10 @@
     data:
       data:
         actions:
-          - action: &power_off "power_off"
+          - action: power_off
             title: "Power Off"
             ìcon: "/local/icons/power-plug-off.png"
-          - action: &power_on "power_on"
+          - action: power_on
             title: "Power On"
             ìcon: "/local/icons/power-plug.png"
 
@@ -28,7 +28,7 @@
     platform: event
     event_type: "html5_notification.clicked"
     event_data:
-      action: *power_on
+      action: power_on
   action:
     service: switch.turn_on
     data_template:
@@ -40,7 +40,7 @@
     platform: event
     event_type: "html5_notification.clicked"
     event_data:
-      action: *power_off
+      action: power_off
   action:
     service: switch.turn_off
     data_template:
