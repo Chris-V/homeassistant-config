@@ -1,14 +1,5 @@
 # TODOs
-## Improvements
-- WOL for Hue Hub. Note: May not work at all, requires research.
-
 ## Automations
-### UPS
-- Notify when battery must be replaced ('STATUS' contains 'REPLACEBATT')
-- Shutdown media when power is down for 70 seconds.
-   - UPS is polled every 60 secs, so the poweroff *must* be higher than that or we risk shutting down for short power outages.
-- Start media when power is back up for 30 seconds.
-
 ### Turn on porch light:
 - Add to sunset scene
 
