@@ -1,4 +1,4 @@
-- alias: network_davice_state
+- alias: notify_network_device_state
   hide_entity: true
   trigger:
     platform: state

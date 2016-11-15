@@ -4,7 +4,7 @@
 
 ## Automations
 ### UPS
-- Notify when power is down / back up.
+- Notify when battery must be replaced ('STATUS' contains 'REPLACEBATT')
 - Shutdown media when power is down for 70 seconds.
    - UPS is polled every 60 secs, so the poweroff *must* be higher than that or we risk shutting down for short power outages.
 - Start media when power is back up for 30 seconds.

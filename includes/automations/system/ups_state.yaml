@@ -1,0 +1,12 @@
+- alias: notify_ups_state
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: "binary_sensor.ups_online_status"
+  action:
+    service: notify.admin
+    data_template:
+      message: "UPS is {{ trigger.to_state.state | lower }}! Shutting down media soon."
+    data:
+      data:
+        tag: "ups_state"
