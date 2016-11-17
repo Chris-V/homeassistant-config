@@ -7,7 +7,7 @@
   consider_home: 60 # seconds unseen but considered home
 
 - platform: owntracks
-  max_gps_accuracy: 200
+  max_gps_accuracy: 100
   waypoints: false
 
 - platform: snmp

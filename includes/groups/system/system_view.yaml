@@ -3,8 +3,6 @@ system_view:
   icon: "mdi:stethoscope"
   view: true
   entities:
-    #- persistent_notification.http-login
-    - persistent_notification.hass_update_available
     - configurator.philips_hue
     - updater.updater
     - group.system_stats

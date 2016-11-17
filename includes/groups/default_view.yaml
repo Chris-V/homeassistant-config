@@ -1,6 +1,9 @@
 default_view:
   view: true
   entities:
+    - persistent_notification.failed_http_login
+    - persistent_notification.hass_update_available
+    - persistent_notification.change_ups_battery
     - group.household
     - group.master_bedroom
     - media_player.top_living_room

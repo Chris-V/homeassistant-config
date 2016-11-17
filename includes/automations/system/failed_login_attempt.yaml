@@ -10,6 +10,12 @@
     - condition: template
       value_template: "{{ trigger.event.data.service_data.notification_id == 'http-login' }}"
   action:
+    - service: persistent_notification.create
+      data_template:
+        message: "{{ trigger.event.data.service_data.message }}"
+        title: "{{ trigger.event.data.service_data.title }}"
+      data: # Can't add http-login to default view, so we copy the notification to another id.
+        notification_id: "failed_http_login"
     - service: notify.admin
       data_template:
         title: "Home Assistant: {{ trigger.event.data.service_data.title }}"

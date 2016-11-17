@@ -17,12 +17,16 @@
     platform: template
     value_template: "{{ 'REPLACEBATT' in states('sensor.ups_status', '') }}"
   action:
-    service: notify.admin
-    data_template:
-      message: "UPS battery must be replaced."
-    data:
+    - service: persistent_notification.create
       data:
-        tag: "ups_battery"
+        notification_id: "change_ups_battery"
+        title: "Replace UPS battery"
+        message: "UPS battery must be replaced. Search on amazon: http://amzn.to/2fJo3Ax"
+    - service: notify.admin
+      data:
+        message: "UPS battery must be replaced."
+        data:
+          tag: "ups_battery"
 
 - alias: ups_power_off
   hide_entity: true
