@@ -15,9 +15,9 @@
   community: "public"
   baseoid: "1.3.6.1.2.1.4.22.1.2"
 
-- platform: tomato
+- platform: tomato_custom
   host: !secret device_tracker_router_host
   username: !secret device_tracker_tomato_username
   password: !secret device_tracker_tomato_password
   http_id: !secret device_tracker_tomato_http_id
-
+  minimum_quality: 5
