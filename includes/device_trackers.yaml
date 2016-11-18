@@ -4,7 +4,7 @@
   # Options shared by all trackers
   track_new_devices: false
   interval_seconds: 10 # seconds between each scan
-  consider_home: 60 # seconds unseen but considered home
+  consider_home: 30 # seconds unseen but considered home
 
 - platform: owntracks
   max_gps_accuracy: 100
@@ -20,4 +20,4 @@
   username: !secret device_tracker_tomato_username
   password: !secret device_tracker_tomato_password
   http_id: !secret device_tracker_tomato_http_id
-  minimum_quality: 5
+  minimum_quality: 6
