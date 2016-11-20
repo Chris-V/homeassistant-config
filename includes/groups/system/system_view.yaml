@@ -3,8 +3,9 @@ system_view:
   icon: "mdi:stethoscope"
   view: true
   entities:
-    - configurator.philips_hue
     - updater.updater
+    - sensor.connected_clients
+    - configurator.philips_hue
     - group.system_stats
     - group.network_devices
     - group.ups
