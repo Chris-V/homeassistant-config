@@ -1,0 +1,287 @@
+group:
+  wake_up_alarm:
+    name: "Wake Up Alarms"
+    icon: "mdi:bell-ring"
+    entities:
+      - automation.wake_up_alarm_monday
+      - input_select.wake_up_alarm_monday
+      - automation.wake_up_alarm_tuesday
+      - input_select.wake_up_alarm_tuesday
+      - automation.wake_up_alarm_wednesday
+      - input_select.wake_up_alarm_wednesday
+      - automation.wake_up_alarm_thursday
+      - input_select.wake_up_alarm_thursday
+      - automation.wake_up_alarm_friday
+      - input_select.wake_up_alarm_friday
+      - automation.wake_up_alarm_saturday
+      - input_select.wake_up_alarm_saturday
+      - automation.wake_up_alarm_sunday
+      - input_select.wake_up_alarm_sunday
+
+homeassistant:
+  customize:
+    scene.wake_up_alarm:
+      friendly_name: "Wake Up Alarm"
+    automation.wake_up_alarm_monday:
+      friendly_name: "Monday Alarm"
+    automation.wake_up_alarm_tuesday:
+      friendly_name: "Tuesday Alarm"
+    automation.wake_up_alarm_wednesday:
+      friendly_name: "Wednesday Alarm"
+    automation.wake_up_alarm_thursday:
+      friendly_name: "Thursday Alarm"
+    automation.wake_up_alarm_friday:
+      friendly_name: "Friday Alarm"
+    automation.wake_up_alarm_saturday:
+      friendly_name: "Saturday Alarm"
+    automation.wake_up_alarm_sunday:
+      friendly_name: "Sunday Alarm"
+
+scene:
+  - name: wake_up_alarm
+    entities:
+      group.master_bedroom_light_bedside:
+        state: "on"
+        color_temp: 375
+        brightness: 200
+        transition: 600
+
+input_select:
+  wake_up_alarm_monday:
+    name: "Monday Time"
+    icon: "mdi:clock"
+    initial: "06:00"
+    options:
+      - 06:00
+      - 06:15
+      - 06:30
+      - 06:45
+      - 07:00
+      - 07:15
+      - 07:30
+      - 07:45
+      - 08:00
+      - 08:15
+      - 08:30
+      - 08:45
+      - 09:00
+
+  wake_up_alarm_tuesday:
+    name: "Tuesday Time"
+    icon: "mdi:clock"
+    initial: "06:00"
+    options:
+      - 06:00
+      - 06:15
+      - 06:30
+      - 06:45
+      - 07:00
+      - 07:15
+      - 07:30
+      - 07:45
+      - 08:00
+      - 08:15
+      - 08:30
+      - 08:45
+      - 09:00
+
+  wake_up_alarm_wednesday:
+    name: "Wednesday Time"
+    icon: "mdi:clock"
+    initial: "07:15"
+    options:
+      - 06:00
+      - 06:15
+      - 06:30
+      - 06:45
+      - 07:00
+      - 07:15
+      - 07:30
+      - 07:45
+      - 08:00
+      - 08:15
+      - 08:30
+      - 08:45
+      - 09:00
+
+  wake_up_alarm_thursday:
+    name: "Thursday Time"
+    icon: "mdi:clock"
+    initial: "07:15"
+    options:
+      - 06:00
+      - 06:15
+      - 06:30
+      - 06:45
+      - 07:00
+      - 07:15
+      - 07:30
+      - 07:45
+      - 08:00
+      - 08:15
+      - 08:30
+      - 08:45
+      - 09:00
+
+  wake_up_alarm_friday:
+    name: "Friday Time"
+    icon: "mdi:clock"
+    initial: "07:15"
+    options:
+      - 06:00
+      - 06:15
+      - 06:30
+      - 06:45
+      - 07:00
+      - 07:15
+      - 07:30
+      - 07:45
+      - 08:00
+      - 08:15
+      - 08:30
+      - 08:45
+      - 09:00
+
+  wake_up_alarm_saturday:
+    name: "Saturday Time"
+    icon: "mdi:clock"
+    initial: "07:15"
+    options:
+      - 06:00
+      - 06:15
+      - 06:30
+      - 06:45
+      - 07:00
+      - 07:15
+      - 07:30
+      - 07:45
+      - 08:00
+      - 08:15
+      - 08:30
+      - 08:45
+      - 09:00
+
+  wake_up_alarm_sunday:
+    name: "Sunday Time"
+    icon: "mdi:clock"
+    initial: "09:00"
+    options:
+      - 06:00
+      - 06:15
+      - 06:30
+      - 06:45
+      - 07:00
+      - 07:15
+      - 07:30
+      - 07:45
+      - 08:00
+      - 08:15
+      - 08:30
+      - 08:45
+      - 09:00
+
+automation:
+  - alias: wake_up_alarm_monday
+    initial_state: "off"
+    trigger:
+      - platform: template
+        value_template: "{{ is_state('input_select.wake_up_alarm_monday', states('sensor.time')) }}"
+    condition:
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+      - condition: time
+        weekday: "mon"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.wake_up_alarm"
+
+  - alias: wake_up_alarm_tuesday
+    initial_state: "off"
+    trigger:
+      - platform: template
+        value_template: "{{ is_state('input_select.wake_up_alarm_tuesday', states('sensor.time')) }}"
+    condition:
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+      - condition: time
+        weekday: "tue"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.wake_up_alarm"
+
+  - alias: wake_up_alarm_wednesday
+    initial_state: "off"
+    trigger:
+      - platform: template
+        value_template: "{{ is_state('input_select.wake_up_alarm_wednesday', states('sensor.time')) }}"
+    condition:
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+      - condition: time
+        weekday: "wed"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.wake_up_alarm"
+
+  - alias: wake_up_alarm_thursday
+    initial_state: "off"
+    trigger:
+      - platform: template
+        value_template: "{{ is_state('input_select.wake_up_alarm_thursday', states('sensor.time')) }}"
+    condition:
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+      - condition: time
+        weekday: "thu"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.wake_up_alarm"
+
+  - alias: wake_up_alarm_friday
+    initial_state: "off"
+    trigger:
+      - platform: template
+        value_template: "{{ is_state('input_select.wake_up_alarm_friday', states('sensor.time')) }}"
+    condition:
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+      - condition: time
+        weekday: "fri"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.wake_up_alarm"
+
+  - alias: wake_up_alarm_saturday
+    initial_state: "off"
+    trigger:
+      - platform: template
+        value_template: "{{ is_state('input_select.wake_up_alarm_saturday', states('sensor.time')) }}"
+    condition:
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+      - condition: time
+        weekday: "sat"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.wake_up_alarm"
+
+  - alias: wake_up_alarm_sunday
+    initial_state: "off"
+    trigger:
+      - platform: template
+        value_template: "{{ is_state('input_select.wake_up_alarm_sunday', states('sensor.time')) }}"
+    condition:
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+      - condition: time
+        weekday: "sat"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.wake_up_alarm"
