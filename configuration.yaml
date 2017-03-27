@@ -13,18 +13,6 @@ homeassistant:
   customize: !include_dir_merge_named includes/customize/
 
 ###############################################################################
-## Base Platforms
-###############################################################################
-
-apcupsd: !include includes/apcupsd.yaml
-device_tracker: !include includes/device_trackers.yaml
-light: !include includes/lights.yaml
-media_player: !include includes/media_players.yaml
-mqtt: !include includes/mqtt.yaml
-notify: !include_dir_merge_list includes/notifiers/
-sun:
-
-###############################################################################
 ## Customizations
 ###############################################################################
 

@@ -1,0 +1,7 @@
+apcupsd: !include .platforms/apcupsd.yaml
+device_tracker: !include .platforms/device_trackers.yaml
+light: !include .platforms/lights.yaml
+media_player: !include .platforms/media_players.yaml
+mqtt: !include .platforms/mqtt.yaml
+notify: !include_dir_merge_list .platforms/notifiers/
+sun: {}
