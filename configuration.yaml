@@ -9,26 +9,15 @@ homeassistant:
   elevation: !secret zone_home_elevation
   unit_system: metric
   time_zone: America/Toronto
+  packages: !include_dir_named includes/packages/
   customize: !include_dir_merge_named includes/customize/
 
-conversation:
-discovery:
-frontend:
-http:
-  server_port: !secret http_port
-  api_password: !secret http_password
-  base_url: !secret http_public_host
-  cors_allowed_origins:
-    - !secret http_public_host
-updater:
-
 ###############################################################################
-## Logs and History
+## History
 ###############################################################################
 
 history: !include includes/history_logbook.yaml
 logbook: !include includes/history_logbook.yaml
-logger: !include includes/logger.yaml
 recorder:
   purge_days: 14
 

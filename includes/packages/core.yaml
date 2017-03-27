@@ -1,0 +1,12 @@
+conversation: {}
+discovery: {}
+frontend: {}
+http:
+  server_port: !secret http_port
+  api_password: !secret http_password
+  base_url: !secret http_public_host
+  cors_allowed_origins:
+    - !secret http_public_host
+logger:
+  default: "warn"
+updater: {}
