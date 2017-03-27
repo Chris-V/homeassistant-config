@@ -15,7 +15,7 @@
   hide_entity: true
   trigger:
     platform: template
-    value_template: "{{ 'REPLACEBATT' in states('sensor.ups_status', '') }}"
+    value_template: "{{ 'REPLACEBATT' in states('sensor.ups_status') }}"
   action:
     - service: persistent_notification.create
       data:
