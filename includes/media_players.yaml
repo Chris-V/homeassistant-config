@@ -1,6 +1,3 @@
 - platform: cast
   host: !secret media_player_cast_host
 
-# TODO: Plex
-#- platform: plex
-#  host: !secret media_player_plex_host
