@@ -1,0 +1,83 @@
+homeassistant:
+  customize:
+    automation.network_davice_state:
+      friendly_name: "Detect network device state"
+    switch.network_hue_hub:
+      friendly_name: "Hue Hub"
+      icon: "mdi:lightbulb"
+    switch.network_media:
+      friendly_name: "Avatar Media"
+      icon: "mdi:movie"
+
+group:
+  network_devices:
+    name: "Network Devices"
+    icon: "mdi:ethernet"
+    entities:
+      - switch.network_media
+      - switch.network_hue_hub
+
+switch:
+  - platform: wake_on_lan
+    name: "network_hue_hub"
+    mac_address: !secret network_hue_hub_mac
+    host: !secret network_hue_hub_host
+
+  - platform: wake_on_lan
+    name: "network_media"
+    mac_address: !secret network_media_mac
+    host: !secret network_media_host
+    turn_off:
+      service: "shell_command.shutdown_media"
+
+shell_command:
+  shutdown_media: "/home/hass/.homeassistant/shell/exec.sh 'shutdown_smb' 'secret:network_media_host' 'secret:network_media_samba'"
+
+automation:
+  - alias: notify_network_device_state
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id:
+        - switch.network_hue_hub
+        - switch.network_media
+    action:
+      service: notify.admin
+      data_template:
+        message: "{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!"
+        data:
+          entity_id: "{{ trigger.entity_id }}"
+          tag: "{{ trigger.entity_id | replace('.', '_') }}"
+      data:
+        data:
+          actions:
+            - action: power_off
+              title: "Power Off"
+              ìcon: "/local/icons/power-plug-off.png"
+            - action: power_on
+              title: "Power On"
+              ìcon: "/local/icons/power-plug.png"
+
+  - alias: action_power_on_device
+    hide_entity: true
+    trigger:
+      platform: event
+      event_type: "html5_notification.clicked"
+      event_data:
+        action: power_on
+    action:
+      service: switch.turn_on
+      data_template:
+        entity_id: "{{ trigger.event.data.data.entity_id }}"
+
+  - alias: action_power_off_device
+    hide_entity: true
+    trigger:
+      platform: event
+      event_type: "html5_notification.clicked"
+      event_data:
+        action: power_off
+    action:
+      service: switch.turn_off
+      data_template:
+        entity_id: "{{ trigger.event.data.data.entity_id }}"

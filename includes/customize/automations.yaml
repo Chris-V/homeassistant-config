@@ -4,8 +4,7 @@ automation.failed_login_attempt:
 automation.household_leaves:
   friendly_name: "Household leaves"
 
-automation.network_davice_state:
-  friendly_name: "Detect network device up/down"
+
 
 automation.sunset_arrives:
   friendly_name: "Activate sunset scene"

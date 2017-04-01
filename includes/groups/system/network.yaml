@@ -1,6 +1,0 @@
-network_devices:
-  name: "Network Devices"
-  icon: "mdi:ethernet"
-  entities:
-    - switch.network_media
-    - switch.network_hue_hub

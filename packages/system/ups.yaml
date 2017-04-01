@@ -1,7 +1,3 @@
-apcupsd:
-  host: !secret ups_host
-  port: !secret ups_port
-
 group:
   ups:
     name: "UPS"
@@ -13,6 +9,10 @@ group:
       - sensor.ups_input_voltage
       - sensor.ups_time_left
       - sensor.ups_time_on_battery
+
+apcupsd:
+  host: !secret ups_host
+  port: !secret ups_port
 
 binary_sensor:
   - platform: apcupsd

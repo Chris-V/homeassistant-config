@@ -1,1 +1,0 @@
-shutdown_media: "/home/hass/.homeassistant/includes/shell_commands/exec.sh 'shutdown_smb' 'secret:network_media_host' 'secret:network_media_samba'"

@@ -21,6 +21,4 @@ group: !include_dir_merge_named includes/groups/
 input_boolean: !include_dir_merge_named includes/input_booleans/
 scene: !include_dir_merge_list includes/scenes/
 sensor: !include_dir_merge_list includes/sensors/
-shell_command: !include_dir_merge_named includes/shell_commands
-switch: !include_dir_merge_list includes/switches/
 zone: !include_dir_merge_list includes/zones/
