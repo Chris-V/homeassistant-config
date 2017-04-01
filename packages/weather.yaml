@@ -1,3 +1,12 @@
+homeassistant:
+  customize:
+    sensor.yr_humidity:
+      friendly_name: "Humidity"
+    sensor.yr_symbol:
+      friendly_name: "Weather"
+    sensor.yr_temperature:
+      friendly_name: "Temperature"
+
 sensor:
   - platform: yr
     monitored_conditions:
@@ -22,11 +31,3 @@ group:
       - sensor.yr_temperature
       - sensor.yr_symbol
 
-homeassistant:
-  customize:
-    sensor.yr_humidity:
-      friendly_name: "Humidity"
-    sensor.yr_symbol:
-      friendly_name: "Weather"
-    sensor.yr_temperature:
-      friendly_name: "Temperature"

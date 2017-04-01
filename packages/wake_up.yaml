@@ -1,3 +1,22 @@
+homeassistant:
+  customize:
+    scene.wake_up_alarm:
+      friendly_name: "Wake Up Alarm"
+    automation.wake_up_alarm_monday:
+      friendly_name: "Monday Alarm"
+    automation.wake_up_alarm_tuesday:
+      friendly_name: "Tuesday Alarm"
+    automation.wake_up_alarm_wednesday:
+      friendly_name: "Wednesday Alarm"
+    automation.wake_up_alarm_thursday:
+      friendly_name: "Thursday Alarm"
+    automation.wake_up_alarm_friday:
+      friendly_name: "Friday Alarm"
+    automation.wake_up_alarm_saturday:
+      friendly_name: "Saturday Alarm"
+    automation.wake_up_alarm_sunday:
+      friendly_name: "Sunday Alarm"
+
 group:
   wake_up_alarm:
     name: "Wake Up Alarms"
@@ -17,25 +36,6 @@ group:
       - input_select.wake_up_alarm_saturday
       - automation.wake_up_alarm_sunday
       - input_select.wake_up_alarm_sunday
-
-homeassistant:
-  customize:
-    scene.wake_up_alarm:
-      friendly_name: "Wake Up Alarm"
-    automation.wake_up_alarm_monday:
-      friendly_name: "Monday Alarm"
-    automation.wake_up_alarm_tuesday:
-      friendly_name: "Tuesday Alarm"
-    automation.wake_up_alarm_wednesday:
-      friendly_name: "Wednesday Alarm"
-    automation.wake_up_alarm_thursday:
-      friendly_name: "Thursday Alarm"
-    automation.wake_up_alarm_friday:
-      friendly_name: "Friday Alarm"
-    automation.wake_up_alarm_saturday:
-      friendly_name: "Saturday Alarm"
-    automation.wake_up_alarm_sunday:
-      friendly_name: "Sunday Alarm"
 
 scene:
   - name: wake_up_alarm

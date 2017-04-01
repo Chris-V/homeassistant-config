@@ -17,11 +17,3 @@
   value_template: "{{ value|multiply(0.001)|round(1) }}"
   unit_of_measurement: "°C"
 
-- platform: apcupsd
-  resources:
-    - bcharge # Battery Charge
-    - linev # Input Voltage
-    - loadpct # Load %
-    - status
-    - timeleft # Time Left on Battery
-    - tonbatt # Time on Battery
