@@ -1,12 +1,16 @@
 conversation: {}
 discovery: {}
 frontend: {}
+history: !include .core/domains.yaml
 http:
   server_port: !secret http_port
   api_password: !secret http_password
   base_url: !secret http_public_host
   cors_allowed_origins:
     - !secret http_public_host
+logbook: !include .core/domains.yaml
 logger:
   default: "warn"
+recorder:
+  purge_days: 14
 updater: {}

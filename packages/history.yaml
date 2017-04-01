@@ -1,4 +1,0 @@
-history: !include .history/domains.yaml
-logbook: !include .history/domains.yaml
-recorder:
-  purge_days: 14
