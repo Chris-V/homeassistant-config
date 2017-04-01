@@ -1,0 +1,68 @@
+homeassistant:
+  customize:
+    automation.household_leaves:
+      friendly_name: "Household left"
+    scene.empty_house:
+      friendly_name: "Empty House"
+
+scene:
+  - name: empty_house
+    entities:
+      group.all_lights:
+        state: "off"
+
+input_boolean:
+  home_presence_notifications:
+    name: "Home presence notifications"
+    icon: "mdi:bug"
+    initial: "off"
+
+automation:
+  - alias: household_leaves
+    trigger:
+      platform: state
+      entity_id: "group.household"
+      from: "home"
+    condition:
+      condition: state
+      entity_id: "input_boolean.guest_mode"
+      state: "off"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.empty_house"
+
+  - alias: notify_person_arrives
+    trigger:
+      platform: state
+      entity_id:
+        - group.person_chris
+        - group.person_karine
+      to: "home"
+    condition:
+      condition: state
+      entity_id: "input_boolean.home_presence_notifications"
+      state: "on"
+    action:
+      service: notify.admin
+      data_template:
+        message: "{{ trigger.to_state.name }} arrived home. Household is {{ states('group.household') }}."
+        data:
+          tag: "presence_{{ trigger.to_state.entity_id | replace('.', '_') }}"
+
+  - alias: notify_person_leaves
+    trigger:
+      platform: state
+      entity_id:
+        - group.person_chris
+        - group.person_karine
+      from: "home"
+    condition:
+      condition: state
+      entity_id: "input_boolean.home_presence_notifications"
+      state: "on"
+    action:
+      service: notify.admin
+      data_template:
+        message: "{{ trigger.to_state.name }} left home. Household is {{ states('group.household') }}."
+        data:
+          tag: "presence_{{ trigger.to_state.entity_id | replace('.', '_') }}"

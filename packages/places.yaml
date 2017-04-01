@@ -1,0 +1,19 @@
+homeassistant:
+  customize:
+    zone.home:
+      friendly_name: "Home"
+      icon: "mdi:home-variant"
+    zone.work_chris:
+      friendly_name: "Arcbees"
+      icon: "mdi:mouse"
+
+zone:
+  - name: home
+    latitude: !secret zone_home_latitude
+    longitude: !secret zone_home_longitude
+    radius: 50
+
+  - name: work_chris
+    latitude: !secret zone_work1_latitude
+    longitude: !secret zone_work1_longitude
+    radius: 100
