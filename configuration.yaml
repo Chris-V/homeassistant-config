@@ -1,8 +1,8 @@
 homeassistant:
-  name: "That small house on a hill"
+  name: !secret name
   latitude: !secret zone_home_latitude
   longitude: !secret zone_home_longitude
   elevation: !secret zone_home_elevation
+  time_zone: !secret zone_home_tz
   unit_system: metric
-  time_zone: America/Toronto
   packages: !include_dir_named packages/
