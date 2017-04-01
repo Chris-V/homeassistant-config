@@ -4,10 +4,5 @@ automation.failed_login_attempt:
 automation.household_leaves:
   friendly_name: "Household leaves"
 
-
-
-automation.sunset_arrives:
-  friendly_name: "Activate sunset scene"
-
 automation.update_available:
   friendly_name: "Detect update available"

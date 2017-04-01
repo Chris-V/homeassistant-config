@@ -1,5 +1,2 @@
 scene.empty_house:
   friendly_name: "Empty House"
-
-scene.sunset:
-  friendly_name: "Sunset"

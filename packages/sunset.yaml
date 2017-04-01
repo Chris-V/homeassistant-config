@@ -1,0 +1,38 @@
+homeassistant:
+  customize:
+    scene.sunset:
+      friendly_name: "Sunset"
+    automation.sunset_arrives:
+      friendly_name: "Activate sunset scene"
+
+automation:
+  - alias: sunset_arrives
+    trigger:
+      - platform: sun
+        event: "sunset"
+        offset: "-00:30:00"
+      - platform: state
+        entity_id: "group.household"
+        to: "home"
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          before: "00:00:00"
+        - condition: sun
+          after: "sunset"
+          after_offset: "-00:30:00"
+        - condition: state
+          entity_id: "group.household"
+          state: "home"
+    action:
+      service: scene.turn_on
+      entity_id: "scene.sunset"
+
+scene:
+  - name: sunset
+    entities:
+      group.master_bedroom_light_bedside:
+        state: "on"
+        rgb_color: [100, 100, 255]
+        brightness: 35
