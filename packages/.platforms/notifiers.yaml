@@ -6,3 +6,15 @@
   name: "html5"
   gcm_api_key: !secret notifier_gcm_key
   gcm_sender_id: !secret notifier_gcm_sender_id
+
+- platform: group
+  name: "default"
+  services:
+    - service: html5
+
+- platform: group
+  name: "admin"
+  services:
+    - service: html5
+      data:
+        target: ["chris chrome", "chris mobile"]

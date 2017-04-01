@@ -1,0 +1,35 @@
+homeassistant:
+  customize:
+    automation.failed_login_attempt:
+      friendly_name: "Detect failed login attempts"
+
+sensor:
+  - platform: api_streams
+
+automation:
+  - alias: failed_login_attempt
+    hide_entity: true
+    trigger:
+      - platform: event
+        event_type: "call_service"
+        event_data:
+          domain: "persistent_notification"
+          service: "create"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.service_data.notification_id == 'http-login' }}"
+    action:
+      - service: persistent_notification.create
+        data_template:
+          message: "{{ trigger.event.data.service_data.message }}"
+          title: "{{ trigger.event.data.service_data.title }}"
+        data: # Can't add http-login to default view, so we copy the notification to another id.
+          notification_id: "failed_http_login"
+      - service: notify.admin
+        data_template:
+          title: "Home Assistant: {{ trigger.event.data.service_data.title }}"
+          message: "{{ trigger.event.data.service_data.message }}"
+        data:
+          data:
+            tag: "failed_login_attempt"
+            url: !secret http_public_host

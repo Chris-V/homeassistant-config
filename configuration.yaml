@@ -20,5 +20,4 @@ automation: !include_dir_merge_list includes/automations/
 group: !include_dir_merge_named includes/groups/
 input_boolean: !include_dir_merge_named includes/input_booleans/
 scene: !include_dir_merge_list includes/scenes/
-sensor: !include_dir_merge_list includes/sensors/
 zone: !include_dir_merge_list includes/zones/

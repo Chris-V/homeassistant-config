@@ -1,0 +1,55 @@
+homeassistant:
+  customize:
+    automation.update_available:
+      friendly_name: "Detect update available"
+    sensor.cpu_temperature:
+      friendly_name: "CPU Temperature"
+      icon: "mdi:fire"
+
+group:
+  system_stats:
+    name: "System"
+    icon: "mdi:chart-scatterplot-hexbin"
+    entities:
+      - sensor.cpu_use
+      - sensor.ram_use
+      - sensor.cpu_temperature
+      - sensor.since_last_boot
+
+sensor:
+  - platform: time_date
+    display_options:
+      - date
+      - time
+
+  - platform: systemmonitor
+    resources:
+      - type: processor_use
+      - type: memory_use_percent
+      - type: since_last_boot
+
+  - platform: command_line
+    name: "cpu_temperature"
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    value_template: "{{ value|multiply(0.001)|round(1) }}"
+    unit_of_measurement: "°C"
+
+automation:
+  - alias: update_available
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id: updater.updater
+    action:
+      - service: persistent_notification.create
+        data_template:
+          message: "Home Assistant {{ states('updater.updater') }} is available."
+          title: "Home Assistant Update"
+          notification_id: "hass_update_available"
+      - service: notify.admin
+        data_template:
+          message: "Home Assistant {{ states('updater.updater') }} is available."
+          title: "Home Assistant Update"
+          data:
+            tag: "hass_update_available"
+            url: "https://github.com/home-assistant/home-assistant/releases/tag/{{ states('updater.updater') }}"

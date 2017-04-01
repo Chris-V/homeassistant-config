@@ -1,3 +1,0 @@
-sensor.cpu_temperature:
-  friendly_name: "CPU Temperature"
-  icon: "mdi:fire"

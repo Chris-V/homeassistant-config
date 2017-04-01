@@ -1,8 +1,3 @@
-automation.failed_login_attempt:
-  friendly_name: "Detect failed login attempts"
-
 automation.household_leaves:
   friendly_name: "Household leaves"
 
-automation.update_available:
-  friendly_name: "Detect update available"
