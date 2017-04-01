@@ -1,4 +1,0 @@
-guest_mode:
-  name: "Guest Mode"
-  icon: "mdi:human-greeting"
-  initial: "off"
