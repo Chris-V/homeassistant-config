@@ -1,0 +1,6 @@
+group:
+  top_living_room:
+    name: "Top Living Room"
+    icon: "mdi:television"
+    entities:
+      - media_player.top_living_room

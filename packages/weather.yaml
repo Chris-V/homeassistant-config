@@ -15,13 +15,6 @@ sensor:
       - humidity
 
 group:
-  weather_view:
-    name: "Weather"
-    icon: "mdi:weather-partlycloudy"
-    view: true
-    entities:
-      - group.weather
-
   weather:
     name: "Weather"
     icon: "mdi:weather-partlycloudy"
@@ -30,4 +23,3 @@ group:
       - sensor.yr_humidity
       - sensor.yr_temperature
       - sensor.yr_symbol
-

@@ -1,0 +1,77 @@
+homeassistant:
+  customize:
+    group.default_View:
+      order: 0
+    group.weather_view:
+      order: 1
+    group.settings_view:
+      order: 2
+    group.monitoring_home_view:
+      order: 3
+    group.monitoring_devices_view:
+      order: 4
+
+group:
+  default_view:
+    name: "Home"
+    icon: "mdi:home"
+    view: true
+    entities:
+      - persistent_notification.failed_http_login
+      - persistent_notification.hass_update_available
+      - persistent_notification.change_ups_battery
+      - group.household
+      - group.master_bedroom
+      - group.top_living_room
+
+  weather_view:
+    name: "Weather"
+    icon: "mdi:weather-partlycloudy"
+    view: true
+    entities:
+      - group.weather
+
+  general_settings:
+    name: "General Settings"
+    icon: "mdi:settings"
+    entities:
+      - input_boolean.guest_mode
+
+  settings_view:
+    name: "Settings"
+    icon: "mdi:settings"
+    view: true
+    entities:
+      - group.general_settings
+      - group.wake_up_alarm
+
+  monitoring_settings:
+    name: "Monitoring Settings"
+    icon: "mdi:settings"
+    entities:
+      - input_boolean.guest_mode
+
+  monitoring_home_view:
+    name: "Monitoring - Home"
+    icon: "mdi:settings-box"
+    view: true
+    entities:
+      - persistent_notification.failed_http_login
+      - persistent_notification.hass_update_available
+      - persistent_notification.change_ups_battery
+      - updater.updater
+      - sensor.connected_clients
+      - configurator.philips_hue
+      - group.monitoring_settings
+
+  monitoring_devices_view:
+    name: "Monitoring - Devices"
+    icon: "mdi:stethoscope"
+    view: true
+    entities:
+      - updater.updater
+      - sensor.connected_clients
+      - configurator.philips_hue
+      - group.system_stats
+      - group.network_devices
+      - group.ups
