@@ -34,5 +34,6 @@ scene:
     entities:
       group.master_bedroom_light_bedside:
         state: "on"
-        rgb_color: [100, 100, 255]
-        brightness: 35
+        brightness: 1
+        color_temp: 500
+        rgb_color: [21, 8, 0]
