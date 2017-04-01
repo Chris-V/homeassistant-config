@@ -1,8 +1,0 @@
-light.hue_color_lamp_1:
-  friendly_name: "Bedside Chris"
-
-light.hue_color_lamp_2:
-  hidden: true
-
-light.hue_color_lamp_3:
-  friendly_name: "Bedside Karine"
