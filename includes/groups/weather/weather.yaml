@@ -1,8 +1,0 @@
-weather:
-  name: "Weather"
-  icon: "mdi:weather-partlycloudy"
-  entities:
-    - sun.sun
-    - sensor.yr_humidity
-    - sensor.yr_temperature
-    - sensor.yr_symbol

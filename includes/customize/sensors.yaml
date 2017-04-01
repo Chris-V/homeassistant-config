@@ -1,12 +1,3 @@
 sensor.cpu_temperature:
   friendly_name: "CPU Temperature"
   icon: "mdi:fire"
-
-sensor.yr_humidity:
-  friendly_name: "Humidity"
-
-sensor.yr_symbol:
-  friendly_name: "Weather"
-
-sensor.yr_temperature:
-  friendly_name: "Temperature"
