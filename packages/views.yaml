@@ -17,9 +17,6 @@ group:
     icon: "mdi:home"
     view: true
     entities:
-      - persistent_notification.failed_http_login
-      - persistent_notification.hass_update_available
-      - persistent_notification.change_ups_battery
       - group.household
       - group.master_bedroom
       - group.top_living_room
@@ -56,9 +53,6 @@ group:
     icon: "mdi:settings-box"
     view: true
     entities:
-      - persistent_notification.failed_http_login
-      - persistent_notification.hass_update_available
-      - persistent_notification.change_ups_battery
       - updater.updater
       - sensor.connected_clients
       - configurator.philips_hue
