@@ -7,18 +7,6 @@ automation.household_leaves:
 automation.network_davice_state:
   friendly_name: "Detect network device up/down"
 
-automation.state_persistence_publish:
-  friendly_name: "Publish persistent states"
-
-automation.state_persistence_subscribe_binary:
-  friendly_name: "Subscribe to persisted states (binary)"
-
-automation.state_persistence_subscribe_select_option:
-  friendly_name: "Subscribe persisted states (option)"
-
-automation.state_persistence_subscribe_select_slider:
-  friendly_name: "Subscribe persisted states (slider)"
-
 automation.sunset_arrives:
   friendly_name: "Activate sunset scene"
 

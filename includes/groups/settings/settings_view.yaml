@@ -12,4 +12,3 @@ global_settings:
   entities:
     - input_boolean.guest_mode
     - input_boolean.debug_mode
-    - input_boolean.publish_state_persistence
