@@ -46,7 +46,7 @@ group:
     name: "Monitoring Settings"
     icon: "mdi:settings"
     entities:
-      - input_boolean.guest_mode
+      - input_boolean.home_presence_notifications
 
   monitoring_home_view:
     name: "Monitoring - Home"
