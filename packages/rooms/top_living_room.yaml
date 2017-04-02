@@ -1,6 +1,47 @@
+homeassistant:
+  customize:
+    switch.living_room_ambiance:
+      friendly_name: "Ambiance"
+      icon: "mdi:lightbulb"
+    switch.living_room_bookshelf:
+      friendly_name: "Bookshelf"
+      icon: "mdi:lightbulb"
+
 group:
   top_living_room:
     name: "Top Living Room"
     icon: "mdi:television"
     entities:
       - media_player.top_living_room
+      - switch.living_room_ambiance
+      - switch.living_room_bookshelf
+
+switch:
+  platform: rpi_rf
+  gpio: 17
+  switches:
+    living_room_ambiance:
+      protocol: 1
+      pulselength: 186
+      code_on: 5330227
+      code_off: 5330236
+    living_room_bookshelf:
+      protocol: 1
+      pulselength: 186
+      code_on: 5330371
+      code_off: 5330380
+    unused_3:
+      protocol: 1
+      pulselength: 186
+      code_on: 5330691
+      code_off: 5330700
+    unused_4:
+      protocol: 1
+      pulselength: 186
+      code_on: 5332227
+      code_off: 5332236
+    all_etekcity:
+      protocol: 1
+      pulselength: 186
+      code_on: 5338371
+      code_off: 5338380
