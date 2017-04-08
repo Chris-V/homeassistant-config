@@ -37,3 +37,4 @@ scene:
         brightness: 1
         color_temp: 500
         rgb_color: [21, 8, 0]
+      switch.living_room_ambiance: "on"
