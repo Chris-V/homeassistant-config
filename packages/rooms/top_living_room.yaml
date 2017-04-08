@@ -23,11 +23,13 @@ switch:
     living_room_ambiance:
       protocol: 1
       pulselength: 186
+      signal_repetitions: 25
       code_on: 5330227
       code_off: 5330236
     living_room_bookshelf:
       protocol: 1
       pulselength: 186
+      signal_repetitions: 15
       code_on: 5330371
       code_off: 5330380
     unused_3:
