@@ -6,12 +6,22 @@ homeassistant:
       order: 1
     group.settings_view:
       order: 2
-    group.monitoring_home_view:
-      order: 3
-    group.monitoring_devices_view:
+    group.monitoring_view:
       order: 4
 
 group:
+  general_settings:
+    name: "Settings"
+    icon: "mdi:settings"
+    entities:
+      - input_boolean.guest_mode
+
+  monitoring_settings:
+    name: "Settings"
+    icon: "mdi:settings"
+    entities:
+      - input_boolean.home_presence_notifications
+
   default_view:
     name: "Home"
     icon: "mdi:home"
@@ -28,12 +38,6 @@ group:
     entities:
       - group.weather
 
-  general_settings:
-    name: "Settings"
-    icon: "mdi:settings"
-    entities:
-      - input_boolean.guest_mode
-
   settings_view:
     name: "Settings"
     icon: "mdi:settings"
@@ -42,30 +46,15 @@ group:
       - group.general_settings
       - group.wake_up_alarm
 
-  monitoring_devices_view:
-    name: "Home"
+  monitoring_view:
+    name: "Monitoring"
     icon: "mdi:stethoscope"
     view: true
     entities:
       - updater.updater
       - sensor.connected_clients
       - configurator.philips_hue
+      - group.monitoring_settings
       - group.system_stats
       - group.network_devices
       - group.ups
-
-  monitoring_settings:
-    name: "Settings"
-    icon: "mdi:settings"
-    entities:
-      - input_boolean.home_presence_notifications
-
-  monitoring_home_view:
-    name: "Settings"
-    icon: "mdi:settings"
-    view: true
-    entities:
-      - updater.updater
-      - sensor.connected_clients
-      - configurator.philips_hue
-      - group.monitoring_settings
