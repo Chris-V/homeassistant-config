@@ -36,7 +36,7 @@ automation:
     action:
       service: notify.admin
       data_template:
-        message: "UPS is running {% if is_state('binary_sensor.ups_online_status', 'on') %}back on power!{% else %}on battery! Shutting down media soon.{% endif %}"
+        message: "UPS is running on {% if is_state('binary_sensor.ups_online_status', 'on') -%} power after a {{ states('sensor.ups_time_on_battery') | int // 60 }}m {{ states('sensor.ups_time_on_battery') | int % 60 }}s outage. {% else -%} battery. Shutting down media soon.{% endif %}"
       data:
         data:
           tag: "ups_state"
@@ -51,7 +51,7 @@ automation:
         data:
           notification_id: "change_ups_battery"
           title: "Replace UPS battery"
-          message: "UPS battery must be replaced. Search on amazon: http://amzn.to/2fJo3Ax"
+          message: "UPS battery must be replaced. Search on amazon: https://amzn.to/2fJo3Ax"
       - service: notify.admin
         data:
           message: "UPS battery must be replaced."
