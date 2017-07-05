@@ -1,8 +1,5 @@
 # TODOs
 ## Automations
-### Turn on porch light:
-- Add to sunset scene
-
 ### Turn on porch light for 5 minutes:
 - Scene: Late Arrival
 - Household may be home, but not everybody

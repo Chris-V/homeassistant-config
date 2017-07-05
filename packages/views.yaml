@@ -28,6 +28,7 @@ group:
     view: true
     entities:
       - group.household
+      - group.outdoor
       - group.master_bedroom
       - group.top_living_room
 

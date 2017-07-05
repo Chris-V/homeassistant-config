@@ -36,4 +36,6 @@ scene:
         state: "on"
         brightness: 1
         rgb_color: [21, 8, 0]
+      group.outdoor_light:
+        state: "on"
       switch.living_room_ambiance: "on"

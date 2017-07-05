@@ -10,6 +10,8 @@ scene:
     entities:
       group.all_lights:
         state: "off"
+      group.all_light_switches:
+        state: "off"
 
 input_boolean:
   home_presence_notifications:
