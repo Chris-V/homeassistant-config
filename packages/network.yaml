@@ -17,6 +17,9 @@ group:
       - switch.network_media
       - switch.network_hue_hub
 
+shell_command:
+  shutdown_media: "/home/hass/.homeassistant/shell/exec.sh 'shutdown_ssh' 'secret:network_media_host' 'secret:network_media_key'"
+
 switch:
   - platform: wake_on_lan
     name: "network_hue_hub"
@@ -27,11 +30,9 @@ switch:
     name: "network_media"
     mac_address: !secret network_media_mac
     host: !secret network_media_host
+    broadcast_address: !secret network_wol_broadcast
     turn_off:
       service: "shell_command.shutdown_media"
-
-shell_command:
-  shutdown_media: "/home/hass/.homeassistant/shell/exec.sh 'shutdown_smb' 'secret:network_media_host' 'secret:network_media_samba'"
 
 automation:
   - alias: notify_network_device_state
@@ -53,10 +54,10 @@ automation:
           actions:
             - action: power_off
               title: "Power Off"
-              ìcon: "/local/icons/power-plug-off.png"
+              icon: "/local/icons/power-plug-off.png"
             - action: power_on
               title: "Power On"
-              ìcon: "/local/icons/power-plug.png"
+              icon: "/local/icons/power-plug.png"
 
   - alias: action_power_on_device
     hide_entity: true
