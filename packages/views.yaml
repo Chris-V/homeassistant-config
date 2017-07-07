@@ -56,6 +56,7 @@ group:
       - sensor.connected_clients
       - configurator.philips_hue
       - group.monitoring_settings
-      - group.system_stats
+      - group.automate_monitor
+      - group.media_monitor
       - group.network_devices
       - group.ups

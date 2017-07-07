@@ -7,8 +7,8 @@ homeassistant:
       icon: "mdi:fire"
 
 group:
-  system_stats:
-    name: "System"
+  automate_monitor:
+    name: "Automate Monitor"
     icon: "mdi:chart-scatterplot-hexbin"
     entities:
       - sensor.cpu_use

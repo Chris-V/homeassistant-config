@@ -8,6 +8,21 @@ homeassistant:
     switch.network_media:
       friendly_name: "Avatar Media"
       icon: "mdi:movie"
+    sensor.glances_cpu_load:
+      friendly_name: "CPU Load"
+      icon: "mdi:memory"
+    sensor.glances_cpu_temp:
+      friendly_name: "CPU Temperature"
+      icon: "mdi:fire"
+    sensor.glances_ram_use:
+      friendly_name: "RAM Use"
+      icon: "mdi:memory"
+    sensor.glances_total:
+      friendly_name: "Processes Total"
+      icon: "mdi:file-tree"
+    sensor.glances_running:
+      friendly_name: "Processes Running"
+      icon: "mdi:file-tree"
 
 group:
   network_devices:
@@ -16,6 +31,27 @@ group:
     entities:
       - switch.network_media
       - switch.network_hue_hub
+
+  media_monitor:
+    name: "Media Monitor"
+    icon: "mdi:chart-scatterplot-hexbin"
+    entities:
+      - sensor.glances_cpu_load
+      - sensor.glances_cpu_temp
+      - sensor.glances_ram_use
+      - sensor.glances_total
+      - sensor.glances_running
+
+sensor:
+  - platform: glances
+    host: !secret network_media_host
+    port: !secret media_glances_port
+    resources:
+      - processor_load
+      - memory_use_percent
+      - cpu_temp
+      - process_total
+      - process_running
 
 shell_command:
   shutdown_media: "/home/hass/.homeassistant/shell/exec.sh 'shutdown_ssh' 'secret:network_media_host' 'secret:network_media_key'"
