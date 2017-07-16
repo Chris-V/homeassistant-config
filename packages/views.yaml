@@ -15,6 +15,7 @@ group:
     icon: "mdi:settings"
     entities:
       - input_boolean.guest_mode
+      - automation.close_outdoor_lights
 
   monitoring_settings:
     name: "Settings"
