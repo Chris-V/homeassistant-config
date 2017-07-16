@@ -2,16 +2,6 @@ homeassistant:
   customize:
     automation.household_leaves:
       friendly_name: "Household left"
-    scene.empty_house:
-      friendly_name: "Empty House"
-
-scene:
-  - name: empty_house
-    entities:
-      group.all_lights:
-        state: "off"
-      group.all_light_switches:
-        state: "off"
 
 input_boolean:
   home_presence_notifications:
@@ -20,19 +10,6 @@ input_boolean:
     initial: "off"
 
 automation:
-  - alias: household_leaves
-    trigger:
-      platform: state
-      entity_id: "group.household"
-      from: "home"
-    condition:
-      condition: state
-      entity_id: "input_boolean.guest_mode"
-      state: "off"
-    action:
-      service: scene.turn_on
-      entity_id: "scene.empty_house"
-
   - alias: notify_person_arrives
     trigger:
       platform: state
