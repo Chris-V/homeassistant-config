@@ -3,11 +3,13 @@ homeassistant:
     group.default_View:
       order: 0
     group.weather_view:
-      order: 1
-    group.settings_view:
       order: 2
-    group.monitoring_view:
+    group.plants_view:
       order: 4
+    group.settings_view:
+      order: 6
+    group.monitoring_view:
+      order: 8
 
 group:
   general_settings:
@@ -32,6 +34,13 @@ group:
       - group.outdoor
       - group.master_bedroom
       - group.top_living_room
+
+  plants_view:
+    name: "Plants"
+    icon: "mdi:flower"
+    view: true
+    entities:
+      - group.plant_susan
 
   weather_view:
     name: "Weather"
