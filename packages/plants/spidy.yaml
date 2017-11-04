@@ -1,0 +1,57 @@
+ # Spider plant
+ 
+homeassistant:
+  customize:
+    plant.spidy:
+      friendly_name: "Status"
+    sensor.spidy_battery:
+      friendly_name: "Battery"
+      icon: "mdi:battery"
+    sensor.spidy_conductivity:
+      friendly_name: "Conductivity"
+      icon: "mdi:flash"
+    sensor.spidy_light_intensity:
+      friendly_name: "Light"
+      icon: "mdi:white-balance-sunny"
+    sensor.spidy_moisture:
+      friendly_name: "Moisture"
+      icon: "mdi:water-percent"
+    sensor.spidy_temperature:
+      friendly_name: "Temperature"
+      icon: "mdi:thermometer"
+
+group:
+  plant_spidy:
+    name: "Spidy"
+    icon: "mdi:flower"
+    entities:
+      - plant.spidy
+      - sensor.spidy_battery
+      - sensor.spidy_conductivity
+      - sensor.spidy_light_intensity
+      - sensor.spidy_moisture
+      - sensor.spidy_temperature
+
+plant:
+  spidy:
+    sensors:
+      battery: sensor.spidy_battery
+      conductivity: sensor.spidy_conductivity
+      brightness: sensor.spidy_light_intensity
+      moisture: sensor.spidy_moisture
+      temperature: sensor.spidy_temperature
+    min_moisture: 20
+    min_battery: 15
+    min_temperature: 10
+
+sensor:
+  - platform: miflora
+    mac: "C4:7C:8D:63:6F:A3"
+    name: "Spidy"
+    monitored_conditions:
+      - battery
+      - conductivity
+      - light
+      - moisture
+      - temperature
+

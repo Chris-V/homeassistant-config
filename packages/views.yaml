@@ -41,6 +41,8 @@ group:
     view: true
     entities:
       - group.plant_susan
+      - group.plant_gaetan
+      - group.plant_spidy
 
   weather_view:
     name: "Weather"

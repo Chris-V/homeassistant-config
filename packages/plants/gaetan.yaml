@@ -1,0 +1,58 @@
+ # Pineapple bush
+ 
+homeassistant:
+  customize:
+    plant.gaetan:
+      friendly_name: "Status"
+    sensor.gaetan_battery:
+      friendly_name: "Battery"
+      icon: "mdi:battery"
+    sensor.gaetan_conductivity:
+      friendly_name: "Conductivity"
+      icon: "mdi:flash"
+    sensor.gaetan_light_intensity:
+      friendly_name: "Light"
+      icon: "mdi:white-balance-sunny"
+    sensor.gaetan_moisture:
+      friendly_name: "Moisture"
+      icon: "mdi:water-percent"
+    sensor.gaetan_temperature:
+      friendly_name: "Temperature"
+      icon: "mdi:thermometer"
+
+group:
+  plant_gaetan:
+    name: "Gaétan"
+    icon: "mdi:flower"
+    entities:
+      - plant.gaetan
+      - sensor.gaetan_battery
+      - sensor.gaetan_conductivity
+      - sensor.gaetan_light_intensity
+      - sensor.gaetan_moisture
+      - sensor.gaetan_temperature
+
+plant:
+  gaetan:
+    sensors:
+      battery: sensor.gaetan_battery
+      conductivity: sensor.gaetan_conductivity
+      brightness: sensor.gaetan_light_intensity
+      moisture: sensor.gaetan_moisture
+      temperature: sensor.gaetan_temperature
+    min_moisture: 20
+    min_battery: 15
+    min_temperature: 10
+
+sensor:
+  - platform: miflora
+    mac: "C4:7C:8D:62:76:66"
+    name: "Gaetan"
+    timeout: 30
+    monitored_conditions:
+      - battery
+      - conductivity
+      - light
+      - moisture
+      - temperature
+
