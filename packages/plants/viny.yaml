@@ -1,45 +1,43 @@
- # Black-Eyed Susan vine
- 
 homeassistant:
   customize:
-    plant.susan:
+    plant.viny:
       friendly_name: "Status"
-    sensor.susan_battery:
+    sensor.viny_battery:
       friendly_name: "Battery"
       icon: "mdi:battery"
-    sensor.susan_conductivity:
+    sensor.viny_conductivity:
       friendly_name: "Conductivity"
       icon: "mdi:flash"
-    sensor.susan_light_intensity:
+    sensor.viny_light_intensity:
       friendly_name: "Light"
       icon: "mdi:white-balance-sunny"
-    sensor.susan_moisture:
+    sensor.viny_moisture:
       friendly_name: "Moisture"
       icon: "mdi:water-percent"
-    sensor.susan_temperature:
+    sensor.viny_temperature:
       friendly_name: "Temperature"
       icon: "mdi:thermometer"
 
 group:
-  plant_susan:
-    name: "Susan"
+  plant_viny:
+    name: "Viny"
     icon: "mdi:flower"
     entities:
-      - plant.susan
-      - sensor.susan_battery
-      - sensor.susan_conductivity
-      - sensor.susan_light_intensity
-      - sensor.susan_moisture
-      - sensor.susan_temperature
+      - plant.viny
+      - sensor.viny_battery
+      - sensor.viny_conductivity
+      - sensor.viny_light_intensity
+      - sensor.viny_moisture
+      - sensor.viny_temperature
 
 plant:
-  susan:
+  viny:
     sensors:
-      battery: sensor.susan_battery
-      conductivity: sensor.susan_conductivity
-      brightness: sensor.susan_light_intensity
-      moisture: sensor.susan_moisture
-      temperature: sensor.susan_temperature
+      battery: sensor.viny_battery
+      conductivity: sensor.viny_conductivity
+      brightness: sensor.viny_light_intensity
+      moisture: sensor.viny_moisture
+      temperature: sensor.viny_temperature
     min_moisture: 20
     min_battery: 15
     min_temperature: 10
@@ -47,7 +45,7 @@ plant:
 sensor:
   - platform: miflora
     mac: "C4:7C:8D:63:62:3E"
-    name: "Susan"
+    name: "Viny"
     timeout: 30
     monitored_conditions:
       - battery

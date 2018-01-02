@@ -40,9 +40,9 @@ group:
     icon: "mdi:flower"
     view: true
     entities:
-      - group.plant_susan
       - group.plant_gaetan
       - group.plant_spidy
+      - group.plant_viny
 
   weather_view:
     name: "Weather"

@@ -13,5 +13,23 @@ logbook: !include .core/domains.yaml
 logger:
   default: "warn"
 recorder:
-  purge_days: 14
+  # Find a way to include and add to the purge settings
+  include:
+    domains:
+      - device_tracker
+      - input_boolean
+      - light
+      - media_player
+      - sensor
+      - sun
+      - switch
+    entities:
+      - group.household
+  exclude:
+    entities:
+      - sensor.date
+      - sensor.since_last_boot
+      - sensor.time
+  purge_interval: 2
+  purge_keep_days: 14
 updater: {}
