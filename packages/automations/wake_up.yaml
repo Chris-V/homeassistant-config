@@ -23,19 +23,19 @@ group:
     icon: "mdi:bell-ring"
     entities:
       - automation.wake_up_alarm_monday
-      - input_select.wake_up_alarm_monday
+      - input_datetime.wake_up_alarm_monday
       - automation.wake_up_alarm_tuesday
-      - input_select.wake_up_alarm_tuesday
+      - input_datetime.wake_up_alarm_tuesday
       - automation.wake_up_alarm_wednesday
-      - input_select.wake_up_alarm_wednesday
+      - input_datetime.wake_up_alarm_wednesday
       - automation.wake_up_alarm_thursday
-      - input_select.wake_up_alarm_thursday
+      - input_datetime.wake_up_alarm_thursday
       - automation.wake_up_alarm_friday
-      - input_select.wake_up_alarm_friday
+      - input_datetime.wake_up_alarm_friday
       - automation.wake_up_alarm_saturday
-      - input_select.wake_up_alarm_saturday
+      - input_datetime.wake_up_alarm_saturday
       - automation.wake_up_alarm_sunday
-      - input_select.wake_up_alarm_sunday
+      - input_datetime.wake_up_alarm_sunday
 
 scene:
   - name: wake_up_alarm
@@ -46,146 +46,62 @@ scene:
         brightness: 200
         transition: 600
 
-input_select:
+input_datetime:
   wake_up_alarm_monday:
     name: "Monday Time"
     icon: "mdi:clock"
-    initial: "06:00"
-    options:
-      - 06:00
-      - 06:15
-      - 06:30
-      - 06:45
-      - 07:00
-      - 07:15
-      - 07:30
-      - 07:45
-      - 08:00
-      - 08:15
-      - 08:30
-      - 08:45
-      - 09:00
+    initial: "6:00"
+    has_date: False
+    has_time: True
 
   wake_up_alarm_tuesday:
     name: "Tuesday Time"
     icon: "mdi:clock"
-    initial: "06:00"
-    options:
-      - 06:00
-      - 06:15
-      - 06:30
-      - 06:45
-      - 07:00
-      - 07:15
-      - 07:30
-      - 07:45
-      - 08:00
-      - 08:15
-      - 08:30
-      - 08:45
-      - 09:00
+    initial: "6:00"
+    has_date: False
+    has_time: True
 
   wake_up_alarm_wednesday:
     name: "Wednesday Time"
     icon: "mdi:clock"
-    initial: "07:15"
-    options:
-      - 06:00
-      - 06:15
-      - 06:30
-      - 06:45
-      - 07:00
-      - 07:15
-      - 07:30
-      - 07:45
-      - 08:00
-      - 08:15
-      - 08:30
-      - 08:45
-      - 09:00
+    initial: "7:15"
+    has_date: False
+    has_time: True
 
   wake_up_alarm_thursday:
     name: "Thursday Time"
     icon: "mdi:clock"
-    initial: "07:15"
-    options:
-      - 06:00
-      - 06:15
-      - 06:30
-      - 06:45
-      - 07:00
-      - 07:15
-      - 07:30
-      - 07:45
-      - 08:00
-      - 08:15
-      - 08:30
-      - 08:45
-      - 09:00
+    initial: "7:15"
+    has_date: False
+    has_time: True
 
   wake_up_alarm_friday:
     name: "Friday Time"
     icon: "mdi:clock"
-    initial: "07:15"
-    options:
-      - 06:00
-      - 06:15
-      - 06:30
-      - 06:45
-      - 07:00
-      - 07:15
-      - 07:30
-      - 07:45
-      - 08:00
-      - 08:15
-      - 08:30
-      - 08:45
-      - 09:00
+    initial: "7:15"
+    has_date: False
+    has_time: True
 
   wake_up_alarm_saturday:
     name: "Saturday Time"
     icon: "mdi:clock"
-    initial: "07:15"
-    options:
-      - 06:00
-      - 06:15
-      - 06:30
-      - 06:45
-      - 07:00
-      - 07:15
-      - 07:30
-      - 07:45
-      - 08:00
-      - 08:15
-      - 08:30
-      - 08:45
-      - 09:00
+    initial: "7:15"
+    has_date: False
+    has_time: True
 
   wake_up_alarm_sunday:
     name: "Sunday Time"
     icon: "mdi:clock"
-    initial: "09:00"
-    options:
-      - 06:00
-      - 06:15
-      - 06:30
-      - 06:45
-      - 07:00
-      - 07:15
-      - 07:30
-      - 07:45
-      - 08:00
-      - 08:15
-      - 08:30
-      - 08:45
-      - 09:00
+    initial: "9:00"
+    has_date: False
+    has_time: True
 
 automation:
   - alias: wake_up_alarm_monday
     initial_state: True
     trigger:
       - platform: template
-        value_template: "{{ is_state('input_select.wake_up_alarm_monday', states('sensor.time')) }}"
+        value_template: "{{ is_state('input_datetime.wake_up_alarm_monday', as_timestamp(now()) | timestamp_custom('%H:%M:%S')) }}"
     condition:
       - condition: state
         entity_id: "group.household"
@@ -200,7 +116,7 @@ automation:
     initial_state: True
     trigger:
       - platform: template
-        value_template: "{{ is_state('input_select.wake_up_alarm_tuesday', states('sensor.time')) }}"
+        value_template: "{{ is_state('input_datetime.wake_up_alarm_tuesday', as_timestamp(now()) | timestamp_custom('%H:%M:%S')) }}"
     condition:
       - condition: state
         entity_id: "group.household"
@@ -215,7 +131,7 @@ automation:
     initial_state: True
     trigger:
       - platform: template
-        value_template: "{{ is_state('input_select.wake_up_alarm_wednesday', states('sensor.time')) }}"
+        value_template: "{{ is_state('input_datetime.wake_up_alarm_wednesday', as_timestamp(now()) | timestamp_custom('%H:%M:%S')) }}"
     condition:
       - condition: state
         entity_id: "group.household"
@@ -230,7 +146,7 @@ automation:
     initial_state: True
     trigger:
       - platform: template
-        value_template: "{{ is_state('input_select.wake_up_alarm_thursday', states('sensor.time')) }}"
+        value_template: "{{ is_state('input_datetime.wake_up_alarm_thursday', as_timestamp(now()) | timestamp_custom('%H:%M:%S')) }}"
     condition:
       - condition: state
         entity_id: "group.household"
@@ -245,7 +161,7 @@ automation:
     initial_state: True
     trigger:
       - platform: template
-        value_template: "{{ is_state('input_select.wake_up_alarm_friday', states('sensor.time')) }}"
+        value_template: "{{ is_state('input_datetime.wake_up_alarm_friday', as_timestamp(now()) | timestamp_custom('%H:%M:%S')) }}"
     condition:
       - condition: state
         entity_id: "group.household"
@@ -260,7 +176,7 @@ automation:
     initial_state: True
     trigger:
       - platform: template
-        value_template: "{{ is_state('input_select.wake_up_alarm_saturday', states('sensor.time')) }}"
+        value_template: "{{ is_state('input_datetime.wake_up_alarm_saturday', as_timestamp(now()) | timestamp_custom('%H:%M:%S')) }}"
     condition:
       - condition: state
         entity_id: "group.household"
@@ -275,7 +191,7 @@ automation:
     initial_state: True
     trigger:
       - platform: template
-        value_template: "{{ is_state('input_select.wake_up_alarm_sunday', states('sensor.time')) }}"
+        value_template: "{{ is_state('input_datetime.wake_up_alarm_sunday', as_timestamp(now()) | timestamp_custom('%H:%M:%S')) }}"
     condition:
       - condition: state
         entity_id: "group.household"
