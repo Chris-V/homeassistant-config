@@ -1,2 +1,4 @@
 config:
 automation: !include ../automations.yaml
+homeassistant:
+  customize: !include ../customize.yaml
