@@ -1,5 +1,6 @@
 device_tracker: !include .platforms/device_trackers.yaml
 hue: !include .platforms/hue.yaml
+map: {}
 media_player: !include .platforms/media_players.yaml
 mqtt: !include .platforms/mqtt.yaml
 notify: !include .platforms/notifiers.yaml
