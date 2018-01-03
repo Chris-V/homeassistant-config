@@ -1,6 +1,10 @@
+homeassistant:
+  customize:
+    automation.notify_plant_problems:
+      friendly_name: "Notify plant problems"
+
 automation:
-- id: notify_plant_problems
-  alias: "Notify plant problems"
+- alias: notify_plant_problems
   initial_state: True
   trigger:
   - entity_id:

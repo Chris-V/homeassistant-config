@@ -2,14 +2,16 @@ homeassistant:
   customize:
     scene.empty_house:
       friendly_name: "Empty House"
+    automation.household_leaves:
+      friendly_name: "Turn everything off when household leaves"
 
 scene:
   - name: empty_house
     entities:
       group.all_lights:
-        state: "off"
+        state: False
       group.all_light_switches:
-        state: "off"
+        state: False
 
 automation:
   - alias: household_leaves

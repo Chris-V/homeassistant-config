@@ -2,15 +2,14 @@ homeassistant:
   customize:
     scene.sunset:
       friendly_name: "Sunset"
-    automation.sunset_arrives:
-      friendly_name: "Activate sunset scene"
+    automation.sunset_ambiance:
+      friendly_name: "Turn on ambiance lights at sunset"
 
 automation:
-  - alias: sunset_arrives
+  - alias: sunset_ambiance
     trigger:
       - platform: sun
         event: "sunset"
-#        offset: "-00:30:00"
       - platform: state
         entity_id: "group.household"
         to: "home"
@@ -21,7 +20,6 @@ automation:
           before: "00:00:00"
         - condition: sun
           after: "sunset"
-#          after_offset: "-00:30:00"
         - condition: state
           entity_id: "group.household"
           state: "home"

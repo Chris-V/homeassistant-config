@@ -19,11 +19,22 @@ group:
       - input_boolean.guest_mode
       - automation.close_outdoor_lights
 
-  monitoring_settings:
-    name: "Settings"
-    icon: "mdi:settings"
+  general_notifications:
+    name: "Notifications"
+    icon: "mdi:message-settings-variant"
     entities:
-      - input_boolean.home_presence_notifications
+      - automation.notify_plant_problems
+
+  monitoring_notifications:
+    name: "Notifications"
+    icon: "mdi:message-settings-variant"
+    entities:
+      - input_boolean.notify_household_changes
+      - automation.notify_failed_login_attempt
+      - automation.notify_update_available
+      - automation.notify_network_device_state
+      - automation.notify_ups_state
+      - automation.notify_ups_replace_battery
 
   default_view:
     name: "Home"
@@ -57,6 +68,7 @@ group:
     view: true
     entities:
       - group.general_settings
+      - group.general_notifications
       - group.wake_up_alarm
 
   monitoring_view:
@@ -67,7 +79,7 @@ group:
       - updater.updater
       - sensor.connected_clients
       - configurator.philips_hue
-      - group.monitoring_settings
+      - group.monitoring_notifications
       - group.automate_monitor
       - group.media_monitor
       - group.network_devices

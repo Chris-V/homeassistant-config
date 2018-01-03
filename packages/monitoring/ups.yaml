@@ -1,3 +1,14 @@
+homeassistant:
+  customize:
+    automation.notify_ups_state:
+      friendly_name: "Notify UPS state change"
+    automation.notify_ups_replace_battery:
+      friendly_name: "Notify UPS battery status"
+    automation.ups_power_off:
+      friendly_name: "Power off devices when running on UPS battery"
+    automation.ups_power_on:
+      friendly_name: "Power on devices when not running on UPS battery"
+
 group:
   ups:
     name: "UPS"
@@ -29,7 +40,7 @@ sensor:
 
 automation:
   - alias: notify_ups_state
-    hide_entity: true
+    initial_state: True
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"
@@ -42,7 +53,7 @@ automation:
           tag: "ups_state"
 
   - alias: notify_ups_replace_battery
-    hide_entity: true
+    initial_state: True
     trigger:
       platform: template
       value_template: "{{ 'REPLACEBATT' in states('sensor.ups_status') }}"
@@ -60,7 +71,6 @@ automation:
             tag: "ups_battery"
 
   - alias: ups_power_off
-    hide_entity: true
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"
@@ -73,7 +83,6 @@ automation:
         - switch.network_media
 
   - alias: ups_power_on
-    hide_entity: true
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"

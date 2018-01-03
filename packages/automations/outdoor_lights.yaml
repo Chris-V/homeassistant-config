@@ -1,14 +1,15 @@
 homeassistant:
   customize:
     automation.close_outdoor_lights:
-      friendly_name: "Outdoor lights for 5 minutes at night"
+      friendly_name: "Keep outdoor lights open for 5 minutes after 11 pm"
 
 automation:
   - alias: close_outdoor_lights
+    initial_state: True
     trigger:
       - platform: state
         entity_id: group.outdoor_light
-        to: 'on'
+        to: "on"
         for:
           minutes: 5
       - platform: time
@@ -18,7 +19,7 @@ automation:
       conditions: 
         - condition: state
           entity_id: 'group.outdoor_light'
-          state: 'on'
+          state: "on"
           for:
             minutes: 5
         - condition: time

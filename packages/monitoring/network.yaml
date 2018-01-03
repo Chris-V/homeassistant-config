@@ -1,7 +1,5 @@
 homeassistant:
   customize:
-    automation.network_davice_state:
-      friendly_name: "Detect network device state"
     switch.network_hue_hub:
       friendly_name: "Hue Hub"
       icon: "mdi:lightbulb"
@@ -23,6 +21,12 @@ homeassistant:
     sensor.glances_running:
       friendly_name: "Processes Running"
       icon: "mdi:file-tree"
+    automation.action_power_on_device:
+      friendly_name: "Power on network device"
+    automation.action_power_off_device:
+      friendly_name: "Power off network device"
+    automation.notify_network_device_state:
+      friendly_name: "Notify state changes of network devices"
 
 group:
   network_devices:
@@ -72,7 +76,7 @@ switch:
 
 automation:
   - alias: notify_network_device_state
-    hide_entity: true
+    initial_state: True
     trigger:
       platform: state
       entity_id:
@@ -95,7 +99,6 @@ automation:
               icon: "/local/icons/power-plug.png"
 
   - alias: action_power_on_device
-    hide_entity: true
     trigger:
       platform: event
       event_type: "html5_notification.clicked"
@@ -107,7 +110,6 @@ automation:
         entity_id: "{{ trigger.event.data.data.entity_id }}"
 
   - alias: action_power_off_device
-    hide_entity: true
     trigger:
       platform: event
       event_type: "html5_notification.clicked"

@@ -1,10 +1,10 @@
 homeassistant:
   customize:
-    automation.update_available:
-      friendly_name: "Detect update available"
     sensor.cpu_temperature:
       friendly_name: "CPU Temperature"
       icon: "mdi:fire"
+    automation.notify_update_available:
+      friendly_name: "Notify about available HASS updates"
 
 group:
   automate_monitor:
@@ -35,8 +35,8 @@ sensor:
     unit_of_measurement: "°C"
 
 automation:
-  - alias: update_available
-    hide_entity: true
+  - alias: notify_update_available
+    initial_state: True
     trigger:
       platform: state
       entity_id: updater.updater

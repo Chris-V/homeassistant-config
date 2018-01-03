@@ -1,6 +1,10 @@
-- id: placeholder
-  alias: 'Placeholder'
+- id: sample
+  alias: 'Notify HASS shutdowns'
   initial_state: False
   trigger:
-  condition: []
+    - platform: homeassistant
+      event: shutdown
   action:
+    - service: notify.admin
+      data:
+        message: "Home Assistant is shutting down"

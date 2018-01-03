@@ -41,7 +41,7 @@ scene:
   - name: wake_up_alarm
     entities:
       group.master_bedroom_light_bedside:
-        state: "on"
+        state: True
         color_temp: 375
         brightness: 200
         transition: 600
@@ -182,7 +182,7 @@ input_select:
 
 automation:
   - alias: wake_up_alarm_monday
-    initial_state: "off"
+    initial_state: True
     trigger:
       - platform: template
         value_template: "{{ is_state('input_select.wake_up_alarm_monday', states('sensor.time')) }}"
@@ -197,7 +197,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: wake_up_alarm_tuesday
-    initial_state: "off"
+    initial_state: True
     trigger:
       - platform: template
         value_template: "{{ is_state('input_select.wake_up_alarm_tuesday', states('sensor.time')) }}"
@@ -212,7 +212,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: wake_up_alarm_wednesday
-    initial_state: "off"
+    initial_state: True
     trigger:
       - platform: template
         value_template: "{{ is_state('input_select.wake_up_alarm_wednesday', states('sensor.time')) }}"
@@ -227,7 +227,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: wake_up_alarm_thursday
-    initial_state: "off"
+    initial_state: True
     trigger:
       - platform: template
         value_template: "{{ is_state('input_select.wake_up_alarm_thursday', states('sensor.time')) }}"
@@ -242,7 +242,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: wake_up_alarm_friday
-    initial_state: "off"
+    initial_state: True
     trigger:
       - platform: template
         value_template: "{{ is_state('input_select.wake_up_alarm_friday', states('sensor.time')) }}"
@@ -257,7 +257,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: wake_up_alarm_saturday
-    initial_state: "off"
+    initial_state: True
     trigger:
       - platform: template
         value_template: "{{ is_state('input_select.wake_up_alarm_saturday', states('sensor.time')) }}"
@@ -272,7 +272,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: wake_up_alarm_sunday
-    initial_state: "off"
+    initial_state: True
     trigger:
       - platform: template
         value_template: "{{ is_state('input_select.wake_up_alarm_sunday', states('sensor.time')) }}"

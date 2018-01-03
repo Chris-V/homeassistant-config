@@ -1,13 +1,15 @@
 homeassistant:
   customize:
-    automation.household_leaves:
-      friendly_name: "Household left"
+    automation.notify_person_arrives:
+      friendly_name: "Notify household arrival"
+    automation.sunset_ambiance:
+      friendly_name: "Notify household departure"
 
 input_boolean:
-  home_presence_notifications:
-    name: "Home presence notifications"
+  notify_household_changes:
+    name: "Notify household changes"
     icon: "mdi:bug"
-    initial: "off"
+    initial: False
 
 automation:
   - alias: notify_person_arrives
@@ -19,7 +21,7 @@ automation:
       to: "home"
     condition:
       condition: state
-      entity_id: "input_boolean.home_presence_notifications"
+      entity_id: input_boolean.notify_household_changes
       state: "on"
     action:
       service: notify.admin
@@ -37,7 +39,7 @@ automation:
       from: "home"
     condition:
       condition: state
-      entity_id: "input_boolean.home_presence_notifications"
+      entity_id: input_boolean.notify_household_changes
       state: "on"
     action:
       service: notify.admin

@@ -1,14 +1,14 @@
 homeassistant:
   customize:
-    automation.failed_login_attempt:
-      friendly_name: "Detect failed login attempts"
+    automation.notify_failed_login_attempt:
+      friendly_name: "Notify failed login attempts"
 
 sensor:
   - platform: api_streams
 
 automation:
-  - alias: failed_login_attempt
-    hide_entity: true
+  - alias: notify_failed_login_attempt
+    initial_state: True
     trigger:
       - platform: event
         event_type: "call_service"
