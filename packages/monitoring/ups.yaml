@@ -1,7 +1,9 @@
 homeassistant:
   customize:
-    automation.notify_ups_state:
-      friendly_name: "Notify UPS state change"
+    automation.notify_power_back:
+      friendly_name: "Notify when power is back"
+    automation.notify_power_outage:
+      friendly_name: "Notify when power is out"
     automation.notify_ups_replace_battery:
       friendly_name: "Notify UPS battery status"
     automation.ups_power_off:
@@ -39,16 +41,31 @@ sensor:
       - tonbatt # Time on Battery
 
 automation:
-  - alias: notify_ups_state
+  - alias: notify_power_back
     initial_state: True
     trigger:
-      platform: state
-      entity_id: "binary_sensor.ups_online_status"
+      - platform: state
+        entity_id: "binary_sensor.ups_online_status"
+        to: "on"
     action:
       service: notify.admin
       data_template:
-        message: "UPS is running on {% if is_state('binary_sensor.ups_online_status', 'on') -%} power after a {{ states('sensor.ups_time_on_battery') | int // 60 }}m {{ states('sensor.ups_time_on_battery') | int % 60 }}s outage. {% else -%} battery. Shutting down media soon.{% endif %}"
+        title: "Power is Back"
+        message: "UPS is running on power after a {{ relative_time(trigger.from_state.last_changed) }} outage."
+        data:
+          tag: "ups_state"
+
+  - alias: notify_power_outage
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.ups_online_status"
+        to: "off"
+    action:
+      service: notify.admin
       data:
+        title: "Power Outage"
+        message: "UPS is running on battery. Media Server will shutdown in a minute."
         data:
           tag: "ups_state"
 

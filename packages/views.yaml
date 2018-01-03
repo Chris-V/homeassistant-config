@@ -33,7 +33,8 @@ group:
       - automation.notify_failed_login_attempt
       - automation.notify_update_available
       - automation.notify_network_device_state
-      - automation.notify_ups_state
+      - automation.notify_power_outage
+      - automation.notify_power_back
       - automation.notify_ups_replace_battery
 
   default_view:

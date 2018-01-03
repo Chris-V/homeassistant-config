@@ -58,7 +58,7 @@ sensor:
       - process_running
 
 shell_command:
-  shutdown_media: "/home/hass/.homeassistant/shell/exec.sh 'shutdown_ssh' 'secret:network_media_host' 'secret:network_media_key'"
+  shutdown_media: "/home/hass/.homeassistant/shell/shutdown_media.sh"
 
 switch:
   - platform: wake_on_lan
