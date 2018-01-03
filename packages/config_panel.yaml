@@ -1,0 +1,2 @@
+config:
+automation: !include ../automations.yaml

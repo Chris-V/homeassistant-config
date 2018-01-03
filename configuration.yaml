@@ -6,3 +6,4 @@ homeassistant:
   time_zone: !secret zone_home_tz
   unit_system: metric
   packages: !include_dir_named packages/
+

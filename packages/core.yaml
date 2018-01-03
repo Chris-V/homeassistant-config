@@ -1,4 +1,3 @@
-config: {}
 conversation: {}
 discovery: {}
 frontend: {}
@@ -34,3 +33,4 @@ recorder:
   purge_interval: 2
   purge_keep_days: 14
 updater: {}
+
