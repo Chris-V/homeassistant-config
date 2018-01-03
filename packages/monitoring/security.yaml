@@ -21,9 +21,8 @@ automation:
     action:
       - service: notify.admin
         data_template:
-          title: "Home Assistant: {{ trigger.event.data.service_data.title }}"
+          title: "{{ trigger.event.data.service_data.title }}"
           message: "{{ trigger.event.data.service_data.message }}"
-        data:
           data:
             tag: "failed_login_attempt"
             url: !secret http_public_host

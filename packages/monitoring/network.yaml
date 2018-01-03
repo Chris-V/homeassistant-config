@@ -81,12 +81,11 @@ automation:
     action:
       service: notify.admin
       data_template:
+        title: "Network Status"
         message: "{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!"
         data:
           entity_id: "{{ trigger.entity_id }}"
           tag: "{{ trigger.entity_id | replace('.', '_') }}"
-      data:
-        data:
           actions:
             - action: power_off
               title: "Power Off"

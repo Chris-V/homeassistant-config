@@ -54,7 +54,8 @@ automation:
           message: "UPS battery must be replaced. Search on amazon: https://amzn.to/2fJo3Ax"
       - service: notify.admin
         data:
-          message: "UPS battery must be replaced."
+          title: "Replace UPS battery"
+          message: "UPS battery must be replaced. Search on amazon: https://amzn.to/2fJo3Ax"
           data:
             tag: "ups_battery"
 

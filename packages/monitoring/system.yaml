@@ -43,13 +43,13 @@ automation:
     action:
       - service: persistent_notification.create
         data_template:
-          message: "Home Assistant {{ states('updater.updater') }} is available."
           title: "Home Assistant Update"
+          message: "Home Assistant {{ states('updater.updater') }} is available.<br><a href=\"{{ states.updater.updater.attributes.release_notes }}\">Open release notes</a>"
           notification_id: "hass_update_available"
       - service: notify.admin
         data_template:
-          message: "Home Assistant {{ states('updater.updater') }} is available."
           title: "Home Assistant Update"
+          message: "Home Assistant {{ states('updater.updater') }} is available."
           data:
             tag: "hass_update_available"
-            url: "https://github.com/home-assistant/home-assistant/releases/tag/{{ states('updater.updater') }}"
+            url: "{{states.updater.updater.attributes.release_notes }}"
