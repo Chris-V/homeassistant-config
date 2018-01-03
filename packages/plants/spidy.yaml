@@ -3,7 +3,7 @@
 homeassistant:
   customize:
     plant.spidy:
-      friendly_name: "Status"
+      friendly_name: "Spidy"
     sensor.spidy_battery:
       friendly_name: "Battery"
       icon: "mdi:battery"

@@ -3,7 +3,7 @@
 homeassistant:
   customize:
     plant.gaetan:
-      friendly_name: "Status"
+      friendly_name: "Gaétan"
     sensor.gaetan_battery:
       friendly_name: "Battery"
       icon: "mdi:battery"

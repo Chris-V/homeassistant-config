@@ -1,2 +1,6 @@
-# Automations managed by the frontend component
-
+- id: placeholder
+  alias: 'Placeholder'
+  initial_state: False
+  trigger:
+  condition: []
+  action:

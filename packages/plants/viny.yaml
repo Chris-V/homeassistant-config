@@ -1,7 +1,7 @@
 homeassistant:
   customize:
     plant.viny:
-      friendly_name: "Status"
+      friendly_name: "Viny"
     sensor.viny_battery:
       friendly_name: "Battery"
       icon: "mdi:battery"

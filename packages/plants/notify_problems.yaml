@@ -1,0 +1,21 @@
+automation:
+- id: notify_plant_problems
+  alias: "Notify plant problems"
+  initial_state: True
+  trigger:
+  - entity_id:
+    - plant.gaetan
+    - plant.spidy
+    - plant.viny
+    platform: state
+    to: "problem"
+  condition: []
+  action:
+  - service: notify.default
+    data_template:
+      title: "Check the Plants"
+      message: "{{ trigger.to_state.attributes.friendly_name }} has some problems: {{ trigger.to_state.attributes.problem }}"
+      data: 
+        tag: "{{ trigger.to_state.entity_id | replace('.', '_') }}"
+        url: !secret http_public_host # TODO: append states/group.plants_view
+
