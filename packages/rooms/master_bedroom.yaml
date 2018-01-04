@@ -2,8 +2,14 @@ homeassistant:
   customize:
     light.hue_color_lamp_1:
       friendly_name: "Bedside Chris"
+      google_assistant: True
     light.hue_color_lamp_3:
       friendly_name: "Bedside Karine"
+      google_assistant: True
+    group.master_bedroom_light_bedside:
+      google_assistant: True
+      google_assistant_name: "Bedside lamps"
+      google_assistant_type: light
 
 group:
   master_bedroom:

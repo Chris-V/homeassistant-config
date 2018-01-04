@@ -5,3 +5,4 @@ media_player: !include .platforms/media_players.yaml
 mqtt: !include .platforms/mqtt.yaml
 notify: !include .platforms/notifiers.yaml
 sun: {}
+tts: !include .platforms/tts.yaml
