@@ -38,15 +38,15 @@ plant:
       brightness: sensor.viny_light_intensity
       moisture: sensor.viny_moisture
       temperature: sensor.viny_temperature
+    min_battery: 10
     min_moisture: 20
-    min_battery: 15
-    min_temperature: 10
+    min_temperature: 15
 
 sensor:
   - platform: miflora
     mac: "C4:7C:8D:63:62:3E"
     name: "Viny"
-    timeout: 30
+    median: 3
     monitored_conditions:
       - battery
       - conductivity
