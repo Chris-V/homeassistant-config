@@ -13,19 +13,12 @@ logbook: !include .core/domains.yaml
 logger:
   default: "warn"
 recorder:
-  # Find a way to include and add to the purge settings
-  include:
-    domains:
-      - device_tracker
-      - input_boolean
-      - light
-      - media_player
-      - sensor
-      - sun
-      - switch
-    entities:
-      - group.household
   exclude:
+    domains:
+      - scene
+      - sun
+      - updater
+      - zone
     entities:
       - sensor.date
       - sensor.since_last_boot

@@ -9,7 +9,6 @@ input_boolean:
   notify_household_changes:
     name: "Notify household changes"
     icon: "mdi:bug"
-    initial: False
 
 automation:
   - alias: notify_person_arrives
