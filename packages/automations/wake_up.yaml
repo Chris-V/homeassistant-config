@@ -90,6 +90,19 @@ input_datetime:
     has_time: True
 
 automation:
+  - alias: toggle_alarm_time_monday
+    trigger:
+      - platform: state
+        entity_id: automation.wake_up_alarm_monday
+      - platform: homeassistant
+        event: start
+    action:
+      service: customizer.set_attribute
+      data_template:
+        entity_id: "input_datetime.wake_up_alarm_monday"
+        attribute: "hidden"
+        value: "{% if is_state('automation.wake_up_alarm_monday', 'off') %}True{% endif %}"
+
   - alias: wake_up_alarm_monday
     initial_state: False
     trigger:
@@ -104,6 +117,19 @@ automation:
     action:
       service: scene.turn_on
       entity_id: "scene.wake_up_alarm"
+
+  - alias: toggle_alarm_time_tuesday
+    trigger:
+      - platform: state
+        entity_id: automation.wake_up_alarm_tuesday
+      - platform: homeassistant
+        event: start
+    action:
+      service: customizer.set_attribute
+      data_template:
+        entity_id: "input_datetime.wake_up_alarm_tuesday"
+        attribute: "hidden"
+        value: "{% if is_state('automation.wake_up_alarm_tuesday', 'off') %}True{% endif %}"
 
   - alias: wake_up_alarm_tuesday
     initial_state: False
@@ -120,6 +146,19 @@ automation:
       service: scene.turn_on
       entity_id: "scene.wake_up_alarm"
 
+  - alias: toggle_alarm_time_wednesday
+    trigger:
+      - platform: state
+        entity_id: automation.wake_up_alarm_wednesday
+      - platform: homeassistant
+        event: start
+    action:
+      service: customizer.set_attribute
+      data_template:
+        entity_id: "input_datetime.wake_up_alarm_wednesday"
+        attribute: "hidden"
+        value: "{% if is_state('automation.wake_up_alarm_wednesday', 'off') %}True{% endif %}"
+
   - alias: wake_up_alarm_wednesday
     initial_state: False
     trigger:
@@ -134,6 +173,19 @@ automation:
     action:
       service: scene.turn_on
       entity_id: "scene.wake_up_alarm"
+
+  - alias: toggle_alarm_time_thursday
+    trigger:
+      - platform: state
+        entity_id: automation.wake_up_alarm_thursday
+      - platform: homeassistant
+        event: start
+    action:
+      service: customizer.set_attribute
+      data_template:
+        entity_id: "input_datetime.wake_up_alarm_thursday"
+        attribute: "hidden"
+        value: "{% if is_state('automation.wake_up_alarm_thursday', 'off') %}True{% endif %}"
 
   - alias: wake_up_alarm_thursday
     initial_state: False
@@ -150,6 +202,19 @@ automation:
       service: scene.turn_on
       entity_id: "scene.wake_up_alarm"
 
+  - alias: toggle_alarm_time_friday
+    trigger:
+      - platform: state
+        entity_id: automation.wake_up_alarm_friday
+      - platform: homeassistant
+        event: start
+    action:
+      service: customizer.set_attribute
+      data_template:
+        entity_id: "input_datetime.wake_up_alarm_friday"
+        attribute: "hidden"
+        value: "{% if is_state('automation.wake_up_alarm_friday', 'off') %}True{% endif %}"
+
   - alias: wake_up_alarm_friday
     initial_state: False
     trigger:
@@ -165,6 +230,19 @@ automation:
       service: scene.turn_on
       entity_id: "scene.wake_up_alarm"
 
+  - alias: toggle_alarm_time_saturday
+    trigger:
+      - platform: state
+        entity_id: automation.wake_up_alarm_saturday
+      - platform: homeassistant
+        event: start
+    action:
+      service: customizer.set_attribute
+      data_template:
+        entity_id: "input_datetime.wake_up_alarm_saturday"
+        attribute: "hidden"
+        value: "{% if is_state('automation.wake_up_alarm_saturday', 'off') %}True{% endif %}"
+
   - alias: wake_up_alarm_saturday
     initial_state: False
     trigger:
@@ -179,6 +257,19 @@ automation:
     action:
       service: scene.turn_on
       entity_id: "scene.wake_up_alarm"
+
+  - alias: toggle_alarm_time_sunday
+    trigger:
+      - platform: state
+        entity_id: automation.wake_up_alarm_sunday
+      - platform: homeassistant
+        event: start
+    action:
+      service: customizer.set_attribute
+      data_template:
+        entity_id: "input_datetime.wake_up_alarm_sunday"
+        attribute: "hidden"
+        value: "{% if is_state('automation.wake_up_alarm_sunday', 'off') %}True{% endif %}"
 
   - alias: wake_up_alarm_sunday
     initial_state: False
