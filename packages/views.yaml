@@ -79,11 +79,9 @@ group:
     icon: "mdi:stethoscope"
     view: true
     entities:
-      - updater.updater
-      - sensor.connected_clients
-      - configurator.philips_hue
       - group.monitoring_notifications
+      - group.network_devices
+      - group.monitoring_hass
+      - group.ups
       - group.automate_monitor
       - group.media_monitor
-      - group.network_devices
-      - group.ups

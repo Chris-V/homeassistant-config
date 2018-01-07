@@ -1,0 +1,7 @@
+group:
+  monitoring_hass:
+    name: "Home Assistant"
+    icon: "mdi:chart-scatterplot-hexbin"
+    entities:
+      - updater.updater
+      - sensor.connected_clients
