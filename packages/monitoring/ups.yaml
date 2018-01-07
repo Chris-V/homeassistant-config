@@ -2,10 +2,13 @@ homeassistant:
   customize:
     automation.notify_power_back:
       friendly_name: "Notify when power is back"
+      icon: "mdi:message-settings-variant"
     automation.notify_power_outage:
       friendly_name: "Notify when power is out"
+      icon: "mdi:message-settings-variant"
     automation.notify_ups_replace_battery:
       friendly_name: "Notify UPS battery status"
+      icon: "mdi:message-settings-variant"
     automation.ups_power_off:
       friendly_name: "Power off devices when running on UPS battery"
     automation.ups_power_on:
@@ -29,6 +32,11 @@ apcupsd:
 
 binary_sensor:
   - platform: apcupsd
+
+input_boolean:
+  notify_power_changes:
+    name: "Notify power state changes"
+    icon: "mdi:message-settings-variant"
 
 sensor:
   - platform: apcupsd
@@ -94,6 +102,10 @@ automation:
       to: "off"
       for:
         seconds: 70 # UPS is polled every 60 secs, this *must* be higher to outlast short power outages.
+    condition:
+      condition: state
+      entity_id: input_boolean.notify_power_changes
+      state: "on"
     action:
       service: switch.turn_off
       entity_id:
@@ -106,6 +118,10 @@ automation:
       to: "on"
       for:
         seconds: 30 # Power can come back for a couple seconds then cut again. Been there done that.
+    condition:
+      condition: state
+      entity_id: input_boolean.notify_power_changes
+      state: "on"
     action:
       service: switch.turn_on
       entity_id:

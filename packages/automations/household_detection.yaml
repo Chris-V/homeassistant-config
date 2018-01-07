@@ -8,9 +8,11 @@ homeassistant:
 scene:
   - name: empty_house
     entities:
-      group.all_lights:
+      group.master_bedroom:
         state: False
-      group.all_light_switches:
+      group.top_living_room:
+        state: False
+      group.outdoor:
         state: False
 
 automation:

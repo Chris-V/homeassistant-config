@@ -2,13 +2,15 @@ homeassistant:
   customize:
     automation.notify_person_arrives:
       friendly_name: "Notify household arrival"
+      icon: "mdi:message-settings-variant"
     automation.sunset_ambiance:
       friendly_name: "Notify household departure"
+      icon: "mdi:message-settings-variant"
 
 input_boolean:
   notify_household_changes:
     name: "Notify household changes"
-    icon: "mdi:bug"
+    icon: "mdi:message-settings-variant"
 
 automation:
   - alias: notify_person_arrives

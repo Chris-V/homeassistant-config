@@ -27,6 +27,7 @@ homeassistant:
       friendly_name: "Power off network device"
     automation.notify_network_device_state:
       friendly_name: "Notify state changes of network devices"
+      icon: "mdi:message-settings-variant"
 
 group:
   network_devices:

@@ -1,6 +1,0 @@
-group:
-  all_light_switches:
-    name: "All Light Switches"
-    icon: "mdi:lightbulb"
-    entities:
-      - switch.living_room_ambiance

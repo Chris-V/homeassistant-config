@@ -5,6 +5,7 @@ homeassistant:
       icon: "mdi:fire"
     automation.notify_update_available:
       friendly_name: "Notify about available HASS updates"
+      icon: "mdi:message-settings-variant"
 
 group:
   automate_monitor:

@@ -2,6 +2,7 @@ homeassistant:
   customize:
     automation.notify_failed_login_attempt:
       friendly_name: "Notify failed login attempts"
+      icon: "mdi:message-settings-variant"
 
 sensor:
   - platform: api_streams
