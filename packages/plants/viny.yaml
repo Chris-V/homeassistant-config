@@ -2,21 +2,29 @@ homeassistant:
   customize:
     plant.viny:
       friendly_name: "Viny"
+      group:
+        group.plant_viny:
+          friendly_name: "Status"
     sensor.viny_battery:
       friendly_name: "Battery"
       icon: "mdi:battery"
+      state_card_mode: "badges"
     sensor.viny_conductivity:
       friendly_name: "Conductivity"
       icon: "mdi:flash"
+      state_card_mode: "badges"
     sensor.viny_light_intensity:
       friendly_name: "Light"
       icon: "mdi:white-balance-sunny"
+      state_card_mode: "badges"
     sensor.viny_moisture:
       friendly_name: "Moisture"
       icon: "mdi:water-percent"
+      state_card_mode: "badges"
     sensor.viny_temperature:
       friendly_name: "Temperature"
       icon: "mdi:thermometer"
+      state_card_mode: "badges"
 
 group:
   plant_viny:

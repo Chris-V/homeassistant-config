@@ -2,6 +2,7 @@ homeassistant:
   customize:
     automation.notify_plant_problems:
       friendly_name: "Notify plant problems"
+      icon: "mdi:message-settings-variant"
 
 automation:
 - alias: notify_plant_problems
