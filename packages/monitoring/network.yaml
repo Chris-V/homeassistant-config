@@ -3,9 +3,11 @@ homeassistant:
     switch.network_hue_hub:
       friendly_name: "Hue Hub"
       icon: "mdi:lightbulb"
+      confirm_controls_show_lock: True
     switch.network_media:
       friendly_name: "Avatar Media"
       icon: "mdi:movie"
+      confirm_controls_show_lock: True
     sensor.glances_cpu_load:
       friendly_name: "CPU Load"
       icon: "mdi:memory"
@@ -33,6 +35,7 @@ group:
   network_devices:
     name: "Network Devices"
     icon: "mdi:ethernet"
+    control: "hidden"
     entities:
       - switch.network_media
       - switch.network_hue_hub

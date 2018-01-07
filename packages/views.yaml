@@ -15,6 +15,7 @@ group:
   general_settings:
     name: "Settings"
     icon: "mdi:settings"
+    control: "hidden"
     entities:
       - input_boolean.guest_mode
       - automation.close_outdoor_lights
@@ -22,12 +23,14 @@ group:
   general_notifications:
     name: "Notifications"
     icon: "mdi:message-settings-variant"
+    control: "hidden"
     entities:
       - automation.notify_plant_problems
 
   monitoring_notifications:
     name: "Notifications"
     icon: "mdi:message-settings-variant"
+    control: "hidden"
     entities:
       - input_boolean.notify_household_changes
       - input_boolean.notify_power_changes
