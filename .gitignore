@@ -13,3 +13,6 @@ secrets.yaml
 *.db-journal
 .HA_VERSION
 .uuid
+
+custom_components/customizer/
+www/custom_ui/
