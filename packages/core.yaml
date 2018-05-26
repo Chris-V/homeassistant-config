@@ -1,6 +1,7 @@
 conversation: {}
 discovery: {}
-frontend: {}
+frontend: 
+  javascript_version: "latest"
 history: !include .core/domains.yaml
 http:
   server_port: !secret http_port
