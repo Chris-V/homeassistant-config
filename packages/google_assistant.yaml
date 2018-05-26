@@ -5,3 +5,29 @@ google_assistant:
   agent_user_id: "Avatar-Home-Assistant"
   api_key: !secret google_assistant_api_key
   exposed_domains: []
+  entity_config:
+    switch.living_room_ambiance:
+      expose: True
+      type: "light"
+    switch.living_room_bookshelf:
+      expose: True
+      type: "light"
+      aliases:
+        - "Xmas tree"
+        - "Christmas tree"
+    group.master_bedroom_light_bedside:
+      expose: True
+      type: "light"
+      name: "Bedside lamps"
+    light.hue_color_lamp_1:
+      expose: True
+      type: "light"
+    light.hue_color_lamp_2:
+      expose: True
+      type: "light"
+      aliases:
+        - "porch"
+    light.hue_color_lamp_3:
+      expose: True
+      type: "light"
+

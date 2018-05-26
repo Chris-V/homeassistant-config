@@ -3,15 +3,9 @@ homeassistant:
     switch.living_room_ambiance:
       friendly_name: "Ambiance lamp"
       icon: "mdi:lightbulb"
-      google_assistant: True
-      google_assistant_type: light
     switch.living_room_bookshelf:
       friendly_name: "Bookshelf switch"
       icon: "mdi:lightbulb"
-      google_assistant: True
-      google_assistant_type: light
-      aliases:
-        - "Xmas tree"
 
 group:
   top_living_room:
