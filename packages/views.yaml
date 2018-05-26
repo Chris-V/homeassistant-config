@@ -54,9 +54,9 @@ group:
     icon: "mdi:flower"
     view: true
     entities:
-      - group.plant_gaetan
-      - group.plant_spidy
-      - group.plant_viny
+      - plant.gaetan
+      - plant.spidy
+      - plant.viny
 
   weather_view:
     name: "Weather"

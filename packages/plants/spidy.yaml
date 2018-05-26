@@ -4,41 +4,6 @@ homeassistant:
   customize:
     plant.spidy:
       friendly_name: "Spidy"
-      group:
-        group.plant_spidy:
-          friendly_name: "Status"
-    sensor.spidy_battery:
-      friendly_name: "Battery"
-      icon: "mdi:battery"
-      state_card_mode: "badges"
-    sensor.spidy_conductivity:
-      friendly_name: "Conductivity"
-      icon: "mdi:flash"
-      state_card_mode: "badges"
-    sensor.spidy_light_intensity:
-      friendly_name: "Light"
-      icon: "mdi:white-balance-sunny"
-      state_card_mode: "badges"
-    sensor.spidy_moisture:
-      friendly_name: "Moisture"
-      icon: "mdi:water-percent"
-      state_card_mode: "badges"
-    sensor.spidy_temperature:
-      friendly_name: "Temperature"
-      icon: "mdi:thermometer"
-      state_card_mode: "badges"
-
-group:
-  plant_spidy:
-    name: "Spidy"
-    icon: "mdi:flower"
-    entities:
-      - plant.spidy
-      - sensor.spidy_battery
-      - sensor.spidy_conductivity
-      - sensor.spidy_light_intensity
-      - sensor.spidy_moisture
-      - sensor.spidy_temperature
 
 plant:
   spidy:
