@@ -9,20 +9,14 @@ homeassistant:
       icon: "mdi:movie"
       confirm_controls_show_lock: True
     sensor.glances_cpu_load:
-      friendly_name: "CPU Load"
+      friendly_name: "Processor use"
       icon: "mdi:memory"
     sensor.glances_cpu_temp:
-      friendly_name: "CPU Temperature"
+      friendly_name: "Processor temperature"
       icon: "mdi:fire"
-    sensor.glances_ram_use:
-      friendly_name: "RAM Use"
+    sensor.glances_ram_used:
+      friendly_name: "Memory use"
       icon: "mdi:memory"
-    sensor.glances_total:
-      friendly_name: "Processes Total"
-      icon: "mdi:file-tree"
-    sensor.glances_running:
-      friendly_name: "Processes Running"
-      icon: "mdi:file-tree"
     automation.action_power_on_device:
       friendly_name: "Power on network device"
     automation.action_power_off_device:
@@ -46,9 +40,7 @@ group:
     entities:
       - sensor.glances_cpu_load
       - sensor.glances_cpu_temp
-      - sensor.glances_ram_use
-      - sensor.glances_total
-      - sensor.glances_running
+      - sensor.glances_ram_used
 
 sensor:
   - platform: glances
@@ -58,8 +50,6 @@ sensor:
       - processor_load
       - memory_use_percent
       - cpu_temp
-      - process_total
-      - process_running
 
 shell_command:
   shutdown_media: "/home/hass/.homeassistant/shell/shutdown_media.sh"

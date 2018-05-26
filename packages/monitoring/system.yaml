@@ -1,8 +1,10 @@
 homeassistant:
   customize:
-    sensor.cpu_temperature:
-      friendly_name: "CPU Temperature"
+    sensor.processor_temperature:
+      friendly_name: "Processor temperature"
       icon: "mdi:fire"
+    sensor.memory_use_percent:
+      friendly_name: "Memory use"
     automation.notify_update_available:
       friendly_name: "Notify about available HASS updates"
       icon: "mdi:message-settings-variant"
@@ -12,9 +14,9 @@ group:
     name: "Automate Monitor"
     icon: "mdi:chart-scatterplot-hexbin"
     entities:
-      - sensor.cpu_use
-      - sensor.ram_use
-      - sensor.cpu_temperature
+      - sensor.processor_use
+      - sensor.processor_temperature
+      - sensor.memory_use_percent
       - sensor.since_last_boot
 
 sensor:
@@ -30,7 +32,7 @@ sensor:
       - type: since_last_boot
 
   - platform: command_line
-    name: "cpu_temperature"
+    name: "processor_temperature"
     command: "cat /sys/class/thermal/thermal_zone0/temp"
     value_template: "{{ value|multiply(0.001)|round(1) }}"
     unit_of_measurement: "°C"
