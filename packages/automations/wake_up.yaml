@@ -40,7 +40,7 @@ group:
 scene:
   - name: wake_up_alarm
     entities:
-      group.master_bedroom_light_bedside:
+      light.master_bedroom_bedside_lights:
         state: True
         color_temp: 375
         brightness: 200

@@ -1,5 +1,8 @@
 homeassistant:
   customize:
+    light.outdoor_lights:
+      friendly_name: "Outdoor Lights"
+      icon: "mdi:home"
     light.hue_color_lamp_2:
       friendly_name: "Side Porch"
 
@@ -10,9 +13,9 @@ group:
     entities:
       - light.hue_color_lamp_2
 
-  outdoor_light:
-    name: "Outdoor - Lights"
-    icon: "mdi:home"
+light:
+  - platform: group
+    name: outdoor_lights
     entities:
       - light.hue_color_lamp_2
 

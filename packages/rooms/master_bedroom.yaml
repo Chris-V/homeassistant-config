@@ -1,5 +1,11 @@
 homeassistant:
   customize:
+    light.master_bedroom_lights:
+      friendly_name: "Master Bedroom Lights"
+      icon: "mdi:lightbulb"
+    light.master_bedroom_bedside_lights:
+      friendly_name: "Master Bedroom Bedside Lights"
+      icon: "mdi:lightbulb"
     light.hue_color_lamp_1:
       friendly_name: "Bedside Chris"
     light.hue_color_lamp_3:
@@ -13,16 +19,13 @@ group:
       - light.hue_color_lamp_1
       - light.hue_color_lamp_3
 
-  master_bedroom_light:
-    name: "Master Bedroom - Lights"
-    icon: "mdi:lightbulb"
+light:
+  - platform: group
+    name: "master_bedroom_bedside_lights"
     entities:
       - light.hue_color_lamp_1
       - light.hue_color_lamp_3
-
-  master_bedroom_light_bedside:
-    name: "Master Bedroom - Lights - Bedside"
-    icon: "mdi:lightbulb"
+  - platform: group
+    name: "master_bedroom_lights"
     entities:
-      - light.hue_color_lamp_1
-      - light.hue_color_lamp_3
+      - light.master_bedroom_bedside_lights

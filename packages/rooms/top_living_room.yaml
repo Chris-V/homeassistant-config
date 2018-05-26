@@ -1,7 +1,7 @@
 homeassistant:
   customize:
     switch.living_room_ambiance:
-      friendly_name: "Ambiance lamp"
+      friendly_name: "Ambiance switch"
       icon: "mdi:lightbulb"
     switch.living_room_bookshelf:
       friendly_name: "Bookshelf switch"
