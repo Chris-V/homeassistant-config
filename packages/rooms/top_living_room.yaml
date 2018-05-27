@@ -1,10 +1,10 @@
 homeassistant:
   customize:
     switch.living_room_ambiance:
-      friendly_name: "Ambiance switch"
+      friendly_name: "Ambiance outlet"
       icon: "mdi:lightbulb"
     switch.living_room_bookshelf:
-      friendly_name: "Bookshelf switch"
+      friendly_name: "Bookshelf outlet"
       icon: "mdi:lightbulb"
 
 group:

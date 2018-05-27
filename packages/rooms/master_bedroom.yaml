@@ -12,7 +12,8 @@ group:
     name: "Master Bedroom"
     icon: "mdi:hotel"
     entities:
-      - light.master_bedroom_lights
+      - light.bedside_chris
+      - light.bedside_karine
 
 light:
   - platform: group

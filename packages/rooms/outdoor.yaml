@@ -9,7 +9,7 @@ group:
     name: "Outdoor"
     icon: "mdi:home"
     entities:
-      - light.outdoor_lights
+      - light.side_porch
 
 light:
   - platform: group
