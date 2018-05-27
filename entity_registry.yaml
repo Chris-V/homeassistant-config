@@ -1,0 +1,15 @@
+light.bedside_chris:
+  platform: hue
+  unique_id: 00:17:88:01:10:47:a2:35-0b
+  name: "Bedside Chris"
+light.bedside_karine:
+  platform: hue
+  unique_id: 00:17:88:01:10:36:1c:c0-0b
+  name: "Bedside Karine"
+light.side_porch:
+  platform: hue
+  unique_id: 00:17:88:01:10:53:8a:0f-0b
+  name: "Side porch"
+media_player.top_living_room:
+  platform: cast
+  unique_id: 9bc1a455-6d7a-e698-5240-0341dcde8ad6

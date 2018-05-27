@@ -21,15 +21,15 @@ google_assistant:
       aliases:
         - "bedside lamps"
         - "bedroom lamps"
-    light.hue_color_lamp_1:
+    light.bedside_chris:
       expose: True
       room: "master bedroom"
-    light.hue_color_lamp_2:
+    light.bedside_karine:
+      expose: True
+      room: "master bedroom"
+    light.side_porch:
       expose: True
       aliases:
         - "porch"
       room: "entryway"
-    light.hue_color_lamp_3:
-      expose: True
-      room: "master bedroom"
 

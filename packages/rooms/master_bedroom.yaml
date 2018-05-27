@@ -6,25 +6,20 @@ homeassistant:
     light.master_bedroom_bedside_lights:
       friendly_name: "Master Bedroom Bedside Lights"
       icon: "mdi:lightbulb"
-    light.hue_color_lamp_1:
-      friendly_name: "Bedside Chris"
-    light.hue_color_lamp_3:
-      friendly_name: "Bedside Karine"
 
 group:
   master_bedroom:
     name: "Master Bedroom"
     icon: "mdi:hotel"
     entities:
-      - light.hue_color_lamp_1
-      - light.hue_color_lamp_3
+      - light.master_bedroom_lights
 
 light:
   - platform: group
     name: "master_bedroom_bedside_lights"
     entities:
-      - light.hue_color_lamp_1
-      - light.hue_color_lamp_3
+      - light.bedside_chris
+      - light.bedside_karine
   - platform: group
     name: "master_bedroom_lights"
     entities:
