@@ -33,7 +33,7 @@ scene:
       light.master_bedroom_bedside_lights:
         state: "on"
         brightness: 1
-        rgb_color: [21, 8, 0]
+        rgb_color: [255, 161, 40]
       light.outdoor_lights:
         state: "on"
       switch.living_room_ambiance: "on"
