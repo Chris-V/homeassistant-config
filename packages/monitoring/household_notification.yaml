@@ -3,7 +3,7 @@ homeassistant:
     automation.notify_person_arrives:
       friendly_name: "Notify household arrival"
       icon: "mdi:message-settings-variant"
-    automation.sunset_ambiance:
+    automation.notify_person_leaves:
       friendly_name: "Notify household departure"
       icon: "mdi:message-settings-variant"
 

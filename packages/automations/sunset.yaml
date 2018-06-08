@@ -1,12 +1,10 @@
 homeassistant:
   customize:
-    scene.sunset:
-      friendly_name: "Sunset"
-    automation.sunset_ambiance:
-      friendly_name: "Turn on ambiance lights at sunset"
+    automation.sunset:
+      friendly_name: "Setup the house for a night mood"
 
 automation:
-  - alias: sunset_ambiance
+  - alias: sunset
     trigger:
       - platform: sun
         event: "sunset"
@@ -14,26 +12,40 @@ automation:
         entity_id: "group.household"
         to: "home"
     condition:
-      condition: and
-      conditions:
-        - condition: time
-          before: "00:00:00"
-        - condition: sun
-          after: "sunset"
-        - condition: state
-          entity_id: "group.household"
-          state: "home"
+      condition: sun
+      after: "sunset"
     action:
-      service: scene.turn_on
-      entity_id: "scene.sunset"
+      - service: script.turn_on
+        entity_id: "script.sunset_general"
+      - condition: and
+        conditions:
+          - condition: time
+            before: "00:00:00"
+          - condition: state
+            entity_id: "group.household"
+            state: "home"
+      - service: script.turn_on
+        entity_id: "script.sunset_lighting"
 
-scene:
-  - name: sunset
-    entities:
-      light.master_bedroom_bedside_lights:
-        state: "on"
-        brightness: 1
-        rgb_color: [255, 161, 40]
-      light.outdoor_lights:
-        state: "on"
-      switch.living_room_ambiance: "on"
+script:
+  sunset_general:
+    alias: "General sunset ammbiance"
+    sequence:
+      - service: frontend.set_theme
+        data:
+          name: "black_night"
+  sunset_lighting:
+    alias: "Sunset ambiance lights"
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.master_bedroom_bedside_lights
+          brightness: 1
+          rgb_color: [255, 161, 40]
+      - service: light.turn_on
+        data:
+          entity_id: light.outdoor_lights
+      - service: switch.turn_on
+        data:
+          entity_id: switch.living_room_ambiance
+

@@ -1,0 +1,25 @@
+homeassistant:
+  customize:
+    automation.sunrise:
+      friendly_name: "Setup the house for a day mood"
+
+automation:
+  - alias: sunrise
+    trigger:
+      - platform: sun
+        event: "sunrise"
+    condition:
+      condition: sun
+      after: "sunrise"
+    action:
+      service: script.turn_on
+      entity_id: "script.sunrise_general"
+
+script:
+  sunrise_general:
+    alias: "General sunrise ammbiance"
+    sequence:
+      - service: frontend.set_theme
+        data:
+          name: "default"
+
