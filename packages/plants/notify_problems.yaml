@@ -16,7 +16,7 @@ automation:
     to: "problem"
   condition: []
   action:
-  - service: notify.default
+  - service: notify.household
     data_template:
       title: "Check the Plants"
       message: "{{ trigger.to_state.attributes.friendly_name }} has some problems: {{ trigger.to_state.attributes.problem }}"

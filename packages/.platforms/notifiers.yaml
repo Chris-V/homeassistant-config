@@ -13,4 +13,14 @@
   services:
     - service: html5
       data:
-        target: ["chris chrome", "chris mobile"]
+        target: ["chris aero chrome personal", "chris pixel chrome"]
+
+- platform: group
+  name: "household"
+  services:
+    - service: notify
+      data:
+        target: ["admin"]
+    - service: html5
+      data:
+        target: ["karine nexus5 chrome"]

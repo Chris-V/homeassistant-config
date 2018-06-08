@@ -36,6 +36,7 @@ group:
       - input_boolean.notify_power_changes
       - automation.notify_failed_login_attempt
       - automation.notify_update_available
+      - automation.notify_new_network_device
       - automation.notify_network_device_state
       - automation.notify_ups_replace_battery
 

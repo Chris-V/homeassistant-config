@@ -1,10 +1,10 @@
 - id: sample
-  alias: 'Notify HASS shutdowns'
-  initial_state: False
+  alias: Notify HASS shutdowns
+  initial_state: True
   trigger:
-    - platform: homeassistant
-      event: shutdown
+  - platform: homeassistant
+    event: shutdown
   action:
-    - service: notify.admin
-      data:
-        message: "Home Assistant is shutting down"
+  - service: notify.admin
+    data:
+      message: Home Assistant is shutting down
