@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1280"
+   height="800"
+   viewBox="0 0 1280 800"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="floorplan.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   style="enable-background:new">
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:cx="1361.24"
+     inkscape:cy="659.45105"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer_header"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:lockguides="false"
+     inkscape:snap-page="false"
+     showguides="false"
+     showborder="false"
+     inkscape:pagecheckerboard="true"
+     objecttolerance="20"
+     inkscape:snap-tangential="true"
+     inkscape:snap-perpendicular="true"
+     inkscape:zoom="1.4142136"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4755"
+       originx="0"
+       originy="2.3857422e-007" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer_layout"
+     inkscape:label="Layout layer"
+     style="display:inline"
+     transform="translate(0,32)"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:#f4e3d7;fill-opacity:1;stroke:none;stroke-width:7.00000048;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="layout_background"
+       width="1280"
+       height="800"
+       x="0"
+       y="-32"
+       inkscape:label="Layout background" />
+    <rect
+       style="fill:#ffccaa;fill-opacity:1;stroke:none;stroke-width:7;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="layout_header"
+       width="1280"
+       height="50"
+       x="0"
+       y="-32"
+       inkscape:label="Layout header" />
+  </g>
+  <g
+     inkscape:label="House layer"
+     id="layer_house"
+     transform="translate(0,-61.799984)"
+     style="display:inline"
+     inkscape:groupmode="layer">
+    <rect
+       id="house_background"
+       width="1250"
+       height="720"
+       x="15"
+       y="126.80006"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:7;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="House background"
+       sodipodi:insensitive="true" />
+    <rect
+       style="display:none;fill:#ffcc00;fill-opacity:1;stroke:none;stroke-width:6.99999952;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="model_house_wall"
+       width="60"
+       height="7"
+       x="3.344552"
+       y="976.32275"
+       inkscape:label="House wall model"
+       transform="translate(0,93.799984)" />
+    <g
+       id="layer_ground_floor"
+       inkscape:label="Ground floor layer"
+       style="display:inline"
+       transform="translate(0,93.799984)"
+       inkscape:groupmode="layer" />
+    <g
+       inkscape:groupmode="layer"
+       id="layer_basement"
+       inkscape:label="Basement layer"
+       style="display:none"
+       transform="translate(0,93.799984)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer_header"
+     inkscape:label="Header layer"
+     transform="translate(0,32)"
+     sodipodi:insensitive="true">
+    <g
+       id="actions_menu_item"
+       inkscape:label="Actions menu item"
+       onclick=""
+       transform="translate(256,-32)">
+      <rect
+         inkscape:label="Actions icon background"
+         y="0"
+         x="974"
+         height="50"
+         width="50"
+         id="actions_icon_background"
+         style="fill:#ffffff;fill-opacity:0;stroke:none;stroke-width:7;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:label="Actions icon"
+         style="stroke-width:0.99999994"
+         inkscape:connector-curvature="0"
+         d="m 989,30.555555 v 2.222222 h 6.66665 V 30.555555 H 989 m 0,-13.333333 v 2.222222 h 11.1111 V 17.222222 H 989 M 1000.1111,35 V 32.777777 H 1009 v -2.222222 h -8.8889 v -2.222222 h -2.22224 V 35 h 2.22224 m -6.66667,-13.333334 v 2.222223 H 989 v 2.222222 h 4.44443 v 2.222222 h 2.22222 v -6.666667 h -2.22222 M 1009,26.111111 v -2.222222 h -11.11114 v 2.222222 H 1009 m -6.6667,-4.444445 h 2.2222 V 19.444444 H 1009 v -2.222222 h -4.4445 V 15 h -2.2222 z"
+         id="actions_icon" />
+    </g>
+    <g
+       id="ground_floor_menu_item"
+       inkscape:label="Ground floor menu item"
+       onclick=""
+       transform="translate(214,-32)">
+      <rect
+         inkscape:label="Ground floor icon background"
+         y="0"
+         x="966"
+         height="50"
+         width="50"
+         id="ground_floor_icon_background"
+         style="fill:#ffffff;fill-opacity:0;stroke:none;stroke-width:7;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         onclick=""
+         inkscape:label="Ground floor icon"
+         inkscape:connector-curvature="0"
+         id="ground_floor_icon"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.77214241px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.89261472"
+         d="m 999.99999,32.179144 q -1.18716,1.417113 -3.32085,2.12567 Q 994.56149,35 991.73797,35 988.88235,35 986.66845,33.890374 984.45454,32.76738 983.23529,30.708556 982.03209,28.649733 982,25.935829 v -1.697861 q 0,-4.398396 2.45454,-6.818182 Q 986.92513,15 991.38503,15 q 3.65775,0 5.8877,1.564171 2.22994,1.550802 2.72726,4.411764 h -3.08021 q -0.8663,-3.863636 -5.51871,-3.863636 -3.09626,0 -4.70053,1.818182 -1.58824,1.804813 -1.60429,5.240641 v 1.59091 q 0,3.275401 1.79679,5.213904 1.7968,1.925133 4.86097,1.925133 1.73261,0 3.03208,-0.320855 1.29947,-0.320856 2.14974,-1.082888 v -4.371657 h -5.40642 v -2.085562 h 8.47058 z" />
+    </g>
+    <g
+       id="basement_menu_item"
+       inkscape:label="Basement menu item"
+       onclick=""
+       transform="translate(214,-32)">
+      <rect
+         inkscape:label="Basement icon background"
+         y="0"
+         x="916"
+         height="50"
+         width="50"
+         id="basement_icon_background"
+         style="fill:#ffffff;fill-opacity:0;stroke:none;stroke-width:7;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         onclick=""
+         inkscape:label="Basement icon"
+         inkscape:connector-curvature="0"
+         id="basement_icon"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.00102234px;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.98923641"
+         d="M 932,35 V 15 h 8.64581 q 4.30474,0 6.46619,1.346153 2.17961,1.346154 2.17961,3.983517 0,1.401099 -1.05348,2.486264 -1.05347,1.071429 -2.86982,1.662088 2.14328,0.453296 3.3784,1.730769 Q 950,27.472528 950,29.23077 q 0,2.692308 -2.30677,4.230768 Q 945.38647,35 941.17255,35 Z m 3.48737,-9.354396 v 7.197803 h 5.75783 q 2.4339,0 3.83249,-0.947802 1.41676,-0.961538 1.41676,-2.637363 0,-3.612638 -5.19476,-3.612638 z m 0,-2.115384 h 5.26742 q 2.28859,0 3.65085,-0.865385 1.38042,-0.865384 1.38042,-2.348901 0,-1.648352 -1.27143,-2.39011 -1.27145,-0.755495 -3.86882,-0.755495 h -5.15844 z" />
+    </g>
+    <g
+       id="weather_menu"
+       inkscape:label="Weather menu"
+       style="display:inline;opacity:1"
+       transform="translate(0,-32)">
+      <rect
+         style="fill:#000000;fill-opacity:0;stroke:none;stroke-width:6.99999952;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="weather_menu_bg"
+         width="105"
+         height="50"
+         x="200"
+         y="0"
+         inkscape:label="weather_menu_bg" />
+      <rect
+         style="opacity:1;fill:#000000;fill-opacity:0;stroke:none;stroke-width:7.00000048;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="sensor.yr_symbol"
+         width="20"
+         height="20"
+         x="215"
+         y="14.999999"
+         inkscape:label="Current weather icon" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.18200684px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994"
+         x="257.92764"
+         y="30.179901"
+         id="sensor.yr_temperature"
+         inkscape:label="Temperature"
+         transform="scale(0.94867065,1.0541066)"><tspan
+           sodipodi:role="line"
+           id="tspan4825-0"
+           x="257.92764"
+           y="30.179901"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.99999994">-99 °C</tspan></text>
+    </g>
+    <g
+       id="date_menu"
+       inkscape:label="Date menu"
+       transform="translate(0,-32)">
+      <rect
+         style="fill:#000000;fill-opacity:0;stroke:none;stroke-width:6.99999952;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="date_menu_bg"
+         width="200"
+         height="50"
+         x="0"
+         y="0"
+         inkscape:label="date_menu_bg" />
+      <path
+         id="clock_icon"
+         d="M 25,15 A 10,10 0 0 0 15,25 10,10 0 0 0 25,35 10,10 0 0 0 35,25 10,10 0 0 0 25,15 M 29.2,29.2 24,26 v -6 h 1.5 v 5.2 l 4.5,2.7 z"
+         inkscape:connector-curvature="0"
+         inkscape:label="Clock icon" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.8507061px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999982"
+         x="45.449753"
+         y="30.825336"
+         id="sensor.date"
+         inkscape:label="Date"
+         transform="scale(0.96873954,1.0322692)"><tspan
+           sodipodi:role="line"
+           id="tspan4825"
+           x="45.449753"
+           y="30.825336"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.99999982">00 Abc 0000</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.95349884px;line-height:1.25;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999988"
+         x="155.91777"
+         y="29.800604"
+         id="sensor.time"
+         inkscape:label="Time"
+         transform="scale(0.93674787,1.0675231)"><tspan
+           sodipodi:role="line"
+           id="tspan4825-3"
+           x="155.91777"
+           y="29.800604"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:Roboto;stroke-width:0.99999988">00:00</tspan></text>
+    </g>
+  </g>
+  <g
+     id="layer_actions"
+     inkscape:label="Actions layer"
+     style="display:none"
+     transform="translate(0,32)"
+     inkscape:groupmode="layer">
+    <rect
+       style="display:inline;fill:#4d4d4d;fill-opacity:0.49019608;stroke:none;stroke-width:7.00000048;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="actions_overlay"
+       width="1280"
+       height="800"
+       x="0"
+       y="-32"
+       inkscape:label="Actions overlay"
+       sodipodi:insensitive="true"
+       onclick="" />
+    <rect
+       style="fill:#ffb380;fill-opacity:1;stroke:none;stroke-width:6.99999952;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="actions_background"
+       width="300"
+       height="750"
+       x="980"
+       y="18"
+       inkscape:label="Actions background"
+       sodipodi:insensitive="true" />
+    <rect
+       style="opacity:1;fill:#ff9955;fill-opacity:1;stroke:none;stroke-width:7;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="actions_header"
+       width="300"
+       height="50"
+       x="980"
+       y="-32"
+       inkscape:label="Actions header"
+       sodipodi:insensitive="true" />
+    <g
+       id="actions_close"
+       inkscape:label="Actions close"
+       onclick=""
+       transform="translate(256,-32)"
+       sodipodi:insensitive="true">
+      <rect
+         inkscape:label="Actions close background"
+         y="0"
+         x="974"
+         height="50"
+         width="50"
+         id="actions_close_background"
+         style="fill:#ffb380;fill-opacity:0;stroke:none;stroke-width:7;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="stroke-width:1"
+         inkscape:label="Actions close icon"
+         inkscape:connector-curvature="0"
+         d="M 1009,17.014286 1006.9857,15.000001 999,22.985715 991.0143,15.000001 989,17.014286 996.9857,25 989,32.985714 991.0143,35 999,27.014286 1006.9857,35 1009,32.985714 1001.0143,25 Z"
+         id="actions_close_icon" />
+    </g>
+  </g>
+</svg>

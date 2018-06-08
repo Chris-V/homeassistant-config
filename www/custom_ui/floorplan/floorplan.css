@@ -1,0 +1,86 @@
+/*
+ * Inkscape generates inline styles. The next version should apparently handle stylesheets. Until then... !important
+ */
+
+/* SVG shapes */
+#floorplan > svg {
+    position: relative !important;
+}
+
+svg, svg * {
+    vector-effect: non-scaling-stroke !important;
+    pointer-events: all !important;
+}
+
+svg text {
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+svg text::selection {
+    background: none;
+}
+
+/* Display */
+
+svg g[id^="layer_"] {
+    cursor: default !important;
+}
+
+.layer-hidden {
+    display: none !important;
+}
+
+.layer-visible {
+    display: inline !important;
+}
+
+/* Hover over */
+
+.entity:hover {
+    stroke: #03A9F4 !important;
+    stroke-width: 1px !important;
+    stroke-opacity: 1 !important;
+}
+
+/* Hola */
+
+#layout_background, #layer_header .menu--active rect {
+    fill: var(--primary-background-color) !important;
+    fill-opacity: 1 !important;
+}
+
+#layout_header {
+    fill: var(--primary-color) !important;
+}
+
+#layer_header text, #layer_header path, #image\.sensor\.yr_symbol {
+    fill: var(--text-primary-color) !important;
+}
+
+#layer_header .menu--active path {
+    fill: var(--primary-text-color) !important;
+}
+
+#actions_overlay {
+    fill: var(--app-drawer-scrim-background);
+}
+
+#actions_header {
+    fill: var(--primary-background-color) !important;
+}
+
+#actions_background {
+    fill: var(--sidebar-background-color) !important;
+}
+
+#actions_header text, #actions_header path {
+    fill: var(--text-primary-color) !important;
+}  
+
+#actions_close path {
+    fill: var(--sidebar-icon-color) !important;
+}
+

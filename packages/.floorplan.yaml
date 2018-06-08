@@ -1,0 +1,151 @@
+name: "Dashboard"
+image: "/local/custom_ui/floorplan/floorplan.svg"
+stylesheet: "/local/custom_ui/floorplan/floorplan.css"
+date_format: "D MMM YYYY"
+hide_app_toolbar:
+warnings:
+
+groups:
+  - name: "Default classes"
+    elements:
+      - layer_layout # We could use a small dummy element to avoid this callback to be called often
+    action:
+      - domain: class
+        service: set
+        data:
+          elements:
+            - layer_basement
+            - layer_actions
+          default_class: "layer-hidden"
+      - domain: class
+        service: set
+        data:
+          elements: "layer_ground_floor"
+          default_class: "layer-visible"
+      - domain: class
+        service: set
+        data:
+          elements: "ground_floor_menu_item"
+          default_class: "menu--active"
+
+  - name: "Basement view"
+    elements:
+      - basement_menu_item
+    action:
+      - domain: class
+        service: add
+        data:
+          elements: "layer_ground_floor"
+          classes: "layer-hidden"
+      - domain: class
+        service: remove
+        data:
+          elements: "layer_basement"
+          classes: "layer-hidden"
+      - domain: class
+        service: remove
+        data:
+          elements: "ground_floor_menu_item"
+          classes: "menu--active"
+      - domain: class
+        service: add
+        data:
+          elements: "layer_basement"
+          classes: "layer-visible"
+      - domain: class
+        service: add
+        data:
+          elements: "basement_menu_item"
+          classes: "menu--active"
+      - domain: class
+        service: remove
+        data:
+          elements: "layer_ground_floor"
+          classes: "layer-visible"
+
+  - name: "Ground floor view"
+    elements:
+      - ground_floor_menu_item
+    action:
+      - domain: class
+        service: remove
+        data:
+          elements: "layer_ground_floor"
+          classes: "layer-hidden"
+      - domain: class
+        service: remove
+        data:
+          elements: "basement_menu_item"
+          classes: "menu--active"
+      - domain: class
+        service: add
+        data:
+          elements: "layer_ground_floor"
+          classes: "layer-visible"
+      - domain: class
+        service: remove
+        data:
+          elements: "layer_basement"
+          classes: "layer-visible"
+      - domain: class
+        service: add
+        data:
+          elements: "ground_floor_menu_item"
+          classes: "menu--active"
+      - domain: class
+        service: add
+        data:
+          elements: "layer_basement"
+          classes: "layer-hidden"
+
+  - name: "Actions view"
+    elements:
+      - actions_menu_item
+      - actions_close
+      - actions_overlay
+    action:
+      domain: class
+      service: toggle
+      data:
+        elements: "layer_actions"
+        classes:
+          - layer-visible
+          - layer-hidden
+
+  - name: "Date"
+    entities:
+      - sensor.date
+    text_template: "${moment(entity.state).format(config.date_format)}"
+
+  - name: "Time"
+    entities:
+      - sensor.time
+
+  - name: "Temperature"
+    entities:
+      - sensor.yr_temperature
+    text_template: "${Math.round(entity.state) + ' ' + entity.attributes.unit_of_measurement}"
+
+  - name: "Weather icon"
+    entities:
+      - sensor.yr_symbol
+    # Codes: https://api.met.no/weatherapi/weathericon/1.1/documentation
+    image_template: "
+    const statesIcon = {
+      'cloudy': [4,30,46],
+      'fog': [15],
+      'lightning': [6,24,25],
+      'lightning-rainy': [11,22],
+      'partlycloudy': [3,40],
+      'pouring': [27,32,43,48],
+      'rainy': [5,9,10,41],
+      'snowy': [8,13,14,21,28,29,33,34,44,45,49,50],
+      'snowy-rainy': [7,12,20,23,26,31,42,47],
+      'sunny': [1,2]
+    };
+
+    let state = parseInt(entity.state);
+    let match = Object.entries(statesIcon).find(x => x[1].indexOf(state) !== -1) || [];
+    let icon = match[0] || 'partlycloudy';
+    return '/local/custom_ui/floorplan/icons/weather-' + icon + '.svg';
+    "
