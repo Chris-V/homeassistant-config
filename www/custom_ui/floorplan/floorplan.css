@@ -56,7 +56,7 @@ svg g[id^="layer_"] {
     fill: var(--primary-color) !important;
 }
 
-#layer_header text, #layer_header path, #image\.sensor\.yr_symbol {
+#layer_header text, #layer_header path, #image\.sensor\.dark_sky_summary {
     fill: var(--text-primary-color) !important;
 }
 
@@ -78,9 +78,8 @@ svg g[id^="layer_"] {
 
 #actions_header text, #actions_header path {
     fill: var(--text-primary-color) !important;
-}  
+}
 
 #actions_close path {
     fill: var(--sidebar-icon-color) !important;
 }
-

@@ -1,25 +1,21 @@
 homeassistant:
   customize:
-    sensor.yr_humidity:
-      friendly_name: "Humidity"
-    sensor.yr_symbol:
+    weather.dark_sky:
       friendly_name: "Weather"
-    sensor.yr_temperature:
-      friendly_name: "Temperature"
+
+weather:
+  - platform: darksky
+    api_key: !secret weather_dark_sky_api_key
 
 sensor:
-  - platform: yr
+  - platform: darksky
+    api_key: !secret weather_dark_sky_api_key
+    forecast: []
+    language: "en"
     monitored_conditions:
-      - symbol
-      - temperature
       - humidity
-
-group:
-  weather:
-    name: "Weather"
-    icon: "mdi:weather-partlycloudy"
-    entities:
-      - sun.sun
-      - sensor.yr_humidity
-      - sensor.yr_temperature
-      - sensor.yr_symbol
+      - icon
+      - summary
+      - temperature
+      - uv_index
+    update_interval: "00:03"

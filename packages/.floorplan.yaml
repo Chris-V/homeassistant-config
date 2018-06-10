@@ -123,29 +123,10 @@ groups:
 
   - name: "Temperature"
     entities:
-      - sensor.yr_temperature
+      - sensor.dark_sky_temperature
     text_template: "${Math.round(entity.state) + ' ' + entity.attributes.unit_of_measurement}"
 
   - name: "Weather icon"
     entities:
-      - sensor.yr_symbol
-    # Codes: https://api.met.no/weatherapi/weathericon/1.1/documentation
-    image_template: "
-    const statesIcon = {
-      'cloudy': [4,30,46],
-      'fog': [15],
-      'lightning': [6,24,25],
-      'lightning-rainy': [11,22],
-      'partlycloudy': [3,40],
-      'pouring': [27,32,43,48],
-      'rainy': [5,9,10,41],
-      'snowy': [8,13,14,21,28,29,33,34,44,45,49,50],
-      'snowy-rainy': [7,12,20,23,26,31,42,47],
-      'sunny': [1,2]
-    };
-
-    let state = parseInt(entity.state);
-    let match = Object.entries(statesIcon).find(x => x[1].indexOf(state) !== -1) || [];
-    let icon = match[0] || 'partlycloudy';
-    return '/local/custom_ui/floorplan/icons/weather-' + icon + '.svg';
-    "
+      - sensor.dark_sky_summary
+    image_template: "${entities['sensor.dark_sky_summary'].attributes.entity_picture}"

@@ -64,7 +64,8 @@ group:
     icon: "mdi:weather-partlycloudy"
     view: true
     entities:
-      - group.weather
+      - sun.sun
+      - weather.dark_sky
 
   settings_view:
     name: "Settings"
