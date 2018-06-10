@@ -17,7 +17,7 @@ automation:
 
 script:
   sunrise_general:
-    alias: "General sunrise ammbiance"
+    alias: "General sunrise ambiance"
     sequence:
       - service: frontend.set_theme
         data:

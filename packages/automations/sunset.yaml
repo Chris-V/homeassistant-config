@@ -29,7 +29,7 @@ automation:
 
 script:
   sunset_general:
-    alias: "General sunset ammbiance"
+    alias: "General sunset ambiance"
     sequence:
       - service: frontend.set_theme
         data:
