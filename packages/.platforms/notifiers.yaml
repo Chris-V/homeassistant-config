@@ -18,9 +18,7 @@
 - platform: group
   name: "household"
   services:
-    - service: notify
-      data:
-        target: ["admin"]
+    - service: admin
     - service: html5
       data:
         target: ["karine nexus5 chrome"]
