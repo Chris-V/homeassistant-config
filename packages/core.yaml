@@ -14,6 +14,10 @@ http:
 logbook: !include .core/domains.yaml
 logger:
   default: "warn"
+  logs:
+    # Hiding these for now because of miflora devices too far away
+    homeassistant.helpers.entity: "error"
+    homeassistant.components.sensor: "error"
 recorder:
   exclude:
     domains:
