@@ -129,4 +129,19 @@ groups:
   - name: "Weather icon"
     entities:
       - sensor.dark_sky_summary
-    image_template: "${entities['sensor.dark_sky_summary'].attributes.entity_picture}"
+    image_template: "${entity.attributes.entity_picture}"
+
+  - name: "Presence tracker"
+    entities:
+      - device_tracker.chris_pixel
+      - device_tracker.karine_nexus5
+    class_template: "
+      let state = entity.state;
+      let cssClass = 'unknown';
+      if (state === 'home') {
+        cssClass = 'home';
+      } else if (state === 'not_home') {
+        cssClass = 'away';
+      }
+      return 'tracker__' + cssClass;
+    "

@@ -19,6 +19,7 @@ svg text {
     -ms-user-select: none;
     user-select: none;
 }
+
 svg text::selection {
     background: none;
 }
@@ -82,4 +83,16 @@ svg g[id^="layer_"] {
 
 #actions_close path {
     fill: var(--sidebar-icon-color) !important;
+}
+
+.tracker__unknown [id $= "_ring"] {
+    stroke: dimgray !important;
+}
+
+.tracker__home [id $= "_ring"] {
+    stroke: green !important;
+}
+
+.tracker__away [id $= "_ring"] {
+    stroke: darkred !important;
 }
