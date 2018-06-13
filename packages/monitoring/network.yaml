@@ -2,21 +2,52 @@ homeassistant:
   customize:
     switch.network_hue_hub:
       friendly_name: "Hue Hub"
-      icon: "mdi:lightbulb"
+      icon: "mdi:access-point-network"
       confirm_controls_show_lock: True
     switch.network_media:
-      friendly_name: "Avatar Media"
-      icon: "mdi:movie"
+      friendly_name: "Media"
+      icon: "mdi:play-network"
       confirm_controls_show_lock: True
-    sensor.glances_cpu_load:
-      friendly_name: "Processor use"
+    switch.network_relay_south:
+      friendly_name: "Relay South"
+      icon: "mdi:server-network"
+      confirm_controls_show_lock: True
+    sensor.media_cpu_load:
+      friendly_name: "Media's CPU use"
       icon: "mdi:memory"
-    sensor.glances_cpu_temp:
-      friendly_name: "Processor temperature"
+      group:
+        group.media_monitor:
+          friendly_name: "CPU use"
+    sensor.media_cpu_temp:
+      friendly_name: "Media's CPU temperature"
       icon: "mdi:fire"
-    sensor.glances_ram_used:
-      friendly_name: "Memory use"
+      group:
+        group.media_monitor:
+          friendly_name: "CPU temperature"
+    sensor.media_ram_used:
+      friendly_name: "Media's memory use"
       icon: "mdi:memory"
+      group:
+        group.media_monitor:
+          friendly_name: "Memory use"
+    sensor.relay_south_cpu_load:
+      friendly_name: "South relay's CPU use"
+      icon: "mdi:memory"
+      group:
+        group.relay_south_monitor:
+          friendly_name: "CPU use"
+    sensor.relay_south_cpu_temp:
+      friendly_name: "South relay's CPU temperature"
+      icon: "mdi:fire"
+      group:
+        group.relay_south_monitor:
+          friendly_name: "CPU tmeperature"
+    sensor.relay_south_ram_used:
+      friendly_name: "South relay's memory use"
+      icon: "mdi:memory"
+      group:
+        group.relay_south_monitor:
+          friendly_name: "Memory use"
     automation.notify_new_network_device:
       friendly_name: "Notify new devices detected on network"
       icon: "mdi:message-settings-variant"
@@ -35,20 +66,39 @@ group:
     control: "hidden"
     entities:
       - switch.network_media
+      - switch.network_relay_south
       - switch.network_hue_hub
 
   media_monitor:
     name: "Media Monitor"
     icon: "mdi:chart-scatterplot-hexbin"
     entities:
-      - sensor.glances_cpu_load
-      - sensor.glances_cpu_temp
-      - sensor.glances_ram_used
+      - sensor.media_cpu_load
+      - sensor.media_cpu_temp
+      - sensor.media_ram_used
+
+  relay_south_monitor:
+    name: "South Relay Monitor"
+    icon: "mdi:chart-scatterplot-hexbin"
+    entities:
+      - sensor.relay_south_cpu_load
+      - sensor.relay_south_cpu_temp
+      - sensor.relay_south_ram_used
 
 sensor:
   - platform: glances
     host: !secret network_media_host
-    port: !secret media_glances_port
+    port: !secret glances_port
+    name: "media"
+    resources:
+      - processor_load
+      - memory_use_percent
+      - cpu_temp
+
+  - platform: glances
+    host: !secret network_relay_south_host
+    port: !secret glances_port
+    name: "relay_south"
     resources:
       - processor_load
       - memory_use_percent
@@ -56,6 +106,7 @@ sensor:
 
 shell_command:
   shutdown_media: "/home/hass/.homeassistant/shell/shutdown_media.sh"
+  shutdown_relay_south: "/home/hass/.homeassistant/shell/shutdown_relay_south.sh"
 
 switch:
   - platform: wake_on_lan
@@ -70,6 +121,14 @@ switch:
     broadcast_address: !secret network_wol_broadcast
     turn_off:
       service: "shell_command.shutdown_media"
+
+  - platform: wake_on_lan
+    name: "network_relay_south"
+    mac_address: !secret network_relay_south_mac
+    host: !secret network_relay_south_host
+    broadcast_address: !secret network_wol_broadcast
+    turn_off:
+      service: "shell_command.shutdown_relay_south"
 
 automation:
   - alias: notify_new_network_device
@@ -88,6 +147,7 @@ automation:
       entity_id:
         - switch.network_hue_hub
         - switch.network_media
+        - switch.network_relay_south
     action:
       service: notify.admin
       data_template:
