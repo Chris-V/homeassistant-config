@@ -1,31 +1,60 @@
- # Spider plant
- 
+# Spider plant
+
 homeassistant:
   customize:
     plant.spidy:
       friendly_name: "Spidy"
+    sensor.spidy_battery:
+      friendly_name: "Spidy's battery"
+    sensor.spidy_brightness:
+      friendly_name: "Spidy's brightness"
+    sensor.spidy_conductivity:
+      friendly_name: "Spidy's conductivity"
+    sensor.spidy_moisture:
+      friendly_name: "Spidy's moisture"
+    sensor.spidy_temperature:
+      friendly_name: "Spidy's temperature"
 
 plant:
   spidy:
     sensors:
       battery: sensor.spidy_battery
+      brightness: sensor.spidy_brightness
       conductivity: sensor.spidy_conductivity
-      brightness: sensor.spidy_light_intensity
       moisture: sensor.spidy_moisture
       temperature: sensor.spidy_temperature
     min_battery: 10
-    min_moisture: 15
-    min_temperature: 15
+    min_moisture: 10
+    min_temperature: 14
 
 sensor:
-  - platform: miflora
-    mac: "C4:7C:8D:63:6F:A3"
-    name: "Spidy"
-    median: 3
-    monitored_conditions:
-      - battery
-      - conductivity
-      - light
-      - moisture
-      - temperature
-
+  - platform: mqtt
+    name: "spidy_battery"
+    device_class: "battery"
+    unit_of_measurement: "%"
+    state_topic: "plants/spidy"
+    value_template: "{{ value_json.battery }}"
+  - platform: mqtt
+    name: "spidy_brightness"
+    device_class: "illuminance"
+    unit_of_measurement: "lx"
+    state_topic: "plants/spidy"
+    value_template: "{{ value_json.brightness }}"
+  - platform: mqtt
+    name: "spidy_conductivity"
+    unit_of_measurement: "µS/cm"
+    icon: "mdi:poop"
+    state_topic: "plants/spidy"
+    value_template: "{{ value_json.conductivity }}"
+  - platform: mqtt
+    name: "spidy_moisture"
+    device_class: "humidity"
+    unit_of_measurement: "%"
+    state_topic: "plants/spidy"
+    value_template: "{{ value_json.moisture }}"
+  - platform: mqtt
+    name: "spidy_temperature"
+    device_class: "temperature"
+    unit_of_measurement: "°C"
+    state_topic: "plants/spidy"
+    value_template: "{{ value_json.temperature }}"
