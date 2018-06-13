@@ -7,11 +7,18 @@ homeassistant:
       friendly_name: "Bookshelf outlet"
       icon: "mdi:lightbulb"
 
+media_player:
+  - platform: cast
+    host: !secret media_player_cast_host
+  - platform: cast
+    host: !secret media_player_home_host
+
 group:
   top_living_room:
     name: "Top Living Room"
     icon: "mdi:television"
     entities:
+      - media_player.living_room_home
       - media_player.top_living_room
       - switch.living_room_ambiance
       - switch.living_room_bookshelf
