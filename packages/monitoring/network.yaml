@@ -12,6 +12,10 @@ homeassistant:
       friendly_name: "Relay South"
       icon: "mdi:server-network"
       confirm_controls_show_lock: True
+    switch.network_relay_north:
+      friendly_name: "Relay North"
+      icon: "mdi:server-network"
+      confirm_controls_show_lock: True
     sensor.media_cpu_load:
       friendly_name: "Media's CPU use"
       icon: "mdi:memory"
@@ -48,6 +52,24 @@ homeassistant:
       group:
         group.relay_south_monitor:
           friendly_name: "Memory use"
+    sensor.relay_north_cpu_load:
+      friendly_name: "North relay's CPU use"
+      icon: "mdi:memory"
+      group:
+        group.relay_north_monitor:
+          friendly_name: "CPU use"
+    sensor.relay_north_cpu_temp:
+      friendly_name: "North relay's CPU temperature"
+      icon: "mdi:fire"
+      group:
+        group.relay_north_monitor:
+          friendly_name: "CPU tmeperature"
+    sensor.relay_north_ram_used:
+      friendly_name: "North relay's memory use"
+      icon: "mdi:memory"
+      group:
+        group.relay_north_monitor:
+          friendly_name: "Memory use"
     automation.notify_new_network_device:
       friendly_name: "Notify new devices detected on network"
       icon: "mdi:message-settings-variant"
@@ -67,6 +89,7 @@ group:
     entities:
       - switch.network_media
       - switch.network_relay_south
+      - switch.network_relay_north
       - switch.network_hue_hub
 
   media_monitor:
@@ -84,6 +107,14 @@ group:
       - sensor.relay_south_cpu_load
       - sensor.relay_south_cpu_temp
       - sensor.relay_south_ram_used
+
+  relay_north_monitor:
+    name: "North Relay Monitor"
+    icon: "mdi:chart-scatterplot-hexbin"
+    entities:
+      - sensor.relay_north_cpu_load
+      - sensor.relay_north_cpu_temp
+      - sensor.relay_north_ram_used
 
 sensor:
   - platform: glances
@@ -104,9 +135,19 @@ sensor:
       - memory_use_percent
       - cpu_temp
 
+  - platform: glances
+    host: !secret network_relay_north_host
+    port: !secret glances_port
+    name: "relay_north"
+    resources:
+      - processor_load
+      - memory_use_percent
+      - cpu_temp
+
 shell_command:
   shutdown_media: "/home/hass/.homeassistant/shell/shutdown_media.sh"
   shutdown_relay_south: "/home/hass/.homeassistant/shell/shutdown_relay_south.sh"
+  shutdown_relay_north: "/home/hass/.homeassistant/shell/shutdown_relay_north.sh"
 
 switch:
   - platform: wake_on_lan
@@ -130,6 +171,14 @@ switch:
     turn_off:
       service: "shell_command.shutdown_relay_south"
 
+  - platform: wake_on_lan
+    name: "network_relay_north"
+    mac_address: !secret network_relay_north_mac
+    host: !secret network_relay_north_host
+    broadcast_address: !secret network_wol_broadcast
+    turn_off:
+      service: "shell_command.shutdown_relay_north"
+
 automation:
   - alias: notify_new_network_device
     trigger:
@@ -148,6 +197,7 @@ automation:
         - switch.network_hue_hub
         - switch.network_media
         - switch.network_relay_south
+        - switch.network_relay_north
     action:
       service: notify.admin
       data_template:

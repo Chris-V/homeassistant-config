@@ -88,3 +88,4 @@ group:
       - group.automate_monitor
       - group.media_monitor
       - group.relay_south_monitor
+      - group.relay_north_monitor
