@@ -96,6 +96,7 @@ automation:
             tag: "ups_battery"
 
   - alias: ups_power_off
+    initial_state: True
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"
@@ -112,6 +113,7 @@ automation:
         - switch.network_media
 
   - alias: ups_power_on
+    initial_state: True
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"

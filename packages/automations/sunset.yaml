@@ -5,6 +5,7 @@ homeassistant:
 
 automation:
   - alias: sunset
+    initial_state: True
     trigger:
       - platform: sun
         event: "sunset"

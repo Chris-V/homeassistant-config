@@ -5,22 +5,21 @@ homeassistant:
       icon: "mdi:message-settings-variant"
 
 automation:
-- alias: notify_plant_problems
-  initial_state: True
-  trigger:
-  - entity_id:
-    - plant.gaetan
-    - plant.spidy
-    - plant.viny
-    platform: state
-    to: "problem"
-  condition: []
-  action:
-  - service: notify.household
-    data_template:
-      title: "Check the Plants"
-      message: "{{ trigger.to_state.attributes.friendly_name }} has some problems: {{ trigger.to_state.attributes.problem }}"
-      data: 
-        tag: "{{ trigger.to_state.entity_id | replace('.', '_') }}"
-        url: !secret http_public_host # TODO: append states/group.plants_view
+  - alias: notify_plant_problems
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id:
+          - plant.gaetan
+          - plant.spidy
+          - plant.viny
+        to: "problem"
+    action:
+      - service: notify.household
+        data_template:
+          title: "Check the Plants"
+          message: "{{ trigger.to_state.attributes.friendly_name }} has some problems: {{ trigger.to_state.attributes.problem }}"
+          data: 
+            tag: "{{ trigger.to_state.entity_id | replace('.', '_') }}"
+            url: !secret http_public_host # TODO: append states/group.plants_view
 

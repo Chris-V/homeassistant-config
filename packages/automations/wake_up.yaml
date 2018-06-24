@@ -91,6 +91,7 @@ input_datetime:
 
 automation:
   - alias: toggle_alarm_time_monday
+    initial_state: True
     trigger:
       - platform: state
         entity_id: automation.wake_up_alarm_monday
@@ -119,6 +120,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: toggle_alarm_time_tuesday
+    initial_state: True
     trigger:
       - platform: state
         entity_id: automation.wake_up_alarm_tuesday
@@ -147,6 +149,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: toggle_alarm_time_wednesday
+    initial_state: True
     trigger:
       - platform: state
         entity_id: automation.wake_up_alarm_wednesday
@@ -175,6 +178,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: toggle_alarm_time_thursday
+    initial_state: True
     trigger:
       - platform: state
         entity_id: automation.wake_up_alarm_thursday
@@ -203,6 +207,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: toggle_alarm_time_friday
+    initial_state: True
     trigger:
       - platform: state
         entity_id: automation.wake_up_alarm_friday
@@ -231,6 +236,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: toggle_alarm_time_saturday
+    initial_state: True
     trigger:
       - platform: state
         entity_id: automation.wake_up_alarm_saturday
@@ -259,6 +265,7 @@ automation:
       entity_id: "scene.wake_up_alarm"
 
   - alias: toggle_alarm_time_sunday
+    initial_state: True
     trigger:
       - platform: state
         entity_id: automation.wake_up_alarm_sunday

@@ -17,6 +17,7 @@ scene:
 
 automation:
   - alias: household_leaves
+    initial_state: True
     trigger:
       platform: state
       entity_id: "group.household"

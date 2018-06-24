@@ -14,6 +14,7 @@ input_boolean:
 
 automation:
   - alias: notify_person_arrives
+    initial_state: True
     trigger:
       platform: state
       entity_id:
@@ -32,6 +33,7 @@ automation:
           tag: "presence_{{ trigger.to_state.entity_id | replace('.', '_') }}"
 
   - alias: notify_person_leaves
+    initial_state: True
     trigger:
       platform: state
       entity_id:
