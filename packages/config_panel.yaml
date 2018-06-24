@@ -2,4 +2,5 @@ config:
 automation: !include ../automations.yaml
 homeassistant:
   customize: !include ../customize.yaml
+group: !include ../groups.yaml
 script: !include ../scripts.yaml

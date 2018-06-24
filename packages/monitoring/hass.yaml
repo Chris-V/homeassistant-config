@@ -1,7 +1,66 @@
+homeassistant:
+  customize:
+    sensor.current_home_assistant_version:
+      friendly_name: "Current version"
+      icon: "mdi:arrow-right"
+    sensor.latest_home_assistant_version:
+      friendly_name: "Latest version"
+      icon: "mdi:arrow-up"
+
+updater:
+  reporting: False
+
 group:
   monitoring_hass:
     name: "Home Assistant"
     icon: "mdi:chart-scatterplot-hexbin"
     entities:
-      - updater.updater
       - sensor.connected_clients
+      - sensor.current_home_assistant_version
+      - sensor.latest_home_assistant_version
+
+sensor:
+  - platform: api_streams
+  - platform: rest
+    name: latest_home_assistant_version
+    resource: "https://api.github.com/repos/home-assistant/home-assistant/releases/latest"
+    headers:
+      User-Agent: "Chris-V"
+    value_template: "{{ value_json.tag_name }}"
+    json_attributes:
+      - html_url
+      - name
+    scan_interval: 3600
+  - platform: command_line
+    name: current_home_assistant_version
+    command: "/var/lib/homeassistant/bin/hass --version"
+    scan_interval: 3600
+
+automation:
+  - alias: notify_update_available
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.latest_home_assistant_version
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{{ trigger.to_state.state != 'unknown' }}"
+        - condition: template
+          value_template: "{{ trigger.to_state.state != 'unavailable' }}"
+        - condition: template
+          value_template: "{{ trigger.to_state.state != states.sensor.current_home_assistant_version.state }}"
+    action:
+      - service: persistent_notification.create
+        data_template:
+          title: "Home Assistant Update"
+          message: "Home Assistant *{{ trigger.to_state.state }}* is available.<br><a href=\"{{ trigger.to_state.attributes.html_url }}\">Open release notes</a>"
+          notification_id: "hass_update_available"
+      - service: notify.admin
+        data_template:
+          title: "Home Assistant Update"
+          message: "Home Assistant {{ trigger.to_state.state }} is available."
+          data:
+            tag: "hass_update_available"
+            url: "{{ trigger.to_state.attributes.html_url }}"

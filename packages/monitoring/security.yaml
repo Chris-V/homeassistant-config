@@ -4,9 +4,6 @@ homeassistant:
       friendly_name: "Notify failed login attempts"
       icon: "mdi:message-settings-variant"
 
-sensor:
-  - platform: api_streams
-
 automation:
   - alias: notify_failed_login_attempt
     initial_state: True

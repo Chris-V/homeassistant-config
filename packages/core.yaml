@@ -14,10 +14,6 @@ http:
 logbook: !include .core/domains.yaml
 logger:
   default: "warn"
-  logs:
-    # Hiding these for now because of miflora devices too far away
-    homeassistant.helpers.entity: "error"
-    homeassistant.components.sensor: "error"
 recorder:
   exclude:
     domains:
@@ -31,5 +27,4 @@ recorder:
       - sensor.time
   purge_interval: 2
   purge_keep_days: 14
-updater: {}
 
