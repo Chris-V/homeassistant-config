@@ -40,6 +40,13 @@ group:
       - automation.notify_network_device_state
       - automation.notify_ups_replace_battery
 
+  celestial_bodies:
+    name: "Celestial bodies"
+    icon: "mdi:star-face"
+    entities:
+      - sun.sun
+      - sensor.moon
+
   default_view:
     name: "Home"
     icon: "mdi:home"
@@ -64,8 +71,8 @@ group:
     icon: "mdi:weather-partlycloudy"
     view: true
     entities:
-      - sun.sun
       - weather.dark_sky
+      - group.celestial_bodies
 
   settings_view:
     name: "Settings"

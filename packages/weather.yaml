@@ -7,7 +7,9 @@ weather:
   - platform: darksky
     api_key: !secret weather_dark_sky_api_key
 
+sun: {}
 sensor:
+  - platform: moon
   - platform: darksky
     api_key: !secret weather_dark_sky_api_key
     forecast: []

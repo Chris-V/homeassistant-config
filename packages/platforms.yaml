@@ -3,5 +3,5 @@ hue: !include .platforms/hue.yaml
 map: {}
 mqtt: !include .platforms/mqtt.yaml
 notify: !include .platforms/notifiers.yaml
-sun: {}
 tts: !include .platforms/tts.yaml
+
