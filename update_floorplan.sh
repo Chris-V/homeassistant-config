@@ -63,10 +63,10 @@ check_dir "www/custom_ui/floorplan/lib"
 check_dir "panels"
 
 
-get_file ha-floorplan.html https://github.com/pkozul/ha-floorplan/blob/master/www/custom_ui/floorplan/ha-floorplan.html www/custom_ui/floorplan/
-get_file state-card-floorplan.html https://github.com/pkozul/ha-floorplan/blob/master/www/custom_ui/state-card-floorplan.html www/custom_ui/
-get_file floorplan.html https://github.com/pkozul/ha-floorplan/blob/master/panels/floorplan.html panels/
-get_file jquery-3.2.1.min.js https://github.com/pkozul/ha-floorplan/blob/master/www/custom_ui/floorplan/lib/jquery-3.2.1.min.js www/custom_ui/floorplan/lib/
-get_file moment.min.js https://github.com/pkozul/ha-floorplan/blob/master/www/custom_ui/floorplan/lib/moment.min.js www/custom_ui/floorplan/lib/
-get_file svg-pan-zoom.min.js https://github.com/pkozul/ha-floorplan/blob/master/www/custom_ui/floorplan/lib/svg-pan-zoom.min.js www/custom_ui/floorplan/lib/
+get_file ha-floorplan.html https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/ha-floorplan.html www/custom_ui/floorplan/
+get_file state-card-floorplan.html https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/state-card-floorplan.html www/custom_ui/
+get_file floorplan.html https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/panels/floorplan.html panels/
+get_file jquery-3.2.1.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/jquery-3.2.1.min.js www/custom_ui/floorplan/lib/
+get_file moment.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/moment.min.js www/custom_ui/floorplan/lib/
+get_file svg-pan-zoom.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/svg-pan-zoom.min.js www/custom_ui/floorplan/lib/
 

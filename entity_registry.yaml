@@ -10,11 +10,11 @@ light.side_porch:
   name: Side porch
   platform: hue
   unique_id: 00:17:88:01:10:53:8a:0f-0b
-media_player.top_living_room:
+media_player.top_living_room_chromecast:
   name: "Top living room's chromecast"
   platform: cast
   unique_id: 9bc1a455-6d7a-e698-5240-0341dcde8ad6
-media_player.living_room_home:
+media_player.top_living_room_home:
   name: "Top living room's google home"
   platform: cast
   unique_id: efc495ea-1910-7a86-779e-bf9a306a94c6
