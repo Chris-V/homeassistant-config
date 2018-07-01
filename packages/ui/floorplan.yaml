@@ -3,4 +3,4 @@ panel_custom:
     sidebar_title: "Dashboard"
     sidebar_icon: "mdi:view-dashboard-variant"
     url_path: "dashboard"
-    config: !include .floorplan.yaml
+    config: !include .floorplan_config.yaml
