@@ -4,4 +4,10 @@ map: {}
 mqtt: !include .platforms/mqtt.yaml
 notify: !include .platforms/notifiers.yaml
 tts: !include .platforms/tts.yaml
-
+zha:
+  usb_path: "/dev/zigbee"
+  radio_type: "ezsp"
+  database_path: "/home/hass/.homeassistant/zigbee.db"
+zwave:
+  usb_path: "/dev/zwave"
+  network_key: !secret zwave_network_key

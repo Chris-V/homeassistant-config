@@ -1,9 +1,11 @@
-.config_entries.json
-
 known_devices.yaml
 secrets.yaml
-.uuid
+.config_entries.json
 .HA_VERSION
+.uuid
+
+OZW_Log.txt
+pyozw.sqlite
 
 panels/floorplan.html
 
