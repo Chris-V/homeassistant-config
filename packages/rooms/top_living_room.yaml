@@ -7,6 +7,18 @@ homeassistant:
       friendly_name: "Bookshelf outlet"
       icon: "mdi:lightbulb"
 
+google_assistant:
+  entity_config:
+    switch.living_room_ambiance:
+      expose: True
+      room: "living room"
+    switch.living_room_bookshelf:
+      expose: True
+      aliases:
+        - "Xmas tree"
+        - "Christmas tree"
+      room: "living room"
+
 cast:
   media_player:
     - host: !secret media_player_cast_host

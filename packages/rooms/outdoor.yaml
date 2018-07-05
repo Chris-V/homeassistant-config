@@ -4,6 +4,17 @@ homeassistant:
       friendly_name: "Outdoor Lights"
       icon: "mdi:home"
 
+google_assistant:
+  entity_config:
+    light.outdoor_lights:
+      expose: True
+      room: "outdoor"
+    light.side_porch:
+      expose: True
+      aliases:
+        - "porch"
+      room: "outdoor"
+
 group:
   outdoor:
     name: "Outdoor"
