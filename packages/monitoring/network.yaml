@@ -1,9 +1,5 @@
 homeassistant:
   customize:
-    switch.network_hue_hub:
-      friendly_name: "Hue Hub"
-      icon: "mdi:access-point-network"
-      confirm_controls_show_lock: True
     switch.network_media:
       friendly_name: "Media"
       icon: "mdi:play-network"
@@ -90,7 +86,6 @@ group:
       - switch.network_media
       - switch.network_relay_south
       - switch.network_relay_north
-      - switch.network_hue_hub
 
   media_monitor:
     name: "Media Monitor"
@@ -151,11 +146,6 @@ shell_command:
 
 switch:
   - platform: wake_on_lan
-    name: "network_hue_hub"
-    mac_address: !secret network_hue_hub_mac
-    host: !secret network_hue_hub_host
-
-  - platform: wake_on_lan
     name: "network_media"
     mac_address: !secret network_media_mac
     host: !secret network_media_host
@@ -196,7 +186,6 @@ automation:
     trigger:
       platform: state
       entity_id:
-        - switch.network_hue_hub
         - switch.network_media
         - switch.network_relay_south
         - switch.network_relay_north
