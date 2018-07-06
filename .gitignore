@@ -1,8 +1,8 @@
 known_devices.yaml
 secrets.yaml
-.config_entries.json
 .HA_VERSION
 .uuid
+.storage/
 
 OZW_Log.txt
 pyozw.sqlite

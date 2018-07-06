@@ -1,3 +1,5 @@
+notify:
+
 - platform: html5
   name: "html5"
   gcm_api_key: !secret notifier_gcm_key

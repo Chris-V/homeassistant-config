@@ -1,0 +1,41 @@
+history: &history_config
+  include:
+    domains:
+      - device_tracker
+      - input_boolean
+      - input_datetime
+      - input_number
+      - input_select
+      - input_text
+      - light
+      - media_player
+      - sensor
+      - sun
+      - switch
+    entities:
+      - group.household
+  exclude:
+    entities:
+      - sensor.date
+      - sensor.since_last_boot
+      - sensor.time
+
+logbook: *history_config
+
+logger:
+  default: "warn"
+
+recorder:
+  exclude:
+    domains:
+      - scene
+      - sun
+      - updater
+      - zone
+    entities:
+      - sensor.date
+      - sensor.since_last_boot
+      - sensor.time
+  purge_interval: 2
+  purge_keep_days: 14
+

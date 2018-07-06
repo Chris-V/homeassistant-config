@@ -1,3 +1,4 @@
+tts:
 - platform: google
   cache: True
   cache_dir: "/tmp/tts"
