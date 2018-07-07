@@ -28,31 +28,46 @@ plant:
 sensor:
   - platform: mqtt
     name: "viny_battery"
+    force_update: True
     device_class: "battery"
     unit_of_measurement: "%"
     state_topic: "plants/viny"
     value_template: "{{ value_json.battery }}"
+    json_attributes:
+      - timestamp
   - platform: mqtt
     name: "viny_brightness"
+    force_update: True
     device_class: "illuminance"
     unit_of_measurement: "lx"
     state_topic: "plants/viny"
     value_template: "{{ value_json.brightness }}"
+    json_attributes:
+      - timestamp
   - platform: mqtt
     name: "viny_conductivity"
+    force_update: True
     unit_of_measurement: "µS/cm"
     icon: "mdi:poop"
     state_topic: "plants/viny"
     value_template: "{{ value_json.conductivity }}"
+    json_attributes:
+      - timestamp
   - platform: mqtt
     name: "viny_moisture"
+    force_update: True
     device_class: "humidity"
     unit_of_measurement: "%"
     state_topic: "plants/viny"
     value_template: "{{ value_json.moisture }}"
+    json_attributes:
+      - timestamp
   - platform: mqtt
     name: "viny_temperature"
+    force_update: True
     device_class: "temperature"
     unit_of_measurement: "°C"
     state_topic: "plants/viny"
     value_template: "{{ value_json.temperature }}"
+    json_attributes:
+      - timestamp
