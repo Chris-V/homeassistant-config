@@ -1,0 +1,20 @@
+switch:
+  - platform: rpi_rf
+    gpio: 17
+    switches:
+      unused_rf_3:
+        protocol: 1
+        pulselength: 186
+        code_on: 5330691
+        code_off: 5330700
+      unused_rf_4:
+        protocol: 1
+        pulselength: 186
+        code_on: 5332227
+        code_off: 5332236
+      all_etekcity:
+        protocol: 1
+        pulselength: 186
+        code_on: 5338371
+        code_off: 5338380
+

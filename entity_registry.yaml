@@ -1,11 +1,11 @@
-media_player.top_living_room_chromecast:
+media_player.living_room_chromecast:
   config_entry_id:
-  name: Top living room's chromecast
+  name: Living room's chromecast
   platform: cast
   unique_id: 9bc1a455-6d7a-e698-5240-0341dcde8ad6
-media_player.top_living_room_home:
+media_player.living_room_google_home:
   config_entry_id:
-  name: Top living room's google home
+  name: Living room's google home
   platform: cast
   unique_id: efc495ea-1910-7a86-779e-bf9a306a94c6
 zwave.usb_controller:
@@ -13,9 +13,9 @@ zwave.usb_controller:
   name:
   platform: zwave
   unique_id: node-1
-light.side_porch:
+light.unused_hue:
   config_entry_id:
-  name: Side porch
+  name: Unused hue
   platform: zha
   unique_id: 00:17:88:01:10:53:8a:0f-11
 light.bedside_chris:
@@ -28,3 +28,53 @@ light.bedside_karine:
   name: Bedside Karine
   platform: zha
   unique_id: 00:17:88:01:10:36:1c:c0-11
+zwave.side_porch_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-2
+switch.side_porch_light:
+  config_entry_id:
+  name: Side porch light
+  platform: zwave
+  unique_id: 2-72057594076282880
+zwave.kitchen_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-3
+switch.kitchen_light:
+  config_entry_id:
+  name: Kitchen light
+  platform: zwave
+  unique_id: 3-72057594093060096
+zwave.dining_room_light_dimmer:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-4
+light.dining_room:
+  config_entry_id:
+  name: Dining room light
+  platform: zwave
+  unique_id: 4-72057594109853697
+zwave.garage_outdoor_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-5
+switch.garage_light:
+  config_entry_id:
+  name: Garage light
+  platform: zwave
+  unique_id: 5-72057594126614528
+zwave.front_porch_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-6
+switch.front_porch_light:
+  config_entry_id:
+  name: Front porch light
+  platform: zwave
+  unique_id: 6-72057594143391744

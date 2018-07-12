@@ -1,0 +1,15 @@
+google_assistant:
+  entity_config:
+    light.dining_room:
+      expose: True
+      aliases:
+        - "dining room"
+        - "table"
+      room: "Dining room"
+
+group:
+  dining_room:
+    name: "Dining room"
+    icon: "mdi:food"
+    entities:
+      - light.dining_room

@@ -1,30 +1,30 @@
-homeassistant:
-  customize:
-    light.outdoor_lights:
-      friendly_name: "Outdoor Lights"
-      icon: "mdi:home"
-
 google_assistant:
   entity_config:
-    light.outdoor_lights:
-      expose: True
-      room: "outdoor"
-    light.side_porch:
+    switch.side_porch_light:
       expose: True
       aliases:
         - "porch"
-      room: "outdoor"
+        - "side"
+      room: "Outdoor"
+    switch.garage_light:
+      expose: True
+      aliases:
+        - "garage"
+        - "shed"
+      room: "Outdoor"
+    switch.front_porch_light:
+      expose: True
+      aliases:
+        - "front porch"
+        - "front"
+      room: "Outdoor"
 
 group:
   outdoor:
     name: "Outdoor"
     icon: "mdi:home"
     entities:
-      - light.side_porch
-
-light:
-  - platform: group
-    name: outdoor_lights
-    entities:
-      - light.side_porch
+      - switch.side_porch_light
+      - switch.front_porch_light
+      - switch.garage_light
 

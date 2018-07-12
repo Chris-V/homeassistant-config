@@ -5,15 +5,26 @@ homeassistant:
     automation.household_leaves:
       friendly_name: "Turn everything off when household leaves"
 
-scene:
-  - name: empty_house
-    entities:
-      group.master_bedroom:
-        state: False
-      group.top_living_room:
-        state: False
-      group.outdoor:
-        state: False
+
+script:
+  empty_house:
+    alias: "Set house mood to nobody in da hood"
+    sequence:
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.master_bedroom"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.living_room"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.outdoor"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.kitchen"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.dining_room"
 
 automation:
   - alias: household_leaves
@@ -27,5 +38,5 @@ automation:
       entity_id: "input_boolean.guest_mode"
       state: "off"
     action:
-      service: scene.turn_on
-      entity_id: "scene.empty_house"
+      service: script.turn_on
+      entity_id: "script.empty_house"

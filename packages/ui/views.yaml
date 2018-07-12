@@ -2,6 +2,8 @@ homeassistant:
   customize:
     group.default_View:
       order: 0
+    group.media_view:
+      order: 1
     group.weather_view:
       order: 2
     group.plants_view:
@@ -54,8 +56,19 @@ group:
     entities:
       - group.household
       - group.outdoor
+      - group.kitchen
+      - group.dining_room
       - group.master_bedroom
-      - group.top_living_room
+      - group.living_room
+
+  media_view:
+    name: "Media"
+    icon: "mdi:music"
+    view: True
+    entities:
+      - media_player.living_room_chromecast
+      - media_player.living_room_google_home
+
 
   plants_view:
     name: "Plants"

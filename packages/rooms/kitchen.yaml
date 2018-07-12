@@ -1,0 +1,15 @@
+google_assistant:
+  entity_config:
+    switch.kitchen_light:
+      expose: True
+      aliases:
+        - "kitchen"
+      room: "Kitchen"
+
+group:
+  kitchen:
+    name: "Kitchen"
+    icon: "mdi:stove"
+    entities:
+      - switch.kitchen_light
+
