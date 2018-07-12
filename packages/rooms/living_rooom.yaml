@@ -9,15 +9,21 @@ homeassistant:
 
 google_assistant:
   entity_config:
+    switch.living_room_tv:
+      expose: True
+      room: "Living room"
+      aliases:
+        - "Living room TV"
+        - "TV"
     switch.living_room_ambiance:
       expose: True
-      room: "living room"
+      room: "Living room"
     switch.living_room_bookshelf:
       expose: True
       aliases:
         - "Xmas tree"
         - "Christmas tree"
-      room: "living room"
+      room: "Living room"
 
 cast:
   media_player:
@@ -29,10 +35,21 @@ group:
     name: "Living Room"
     icon: "mdi:television"
     entities:
+      - switch.living_room_tv
       - switch.living_room_ambiance
       - switch.living_room_bookshelf
 
 switch:
+  - platform: broadlink
+    mac: !secret broadlink_living_room_mac
+    host: !secret broadlink_living_room_host
+    type: "rm2_pro_plus"
+    switches:
+      living_room_tv:
+        friendly_name: "Living room TV"
+        command_on: "JgBQAAABKJMTERQRFDUUERQRFBEUERQQFDYTNhQRFDUUNhM2FDYTNhQRFBEUEBQ2ExIUEBQRFBEUNRQ2EzYUERQ1FDYTNhQ2EwAFIwABKEgUAA0FAAAAAAAAAAA="
+        command_off: "JgBYAAABKZITERQRFDUXDhUQFBEUEBUQFDYTNhUQFTQUNhQ1FTUUNRQRFBEUEBQ2FRESERQRFBEUNRQ2FDUUERQ1EzcUNRQ2FAAFIgABKEkUAAxPAAEoSBQADQU="
+
   - platform: rpi_rf
     gpio: 17
     switches:
