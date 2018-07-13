@@ -68,5 +68,6 @@ get_file state-card-floorplan.html https://github.com/Chris-V/ha-floorplan/blob/
 get_file floorplan.html https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/panels/floorplan.html panels/
 get_file jquery-3.2.1.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/jquery-3.2.1.min.js www/custom_ui/floorplan/lib/
 get_file moment.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/moment.min.js www/custom_ui/floorplan/lib/
+get_file yaml.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/yaml.min.js www/custom_ui/floorplan/lib/
 get_file svg-pan-zoom.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/svg-pan-zoom.min.js www/custom_ui/floorplan/lib/
 

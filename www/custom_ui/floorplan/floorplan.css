@@ -48,7 +48,7 @@ svg g[id^="layer_"] {
 
 /* Hola */
 
-#layout_background, #layer_header .menu--active rect {
+#layout_background {
     fill: var(--primary-background-color) !important;
     fill-opacity: 1 !important;
 }
@@ -59,10 +59,6 @@ svg g[id^="layer_"] {
 
 #layer_header text, #layer_header path, #image\.sensor\.dark_sky_summary {
     fill: var(--text-primary-color) !important;
-}
-
-#layer_header .menu--active path {
-    fill: var(--primary-text-color) !important;
 }
 
 #actions_overlay {
