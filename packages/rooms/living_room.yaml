@@ -1,12 +1,3 @@
-homeassistant:
-  customize:
-    switch.living_room_ambiance:
-      friendly_name: "Ambiance outlet"
-      icon: "mdi:lightbulb"
-    switch.living_room_bookshelf:
-      friendly_name: "Bookshelf outlet"
-      icon: "mdi:lightbulb"
-
 google_assistant:
   entity_config:
     switch.living_room_tv:
@@ -17,6 +8,8 @@ google_assistant:
         - "TV"
     switch.living_room_ambiance:
       expose: True
+      aliases:
+        - "living room light"
       room: "Living room"
     switch.living_room_bookshelf:
       expose: True
@@ -49,20 +42,12 @@ switch:
         friendly_name: "Living room TV"
         command_on: "JgBQAAABKJMTERQRFDUUERQRFBEUERQQFDYTNhQRFDUUNhM2FDYTNhQRFBEUEBQ2ExIUEBQRFBEUNRQ2EzYUERQ1FDYTNhQ2EwAFIwABKEgUAA0FAAAAAAAAAAA="
         command_off: "JgBYAAABKZITERQRFDUXDhUQFBEUEBUQFDYTNhUQFTQUNhQ1FTUUNRQRFBEUEBQ2FRESERQRFBEUNRQ2FDUUERQ1EzcUNRQ2FAAFIgABKEkUAAxPAAEoSBQADQU="
-
-  - platform: rpi_rf
-    gpio: 17
-    switches:
       living_room_ambiance:
-        protocol: 1
-        pulselength: 186
-        signal_repetitions: 25
-        code_on: 5330227
-        code_off: 5330236
+        friendly_name: "Ambiance outlet"
+        command_on: "svAyABMHBhMTBwYTBhMHExMHBxMTBwYTEwcHExMHBxMTBwYTBxMTBxMHBxMHExMHEwcGvwYTAAAA"
+        command_off: "ssoyAAYUEggGFBIIBhQGFAYUEggGFRIIBhQSCAYUEggGFBMHBhQGFBIIEggTCBIIBhQGFAbAAAAA"
       living_room_bookshelf:
-        protocol: 1
-        pulselength: 186
-        signal_repetitions: 15
-        code_on: 5330371
-        code_off: 5330380
+        friendly_name: "Bookshelf outlet"
+        command_on: "sggyAAYUEggGFBMIBhQGFAYUEgcGFBIIBhQSCAYUEggGFBIIEwcSCAYUBhQGFAcUEggSCAa/AAAA"
+        command_off: "sgkyAAYUEgcGFBIHBhQGFAYUEgcGFBIHBhQSCAYUEggGFBIHEggSCAYUBhQSBxMHBhQGFAa/AAAA"
 
