@@ -1,0 +1,21 @@
+google_assistant:
+  entity_config:
+    switch.basement_bathroom_light:
+      expose: True
+      aliases:
+        - "basement bathroom light"
+      room: "Basement bathroom"
+    switch.basement_bathroom_fan:
+      expose: True
+      aliases:
+        - "basement bathroom fan"
+      room: "Basement bathroom"
+
+group:
+  basement_bathroom:
+    name: "Basement bathroom"
+    icon: "mdi:shower-head"
+    entities:
+      - switch.basement_bathroom_light
+      - switch.basement_bathroom_fan
+

@@ -1,11 +1,11 @@
 media_player.living_room_chromecast:
   config_entry_id:
-  name: Living room's chromecast
+  name: "Living room's chromecast"
   platform: cast
   unique_id: 9bc1a455-6d7a-e698-5240-0341dcde8ad6
 media_player.living_room_google_home:
   config_entry_id:
-  name: Living room's google home
+  name: "Living room's google home"
   platform: cast
   unique_id: efc495ea-1910-7a86-779e-bf9a306a94c6
 zwave.usb_controller:
@@ -78,3 +78,23 @@ switch.front_porch_light:
   name: Front porch light
   platform: zwave
   unique_id: 6-72057594143391744
+zwave.basement_bathroom_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-7
+switch.basement_bathroom_light:
+  config_entry_id:
+  name: Basement bathroom light
+  platform: zwave
+  unique_id: 7-72057594160168960
+zwave.basement_bathroom_fan_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-8
+switch.basement_bathroom_fan:
+  config_entry_id:
+  name: Basement bathroom fan
+  platform: zwave
+  unique_id: 8-72057594176946176

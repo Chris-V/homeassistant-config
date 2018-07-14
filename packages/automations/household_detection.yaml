@@ -8,6 +8,7 @@ homeassistant:
 
 script:
   empty_house:
+    # TODO: Gonna need to list devices individually. ie: TV is turned on/off w/ the same code, so leaving might open it... huh :/
     alias: "Set house mood to nobody in da hood"
     sequence:
       - service: homeassistant.turn_off

@@ -60,6 +60,7 @@ group:
       - group.dining_room
       - group.master_bedroom
       - group.living_room
+      - group.basement_bathroom
 
   media_view:
     name: "Media"
