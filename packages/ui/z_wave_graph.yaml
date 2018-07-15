@@ -1,0 +1,15 @@
+automation:
+  - alias: Generate Z-Wave graph
+    trigger:
+      platform: time
+      minutes: '/5'
+      seconds: 00
+    action:
+      - service: shell_command.z_wave_graph
+panel_iframe:
+  z_wave_graph:
+    title: 'Z-Wave Graph'
+    icon: mdi:vector-square
+    url: !secret z_wave_graph_url
+shell_command:
+  z_wave_graph: "/var/lib/homeassistant/bin/python /home/hass/.homeassistant/bin/z-wave-graph.py --config /home/hass/.homeassistant/configuration_z_wave_graph.yaml"
