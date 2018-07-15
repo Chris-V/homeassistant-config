@@ -140,9 +140,9 @@ sensor:
       - cpu_temp
 
 shell_command:
-  shutdown_media: "/home/hass/.homeassistant/shell/shutdown_media.sh"
-  shutdown_relay_south: "/home/hass/.homeassistant/shell/shutdown_relay_south.sh"
-  shutdown_relay_north: "/home/hass/.homeassistant/shell/shutdown_relay_north.sh"
+  shutdown_media: "/home/hass/.homeassistant/bin/shutdown_media.sh"
+  shutdown_relay_south: "/home/hass/.homeassistant/bin/shutdown_relay_south.sh"
+  shutdown_relay_north: "/home/hass/.homeassistant/bin/shutdown_relay_north.sh"
 
 switch:
   - platform: wake_on_lan
