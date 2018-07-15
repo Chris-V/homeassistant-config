@@ -1,0 +1,32 @@
+google_assistant:
+  entity_config:
+    light.main_bathroom:
+      expose: True
+      aliases:
+        - "bathroom light"
+        - "main bathroom light"
+      room: "Main bathroom"
+    switch.main_bathroom_vanity_light:
+      expose: True
+      aliases:
+        - "vanity light"
+        - "bathroom vanity light"
+        - "main bathroom vanity light"
+        - "vanity"
+      room: "Main bathroom"
+    switch.main_bathroom_fan:
+      expose: True
+      aliases:
+        - "main bathroom fan"
+        - "bathroom fan"
+      room: "Main bathroom"
+
+group:
+  main_bathroom:
+    name: "Main bathroom"
+    icon: "mdi:shower-head"
+    entities:
+      - light.main_bathroom
+      - switch.main_bathroom_vanity_light
+      - switch.main_bathroom_fan
+

@@ -1,11 +1,11 @@
 media_player.living_room_chromecast:
   config_entry_id:
-  name: "Living room's chromecast"
+  name: Living room's chromecast
   platform: cast
   unique_id: 9bc1a455-6d7a-e698-5240-0341dcde8ad6
 media_player.living_room_google_home:
   config_entry_id:
-  name: "Living room's google home"
+  name: Living room's google home
   platform: cast
   unique_id: efc495ea-1910-7a86-779e-bf9a306a94c6
 zwave.usb_controller:
@@ -98,3 +98,33 @@ switch.basement_bathroom_fan:
   name: Basement bathroom fan
   platform: zwave
   unique_id: 8-72057594176946176
+zwave.main_bathroom_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-9
+light.main_bathroom:
+  config_entry_id:
+  name: Main bathroom light
+  platform: zwave
+  unique_id: 9-72057594193739777
+zwave.main_bathroom_vanity_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-10
+switch.main_bathroom_vanity_light:
+  config_entry_id:
+  name: Main bathroom vanity light
+  platform: zwave
+  unique_id: 10-72057594210500608
+zwave.main_bathroom_fan_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-11
+switch.main_bathroom_fan:
+  config_entry_id:
+  name: Main bathroom fan
+  platform: zwave
+  unique_id: 11-72057594227277824
