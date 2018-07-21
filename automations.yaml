@@ -6,8 +6,8 @@
   action:
   - data:
       data:
-        tag: hass_event
-      message: Home Assistant is shutting down
+        tag: hass-status
+      message: Home-Assistant is shutting down.
     service: notify.admin
   initial_state: true
 - id: notify_start
@@ -18,7 +18,7 @@
   action:
   - data:
       data:
-        tag: hass_event
-      message: Home Assistant has restarted
+        tag: hass-status
+      message: Home-Assistant has restarted.
     service: notify.admin
   initial_state: true

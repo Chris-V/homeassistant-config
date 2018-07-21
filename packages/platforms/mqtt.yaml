@@ -6,3 +6,11 @@ mqtt:
   keepalive: 60
   username: !secret mqtt_username
   password: !secret mqtt_password
+  birth_message:
+    topic: "home-assistant/status"
+    payload: "online"
+    retain: True
+  will_message:
+    topic: "home-assistant/status"
+    payload: "offline"
+    retain: True
