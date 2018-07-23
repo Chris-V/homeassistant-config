@@ -4,6 +4,9 @@ secrets.yaml
 .uuid
 .storage/
 
+zwcfg_*.xml
+zwscene.xml
+
 OZW_Log.txt
 pyozw.sqlite
 
