@@ -62,6 +62,7 @@ group:
       - group.living_room
       - group.main_bathroom
       - group.basement_bathroom
+      - group.office
 
   media_view:
     name: "Media"

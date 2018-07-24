@@ -1,0 +1,16 @@
+google_assistant:
+  entity_config:
+    light.office:
+      expose: True
+      aliases:
+        - "office"
+        - "office light"
+      room: "Office"
+
+group:
+  office:
+    name: "Office"
+    icon: "mdi:desktop-mac-dashboard"
+    entities:
+      - light.office
+

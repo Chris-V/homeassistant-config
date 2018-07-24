@@ -32,6 +32,9 @@ script:
       - service: homeassistant.turn_off
         data:
           entity_id: "group.basement_bathroom"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.office"
 
 automation:
   - alias: household_leaves

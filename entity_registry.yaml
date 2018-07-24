@@ -128,3 +128,13 @@ switch.main_bathroom_fan:
   name: Main bathroom fan
   platform: zwave
   unique_id: 11-72057594227277824
+zwave.office_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-12
+light.office:
+  config_entry_id:
+  name: Office light
+  platform: zwave
+  unique_id: 12-72057594244071425
