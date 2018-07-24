@@ -10,6 +10,11 @@ google_assistant:
       aliases:
         - "basement bathroom fan"
       room: "Basement bathroom"
+    light.basement_bathroom_vanity:
+      expose: True
+      aliases:
+        - "basement bathroom vanity"
+      room: "Basement bathroom"
 
 group:
   basement_bathroom:
@@ -18,4 +23,5 @@ group:
     entities:
       - switch.basement_bathroom_light
       - switch.basement_bathroom_fan
+      - light.basement_bathroom_vanity
 

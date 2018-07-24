@@ -138,3 +138,13 @@ light.office:
   name: Office light
   platform: zwave
   unique_id: 12-72057594244071425
+zwave.basement_bathroom_vanity_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-13
+light.basement_bathroom_vanity:
+  config_entry_id:
+  name: Basement bathroom vanity light
+  platform: zwave
+  unique_id: 13-72057594260848641
