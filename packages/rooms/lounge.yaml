@@ -1,0 +1,23 @@
+google_assistant:
+  entity_config:
+    light.basement_hallway:
+      expose: True
+      aliases:
+        - "basement hallway light"
+        - "basement hallway"
+      room: "Lounge"
+    switch.downstairs_light:
+      expose: True
+      aliases:
+        - "downstairs light"
+        - "downstairs"
+      room: "Lounge"
+
+group:
+  lounge:
+    name: "Lounge"
+    icon: "mdi:glass-cocktail"
+    entities:
+      - light.basement_hallway
+      - switch.downstairs_light
+

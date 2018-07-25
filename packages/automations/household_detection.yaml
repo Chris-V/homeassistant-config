@@ -35,6 +35,12 @@ script:
       - service: homeassistant.turn_off
         data:
           entity_id: "group.office"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.lounge"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.laundry_room"
 
 automation:
   - alias: household_leaves

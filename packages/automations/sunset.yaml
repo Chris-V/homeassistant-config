@@ -48,5 +48,9 @@ script:
           entity_id: "group.outdoor"
       - service: homeassistant.turn_on
         data:
-          entity_id: "switch.living_room_ambiance"
+          entity_id: "switch.bookshelf_light"
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.basement_hallway"
+          brightness: 15
 

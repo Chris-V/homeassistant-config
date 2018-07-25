@@ -60,9 +60,11 @@ group:
       - group.dining_room
       - group.master_bedroom
       - group.living_room
+      - group.lounge
+      - group.office
       - group.main_bathroom
       - group.basement_bathroom
-      - group.office
+      - group.laundry_room
 
   media_view:
     name: "Media"

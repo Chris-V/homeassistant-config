@@ -11,12 +11,19 @@ google_assistant:
       aliases:
         - "living room light"
       room: "Living room"
-    switch.living_room_bookshelf:
+    switch.bookshelf_outlet:
       expose: True
       aliases:
+        - "Bookshelf outlet"
         - "Xmas tree"
         - "Christmas tree"
       room: "Living room"
+    switch.bookshelf_light:
+      expose: True
+      aliases:
+        - "bookshelf light"
+        - "bookshelf"
+      room: "Libing room"
 
 cast:
   media_player:
@@ -30,7 +37,8 @@ group:
     entities:
       - switch.living_room_tv
       - switch.living_room_ambiance
-      - switch.living_room_bookshelf
+      - switch.bookshelf_outlet
+      - switch.bookshelf_light
 
 switch:
   - platform: broadlink
@@ -46,7 +54,7 @@ switch:
         friendly_name: "Ambiance outlet"
         command_on: "svAyABMHBhMTBwYTBhMHExMHBxMTBwYTEwcHExMHBxMTBwYTBxMTBxMHBxMHExMHEwcGvwYTAAAA"
         command_off: "ssoyAAYUEggGFBIIBhQGFAYUEggGFRIIBhQSCAYUEggGFBMHBhQGFBIIEggTCBIIBhQGFAbAAAAA"
-      living_room_bookshelf:
+      bookshelf_outlet:
         friendly_name: "Bookshelf outlet"
         command_on: "sggyAAYUEggGFBMIBhQGFAYUEgcGFBIIBhQSCAYUEggGFBIIEwcSCAYUBhQGFAcUEggSCAa/AAAA"
         command_off: "sgkyAAYUEgcGFBIHBhQGFAYUEgcGFBIHBhQSCAYUEggGFBIHEggSCAYUBhQSBxMHBhQGFAa/AAAA"

@@ -148,3 +148,43 @@ light.basement_bathroom_vanity:
   name: Basement bathroom vanity light
   platform: zwave
   unique_id: 13-72057594260848641
+zwave.bookshelf_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-14
+switch.bookshelf_light:
+  config_entry_id:
+  name: Bookshelf light
+  platform: zwave
+  unique_id: 14-72057594277609472
+zwave.downstairs_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-15
+switch.downstairs_light:
+  config_entry_id:
+  name: Downstairs light
+  platform: zwave
+  unique_id: 15-72057594294386688
+zwave.basement_hallway_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-16
+light.basement_hallway:
+  config_entry_id:
+  name: Basement hallway
+  platform: zwave
+  unique_id: 16-72057594311180289
+zwave.laundry_room_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-17
+switch.laundry_room_light:
+  config_entry_id:
+  name: Laundry room light
+  platform: zwave
+  unique_id: 17-72057594327941120
