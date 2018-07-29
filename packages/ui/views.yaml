@@ -65,6 +65,7 @@ group:
       - group.main_bathroom
       - group.basement_bathroom
       - group.laundry_room
+      - group.workshop
 
   media_view:
     name: "Media"

@@ -53,4 +53,9 @@ script:
         data:
           entity_id: "light.basement_hallway"
           brightness: 15
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.lounge_ambiance"
+          brightness: 15
+          rgb_color: [255, 160, 40]
 

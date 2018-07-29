@@ -13,9 +13,9 @@ zwave.usb_controller:
   name:
   platform: zwave
   unique_id: node-1
-light.unused_hue:
+light.lounge_ambiance:
   config_entry_id:
-  name: Unused hue
+  name: Lounge ambiance light
   platform: zha
   unique_id: 00:17:88:01:10:53:8a:0f-11
 light.bedside_chris:
@@ -58,14 +58,14 @@ light.dining_room:
   name: Dining room light
   platform: zwave
   unique_id: 4-72057594109853697
-zwave.garage_outdoor_light_switch:
+zwave.shed_outdoor_light_switch:
   config_entry_id:
   name:
   platform: zwave
   unique_id: node-5
-switch.garage_light:
+switch.shed_light:
   config_entry_id:
-  name: Garage light
+  name: Shed light
   platform: zwave
   unique_id: 5-72057594126614528
 zwave.front_porch_light_switch:
@@ -98,7 +98,7 @@ switch.basement_bathroom_fan:
   name: Basement bathroom fan
   platform: zwave
   unique_id: 8-72057594176946176
-zwave.main_bathroom_light_switch:
+zwave.main_bathroom_light_dimmer:
   config_entry_id:
   name:
   platform: zwave
@@ -128,7 +128,7 @@ switch.main_bathroom_fan:
   name: Main bathroom fan
   platform: zwave
   unique_id: 11-72057594227277824
-zwave.office_light_switch:
+zwave.office_light_dimmer:
   config_entry_id:
   name:
   platform: zwave
@@ -138,7 +138,7 @@ light.office:
   name: Office light
   platform: zwave
   unique_id: 12-72057594244071425
-zwave.basement_bathroom_vanity_switch:
+zwave.basement_bathroom_vanity_light_dimmer:
   config_entry_id:
   name:
   platform: zwave
@@ -168,7 +168,7 @@ switch.downstairs_light:
   name: Downstairs light
   platform: zwave
   unique_id: 15-72057594294386688
-zwave.basement_hallway_light_switch:
+zwave.basement_hallway_light_dimmer:
   config_entry_id:
   name:
   platform: zwave
@@ -188,3 +188,23 @@ switch.laundry_room_light:
   name: Laundry room light
   platform: zwave
   unique_id: 17-72057594327941120
+zwave.lounge_light_dimmer:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-18
+light.lounge:
+  config_entry_id:
+  name: Lounge light
+  platform: zwave
+  unique_id: 18-72057594344734721
+zwave.workshop_light_switch:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-19
+switch.workshop_light:
+  config_entry_id:
+  name: Workshop light
+  platform: zwave
+  unique_id: 19-72057594361495552

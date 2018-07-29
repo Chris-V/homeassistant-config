@@ -1,0 +1,15 @@
+google_assistant:
+  entity_config:
+    switch.workshop_light:
+      expose: True
+      aliases:
+        - "workshop light"
+      room: "Workshop"
+
+group:
+  workshop:
+    name: "Workshop"
+    icon: "mdi:hammer"
+    entities:
+      - switch.workshop_light
+

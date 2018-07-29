@@ -6,11 +6,11 @@ google_assistant:
         - "porch"
         - "side"
       room: "Outdoor"
-    switch.garage_light:
+    switch.shed_light:
       expose: True
       aliases:
-        - "garage"
         - "shed"
+        - "garage"
       room: "Outdoor"
     switch.front_porch_light:
       expose: True
@@ -26,5 +26,5 @@ group:
     entities:
       - switch.side_porch_light
       - switch.front_porch_light
-      - switch.garage_light
+      - switch.shed_light
 

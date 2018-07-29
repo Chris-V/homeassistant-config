@@ -1,5 +1,17 @@
 google_assistant:
   entity_config:
+    light.lounge:
+      expose: True
+      aliases:
+        - "lounge light"
+        - "lounge spots"
+        - "lounge"
+      room: "Lounge"
+    light.lounge_ambiance:
+      expose: True
+      aliases:
+        - "lounge ambiance"
+      room: "Lounge"
     light.basement_hallway:
       expose: True
       aliases:
@@ -18,6 +30,8 @@ group:
     name: "Lounge"
     icon: "mdi:glass-cocktail"
     entities:
+      - light.lounge
+      - light.lounge_ambiance
       - light.basement_hallway
       - switch.downstairs_light
 
