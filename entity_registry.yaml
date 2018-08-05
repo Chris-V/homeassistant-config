@@ -1,10 +1,10 @@
 media_player.living_room_chromecast:
-  config_entry_id:
+  config_entry_id: 845954f5c67541b4b744c3f2a63eaac5
   name: Living room's chromecast
   platform: cast
   unique_id: 9bc1a455-6d7a-e698-5240-0341dcde8ad6
 media_player.living_room_google_home:
-  config_entry_id:
+  config_entry_id: 845954f5c67541b4b744c3f2a63eaac5
   name: Living room's google home
   platform: cast
   unique_id: efc495ea-1910-7a86-779e-bf9a306a94c6
