@@ -12,4 +12,6 @@ group:
     icon: "mdi:stove"
     entities:
       - switch.kitchen_light
+      - binary_sensor.spidy_problem
+      - binary_sensor.viny_problem
 

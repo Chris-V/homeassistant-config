@@ -27,4 +27,5 @@ group:
       - switch.side_porch_light
       - switch.front_porch_light
       - switch.shed_light
+      - binary_sensor.gaetan_problem
 
