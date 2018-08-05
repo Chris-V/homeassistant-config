@@ -1,24 +1,50 @@
-- id: notify_shutdown
-  alias: Notify HASS shutdowns
-  trigger:
-  - event: shutdown
-    platform: homeassistant
-  action:
-  - data:
-      data:
-        tag: hass-status
-      message: Home-Assistant is shutting down.
-    service: notify.admin
-  initial_state: true
-- id: notify_start
-  alias: Notify HASS starts
+- id: '1533493369981'
+  alias: Notify HA startup
   trigger:
   - event: start
     platform: homeassistant
+  condition: []
   action:
   - data:
       data:
         tag: hass-status
       message: Home-Assistant has restarted.
     service: notify.admin
-  initial_state: true
+- id: '1533493330769'
+  alias: Notify HA shutdown
+  trigger:
+  - event: shutdown
+    platform: homeassistant
+  condition: []
+  action:
+  - data:
+      data:
+        tag: hass-status
+      message: Home-Assistant is shutting down.
+    service: notify.admin
+- id: '1533482708100'
+  alias: Notify Z-Wave network ready
+  trigger:
+  - event_data: {}
+    event_type: zwave.network_ready
+    platform: event
+  condition: []
+  action:
+  - data:
+      data:
+        tag: hass-status
+      message: Z-Wave network is ready.
+    service: notify.admin
+- id: '1533482983141'
+  alias: Notify Z-Wave network complete
+  trigger:
+  - event_data: {}
+    event_type: zwave.network_complete
+    platform: event
+  condition: []
+  action:
+  - data:
+      data:
+        tag: hass-status
+      message: Z-Wave network is complete.
+    service: notify.admin
