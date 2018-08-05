@@ -208,3 +208,48 @@ switch.workshop_light:
   name: Workshop light
   platform: zwave
   unique_id: 19-72057594361495552
+zwave.water_heater_leak_sensor:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-21
+sensor.water_heater_leak_sensor_temperature:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 21-72057594395246610
+sensor.water_heater_leak_sensor_sourcenodeid:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 21-72057594396295201
+sensor.water_heater_leak_sensor_heat:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 21-72057594396295281
+sensor.water_heater_leak_sensor_flood:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 21-72057594396295297
+sensor.water_heater_leak_sensor_burglar:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 21-72057594396295329
+binary_sensor.water_heater_leak_sensor_sensor:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 21-72057594395230208
+sensor.water_heater_leak_sensor_alarm_type:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 21-72057594396295169
+sensor.water_heater_leak_sensor_alarm_level:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 21-72057594396295185
