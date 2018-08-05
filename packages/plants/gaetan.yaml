@@ -27,6 +27,11 @@ plant:
     min_moisture: 10
     min_temperature: 14
 
+group:
+  all_batteries:
+    entities:
+      - sensor.gaetan_battery
+
 sensor:
   - platform: mqtt
     name: "gaetan_battery"

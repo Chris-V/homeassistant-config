@@ -99,6 +99,7 @@ group:
     entities:
       - group.general_settings
       - group.general_notifications
+      - group.all_batteries
 
   monitoring_view:
     name: "Monitoring"
