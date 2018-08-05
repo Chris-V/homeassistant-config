@@ -75,7 +75,6 @@ group:
       - media_player.living_room_chromecast
       - media_player.living_room_google_home
 
-
   plants_view:
     name: "Plants"
     icon: "mdi:flower"
@@ -100,7 +99,6 @@ group:
     entities:
       - group.general_settings
       - group.general_notifications
-      - group.wake_up_alarm
 
   monitoring_view:
     name: "Monitoring"
