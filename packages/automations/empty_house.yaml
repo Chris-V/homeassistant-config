@@ -1,0 +1,13 @@
+automation:
+  - alias: household_leaves
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "group.household"
+        from: "home"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.guest_mode"
+        state: "off"
+    action:
+      - service: script.everything_off

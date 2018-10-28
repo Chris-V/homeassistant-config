@@ -1,26 +1,28 @@
 homeassistant:
   customize:
-    light.master_bedroom_lights:
-      friendly_name: "Master Bedroom Lights"
-      icon: "mdi:lightbulb"
-    light.master_bedroom_bedside_lights:
-      friendly_name: "Master Bedroom Bedside Lights"
+    light.master_bedroom_bedsides:
+      friendly_name: "Master bedroom bedside lights"
       icon: "mdi:lightbulb"
 
 google_assistant:
   entity_config:
-    light.master_bedroom_bedside_lights:
-      expose: True
-      room: "master bedroom"
-      aliases:
-        - "bedside lamps"
-        - "bedroom lamps"
     light.bedside_chris:
       expose: True
-      room: "master bedroom"
+      room: "Master bedroom"
+      aliases:
+        - "Bedside Chris"
     light.bedside_karine:
       expose: True
-      room: "master bedroom"
+      room: "Master bedroom"
+      aliases:
+        - "Bedside Karine"
+
+light:
+  - platform: group
+    name: "master_bedroom_bedsides"
+    entities:
+      - light.bedside_chris
+      - light.bedside_karine
 
 group:
   master_bedroom:
@@ -29,14 +31,8 @@ group:
     entities:
       - light.bedside_chris
       - light.bedside_karine
-
-light:
-  - platform: group
-    name: "master_bedroom_bedside_lights"
+  master_bedroom_lights:
+    name: "Master bedroom lights"
+    icon: "mdi:lightbulb"
     entities:
-      - light.bedside_chris
-      - light.bedside_karine
-  - platform: group
-    name: "master_bedroom_lights"
-    entities:
-      - light.master_bedroom_bedside_lights
+      - light.master_bedroom_bedsides

@@ -1,22 +1,21 @@
 # PmxMononight https://community.home-assistant.io/t/share-your-themes/22018/38
 # Available variables: https://github.com/home-assistant/home-assistant-polymer/blob/master/src/resources/ha-style.js
 
-# MyVariables
-base-hue: '220' #Controls the base (and accent) color hue (0-360) | 0=Red 60=Yellow 120=Green 180=Cyan 240=Blue 300=Magenta 360=Red
-base-sat: '5%' #Controls the saturation of the theme (0%-100%) | 0%=Grey 100%=Full Saturation
+# Variables
+base-hue: '220' # Controls the base (and accent) color hue (0-360) | 0=Red 60=Yellow 120=Green 180=Cyan 240=Blue 300=Magenta 360=Red
+base-sat: '5%' # Controls the saturation of the theme (0%-100%) | 0%=Grey 100%=Full Saturation
 
-# MyVar
 huesat: 'var(--base-hue), var(--base-sat),'
 
 # Primary Color
-primary-color: 'hsl(var(--huesat) 25%)' #header colors and some text colors
-dark-primary-color: 'hsl(var(--huesat) 60%)'
-light-primary-color: 'hsl(var(--huesat) 90%)'
+primary-color: 'hsl(var(--huesat) 35%)' # Header colors and some text colors
+dark-primary-color: 'hsl(var(--huesat) 50%)'
+light-primary-color: 'hsl(var(--huesat) 75%)'
 accent-color: 'hsl(var(--huesat) 30%)'
 
 # Backgrounds
-primary-background-color: 'hsl(var(--huesat) 20%)'
-secondary-background-color: 'hsl(var(--huesat) 16%)' # background behind cards
+primary-background-color: 'hsl(var(--huesat) 19%)'
+secondary-background-color: 'hsl(var(--huesat) 19%)' # Background behind cards
 app-drawer-scrim-background: 'rgba(125, 125, 125, 0.35)'
 paper-listbox-background-color: 'var(--sidebar-background-color)'
 paper-card-background-color: 'hsl(var(--huesat) 12%)'
@@ -33,18 +32,19 @@ light-divider-opacity: '0'
 dark-secondary-opacity: '1'
 
 # Text colors
-primary-text-color: 'hsl(var(--huesat) 90%)'
+primary-text-color: 'hsl(var(--huesat) 95%)'
 text-primary-color: 'hsl(var(--huesat) 80%)'
 secondary-text-color: 'hsl(var(--huesat) 80%)'
 disabled-text-color: 'hsl(var(--huesat) 70%)'
 sidebar-text_-_color: 'hsl(var(--huesat) 90%)'
+sidebar-selected-text-color: 'hsl(var(--huesat) 90%)'
 sidebar-text-color: 'hsl(var(--huesat) 90%)'
 paper-card-header-color: 'hsl(var(--huesat) 90%)'
 paper-button-ink-color: 'hsl(var(--huesat) 50%)'
 
 # Text Adjustments
 paper-font-headline_-_letter-spacing: '-0.5px'
-paper-font-headline_-_font-weight: '400'
+paper-font-headline_-_font-weight: '400'hsl(var(--huesat) 35%)
 paper-font-body1_-_font-weight: '300'
 
 # Nav Menu

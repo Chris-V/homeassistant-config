@@ -2,19 +2,20 @@ google_assistant:
   entity_config:
     switch.basement_bathroom_light:
       expose: True
-      aliases:
-        - "basement bathroom light"
       room: "Basement bathroom"
+      aliases:
+        - "Basement bathroom light"
     switch.basement_bathroom_fan:
       expose: True
-      aliases:
-        - "basement bathroom fan"
       room: "Basement bathroom"
+      aliases:
+        - "Basement bathroom fan"
     light.basement_bathroom_vanity:
       expose: True
-      aliases:
-        - "basement bathroom vanity"
       room: "Basement bathroom"
+      aliases:
+        - "Basement bathroom vanity light"
+        - "Basement bathroom vanity"
 
 group:
   basement_bathroom:
@@ -24,4 +25,10 @@ group:
       - switch.basement_bathroom_light
       - switch.basement_bathroom_fan
       - light.basement_bathroom_vanity
-
+  basement_bathroom_lights:
+    name: "Basement bathroom lights"
+    icon: "mdi:lightbulb"
+    entities:
+      - switch.basement_bathroom_light
+      - switch.basement_bathroom_fan
+      - light.basement_bathroom_vanity

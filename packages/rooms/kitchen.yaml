@@ -2,9 +2,10 @@ google_assistant:
   entity_config:
     switch.kitchen_light:
       expose: True
-      aliases:
-        - "kitchen"
       room: "Kitchen"
+      aliases:
+        - "Kitchen light"
+        - "Kitchen"
 
 group:
   kitchen:
@@ -14,4 +15,9 @@ group:
       - switch.kitchen_light
       - binary_sensor.spidy_problem
       - binary_sensor.viny_problem
+  kitchen_lights:
+    name: "Kitchen lights"
+    icon: "mdi:lightbulb"
+    entities:
+      - switch.kitchen_light
 

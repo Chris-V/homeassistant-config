@@ -2,9 +2,10 @@ google_assistant:
   entity_config:
     switch.workshop_light:
       expose: True
-      aliases:
-        - "workshop light"
       room: "Workshop"
+      aliases:
+        - "Workshop light"
+        - "Workshop"
 
 group:
   workshop:
@@ -13,10 +14,13 @@ group:
     entities:
       - switch.workshop_light
       - binary_sensor.water_heater_leak
+  workshop_lights:
+    name: "Workshop lights"
+    icon: "mdi:lightbulb"
+    entities:
+      - switch.workshop_light
 
   all_batteries:
-    name: "Batteries"
-    icon: "mdi:battery"
     entities:
       - sensor.water_heater_leak_sensor_battery
 

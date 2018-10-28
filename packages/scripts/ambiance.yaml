@@ -1,0 +1,30 @@
+google_assistant:
+  entity_config:
+    script.ambiance:
+      expose: True
+      aliases:
+        - "Ambiance mood"
+        - "Night ambiance"
+        - "Ambiance"
+
+script:
+  ambiance:
+    alias: "Ambiance mood"
+    sequence:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.master_bedroom_bedsides"
+          brightness: 15
+          rgb_color: [255, 160, 40]
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "switch.bookshelf_light"
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.basement_hallway"
+          brightness: 40
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.lounge_ambiance"
+          brightness: 80
+          rgb_color: [255, 160, 40]

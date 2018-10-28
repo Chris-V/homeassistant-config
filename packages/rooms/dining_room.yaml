@@ -2,14 +2,21 @@ google_assistant:
   entity_config:
     light.dining_room:
       expose: True
-      aliases:
-        - "dining room"
-        - "table"
       room: "Dining room"
+      aliases:
+        - "Dining room light"
+        - "Dining room"
+        - "Table light"
+        - "Table"
 
 group:
   dining_room:
     name: "Dining room"
     icon: "mdi:food"
+    entities:
+      - light.dining_room
+  dining_room_lights:
+    name: "Dining room lights"
+    icon: "mdi:lightbulb"
     entities:
       - light.dining_room

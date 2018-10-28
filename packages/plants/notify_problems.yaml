@@ -19,7 +19,7 @@ automation:
         data_template:
           title: "Check the Plants"
           message: "{{ trigger.to_state.attributes.friendly_name }} has some problems: {{ trigger.to_state.attributes.problem }}"
-          data: 
+          data:
             tag: "{{ trigger.to_state.entity_id | replace('.', '_') }}"
-            url: !secret http_public_host # TODO: append states/group.plants_view
+            url: !secret http_public_host # TODO: append lovelace/plants
 

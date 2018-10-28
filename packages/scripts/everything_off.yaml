@@ -1,0 +1,45 @@
+google_assistant:
+  entity_config:
+    script.everything_off:
+      expose: True
+      aliases:
+        - "Everything"
+        - "All lights"
+
+script:
+  everything_off:
+    alias: "Turn off all lights and switches"
+    sequence:
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.outdoor_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.master_bedroom_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.living_room_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.kitchen_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.dining_room_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.main_bathroom_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.basement_bathroom_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.office_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.lounge_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.laundry_room_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "group.workshop_lights"

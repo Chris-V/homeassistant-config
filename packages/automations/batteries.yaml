@@ -1,0 +1,6 @@
+group:
+  all_batteries:
+    name: "Batteries"
+    icon: "mdi:battery"
+
+# TODO: Low battery notifications + global sensor

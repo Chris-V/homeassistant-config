@@ -2,15 +2,20 @@ google_assistant:
   entity_config:
     switch.laundry_room_light:
       expose: True
-      aliases:
-        - "laundry room light"
-        - "laundry room"
       room: "Laundry room"
+      aliases:
+        - "Laundry room light"
+        - "Laundry room"
 
 group:
   laundry_room:
     name: "Laundry room"
     icon: "mdi:washing-machine"
+    entities:
+      - switch.laundry_room_light
+  laundry_room_lights:
+    name: "Laundry room lights"
+    icon: "mdi:lightbulb"
     entities:
       - switch.laundry_room_light
 

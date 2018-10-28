@@ -2,15 +2,20 @@ google_assistant:
   entity_config:
     light.office:
       expose: True
-      aliases:
-        - "office"
-        - "office light"
       room: "Office"
+      aliases:
+        - "Office light"
+        - "Office"
 
 group:
   office:
     name: "Office"
     icon: "mdi:desktop-mac-dashboard"
+    entities:
+      - light.office
+  office_lights:
+    name: "Office lights"
+    icon: "mdi:lightbulb"
     entities:
       - light.office
 

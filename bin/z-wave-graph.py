@@ -3,10 +3,13 @@
 import argparse
 import datetime
 import json
-import os.path
-import re
-import sys
 import locale
+import os.path
+import site
+import sys
+
+from requests import get
+
 locale.setlocale(locale.LC_ALL, '')
 
 # Needed for the docker image:
@@ -23,13 +26,16 @@ def need(what):
     sys.exit(1)
 
 
+# Add persistent site packages if in docker
+if os.path.isdir('/config/deps/lib/python3.6/site-packages'):
+    site.addsitedir('/config/deps/lib/python3.6/site-packages')
+
 try:
     import networkx as nx
 except ImportError:
     need('networkx')
 
 import homeassistant.config
-import homeassistant.remote as remote
 import homeassistant.const
 
 
@@ -164,39 +170,48 @@ class ZWave(object):
 
         self.haconf = homeassistant.config.load_yaml_config_file(config)
 
-        self.directory = os.path.join(os.path.dirname(config), 'www')
-        self.filename = 'z-wave-graph.json'
+        self.outpath = args.outpath or \
+                       os.path.join(os.path.dirname(config), 'www', 'z-wave-graph.json')
 
         # API connection necessities.
-        api_password = None
-        base_url = 'http://localhost'
-        port = None
+        self.api_password = None
+        self.base_url = 'http://localhost:%s' % homeassistant.const.SERVER_PORT
 
+        if 'http' not in self.haconf:
+            raise RuntimeError('http: must be enabled in your hass configuration.')
 
         if self.haconf['http'] is not None and 'base_url' in self.haconf['http']:
-            base_url = self.haconf['http']['base_url']
+            self.base_url = self.haconf['http']['base_url']
 
-        if self.haconf['http'] is not None and 'api_password' in self.haconf['http']:
-            api_password = str(self.haconf['http']['api_password'])
+        if 'HASSIO_TOKEN' in os.environ:
+            self.api_password = os.environ['HASSIO_TOKEN']
+        elif self.haconf['http'] is not None and 'api_password' in self.haconf['http']:
+            self.api_password = str(self.haconf['http']['api_password'])
 
-        # If the base_url ends with a port, then strip it and set the port.
-        # remote.API adds the default port if port= is not set.
-        m = re.match(r'(^.*)(:(\d+))$', base_url)
-        if m:
-            base_url = m.group(1)
-            port = m.group(3)
+        m = self.request('/')
+        if 'message' not in m or m['message'] != 'API running.':
+            raise RuntimeError("Error, unable to connect to the API at %s" % self.base_url)
 
-        self.api = remote.API(base_url, api_password, port=port)
-        if remote.validate_api(self.api).value != 'ok':
-            print("Error, unable to connect to the API: %s" % remote.validate_api(self.api))
-            sys.exit(1)
-
-        self._get_entities()
+        self.get_entities()
 
         if self.args.debug:
             self.dump_nodes()
 
-        self._build_dot()
+        self.build_graph()
+
+
+    def request(self, path):
+        url = '%s/api%s' % (self.base_url, path)
+        headers = {'x-ha-access': self.api_password,
+                   'content-type': 'application/json'}
+
+        response = get(url, headers=headers)
+        if response.status_code != 200:
+            raise ValueError("Unable to pull the data from: %s" % url, response.text)
+
+        # print("request(%s):\n" % (path), response.text)
+
+        return json.loads(response.text)
 
 
     def dump_nodes(self):
@@ -216,14 +231,14 @@ class ZWave(object):
         return self.nodes.add(node)
 
 
-    def _get_entities(self):
-        entities = remote.get_states(self.api)
+    def get_entities(self):
+        entities = self.request('/states')
         for entity in entities:
-            if entity.entity_id.startswith('zwave'):
-                self.add(entity.attributes)
+            if entity['entity_id'].startswith('zwave.'):
+                self.add(entity['attributes'])
 
 
-    def _build_dot(self):
+    def build_graph(self):
         for node in self.nodes:
             config = {
                 'label': str(node),
@@ -265,13 +280,20 @@ class ZWave(object):
         if self.args.debug:
             print(self.json)
 
-        fp = os.path.join(self.directory, self.filename)
-        with open(fp, 'w') as outfile:
+        with open(self.outpath, 'w') as outfile:
             json.dump(self.json, outfile, indent=2, sort_keys=True)
 
 
 if __name__ == '__main__':
     """Generate graph of Home Assistant Z-Wave devices."""
+    to_check = ['~/.config/', '~/config/', '~/.homeassistant/', '~/homeassistant/', '/config/']
+    config = None
+
+    for check in to_check:
+        expanded = os.path.expanduser(os.path.join(check, 'configuration.yaml'))
+        if os.path.isfile(expanded):
+            config = expanded
+
     removed_txt = "Instead of --ssl or --port, set base_url appropriately, e.g.:\nhttp:\n  base_url: https://localhost:443\n\nin your configuration.yaml"
 
     parser = argparse.ArgumentParser(
@@ -282,7 +304,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--port', type=int, default=-1, help=argparse.SUPPRESS)
     parser.add_argument('--ssl', action="store_true", help=argparse.SUPPRESS)
-
+    parser.add_argument('--outpath', type=str, default=None, help='path to write .json file output to')
     args = parser.parse_args()
 
     if args.ssl:
@@ -293,27 +315,19 @@ if __name__ == '__main__':
         print("\n" + removed_txt)
         sys.exit(1)
 
-    config = None
+    if not config:
+        if 'config' not in args or not args.config:
+            raise ValueError("Unable to automatically find configuration.yaml, you have to specify it with -c/--config")
 
-    if 'config' in args and args.config:
         to_check = [args.config, os.path.join(args.config, 'configuration.yaml')]
-    
+
         for check in to_check:
             expanded = os.path.expanduser(check)
             if expanded and os.path.isfile(expanded):
                 config = expanded
 
-    if not config:
-        to_check = ['~/.config/', '~/config/', '~/.homeassistant/', '~/homeassistant/', '/config/']
-    
-        for check in to_check:
-            expanded = os.path.expanduser(os.path.join(check, 'configuration.yaml'))
-            if os.path.isfile(expanded):
-                config = expanded
-
-    if not config:
-        raise ValueError("Unable to automatically find configuration.yaml, you have to specify it with -c/--config")
-
+        if not config:
+            raise ValueError("Unable to find configuration.yaml in specified location.")
 
     zwave = ZWave(config, args)
     zwave.render()

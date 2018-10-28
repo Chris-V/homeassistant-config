@@ -31,3 +31,5 @@ __pycache__/
 *.log
 *.bkp
 *.backup
+
+.idea/

@@ -1,0 +1,252 @@
+title: Avatar
+views:
+
+  - title: Home
+    id: home
+    icon: mdi:home
+    cards:
+      - type: glance
+        show_name: false
+        column_width: '50%'
+        entities:
+          - device_tracker.chris_pixel
+          - device_tracker.karine_nexus5
+      - type: entities
+        name: Actions
+        entities:
+          - entity: script.ambiance
+          - entity: script.everything_off
+      - type: entities
+        name: Lights
+        entities:
+          - entity: group.outdoor_lights
+      - type: weather-forecast
+        entity: weather.dark_sky
+
+  - title: Ground Floor
+    id: ground-floor
+    icon: mdi:arrow-up-thick
+    cards:
+      - type: entities
+        title: Outdoor
+        show_header_toggle: true
+        entities:
+          - entity: switch.side_porch_light
+            name: Side porch light
+          - entity: switch.front_porch_light
+            name: Front porch light
+          - entity: switch.shed_light
+            name: Shed light
+      - type: entities
+        title: Kitchen
+        show_header_toggle: true
+        entities:
+          - entity: switch.kitchen_light
+            name: Light
+          - entity: binary_sensor.spidy_problem
+            name: Spidy
+          - entity: binary_sensor.viny_problem
+            name: Viny
+      - type: entities
+        title: Dining room
+        show_header_toggle: true
+        entities:
+          - entity: light.dining_room
+            name: Dimmer
+      - type: entities
+        title: Living Room
+        show_header_toggle: true
+        entities:
+          - entity: switch.bookshelf_light
+            name: Bookshelf light
+          - entity: switch.living_room_ambiance
+            name: Ambiance
+          - entity: switch.bookshelf_outlet
+            name: Bookshelf outlet
+          - entity: switch.living_room_tv
+            name: TV
+          - entity: media_player.living_room_chromecast
+            name: Chromecast
+          - entity: media_player.living_room_google_home
+            name: Google Home
+          - entity: binary_sensor.gaetan_problem
+            name: Gaétan
+      - type: entities
+        title: Master Bedroom
+        show_header_toggle: true
+        entities:
+          - light.bedside_chris
+          - light.bedside_karine
+      - type: entities
+        title: Main bathroom
+        show_header_toggle: true
+        entities:
+          - entity: light.main_bathroom
+            name: Dimmer
+          - entity: switch.main_bathroom_vanity_light
+            name: Vanity light
+          - entity: switch.main_bathroom_fan
+            name: Fan
+      - type: entities
+        title: Office
+        show_header_toggle: true
+        entities:
+          - entity: light.office
+            name: Dimmer
+
+  - title: Basement
+    id: basement
+    icon: mdi:arrow-down-thick
+    cards:
+      - type: entities
+        title: Lounge
+        show_header_toggle: true
+        entities:
+          - entity: light.lounge
+            name: Dimmer
+          - entity: light.lounge_ambiance
+            name: Ambiance
+          - entity: light.basement_hallway
+            name: Hallway dimmer
+          - entity: switch.downstairs_light
+            name: Downstairs light
+      - type: entities
+        title: Basement bathroom
+        show_header_toggle: true
+        entities:
+          - entity: switch.basement_bathroom_light
+            name: Light
+          - entity: light.basement_bathroom_vanity
+            name: Vanity light
+          - entity: switch.basement_bathroom_fan
+            name: Fan
+      - type: entities
+        title: Laundry room
+        show_header_toggle: true
+        entities:
+          - entity: switch.laundry_room_light
+            name: Light
+      - type: entities
+        title: Workshop
+        show_header_toggle: true
+        entities:
+          - entity: switch.workshop_light
+            name: Light
+          - binary_sensor.water_heater_leak
+
+  - title: Plants
+    id: plants
+    icon: mdi:flower
+    cards:
+      - type: plant-status
+        entity: plant.gaetan
+      - type: plant-status
+        entity: plant.spidy
+      - type: plant-status
+        entity: plant.viny
+
+  - title: Settings
+    id: settings
+    icon: mdi:settings
+    cards:
+      - type: entities
+        title: Settings
+        show_header_toggle: false
+        entities:
+          - input_boolean.guest_mode
+          - input_boolean.automatic_night_theme
+          - input_select.default_theme
+      - type: entities
+        title: Notifications
+        show_header_toggle: false
+        entities:
+          - automation.notify_plant_problems
+      - type: entities
+        title: Batteries
+        entities:
+          - sensor.water_heater_leak_sensor_battery
+          - sensor.gaetan_battery
+          - sensor.spidy_battery
+          - sensor.viny_battery
+      - type: entities
+        title: Celestial
+        entities:
+          - sun.sun
+          - sensor.moon
+
+  - title: Network
+    id: network
+    icon: mdi:stethoscope
+    cards:
+      - type: entities
+        title: Notifications
+        show_header_toggle: false
+        entities:
+          - entity: input_boolean.notify_household_changes
+            name: Household changes
+          - entity: input_boolean.notify_power_changes
+            name: Power outages
+          - entity: automation.notify_network_device_state
+            name: Network device outages
+      - type: entities
+        title: Network Devices
+        show_header_toggle: false
+        entities:
+          - switch.network_media
+          - switch.network_relay_south
+          - switch.network_relay_north
+      - type: entities
+        title: UPS
+        entities:
+          - entity: sensor.ups_status
+            name: Status
+          - entity: sensor.ups_load
+            name: Load
+          - entity: sensor.ups_battery
+            name: Battery
+          - entity: sensor.ups_input_voltage
+            name: Input voltage
+          - entity: sensor.ups_time_left
+            name: Time left
+          - entity: sensor.ups_time_on_battery
+            name: Time on battery
+      - type: entities
+        title: Home Assistant
+        entities:
+          - sensor.connected_clients
+          - sensor.current_home_assistant_version
+          - sensor.latest_home_assistant_version
+      - type: entities
+        title: Automate Monitor
+        entities:
+          - sensor.processor_use
+          - sensor.processor_temperature
+          - sensor.memory_use_percent
+          - sensor.since_last_boot
+      - type: entities
+        title: Media Monitor
+        entities:
+          - entity: sensor.media_cpu_load
+            name: CPU load
+          - entity: sensor.media_cpu_temp
+            name: CPU temperature
+          - entity: sensor.media_ram_used
+            name: Memory use
+      - type: entities
+        title: South Relay Monitor
+        entities:
+          - entity: sensor.relay_south_cpu_load
+            name: CPU load
+          - entity: sensor.relay_south_cpu_temp
+            name: CPU temperature
+          - entity: sensor.relay_south_ram_used
+            name: Memory use
+      - type: entities
+        title: North Relay Monitor
+        entities:
+          - entity: sensor.relay_north_cpu_load
+            name: CPU load
+          - entity: sensor.relay_north_cpu_temp
+            name: CPU temperature
+          - entity: sensor.relay_north_ram_used
+            name: Memory use

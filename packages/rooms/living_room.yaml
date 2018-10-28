@@ -4,26 +4,26 @@ google_assistant:
       expose: True
       room: "Living room"
       aliases:
-        - "Living room TV"
         - "TV"
+        - "Living room TV"
     switch.living_room_ambiance:
       expose: True
-      aliases:
-        - "living room light"
       room: "Living room"
-    switch.bookshelf_outlet:
-      expose: True
       aliases:
-        - "Bookshelf outlet"
-        - "Xmas tree"
-        - "Christmas tree"
-      room: "Living room"
+        - "Living room light"
     switch.bookshelf_light:
       expose: True
+      room: "Living room"
       aliases:
-        - "bookshelf light"
-        - "bookshelf"
-      room: "Libing room"
+        - "Bookshelf light"
+        - "Bookshelf"
+    switch.bookshelf_outlet:
+      expose: True
+      room: "Living room"
+      aliases:
+        - "Bookshelf outlet"
+        - "Christmas tree"
+        - "Xmas tree"
 
 cast:
   media_player:
@@ -32,10 +32,17 @@ cast:
 
 group:
   living_room:
-    name: "Living Room"
+    name: "Living room"
     icon: "mdi:television"
     entities:
       - switch.living_room_tv
+      - switch.living_room_ambiance
+      - switch.bookshelf_outlet
+      - switch.bookshelf_light
+  living_room_lights:
+    name: "Living room lights"
+    icon: "mdi:lightbulb"
+    entities:
       - switch.living_room_ambiance
       - switch.bookshelf_outlet
       - switch.bookshelf_light

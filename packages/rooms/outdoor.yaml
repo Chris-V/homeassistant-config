@@ -2,22 +2,22 @@ google_assistant:
   entity_config:
     switch.side_porch_light:
       expose: True
-      aliases:
-        - "porch"
-        - "side"
       room: "Outdoor"
+      aliases:
+        - "Porch"
+        - "Side"
     switch.shed_light:
       expose: True
-      aliases:
-        - "shed"
-        - "garage"
       room: "Outdoor"
+      aliases:
+        - "Shed"
+        - "Garage"
     switch.front_porch_light:
       expose: True
-      aliases:
-        - "front porch"
-        - "front"
       room: "Outdoor"
+      aliases:
+        - "Front porch"
+        - "Front"
 
 group:
   outdoor:
@@ -29,3 +29,10 @@ group:
       - switch.shed_light
       - binary_sensor.gaetan_problem
 
+  outdoor_lights:
+    name: "Outdoor lights"
+    icon: "mdi:lightbulb"
+    entities:
+      - switch.side_porch_light
+      - switch.front_porch_light
+      - switch.shed_light

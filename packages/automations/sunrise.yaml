@@ -1,26 +1,21 @@
-homeassistant:
-  customize:
-    automation.sunrise:
-      friendly_name: "Setup the house for a day mood"
-
 automation:
-  - alias: sunrise
+  - alias: sunrise_theme
     initial_state: True
     trigger:
       - platform: sun
         event: "sunrise"
+      - platform: homeassistant
+        event: "start"
     condition:
-      condition: sun
-      after: "sunrise"
+      - condition: state
+        entity_id: "input_boolean.automatic_night_theme"
+        state: "on"
+      - condition: sun
+        after: "sunrise"
+      - condition: sun
+        before: "sunset"
     action:
-      service: script.turn_on
-      entity_id: "script.sunrise_general"
-
-script:
-  sunrise_general:
-    alias: "General sunrise ambiance"
-    sequence:
-      - service: frontend.set_theme
+      - service: input_select.select_option
         data:
-          name: "default"
-
+          entity_id: "input_select.default_theme"
+          option: "default"

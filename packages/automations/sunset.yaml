@@ -1,10 +1,28 @@
-homeassistant:
-  customize:
-    automation.sunset:
-      friendly_name: "Setup the house for a night mood"
-
 automation:
-  - alias: sunset
+  - alias: sunset_theme
+    initial_state: True
+    trigger:
+      - platform: sun
+        event: "sunset"
+      - platform: homeassistant
+        event: "start"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.automatic_night_theme"
+        state: "on"
+      - condition: or
+        conditions:
+          - condition: sun
+            after: "sunset"
+          - condition: sun
+            before: "sunrise"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: "input_select.default_theme"
+          option: "night"
+
+  - alias: sunset_ambiance
     initial_state: True
     trigger:
       - platform: sun
@@ -13,49 +31,17 @@ automation:
         entity_id: "group.household"
         to: "home"
     condition:
-      condition: sun
-      after: "sunset"
-    action:
-      - service: script.turn_on
-        entity_id: "script.sunset_general"
       - condition: and
         conditions:
+          - condition: sun
+            after: "sunset"
           - condition: time
             before: "00:00:00"
           - condition: state
             entity_id: "group.household"
             state: "home"
-      - service: script.turn_on
-        entity_id: "script.sunset_lighting"
-
-script:
-  sunset_general:
-    alias: "General sunset ambiance"
-    sequence:
-      - service: frontend.set_theme
-        data:
-          name: "black_night"
-  sunset_lighting:
-    alias: "Sunset ambiance lights"
-    sequence:
+    action:
       - service: homeassistant.turn_on
         data:
-          entity_id: "light.master_bedroom_bedside_lights"
-          brightness: 15
-          rgb_color: [255, 160, 40]
-      - service: homeassistant.turn_on
-        data:
-          entity_id: "group.outdoor"
-      - service: homeassistant.turn_on
-        data:
-          entity_id: "switch.bookshelf_light"
-      - service: homeassistant.turn_on
-        data:
-          entity_id: "light.basement_hallway"
-          brightness: 40
-      - service: homeassistant.turn_on
-        data:
-          entity_id: "light.lounge_ambiance"
-          brightness: 80
-          rgb_color: [255, 160, 40]
-
+          entity_id: "group.outdoor_lights"
+      - service: script.ambiance

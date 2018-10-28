@@ -1,0 +1,26 @@
+input_boolean:
+  automatic_night_theme:
+    name: "Automatic night theme"
+    initial: True
+    icon: 'mdi:palette'
+
+input_select:
+  default_theme:
+    name: 'Default theme'
+    options:
+      - 'default'
+      - 'night'
+    initial: 'default'
+    icon: 'mdi:palette'
+
+automation:
+  - alias: set_default_theme
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "input_select.default_theme"
+    action:
+      - service: frontend.set_theme
+        data_template:
+          name: "{{trigger.to_state.state}}"
+

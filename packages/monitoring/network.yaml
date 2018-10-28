@@ -3,69 +3,39 @@ homeassistant:
     switch.network_media:
       friendly_name: "Media"
       icon: "mdi:play-network"
-      confirm_controls_show_lock: True
     switch.network_relay_south:
       friendly_name: "Relay South"
       icon: "mdi:server-network"
-      confirm_controls_show_lock: True
     switch.network_relay_north:
       friendly_name: "Relay North"
       icon: "mdi:server-network"
-      confirm_controls_show_lock: True
     sensor.media_cpu_load:
       friendly_name: "Media's CPU use"
       icon: "mdi:memory"
-      group:
-        group.media_monitor:
-          friendly_name: "CPU use"
     sensor.media_cpu_temp:
       friendly_name: "Media's CPU temperature"
       icon: "mdi:fire"
-      group:
-        group.media_monitor:
-          friendly_name: "CPU temperature"
     sensor.media_ram_used:
       friendly_name: "Media's memory use"
       icon: "mdi:memory"
-      group:
-        group.media_monitor:
-          friendly_name: "Memory use"
     sensor.relay_south_cpu_load:
       friendly_name: "South relay's CPU use"
       icon: "mdi:memory"
-      group:
-        group.relay_south_monitor:
-          friendly_name: "CPU use"
     sensor.relay_south_cpu_temp:
       friendly_name: "South relay's CPU temperature"
       icon: "mdi:fire"
-      group:
-        group.relay_south_monitor:
-          friendly_name: "CPU tmeperature"
     sensor.relay_south_ram_used:
       friendly_name: "South relay's memory use"
       icon: "mdi:memory"
-      group:
-        group.relay_south_monitor:
-          friendly_name: "Memory use"
     sensor.relay_north_cpu_load:
       friendly_name: "North relay's CPU use"
       icon: "mdi:memory"
-      group:
-        group.relay_north_monitor:
-          friendly_name: "CPU use"
     sensor.relay_north_cpu_temp:
       friendly_name: "North relay's CPU temperature"
       icon: "mdi:fire"
-      group:
-        group.relay_north_monitor:
-          friendly_name: "CPU tmeperature"
     sensor.relay_north_ram_used:
       friendly_name: "North relay's memory use"
       icon: "mdi:memory"
-      group:
-        group.relay_north_monitor:
-          friendly_name: "Memory use"
     automation.notify_new_network_device:
       friendly_name: "Notify new devices detected on network"
       icon: "mdi:message-settings-variant"
@@ -112,14 +82,23 @@ group:
       - sensor.relay_north_ram_used
 
 sensor:
-  - platform: glances
-    host: !secret network_media_host
-    port: !secret glances_port
-    name: "media"
-    resources:
-      - processor_load
-      - memory_use_percent
-      - cpu_temp
+  - platform: template
+    sensors:
+      media_cpu_load:
+        value_template: ""
+      media_cpu_temp:
+        value_template: ""
+      media_ram_used:
+        value_template: ""
+# Disabled until Media is fixed
+#  - platform: glances
+#    host: !secret network_media_host
+#    port: !secret glances_port
+#    name: "media"
+#    resources:
+#      - processor_load
+#      - memory_use_percent
+#      - cpu_temp
 
   - platform: glances
     host: !secret network_relay_south_host
@@ -198,12 +177,9 @@ automation:
           entity_id: "{{ trigger.entity_id }}"
           tag: "{{ trigger.entity_id | replace('.', '_') }}"
           actions:
-            - action: power_off
-              title: "Power Off"
-              icon: "/local/icons/power-plug-off.png"
-            - action: power_on
-              title: "Power On"
-              icon: "/local/icons/power-plug.png"
+            - action: "power_{% if trigger.to_state.state == 'off' %}on{% else %}off{% endif %}"
+              title: "Power {% if trigger.to_state.state == 'off' %}on{% else %}off{% endif %}"
+              icon: "/local/icons/power-plug-{% if trigger.to_state.state == 'off' %}on{% else %}off{% endif %}.png"
 
   - alias: action_power_on_device
     initial_state: True
