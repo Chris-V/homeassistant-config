@@ -44,7 +44,7 @@ paper-button-ink-color: 'hsl(var(--huesat) 50%)'
 
 # Text Adjustments
 paper-font-headline_-_letter-spacing: '-0.5px'
-paper-font-headline_-_font-weight: '400'hsl(var(--huesat) 35%)
+paper-font-headline_-_font-weight: '400'
 paper-font-body1_-_font-weight: '300'
 
 # Nav Menu

@@ -1,5 +1,7 @@
 homeassistant:
   customize:
+    binary_sensor.ups_battery_status:
+      battery_type: "APC BR1500G RS 1500 12V"
     automation.notify_power_back:
       friendly_name: "Notify when power is back"
       icon: "mdi:message-settings-variant"
@@ -26,12 +28,22 @@ group:
       - sensor.ups_time_left
       - sensor.ups_time_on_battery
 
+  all_batteries:
+    entities:
+      - binary_sensor.ups_battery_status
+
 apcupsd:
   host: !secret ups_host
   port: !secret ups_port
 
 binary_sensor:
   - platform: apcupsd
+  - platform: template
+    sensors:
+      ups_battery_status:
+        friendly_name: "UPS battery"
+        value_template: "{{ 'REPLACEBATT' in states('sensor.ups_status') }}"
+        device_class: "battery"
 
 input_boolean:
   notify_power_changes:
@@ -80,20 +92,26 @@ automation:
   - alias: notify_ups_replace_battery
     initial_state: True
     trigger:
-      platform: template
-      value_template: "{{ 'REPLACEBATT' in states('sensor.ups_status') }}"
+      platform: state
+      entity_id: "binary_sensor.ups_battery_status"
+      to: "on"
     action:
       - service: persistent_notification.create
-        data:
-          notification_id: "change_ups_battery"
-          title: "Replace UPS battery"
-          message: "UPS battery must be replaced. Search on amazon: https://amzn.to/2fJo3Ax"
+        data_template:
+          title: "Replace {{ trigger.to_state.name }}"
+          message: >-
+            {{ trigger.to_state.name }} must be replaced.
+            Search on Amazon: https://www.amazon.ca/s/?field-keywords=battery+{{ trigger.to_state.attributes.battery_type | replace(' ', '+') }}
+          notification_id: "replace_battery_{{ trigger.to_state.entity_id | replace('.', '_') }}"
       - service: notify.admin
-        data:
-          title: "Replace UPS battery"
-          message: "UPS battery must be replaced. Search on amazon: https://amzn.to/2fJo3Ax"
+        data_template:
+          title: "Replace {{ trigger.to_state.name }}"
+          message: >-
+            {{ trigger.to_state.name }} must be replaced.
+            Search on Amazon.
           data:
-            tag: "ups_battery"
+            tag: "replace_battery_{{ trigger.to_state.entity_id | replace('.', '_') }}"
+            url: "https://www.amazon.ca/s/?field-keywords=battery+{{ trigger.to_state.attributes.battery_type | replace(' ', '+') }}"
 
   - alias: ups_power_off
     initial_state: True

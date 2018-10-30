@@ -164,6 +164,7 @@ views:
       - type: entities
         title: Batteries
         entities:
+          - binary_sensor.ups_battery_status
           - sensor.water_heater_leak_sensor_battery
           - sensor.gaetan_battery
           - sensor.spidy_battery
