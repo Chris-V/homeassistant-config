@@ -3,4 +3,39 @@ group:
     name: "Batteries"
     icon: "mdi:battery"
 
-# TODO: Low battery notifications + global sensor
+automation:
+  - id: notify_low_batteries
+    alias: "Notify low batteries"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: "state_changed"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.entity_id in state_attr('group.all_batteries', 'entity_id') }}"
+      - condition: or
+        conditions:
+          - condition: template
+            # Binary sensors are on when battery is low, off otherwise
+            value_template: "{{ trigger.event.data.old_state.state == 'off' and trigger.event.data.new_state.state == 'on' }}"
+          - condition: template
+            value_template: "{{ trigger.event.data.old_state.state | int(100) > 20 and trigger.event.data.new_state.state | int(100) <= 20 }}"
+    action:
+      - service: persistent_notification.create
+        data_template:
+          title: "Replace {{ trigger.event.data.new_state.name }}"
+          notification_id: "replace_battery_{{ trigger.event.data.new_state.object_id }}"
+          message: |-
+            {{ trigger.event.data.new_state.name }} must be replaced.
+            Search on Amazon for "{{ state_attr(trigger.event.data.entity_id, 'battery_type') }}" batteries.
+            Quick search: https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.event.data.entity_id, 'battery_type') | replace(' ', '+') }}
+      - service: notify.admin
+        data_template:
+          title: "Replace {{ trigger.event.data.new_state.name }}"
+          message: |-
+            {{ trigger.event.data.new_state.name }} must be replaced.
+            Search on Amazon for "{{ state_attr(trigger.event.data.entity_id, 'battery_type') }}" batteries.
+          data:
+            tag: "replace_battery_{{ trigger.event.data.new_state.object_id }}"
+            url: "https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.event.data.entity_id, 'battery_type') | d('', True)  | replace(' ', '+') }}"

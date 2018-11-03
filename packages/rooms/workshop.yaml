@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    sensor.water_heater_leak_sensor_battery:
+      battery_type: "ER14250 3.6V"
+
 google_assistant:
   entity_config:
     switch.workshop_light:

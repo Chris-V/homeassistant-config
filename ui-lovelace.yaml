@@ -180,6 +180,11 @@ views:
     icon: mdi:stethoscope
     cards:
       - type: entities
+        title: Settings
+        show_header_toggle: false
+        entities:
+          - input_boolean.power_outage_manage_devices
+      - type: entities
         title: Notifications
         show_header_toggle: false
         entities:
@@ -188,7 +193,7 @@ views:
           - entity: input_boolean.notify_power_changes
             name: Power outages
           - entity: automation.notify_network_device_state
-            name: Network device outages
+            name: Network device status
       - type: entities
         title: Network Devices
         show_header_toggle: false

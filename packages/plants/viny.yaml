@@ -4,6 +4,7 @@ homeassistant:
       friendly_name: "Viny"
     sensor.viny_battery:
       friendly_name: "Viny's battery"
+      battery_type: "CR2032 3V"
     sensor.viny_brightness:
       friendly_name: "Viny's brightness"
     sensor.viny_conductivity:
@@ -21,7 +22,7 @@ plant:
       conductivity: sensor.viny_conductivity
       moisture: sensor.viny_moisture
       temperature: sensor.viny_temperature
-    min_battery: 10
+    min_battery: 20
     min_moisture: 10
     min_temperature: 14
 

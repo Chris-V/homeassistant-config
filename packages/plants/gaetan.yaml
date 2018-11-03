@@ -1,11 +1,12 @@
 # Pineapple bush
- 
+
 homeassistant:
   customize:
     plant.gaetan:
       friendly_name: "Gaétan"
     sensor.gaetan_battery:
       friendly_name: "Gaétan's battery"
+      battery_type: "CR2032 3V"
     sensor.gaetan_brightness:
       friendly_name: "Gaétan's brightness"
     sensor.gaetan_conductivity:
@@ -23,7 +24,7 @@ plant:
       conductivity: sensor.gaetan_conductivity
       moisture: sensor.gaetan_moisture
       temperature: sensor.gaetan_temperature
-    min_battery: 10
+    min_battery: 20
     min_moisture: 10
     min_temperature: 14
 

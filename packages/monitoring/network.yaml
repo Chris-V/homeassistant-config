@@ -160,6 +160,7 @@ automation:
           title: "New device detected on network"
           message: "{{ trigger.event.data | tojson }}"
 
+  # TODO: Notify only if in this state for 60 seconds. Store a boolean to prevent on notifications if off was never sent
   - alias: notify_network_device_state
     initial_state: True
     trigger:
@@ -175,14 +176,15 @@ automation:
         message: "{{ trigger.to_state.name }} is {{ trigger.to_state.state | lower }}!"
         data:
           entity_id: "{{ trigger.entity_id }}"
-          tag: "{{ trigger.entity_id | replace('.', '_') }}"
+          tag: "network_state_{{ trigger.to_state.object_id }}"
           actions:
             - action: "power_{% if trigger.to_state.state == 'off' %}on{% else %}off{% endif %}"
               title: "Power {% if trigger.to_state.state == 'off' %}on{% else %}off{% endif %}"
               icon: "/local/icons/power-plug-{% if trigger.to_state.state == 'off' %}on{% else %}off{% endif %}.png"
 
-  - alias: action_power_on_device
+  - alias: notification_action_power_on_device
     initial_state: True
+    hide_entity: True
     trigger:
       platform: event
       event_type: "html5_notification.clicked"
@@ -193,8 +195,9 @@ automation:
       data_template:
         entity_id: "{{ trigger.event.data.data.entity_id }}"
 
-  - alias: action_power_off_device
+  - alias: notification_action_power_off_device
     initial_state: True
+    hide_entity: True
     trigger:
       platform: event
       event_type: "html5_notification.clicked"

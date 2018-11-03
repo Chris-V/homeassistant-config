@@ -2,19 +2,6 @@ homeassistant:
   customize:
     binary_sensor.ups_battery_status:
       battery_type: "APC BR1500G RS 1500 12V"
-    automation.notify_power_back:
-      friendly_name: "Notify when power is back"
-      icon: "mdi:message-settings-variant"
-    automation.notify_power_outage:
-      friendly_name: "Notify when power is out"
-      icon: "mdi:message-settings-variant"
-    automation.notify_ups_replace_battery:
-      friendly_name: "Notify UPS battery status"
-      icon: "mdi:message-settings-variant"
-    automation.ups_power_off:
-      friendly_name: "Power off devices when running on UPS battery"
-    automation.ups_power_on:
-      friendly_name: "Power on devices when not running on UPS battery"
 
 group:
   ups:
@@ -49,6 +36,9 @@ input_boolean:
   notify_power_changes:
     name: "Notify power state changes"
     icon: "mdi:message-settings-variant"
+  power_outage_manage_devices:
+    name: "Manage devices based on power outages"
+    initial: "on"
 
 sensor:
   - platform: apcupsd
@@ -70,10 +60,14 @@ automation:
     action:
       service: notify.admin
       data_template:
-        title: "Power is Back"
-        message: "UPS is running on power after a {{ relative_time(trigger.from_state.last_changed) }} outage."
-        data:
-          tag: "ups_state"
+        title: "Power restored"
+        message: "The power outage at home has finished after {{ relative_time(trigger.from_state.last_changed) }}."
+        data: &power_outage_data
+          tag: "power_outage"
+          actions:
+            - action: "device_management_{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}"
+              title: "{% if states('input_boolean.power_outage_manage_devices') == 'off' %}Enable{% else %}Disable{% endif %} device management"
+              icon: "/local/icons/power-plug-{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}.png"
 
   - alias: notify_power_outage
     initial_state: True
@@ -84,37 +78,39 @@ automation:
     action:
       service: notify.admin
       data:
-        title: "Power Outage"
-        message: "UPS is running on battery. Media Server will shutdown in a minute."
-        data:
-          tag: "ups_state"
+        title: "Power outage"
+        message: "A power outage is ongoing at home."
+        data: *power_outage_data
 
-  - alias: notify_ups_replace_battery
+  - alias: notification_action_enable_device_management
     initial_state: True
+    hide_entity: True
     trigger:
-      platform: state
-      entity_id: "binary_sensor.ups_battery_status"
-      to: "on"
+      platform: event
+      event_type: "html5_notification.clicked"
+      event_data:
+        action: "device_management_on"
     action:
-      - service: persistent_notification.create
-        data_template:
-          title: "Replace {{ trigger.to_state.name }}"
-          message: >-
-            {{ trigger.to_state.name }} must be replaced.
-            Search on Amazon: https://www.amazon.ca/s/?field-keywords=battery+{{ trigger.to_state.attributes.battery_type | replace(' ', '+') }}
-          notification_id: "replace_battery_{{ trigger.to_state.entity_id | replace('.', '_') }}"
-      - service: notify.admin
-        data_template:
-          title: "Replace {{ trigger.to_state.name }}"
-          message: >-
-            {{ trigger.to_state.name }} must be replaced.
-            Search on Amazon.
-          data:
-            tag: "replace_battery_{{ trigger.to_state.entity_id | replace('.', '_') }}"
-            url: "https://www.amazon.ca/s/?field-keywords=battery+{{ trigger.to_state.attributes.battery_type | replace(' ', '+') }}"
+      service: switch.turn_on
+      data:
+        entity_id: "input_boolean.power_outage_manage_devices"
 
-  - alias: ups_power_off
+  - alias: notification_action_disable_device_management
     initial_state: True
+    hide_entity: True
+    trigger:
+      platform: event
+      event_type: "html5_notification.clicked"
+      event_data:
+        action: "device_management_off"
+    action:
+      service: switch.turn_off
+      data:
+        entity_id: "input_boolean.power_outage_manage_devices"
+
+  - alias: ups_power_off_devices
+    initial_state: True
+    hide_entity: True
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"
@@ -123,15 +119,16 @@ automation:
         seconds: 70 # UPS is polled every 60 secs, this *must* be higher to outlast short power outages.
     condition:
       condition: state
-      entity_id: input_boolean.notify_power_changes
+      entity_id: "input_boolean.power_outage_manage_devices"
       state: "on"
     action:
       service: switch.turn_off
       entity_id:
         - switch.network_media
 
-  - alias: ups_power_on
+  - alias: ups_power_on_devices
     initial_state: True
+    hide_entity: True
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"
@@ -140,7 +137,7 @@ automation:
         seconds: 30 # Power can come back for a couple seconds then cut again. Been there done that.
     condition:
       condition: state
-      entity_id: input_boolean.notify_power_changes
+      entity_id: "input_boolean.power_outage_manage_devices"
       state: "on"
     action:
       service: switch.turn_on
