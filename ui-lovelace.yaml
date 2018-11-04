@@ -19,15 +19,34 @@ views:
           type: glance
           entities:
             - group.all_water_leak_sensors
-      - type: entities
-        title: Actions
-        entities:
-          - entity: script.ambiance
-          - entity: script.everything_off
-      - type: entities
-        title: Lights
-        entities:
-          - entity: group.outdoor_lights
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: script.ambiance
+            name: Ambiance
+            icon: mdi:weather-night
+            tap_action: call-service
+            service: script.turn_on
+          - type: entity-button
+            entity: script.everything_off
+            name: Everything off
+            icon: mdi:sleep
+            tap_action: call-service
+            service: script.turn_on
+          - type: markdown
+            content: "<br><br><br>"
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: group.outdoor_lights
+            name: Outdoor
+            icon: mdi:lightbulb
+            tap_action: toggle
+            hold_action: more-info
+          - type: markdown
+            content: "<br><br><br>"
+          - type: markdown
+            content: "<br><br><br>\n\n" # Somehow, those 2 line feeds force the UI to be on 3 columns... Go figure.
       - type: weather-forecast
         entity: weather.dark_sky
 
