@@ -1,0 +1,30 @@
+group:
+  all_water_leak_sensors:
+    name: "Leaks"
+    icon: "mdi:pipe-leak"
+
+automation:
+  - id: notify_water_leaks
+    alias: "Notify water leaks"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: "state_changed"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.entity_id in state_attr('group.all_water_leak_sensors', 'entity_id') }}"
+      - condition: template
+        value_template: "{{ trigger.event.data.old_state.state == 'off' and trigger.event.data.new_state.state == 'on' }}"
+    action:
+      - service: persistent_notification.create
+        data_template:
+          title: "Water leak detected"
+          notification_id: "water_leak_{{ trigger.event.data.new_state.object_id }}"
+          message: "A water leak has been detected at the {{ trigger.event.data.new_state.name | title | replace('Leak', '') | replace('Sensor', '') | trim }}."
+      - service: notify.admin
+        data_template:
+          title: "Water leak detected"
+          message: "A water leak has been detected at the {{ trigger.event.data.new_state.name | title | replace('Leak', '') | replace('Sensor', '') | trim }}."
+          data:
+            tag: "water_leak_{{ trigger.event.data.new_state.object_id }}"

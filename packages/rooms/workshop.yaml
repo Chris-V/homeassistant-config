@@ -28,6 +28,9 @@ group:
   all_batteries:
     entities:
       - sensor.water_heater_leak_sensor_battery
+  all_water_leak_sensors:
+    entities:
+      - binary_sensor.water_heater_leak
 
 binary_sensor:
   - platform: template
