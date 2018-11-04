@@ -38,10 +38,45 @@ light:
           data:
             entity_id: "switch.basement_bathroom_light"
 
-group:
-  basement_bathroom_lights:
-    name: "Basement bathroom lights"
-    icon: "mdi:lightbulb"
-    entities:
-      - light.basement_bathroom
-      - light.basement_bathroom_vanity
+automation:
+  - alias: "double_up_basement_bathroom_lights"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.basement_bathroom_vanity_light_dimmer"
+          scene_id: 1
+          scene_data: 7860
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.basement_bathroom_light_switch"
+          scene_id: 1
+          scene_data: 7860
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.basement_bathroom_lights"
+  - alias: "double_down_basement_bathroom_lights"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.basement_bathroom_vanity_light_dimmer"
+          scene_id: 2
+          scene_data: 7860
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.basement_bathroom_light_switch"
+          scene_id: 2
+          scene_data: 7860
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.basement_bathroom_lights"
+

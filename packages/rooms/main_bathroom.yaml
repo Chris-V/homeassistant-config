@@ -41,3 +41,45 @@ light:
           service: "switch.turn_off"
           data:
             entity_id: "switch.main_bathroom_vanity_light"
+
+automation:
+  - alias: "double_up_main_bathroom_lights"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_light_dimmer"
+          scene_id: 1
+          scene_data: 7860
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_vanity_light_switch"
+          scene_id: 1
+          scene_data: 7860
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.main_bathroom_lights"
+  - alias: "double_down_main_bathroom_lights"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_light_dimmer"
+          scene_id: 2
+          scene_data: 7860
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_vanity_light_switch"
+          scene_id: 2
+          scene_data: 7860
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.main_bathroom_lights"
