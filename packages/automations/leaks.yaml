@@ -2,6 +2,7 @@ group:
   all_water_leak_sensors:
     name: "Leaks"
     icon: "mdi:pipe-leak"
+    control: "hidden"
 
 automation:
   - id: notify_water_leaks

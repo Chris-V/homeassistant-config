@@ -2,6 +2,7 @@ group:
   all_batteries:
     name: "Batteries"
     icon: "mdi:battery"
+    control: "hidden"
 
 automation:
   - id: notify_low_batteries

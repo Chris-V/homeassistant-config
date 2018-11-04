@@ -11,13 +11,21 @@ views:
         entities:
           - device_tracker.chris_pixel
           - device_tracker.karine_nexus5
+      - type: conditional
+        conditions:
+          - entity: group.all_water_leak_sensors
+            state: "on"
+        card:
+          type: glance
+          entities:
+            - group.all_water_leak_sensors
       - type: entities
-        name: Actions
+        title: Actions
         entities:
           - entity: script.ambiance
           - entity: script.everything_off
       - type: entities
-        name: Lights
+        title: Lights
         entities:
           - entity: group.outdoor_lights
       - type: weather-forecast
@@ -169,11 +177,21 @@ views:
       - type: entities
         title: Batteries
         entities:
-          - binary_sensor.ups_battery_status
-          - sensor.water_heater_leak_sensor_battery
-          - sensor.gaetan_battery
-          - sensor.spidy_battery
-          - sensor.viny_battery
+          - entity: binary_sensor.ups_battery_status
+            name: UPS
+          - entity: sensor.water_heater_leak_sensor_battery
+            name: Water heater
+          - entity: sensor.gaetan_battery
+            name: Gaetan
+          - entity: sensor.spidy_battery
+            name: Spidy
+          - entity: sensor.viny_battery
+            name: Viny
+      - type: entities
+        title: Water
+        entities:
+          - entity: binary_sensor.water_heater_leak
+            name: Water heater
       - type: entities
         title: Celestial
         entities:

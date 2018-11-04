@@ -1,4 +1,4 @@
 input_boolean:
   guest_mode:
-    name: "Guest Mode"
+    name: "Guest mode"
     icon: "mdi:human-greeting"
