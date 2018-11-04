@@ -19,34 +19,46 @@ views:
           type: glance
           entities:
             - group.all_water_leak_sensors
-      - type: horizontal-stack
+      - type: vertical-stack
         cards:
-          - type: entity-button
-            entity: script.ambiance
-            name: Ambiance
-            icon: mdi:weather-night
-            tap_action: call-service
-            service: script.turn_on
-          - type: entity-button
-            entity: script.everything_off
-            name: Everything off
-            icon: mdi:sleep
-            tap_action: call-service
-            service: script.turn_on
-          - type: markdown
-            content: "<br><br><br>"
-      - type: horizontal-stack
-        cards:
-          - type: entity-button
-            entity: group.outdoor_lights
-            name: Outdoor
-            icon: mdi:lightbulb
-            tap_action: toggle
-            hold_action: more-info
-          - type: markdown
-            content: "<br><br><br>"
-          - type: markdown
-            content: "<br><br><br>\n\n" # Somehow, those 2 line feeds force the UI to be on 3 columns... Go figure.
+        - type: horizontal-stack
+          cards:
+            - type: entity-button
+              entity: light.outdoor_lights
+              name: Outdoor
+              icon: mdi:tree
+              tap_action: toggle
+              hold_action: more-info
+            - type: entity-button
+              entity: light.ground_floor_lights
+              name: Main
+              icon: mdi:arrow-up-thick
+              tap_action: toggle
+              hold_action: more-info
+            - type: entity-button
+              entity: light.basement_lights
+              name: Basement
+              icon: mdi:arrow-down-thick
+              tap_action: toggle
+              hold_action: more-info
+        - type: horizontal-stack
+          cards: [] # Somehow, this empty stack forces the UI to be on 3 columns
+        - type: horizontal-stack
+          cards:
+            - type: entity-button
+              entity: script.ambiance
+              name: Ambiance
+              icon: mdi:weather-night
+              tap_action: call-service
+              service: script.turn_on
+            - type: entity-button
+              entity: script.everything_off
+              name: Everything off
+              icon: mdi:sleep
+              tap_action: call-service
+              service: script.turn_on
+            - type: horizontal-stack
+              cards: [] # Empty place holder
       - type: weather-forecast
         entity: weather.dark_sky
 
@@ -58,21 +70,21 @@ views:
         title: Outdoor
         show_header_toggle: true
         entities:
-          - entity: switch.side_porch_light
+          - entity: light.side_porch
             name: Side porch light
-          - entity: switch.front_porch_light
+          - entity: light.front_porch
             name: Front porch light
-          - entity: switch.shed_light
+          - entity: light.shed
             name: Shed light
       - type: entities
         title: Kitchen
         show_header_toggle: true
         entities:
-          - entity: switch.kitchen_light
+          - entity: light.kitchen
             name: Light
-          - entity: binary_sensor.spidy_problem
+          - entity: plant.spidy
             name: Spidy
-          - entity: binary_sensor.viny_problem
+          - entity: plant.viny
             name: Viny
       - type: entities
         title: Dining room
@@ -80,14 +92,16 @@ views:
         entities:
           - entity: light.dining_room
             name: Dimmer
+          - entity: plant.gaetan
+            name: Gaétan
       - type: entities
         title: Living Room
         show_header_toggle: true
         entities:
-          - entity: switch.bookshelf_light
+          - entity: light.bookshelf
             name: Bookshelf light
-          - entity: switch.living_room_ambiance
-            name: Ambiance
+          - entity: light.living_room_ambiance
+            name: Ambiance light
           - entity: switch.bookshelf_outlet
             name: Bookshelf outlet
           - entity: switch.living_room_tv
@@ -96,8 +110,6 @@ views:
             name: Chromecast
           - entity: media_player.living_room_google_home
             name: Google Home
-          - entity: binary_sensor.gaetan_problem
-            name: Gaétan
       - type: entities
         title: Master Bedroom
         show_header_toggle: true
@@ -110,10 +122,11 @@ views:
         entities:
           - entity: light.main_bathroom
             name: Dimmer
-          - entity: switch.main_bathroom_vanity_light
+          - entity: light.main_bathroom_vanity
             name: Vanity light
           - entity: switch.main_bathroom_fan
             name: Fan
+            icon: mdi:fan
       - type: entities
         title: Office
         show_header_toggle: true
@@ -135,29 +148,30 @@ views:
             name: Ambiance
           - entity: light.basement_hallway
             name: Hallway dimmer
-          - entity: switch.downstairs_light
+          - entity: light.downstairs
             name: Downstairs light
       - type: entities
         title: Basement bathroom
         show_header_toggle: true
         entities:
-          - entity: switch.basement_bathroom_light
+          - entity: light.basement_bathroom
             name: Light
           - entity: light.basement_bathroom_vanity
             name: Vanity light
           - entity: switch.basement_bathroom_fan
             name: Fan
+            icon: mdi:fan
       - type: entities
         title: Laundry room
         show_header_toggle: true
         entities:
-          - entity: switch.laundry_room_light
+          - entity: light.laundry_room
             name: Light
       - type: entities
         title: Workshop
         show_header_toggle: true
         entities:
-          - entity: switch.workshop_light
+          - entity: light.workshop
             name: Light
           - binary_sensor.water_heater_leak
 

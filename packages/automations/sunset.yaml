@@ -43,5 +43,5 @@ automation:
     action:
       - service: homeassistant.turn_on
         data:
-          entity_id: "group.outdoor_lights"
+          entity_id: "light.outdoor_lights"
       - service: script.ambiance

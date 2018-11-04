@@ -18,7 +18,7 @@ script:
           rgb_color: [255, 160, 40]
       - service: homeassistant.turn_on
         data:
-          entity_id: "switch.bookshelf_light"
+          entity_id: "light.bookshelf"
       - service: homeassistant.turn_on
         data:
           entity_id: "light.basement_hallway"

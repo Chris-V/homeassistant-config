@@ -31,15 +31,6 @@ group:
     entities:
       - sensor.spidy_battery
 
-binary_sensor:
-  - platform: template
-    sensors:
-      spidy_problem:
-        friendly_name: "Spidy issues"
-        device_class: "problem"
-        icon_template: "mdi:flower"
-        value_template: "{{ is_state('plant.spidy', 'problem') }}"
-
 sensor:
   - platform: mqtt
     name: "spidy_battery"

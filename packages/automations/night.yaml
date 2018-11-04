@@ -3,7 +3,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: "group.outdoor_lights"
+        entity_id: "light.outdoor_lights"
         to: "on"
         for:
           minutes: 5
@@ -16,7 +16,7 @@ automation:
           entity_id: "input_boolean.guest_mode"
           state: "off"
         - condition: state
-          entity_id: "group.outdoor_lights"
+          entity_id: "light.outdoor_lights"
           state: "on"
           for:
             minutes: 5
@@ -25,4 +25,4 @@ automation:
           before: "5:00:00"
     action:
       service: homeassistant.turn_off
-      entity_id: "group.outdoor_lights"
+      entity_id: "light.outdoor_lights"

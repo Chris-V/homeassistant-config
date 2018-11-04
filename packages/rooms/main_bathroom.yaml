@@ -6,7 +6,7 @@ google_assistant:
       aliases:
         - "Bathroom light"
         - "Main bathroom light"
-    switch.main_bathroom_vanity_light:
+    light.main_bathroom_vanity:
       expose: True
       room: "Main bathroom"
       aliases:
@@ -21,19 +21,23 @@ google_assistant:
         - "Bathroom fan"
         - "Main bathroom fan"
 
-group:
-  main_bathroom:
-    name: "Main bathroom"
-    icon: "mdi:shower-head"
-    entities:
-      - light.main_bathroom
-      - switch.main_bathroom_vanity_light
-      - switch.main_bathroom_fan
-  main_bathroom_lights:
+light:
+  - platform: group
     name: "Main bathroom lights"
-    icon: "mdi:shower-head"
     entities:
       - light.main_bathroom
-      - switch.main_bathroom_vanity_light
-      - switch.main_bathroom_fan
+      - light.main_bathroom_vanity
 
+  - platform: template
+    lights:
+      main_bathroom_vanity:
+        friendly_name: "Main bathroom vanity light"
+        value_template: "{{ is_state('switch.main_bathroom_vanity_light', 'on') }}"
+        turn_on:
+          service: "switch.turn_on"
+          data:
+            entity_id: "switch.main_bathroom_vanity_light"
+        turn_off:
+          service: "switch.turn_off"
+          data:
+            entity_id: "switch.main_bathroom_vanity_light"

@@ -1,0 +1,65 @@
+google_assistant:
+  entity_config:
+    light.side_porch:
+      expose: True
+      room: "Outdoor"
+      aliases:
+        - "Side porch"
+        - "Porch"
+        - "Side"
+    light.front_porch:
+      expose: True
+      room: "Outdoor"
+      aliases:
+        - "Front porch"
+        - "Front"
+    light.shed:
+      expose: True
+      room: "Outdoor"
+      aliases:
+        - "Shed"
+        - "Garage"
+
+light:
+  - platform: group
+    name: "Outdoor lights"
+    entities:
+      - light.side_porch
+      - light.front_porch
+      - light.shed
+
+  - platform: template
+    lights:
+      side_porch:
+        friendly_name: "Front porch light"
+        value_template: "{{ is_state('switch.side_porch_light', 'on') }}"
+        turn_on:
+          service: "switch.turn_on"
+          data:
+            entity_id: "switch.side_porch_light"
+        turn_off:
+          service: "switch.turn_off"
+          data:
+            entity_id: "switch.side_porch_light"
+      front_porch:
+        friendly_name: "Side porch light"
+        value_template: "{{ is_state('switch.front_porch_light', 'on') }}"
+        turn_on:
+          service: "switch.turn_on"
+          data:
+            entity_id: "switch.front_porch_light"
+        turn_off:
+          service: "switch.turn_off"
+          data:
+            entity_id: "switch.front_porch_light"
+      shed:
+        friendly_name: "Shed door light"
+        value_template: "{{ is_state('switch.shed_light', 'on') }}"
+        turn_on:
+          service: "switch.turn_on"
+          data:
+            entity_id: "switch.shed_light"
+        turn_off:
+          service: "switch.turn_off"
+          data:
+            entity_id: "switch.shed_light"

@@ -14,6 +14,9 @@ automation:
           - plant.spidy
           - plant.viny
         to: "problem"
+    condition:
+      condition: template
+      value_template: "{{ not is_state_attr(trigger.to_state, 'problem', 'battery low') }}"
     action:
       - service: notify.household
         data_template:
@@ -21,5 +24,5 @@ automation:
           message: "{{ trigger.to_state.attributes.friendly_name }} has some problems: {{ trigger.to_state.attributes.problem }}"
           data:
             tag: "plant_problem_{{ trigger.to_state.object_id }}"
-            url: !secret http_public_host # TODO: append lovelace/plants
+            url: "lovelace/plants"
 

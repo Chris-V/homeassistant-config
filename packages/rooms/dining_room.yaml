@@ -9,14 +9,8 @@ google_assistant:
         - "Table light"
         - "Table"
 
-group:
-  dining_room:
-    name: "Dining room"
-    icon: "mdi:food"
-    entities:
-      - light.dining_room
-  dining_room_lights:
+light:
+  - platform: group
     name: "Dining room lights"
-    icon: "mdi:lightbulb"
     entities:
       - light.dining_room

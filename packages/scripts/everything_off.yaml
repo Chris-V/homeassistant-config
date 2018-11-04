@@ -12,34 +12,19 @@ script:
     sequence:
       - service: homeassistant.turn_off
         data:
-          entity_id: "group.outdoor_lights"
+          entity_id: "light.outdoor_lights"
       - service: homeassistant.turn_off
         data:
-          entity_id: "group.master_bedroom_lights"
+          entity_id: "light.ground_floor_lights"
       - service: homeassistant.turn_off
         data:
-          entity_id: "group.living_room_lights"
+          entity_id: "light.basement_lights"
       - service: homeassistant.turn_off
         data:
-          entity_id: "group.kitchen_lights"
+          entity_id: "switch.bookshelf_outlet"
       - service: homeassistant.turn_off
         data:
-          entity_id: "group.dining_room_lights"
+          entity_id: "switch.main_bathroom_fan"
       - service: homeassistant.turn_off
         data:
-          entity_id: "group.main_bathroom_lights"
-      - service: homeassistant.turn_off
-        data:
-          entity_id: "group.basement_bathroom_lights"
-      - service: homeassistant.turn_off
-        data:
-          entity_id: "group.office_lights"
-      - service: homeassistant.turn_off
-        data:
-          entity_id: "group.lounge_lights"
-      - service: homeassistant.turn_off
-        data:
-          entity_id: "group.laundry_room_lights"
-      - service: homeassistant.turn_off
-        data:
-          entity_id: "group.workshop_lights"
+          entity_id: "switch.basement_bathroom_fan"

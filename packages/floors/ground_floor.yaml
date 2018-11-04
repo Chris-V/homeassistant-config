@@ -1,0 +1,10 @@
+light:
+  - platform: group
+    name: "Ground floor lights"
+    entities:
+      - light.dining_room_lights
+      - light.kitchen_lights
+      - light.living_room_lights
+      - light.main_bathroom_lights
+      - light.master_bedroom_lights
+      - light.office_lights

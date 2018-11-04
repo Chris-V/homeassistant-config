@@ -5,7 +5,7 @@ homeassistant:
 
 google_assistant:
   entity_config:
-    switch.workshop_light:
+    light.workshop:
       expose: True
       room: "Workshop"
       aliases:
@@ -13,24 +13,32 @@ google_assistant:
         - "Workshop"
 
 group:
-  workshop:
-    name: "Workshop"
-    icon: "mdi:hammer"
-    entities:
-      - switch.workshop_light
-      - binary_sensor.water_heater_leak
-  workshop_lights:
-    name: "Workshop lights"
-    icon: "mdi:lightbulb"
-    entities:
-      - switch.workshop_light
-
   all_batteries:
     entities:
       - sensor.water_heater_leak_sensor_battery
   all_water_leak_sensors:
     entities:
       - binary_sensor.water_heater_leak
+
+light:
+  - platform: group
+    name: "Workshop lights"
+    entities:
+      - light.workshop
+
+  - platform: template
+    lights:
+      workshop:
+        friendly_name: "Workshop light"
+        value_template: "{{ is_state('switch.workshop_light', 'on') }}"
+        turn_on:
+          service: "switch.turn_on"
+          data:
+            entity_id: "switch.workshop_light"
+        turn_off:
+          service: "switch.turn_off"
+          data:
+            entity_id: "switch.workshop_light"
 
 binary_sensor:
   - platform: template

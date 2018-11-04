@@ -1,34 +1,47 @@
 google_assistant:
   entity_config:
-    switch.basement_bathroom_light:
+    light.basement_bathroom:
       expose: True
       room: "Basement bathroom"
       aliases:
         - "Basement bathroom light"
-    switch.basement_bathroom_fan:
-      expose: True
-      room: "Basement bathroom"
-      aliases:
-        - "Basement bathroom fan"
     light.basement_bathroom_vanity:
       expose: True
       room: "Basement bathroom"
       aliases:
         - "Basement bathroom vanity light"
         - "Basement bathroom vanity"
+    switch.basement_bathroom_fan:
+      expose: True
+      room: "Basement bathroom"
+      aliases:
+        - "Basement bathroom fan"
+
+light:
+  - platform: group
+    name: "Basement bathroom lights"
+    entities:
+      - light.basement_bathroom
+      - light.basement_bathroom_vanity
+
+  - platform: template
+    lights:
+      basement_bathroom:
+        friendly_name: "Basement bathroom light"
+        value_template: "{{ is_state('switch.basement_bathroom_light', 'on') }}"
+        turn_on:
+          service: "switch.turn_on"
+          data:
+            entity_id: "switch.basement_bathroom_light"
+        turn_off:
+          service: "switch.turn_off"
+          data:
+            entity_id: "switch.basement_bathroom_light"
 
 group:
-  basement_bathroom:
-    name: "Basement bathroom"
-    icon: "mdi:shower-head"
-    entities:
-      - switch.basement_bathroom_light
-      - switch.basement_bathroom_fan
-      - light.basement_bathroom_vanity
   basement_bathroom_lights:
     name: "Basement bathroom lights"
     icon: "mdi:lightbulb"
     entities:
-      - switch.basement_bathroom_light
-      - switch.basement_bathroom_fan
+      - light.basement_bathroom
       - light.basement_bathroom_vanity

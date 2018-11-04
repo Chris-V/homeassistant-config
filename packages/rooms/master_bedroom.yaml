@@ -2,7 +2,6 @@ homeassistant:
   customize:
     light.master_bedroom_bedsides:
       friendly_name: "Master bedroom bedside lights"
-      icon: "mdi:lightbulb"
 
 google_assistant:
   entity_config:
@@ -19,20 +18,11 @@ google_assistant:
 
 light:
   - platform: group
+    name: "Master bedroom lights"
+    entities:
+      - light.master_bedroom_bedsides
+  - platform: group
     name: "master_bedroom_bedsides"
     entities:
       - light.bedside_chris
       - light.bedside_karine
-
-group:
-  master_bedroom:
-    name: "Master Bedroom"
-    icon: "mdi:hotel"
-    entities:
-      - light.bedside_chris
-      - light.bedside_karine
-  master_bedroom_lights:
-    name: "Master bedroom lights"
-    icon: "mdi:lightbulb"
-    entities:
-      - light.master_bedroom_bedsides
