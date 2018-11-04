@@ -95,6 +95,7 @@ sensor:
 #    host: !secret network_media_host
 #    port: !secret glances_port
 #    name: "media"
+#    version: 3
 #    resources:
 #      - processor_load
 #      - memory_use_percent
@@ -104,6 +105,7 @@ sensor:
     host: !secret network_relay_south_host
     port: !secret glances_port
     name: "relay_south"
+    version: 3
     resources:
       - processor_load
       - memory_use_percent
@@ -113,6 +115,7 @@ sensor:
     host: !secret network_relay_north_host
     port: !secret glances_port
     name: "relay_north"
+    version: 3
     resources:
       - processor_load
       - memory_use_percent
