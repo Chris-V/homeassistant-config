@@ -2,7 +2,7 @@ input_boolean:
   automatic_night_theme:
     name: "Automatic night theme"
     initial: True
-    icon: 'mdi:palette'
+    icon: 'mdi:auto-fix'
 
 input_select:
   default_theme:

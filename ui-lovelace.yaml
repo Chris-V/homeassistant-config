@@ -160,7 +160,12 @@ views:
         title: Notifications
         show_header_toggle: false
         entities:
-          - automation.notify_plant_problems
+          - entity: automation.notify_plant_problems
+            name: Plant problems
+          - entity: input_boolean.notify_power_outages
+            name: Power outages
+          - entity: input_boolean.notify_household_changes
+            name: Household changes
       - type: entities
         title: Batteries
         entities:
@@ -177,7 +182,7 @@ views:
 
   - title: Network
     id: network
-    icon: mdi:stethoscope
+    icon: mdi:server-network
     cards:
       - type: entities
         title: Settings
@@ -188,12 +193,8 @@ views:
         title: Notifications
         show_header_toggle: false
         entities:
-          - entity: input_boolean.notify_household_changes
-            name: Household changes
-          - entity: input_boolean.notify_power_changes
-            name: Power outages
-          - entity: automation.notify_network_device_state
-            name: Network device status
+          - entity: input_boolean.notify_network_device_outages
+            name: Network device outages
       - type: entities
         title: Network Devices
         show_header_toggle: false
