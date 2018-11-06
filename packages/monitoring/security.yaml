@@ -19,6 +19,7 @@ automation:
     action:
       - service: python_script.notify
         data_template:
+          audio: True
           push_target: "admin"
           title: "{{ trigger.event.data.service_data.title }}"
           message: "{{ trigger.event.data.service_data.message }}"

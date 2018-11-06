@@ -15,6 +15,7 @@ PUSH_GROUPS = {
     ATTR_ADMIN_TARGET: 'admin',
     ATTR_HOUSEHOLD_TARGET: 'household',
 }
+TTS_ENTITIES = ['media_player.living_room_google_home']
 
 audio = data.get(ATTR_AUDIO, False)
 message = data.get(ATTR_MESSAGE, '')
@@ -40,7 +41,7 @@ if push_target and push_target not in PUSH_GROUPS:
 if not push_target and not persistent and not audio:
     logger.error(
         'Missing notification channel. Expected one of "{}", "{}" or "{}".'
-        .format(ATTR_PUSH_TARGET, ATTR_PERSISTENT, ATTR_AUDIO))
+            .format(ATTR_PUSH_TARGET, ATTR_PERSISTENT, ATTR_AUDIO))
 
 if push_target:
     payload = {'title': title, 'message': message, 'data': {}}
@@ -72,5 +73,7 @@ if persistent:
     hass.services.call('persistent_notification', 'create', payload)
 
 if audio:
-    # Not supported for now.
-    pass
+    payload = {'language': 'en', 'message': '. '.join([title, message])}
+    for entity_id in TTS_ENTITIES:
+        payload['entity_id'] = entity_id
+        hass.services.call('tts', 'google_say', payload)

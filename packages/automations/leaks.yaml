@@ -20,6 +20,7 @@ automation:
     action:
       - service: python_script.notify
         data_template:
+          audio: True
           persistent: True
           push_target: "household"
           tag: "water_{{ trigger.event.data.new_state.object_id }}"

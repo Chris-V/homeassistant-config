@@ -29,7 +29,5 @@ automation:
           push_target: "household"
           tag: "battery_low_{{ trigger.event.data.new_state.object_id }}"
           url: "https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.event.data.entity_id, 'battery_type') | d('', True)  | replace(' ', '+') }}"
-          title: "Replace {{ trigger.event.data.new_state.name }}"
-          message: |-
-            {{ trigger.event.data.new_state.name }} must be replaced.
-            Search on Amazon for "{{ state_attr(trigger.event.data.entity_id, 'battery_type') }}" batteries.
+          title: "Replace {{ trigger.event.data.new_state.name | lower }}"
+          message: "Search on Amazon for \"{{ state_attr(trigger.event.data.entity_id, 'battery_type') }}\" batteries."

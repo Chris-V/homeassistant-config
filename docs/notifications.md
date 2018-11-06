@@ -24,8 +24,8 @@ The `alert` component is an option, although is only support notify groups: http
 | 3  | Network device on | device\_outage\__device_name_ | A | N | N | See about calculating offline time as well. 
 | -  | Power outage started | power\_outage\__outage_id_ | H | Y | N | Outage id is a timestamp stored in a `input_text.power_outage_id` entity.
 | -  | Power outage done | power\_outage\__outage_id_ | H | Y | N | Also clear `input_text.power_outage_id`'s value.
-| -  | New device on network | - | A | Y | Y |
-| -  | Login attempt | - | A | Y | Y |
+| -  | New device on network | - | A | Y | N |
+| -  | Login attempt | - | A | Y | N |
 | -  | Plant problems | plant\__plant_name_ | H | Y | Y |
 | -  | Water leaks | water\__sensor_name_ | H | Y | Y |
 | 6  | Door left open | door\__door_name_ | H | N | Y | Loop every 30 seconds.
