@@ -52,15 +52,11 @@ automation:
         - condition: template
           value_template: "{{ trigger.to_state.state != states.sensor.current_home_assistant_version.state }}"
     action:
-      - service: persistent_notification.create
+      - service: python_script.notify
         data_template:
-          title: "Home Assistant Update"
-          message: "Home Assistant *{{ trigger.to_state.state }}* is available.<br><a href=\"{{ trigger.to_state.attributes.html_url }}\">Open release notes</a>"
-          notification_id: "hass_update_available"
-      - service: notify.admin
-        data_template:
+          persistent: True
+          push_target: "admin"
+          tag: "hass_version"
+          url: "{{ trigger.to_state.attributes.html_url }}"
           title: "Home Assistant Update"
           message: "Home Assistant {{ trigger.to_state.state }} is available."
-          data:
-            tag: "hass_update_available"
-            url: "{{ trigger.to_state.attributes.html_url }}"

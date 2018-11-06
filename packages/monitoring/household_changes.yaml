@@ -26,11 +26,12 @@ automation:
       entity_id: input_boolean.notify_household_changes
       state: "on"
     action:
-      service: notify.admin
-      data_template:
-        message: "{{ trigger.to_state.name }} arrived home. Household is {{ states('group.household') }}."
-        data:
+      - service: python_script.notify
+        data_template:
+          push_target: "admin"
           tag: "presence_{{ trigger.to_state.object_id }}"
+          title: "{{ trigger.to_state.name }} arrived home."
+          message: "Household is {{ states('group.household') }}."
 
   - alias: notify_person_leaves
     initial_state: True
@@ -45,8 +46,9 @@ automation:
       entity_id: input_boolean.notify_household_changes
       state: "on"
     action:
-      service: notify.admin
-      data_template:
-        message: "{{ trigger.to_state.name }} left home. Household is {{ states('group.household') }}."
-        data:
+      - service: python_script.notify
+        data_template:
+          push_target: "admin"
           tag: "presence_{{ trigger.to_state.object_id }}"
+          title: "{{ trigger.to_state.name }} left home."
+          message: "Household is {{ states('group.household') }}."

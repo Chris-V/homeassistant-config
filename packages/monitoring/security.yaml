@@ -17,10 +17,8 @@ automation:
       - condition: template
         value_template: "{{ trigger.event.data.service_data.notification_id == 'http-login' }}"
     action:
-      - service: notify.admin
+      - service: python_script.notify
         data_template:
+          push_target: "admin"
           title: "{{ trigger.event.data.service_data.title }}"
           message: "{{ trigger.event.data.service_data.message }}"
-          data:
-            tag: "failed_login_attempt"
-            url: !secret http_public_host

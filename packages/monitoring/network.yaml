@@ -127,10 +127,12 @@ automation:
       platform: event
       event_type: "device_tracker_new_device"
     action:
-      - service: notify.admin
+      - service: python_script.notify
         data_template:
+          push_target: "admin"
+          persistent: True
           title: "New device detected on network"
-          message: "{{ trigger.event.data | tojson }}"
+          message: "Device data: {{ trigger.event.data | tojson }}"
 
   - alias: notify_network_device_off
     initial_state: True
@@ -155,17 +157,18 @@ automation:
       - condition: state
         entity_id: "input_boolean.notify_network_device_outages"
         state: "on"
-      - service: notify.admin
+      - service: python_script.notify
         data_template:
+          push_target: "admin"
+          tag: "device_outage_{{ trigger.to_state.object_id }}"
+          url: "/lovelace/network"
           title: "{{ trigger.to_state.name }} is offline"
-          message: ""
-          data:
+          push_data:
             entity_id: "{{ trigger.entity_id }}"
-            tag: "network_device_{{ trigger.to_state.object_id }}"
-            actions:
-              - action: "power_on"
-                title: "Power on"
-                icon: "/local/icons/power-plug-on.png"
+          push_actions:
+            - action: "power_on"
+              title: "Power on"
+              icon: "/local/icons/power-plug-on.png"
 
   - alias: notify_network_device_on
     initial_state: True
@@ -190,17 +193,18 @@ automation:
       - condition: state
         entity_id: "input_boolean.notify_network_device_outages"
         state: "on"
-      - service: notify.admin
+      - service: python_script.notify
         data_template:
-          title: "{{ trigger.to_state.name }} is online!"
-          message: ""
-          data:
+          push_target: "admin"
+          tag: "device_outage_{{ trigger.to_state.object_id }}"
+          url: "/lovelace/network"
+          title: "{{ trigger.to_state.name }} is online"
+          push_data:
             entity_id: "{{ trigger.entity_id }}"
-            tag: "network_device_{{ trigger.to_state.object_id }}"
-            actions:
-              - action: "power_off"
-                title: "Power off"
-                icon: "/local/icons/power-plug-off.png"
+          push_actions:
+            - action: "power_off"
+              title: "Power off"
+              icon: "/local/icons/power-plug-off.png"
 
   - alias: notification_action_power_on_device
     initial_state: True

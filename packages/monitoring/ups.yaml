@@ -62,13 +62,14 @@ automation:
       entity_id: "input_boolean.notify_power_outages"
       state: "on"
     action:
-      service: notify.admin
-      data_template:
-        title: "Power restored"
-        message: "The power outage at home has finished after {{ relative_time(trigger.from_state.last_changed) }}."
-        data: &power_outage_data
+      - service: python_script.notify
+        data_template:
+          persistent: True
+          push_target: "household"
           tag: "power_outage"
-          actions:
+          title: "Power restored"
+          message: "The power outage at home has finished after {{ relative_time(trigger.from_state.last_changed) }}."
+          push_actions: &power_outage_actions
             - action: "device_management_{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}"
               title: "{% if states('input_boolean.power_outage_manage_devices') == 'off' %}Enable{% else %}Disable{% endif %} device management"
               icon: "/local/icons/power-plug-{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}.png"
@@ -81,11 +82,15 @@ automation:
         to: "off"
     condition: *power_outage_conditions
     action:
-      service: notify.admin
-      data:
-        title: "Power outage"
-        message: "A power outage is ongoing at home."
-        data: *power_outage_data
+      - service: python_script.notify
+        data_template:
+          persistent: True
+          push_target: "household"
+          tag: "power_outage"
+          title: "Power outage"
+          message: "A power outage is ongoing at home."
+          push_actions:
+            <<: *power_outage_actions
 
   - alias: notification_action_enable_device_management
     initial_state: True

@@ -23,20 +23,13 @@ automation:
           - condition: template
             value_template: "{{ trigger.event.data.old_state.state | int(100) > 20 and trigger.event.data.new_state.state | int(100) <= 20 }}"
     action:
-      - service: persistent_notification.create
+      - service: python_script.notify
         data_template:
-          title: "Replace {{ trigger.event.data.new_state.name }}"
-          notification_id: "replace_battery_{{ trigger.event.data.new_state.object_id }}"
-          message: |-
-            {{ trigger.event.data.new_state.name }} must be replaced.
-            Search on Amazon for "{{ state_attr(trigger.event.data.entity_id, 'battery_type') }}" batteries.
-            Quick search: https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.event.data.entity_id, 'battery_type') | replace(' ', '+') }}
-      - service: notify.admin
-        data_template:
+          persistent: True
+          push_target: "household"
+          tag: "battery_low_{{ trigger.event.data.new_state.object_id }}"
+          url: "https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.event.data.entity_id, 'battery_type') | d('', True)  | replace(' ', '+') }}"
           title: "Replace {{ trigger.event.data.new_state.name }}"
           message: |-
             {{ trigger.event.data.new_state.name }} must be replaced.
             Search on Amazon for "{{ state_attr(trigger.event.data.entity_id, 'battery_type') }}" batteries.
-          data:
-            tag: "replace_battery_{{ trigger.event.data.new_state.object_id }}"
-            url: "https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.event.data.entity_id, 'battery_type') | d('', True)  | replace(' ', '+') }}"

@@ -18,14 +18,11 @@ automation:
       - condition: template
         value_template: "{{ trigger.event.data.old_state.state == 'off' and trigger.event.data.new_state.state == 'on' }}"
     action:
-      - service: persistent_notification.create
+      - service: python_script.notify
         data_template:
+          persistent: True
+          push_target: "household"
+          tag: "water_{{ trigger.event.data.new_state.object_id }}"
+          url: "/lovelace/settings"
           title: "Water leak detected"
-          notification_id: "water_leak_{{ trigger.event.data.new_state.object_id }}"
           message: "A water leak has been detected at the {{ trigger.event.data.new_state.name | title | replace('Leak', '') | replace('Sensor', '') | trim }}."
-      - service: notify.admin
-        data_template:
-          title: "Water leak detected"
-          message: "A water leak has been detected at the {{ trigger.event.data.new_state.name | title | replace('Leak', '') | replace('Sensor', '') | trim }}."
-          data:
-            tag: "water_leak_{{ trigger.event.data.new_state.object_id }}"
