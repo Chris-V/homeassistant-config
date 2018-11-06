@@ -40,6 +40,10 @@ input_boolean:
     name: "Manage devices based on power outages"
     initial: "on"
 
+input_text:
+  power_outage_id:
+    name: "Power outage ID"
+
 sensor:
   - platform: apcupsd
     resources:
@@ -66,7 +70,7 @@ automation:
         data_template:
           persistent: True
           push_target: "household"
-          tag: "power_outage"
+          tag: "power_outage_{{ states('input_text.power_outage_id') }}"
           title: "Power restored"
           message: "The power outage at home has finished after {{ relative_time(trigger.from_state.last_changed) }}."
           push_actions: &power_outage_actions
@@ -82,11 +86,15 @@ automation:
         to: "off"
     condition: *power_outage_conditions
     action:
+      - service: input_text.set_value
+        data_template:
+          entity_id: "input_text.power_outage_id"
+          value: "{{ as_timestamp(now()) | int }}"
       - service: python_script.notify
         data_template:
           persistent: True
           push_target: "household"
-          tag: "power_outage"
+          tag: "power_outage_{{ states('input_text.power_outage_id') }}"
           title: "Power outage"
           message: "A power outage is ongoing at home."
           push_actions:

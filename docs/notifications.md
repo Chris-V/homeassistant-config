@@ -21,25 +21,16 @@ The `alert` component is an option, although is only support notify groups: http
 | 2  | Household person arrives | presence\__person_name_ | A | N | N |
 | 2  | Household person leaves | presence\__person_name_ | A | N | N |
 | 3  | Network device off | device\_outage\__device_name_ | A | N | N |
-| 3  | Network device on | device\_outage\__device_name_ | A | N | N | See about calculating offline time as well. 
-| -  | Power outage started | power\_outage\__outage_id_ | H | Y | N | Outage id is a timestamp stored in a `input_text.power_outage_id` entity.
-| -  | Power outage done | power\_outage\__outage_id_ | H | Y | N | Also clear `input_text.power_outage_id`'s value.
+| 3  | Network device on | device\_outage\__device_name_ | A | N | N | See about calculating offline time as well.
+| -  | Power outage started | power\_outage\__outage_id_ | H | Y | N |
+| -  | Power outage done | power\_outage\__outage_id_ | H | Y | N |
 | -  | New device on network | - | A | Y | N |
 | -  | Login attempt | - | A | Y | N |
 | -  | Plant problems | plant\__plant_name_ | H | Y | Y |
-| -  | Water leaks | water\__sensor_name_ | H | Y | Y |
-| 6  | Door left open | door\__door_name_ | H | N | Y | Loop every 30 seconds.
-| 7  | Weather alert | weather\_alert | H | Y | Y | Loop every 1 hour.
+| -  | Water leaks | water\__sensor_name_ | H | Y | Y* |
+| 6  | Door left open | door\__door_name_ | H | N | Y* |
+| 7  | Weather alert | weather\_alert | H | Y | Y |
 | -  | Low battery | battery\_low\__battery_name_ | H | Y | N |
 
 ---
 
-Notification groups:
-
-1. Off by default.
-2. Off by default.
-3. On by default.
-4. On by default.
-5. On by default. Resets to on after 24 hours.
-6. On by default. Resets to on after 30 minutes.
-7. On by default. Resets to on after 24 hours.
