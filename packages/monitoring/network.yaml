@@ -144,8 +144,8 @@ automation:
         - switch.network_relay_south
         - switch.network_relay_north
       to: "off"
-      for:
-        seconds: 30
+      for: &device_outage_leeway
+        seconds: 45
     condition:
       condition: template
       value_template: "{{ '|' ~ trigger.to_state.object_id ~ '|' not in states.input_text.offline_network_devices.state }}"
@@ -180,8 +180,7 @@ automation:
         - switch.network_relay_south
         - switch.network_relay_north
       to: "on"
-      for:
-        seconds: 30
+      for: *device_outage_leeway
     condition:
       condition: template
       value_template: "{{ '|' ~ trigger.to_state.object_id ~ '|' in states.input_text.offline_network_devices.state }}"
