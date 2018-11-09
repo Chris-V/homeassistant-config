@@ -53,11 +53,11 @@ sensor:
   - platform: template
     sensors:
       media_cpu_load:
-        value_template: ""
+        value_template: "unavailable"
       media_cpu_temp:
-        value_template: ""
+        value_template: "unavailable"
       media_ram_used:
-        value_template: ""
+        value_template: "unavailable"
   # Disabled until Media is fixed
   #  - platform: glances
   #    host: !secret network_media_host

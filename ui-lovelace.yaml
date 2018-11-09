@@ -42,8 +42,6 @@ views:
               tap_action: toggle
               hold_action: more-info
         - type: horizontal-stack
-          cards: [] # Somehow, this empty stack forces the UI to be on 3 columns
-        - type: horizontal-stack
           cards:
             - type: entity-button
               entity: script.ambiance
