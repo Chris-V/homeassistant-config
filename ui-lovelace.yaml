@@ -205,8 +205,6 @@ views:
             name: Plant problems
           - entity: input_boolean.notify_power_outages
             name: Power outages
-          - entity: input_boolean.notify_household_changes
-            name: Household changes
       - type: entities
         title: Batteries
         entities:
@@ -244,15 +242,10 @@ views:
         title: Notifications
         show_header_toggle: false
         entities:
+          - entity: input_boolean.notify_household_changes
+            name: Household changes
           - entity: input_boolean.notify_network_device_outages
             name: Network device outages
-      - type: entities
-        title: Network Devices
-        show_header_toggle: false
-        entities:
-          - switch.network_media
-          - switch.network_relay_south
-          - switch.network_relay_north
       - type: entities
         title: UPS
         entities:
@@ -275,15 +268,19 @@ views:
           - sensor.current_home_assistant_version
           - sensor.latest_home_assistant_version
       - type: entities
-        title: Automate Monitor
+        title: Automate
         entities:
           - sensor.processor_use
           - sensor.processor_temperature
           - sensor.memory_use_percent
           - sensor.since_last_boot
       - type: entities
-        title: Media Monitor
+        title: Media
+        show_header_toggle: false
         entities:
+          - entity: switch.network_media
+            name: Status
+            icon: mdi:flash-circle
           - entity: sensor.media_cpu_load
             name: CPU load
           - entity: sensor.media_cpu_temp
@@ -291,8 +288,12 @@ views:
           - entity: sensor.media_ram_used
             name: Memory use
       - type: entities
-        title: South Relay Monitor
+        title: Relay South
+        show_header_toggle: false
         entities:
+          - entity: switch.network_relay_south
+            name: Status
+            icon: mdi:flash-circle
           - entity: sensor.relay_south_cpu_load
             name: CPU load
           - entity: sensor.relay_south_cpu_temp
@@ -300,8 +301,12 @@ views:
           - entity: sensor.relay_south_ram_used
             name: Memory use
       - type: entities
-        title: North Relay Monitor
+        title: Relay North
+        show_header_toggle: false
         entities:
+          - entity: switch.network_relay_north
+            name: Status
+            icon: mdi:flash-circle
           - entity: sensor.relay_north_cpu_load
             name: CPU load
           - entity: sensor.relay_north_cpu_temp
