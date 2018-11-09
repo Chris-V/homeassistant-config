@@ -5,19 +5,6 @@ homeassistant:
       icon: "mdi:fire"
     sensor.memory_use_percent:
       friendly_name: "Memory use"
-    automation.notify_update_available:
-      friendly_name: "Notify about available HASS updates"
-      icon: "mdi:message-settings-variant"
-
-group:
-  automate_monitor:
-    name: "Automate Monitor"
-    icon: "mdi:chart-scatterplot-hexbin"
-    entities:
-      - sensor.processor_use
-      - sensor.processor_temperature
-      - sensor.memory_use_percent
-      - sensor.since_last_boot
 
 sensor:
   - platform: time_date

@@ -10,15 +10,6 @@ homeassistant:
 updater:
   reporting: False
 
-group:
-  monitoring_hass:
-    name: "Home Assistant"
-    icon: "mdi:chart-scatterplot-hexbin"
-    entities:
-      - sensor.connected_clients
-      - sensor.current_home_assistant_version
-      - sensor.latest_home_assistant_version
-
 sensor:
   - platform: api_streams
   - platform: rest
