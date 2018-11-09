@@ -22,13 +22,12 @@ sensor:
       - html_url
       - name
     scan_interval: 3600
-  - platform: command_line
-    name: current_home_assistant_version
-    command: "/var/lib/homeassistant/bin/hass --version"
-    scan_interval: 3600
+  - platform: version
+    name: "current_home_assistant_version"
 
 automation:
   - alias: notify_update_available
+    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
@@ -41,7 +40,7 @@ automation:
         - condition: template
           value_template: "{{ trigger.to_state.state != 'unavailable' }}"
         - condition: template
-          value_template: "{{ trigger.to_state.state != states.sensor.current_home_assistant_version.state }}"
+          value_template: "{{ trigger.to_state.state != states('sensor.current_home_assistant_version') }}"
     action:
       - service: python_script.notify
         data_template:
