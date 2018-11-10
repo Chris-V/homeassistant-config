@@ -50,6 +50,35 @@ light:
             entity_id: "switch.downstairs_light"
 
 automation:
+  - alias: "double_up_lounge"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.lounge_light_dimmer"
+          scene_id: 1
+          scene_data: 7860
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.lounge_ambiance"
+  - alias: "double_down_lounge"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.lounge_light_dimmer"
+          scene_id: 2
+          scene_data: 7860
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.lounge_ambiance"
+
   - alias: "triple_up_downstairs_lights"
     hide_entity: True
     initial_state: True
@@ -64,6 +93,12 @@ automation:
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.downstairs_light_switch"
+          scene_id: 1
+          scene_data: 7920
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.lounge_light_dimmer"
           scene_id: 1
           scene_data: 7920
     action:
@@ -84,6 +119,12 @@ automation:
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.downstairs_light_switch"
+          scene_id: 2
+          scene_data: 7920
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.lounge_light_dimmer"
           scene_id: 2
           scene_data: 7920
     action:
