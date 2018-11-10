@@ -1,26 +1,85 @@
 notify:
+  - platform: html5
+    name: "html5"
+    gcm_api_key: !secret notifier_gcm_key
+    gcm_sender_id: !secret notifier_gcm_sender_id
 
-- platform: html5
-  name: "html5"
-  gcm_api_key: !secret notifier_gcm_key
-  gcm_sender_id: !secret notifier_gcm_sender_id
+  - platform: group
+    name: "default"
+    services:
+      - service: html5
 
-- platform: group
-  name: "default"
-  services:
-    - service: html5
+  - platform: group
+    name: "admin"
+    services:
+      - service: html5
+        data:
+          target: ["chris aero chrome arch", "chris aero chrome windows", "chris pixel chrome"]
 
-- platform: group
-  name: "admin"
-  services:
-    - service: html5
-      data:
-        target: ["chris aero chrome arch", "chris aero chrome windows", "chris pixel chrome"]
+  - platform: group
+    name: "household"
+    services:
+      - service: admin
+      - service: html5
+        data:
+          target: ["karine nexus5 chrome"]
 
-- platform: group
-  name: "household"
-  services:
-    - service: admin
-    - service: html5
-      data:
-        target: ["karine nexus5 chrome"]
+custom_storage:
+  audio_notifications:
+    enable_persistence: True
+
+automation:
+  - alias: speak_stored_audio_notifications
+    hide_entity: True
+    initial_state: True
+
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: state
+        entity_id: "custom_storage.audio_notifications"
+      - platform: state
+        entity_id: "group.household"
+        to: "home"
+        for:
+          minutes: 1
+      - platform: time
+        at: "8:00:00"
+      - platform: time
+        at: "9:30:00"
+
+    condition:
+      - condition: numeric_state
+        entity_id: "custom_storage.audio_notifications"
+        value_template: "{{ state.attributes.size }}"
+        above: 0
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+      - condition: or
+        conditions:
+        - condition: time
+          after: "8:00:00"
+          before: "23:59:59"
+          weekday:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+        - condition: time
+          after: "9:30:00"
+          before: "23:59:59"
+          weekday:
+            - sun
+
+    action:
+      - service: tts.google_say
+        data_template:
+          entity_id: "media_player.living_room_google_home"
+          message: "{{ states.custom_storage.audio_notifications.attributes.item_0_data }}"
+      - service: custom_storage.remove
+        data_template:
+          object_id: "audio_notifications"
+          id: "{{ states.custom_storage.audio_notifications.attributes.item_0_id }}"

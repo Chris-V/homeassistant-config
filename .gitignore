@@ -3,6 +3,7 @@ secrets.yaml
 .HA_VERSION
 .uuid
 .storage/
+.custom_storage/
 
 zwcfg_*.xml
 zwscene.xml
@@ -18,7 +19,7 @@ www/custom_ui/*
 !www/custom_ui/floorplan/
 www/custom_ui/floorplan/ha-floorplan.html
 www/custom_ui/floorplan/lib/
-www/z-wave-graph.json 
+www/z-wave-graph.json
 
 deps/
 __pycache__/

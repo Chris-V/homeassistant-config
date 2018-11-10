@@ -73,7 +73,7 @@ if persistent:
     hass.services.call('persistent_notification', 'create', payload)
 
 if audio:
-    payload = {'language': 'en', 'message': '. '.join([title, message])}
-    for entity_id in TTS_ENTITIES:
-        payload['entity_id'] = entity_id
-        hass.services.call('tts', 'google_say', payload)
+    audio_message = '. '.join([title, message])
+    payload = {'object_id': 'audio_notifications', 'data': audio_message}
+
+    hass.services.call('custom_storage', 'add', payload)

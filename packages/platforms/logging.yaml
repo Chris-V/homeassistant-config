@@ -28,6 +28,7 @@ logger:
 recorder:
   exclude:
     domains:
+      - custom_storage
       - scene
       - sun
       - updater
