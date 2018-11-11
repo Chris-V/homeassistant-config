@@ -12,18 +12,12 @@ updater:
 
 sensor:
   - platform: api_streams
-  - platform: rest
-    name: latest_home_assistant_version
-    resource: "https://api.github.com/repos/home-assistant/home-assistant/releases/latest"
-    headers:
-      User-Agent: "Chris-V"
-    value_template: "{{ value_json.tag_name }}"
-    json_attributes:
-      - html_url
-      - name
-    scan_interval: 3600
+  - platform: version
+    name: "latest_home_assistant_version"
+    source: "pypi"
   - platform: version
     name: "current_home_assistant_version"
+    source: "local"
 
 automation:
   - alias: notify_update_available
@@ -47,6 +41,6 @@ automation:
           persistent: True
           push_target: "admin"
           tag: "hass_version"
-          url: "{{ trigger.to_state.attributes.html_url }}"
+          url: "https://github.com/home-assistant/home-assistant/releases/tag/{{ trigger.to_state.state }}"
           title: "Home Assistant Update"
           message: "Home Assistant {{ trigger.to_state.state }} is available."
