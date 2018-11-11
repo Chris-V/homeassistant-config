@@ -84,6 +84,7 @@ views:
             name: Spidy
           - entity: plant.viny
             name: Viny
+          - entity: binary_sensor.kitchen_sink_leak
       - type: entities
         title: Dining room
         show_header_toggle: true
@@ -171,7 +172,7 @@ views:
         entities:
           - entity: light.workshop
             name: Light
-          - binary_sensor.water_heater_leak
+          - entity: binary_sensor.water_heater_leak
 
   - title: Plants
     id: plants
@@ -208,8 +209,10 @@ views:
         entities:
           - entity: binary_sensor.ups_battery_status
             name: UPS
+          - entity: sensor.kitchen_sink_leak_sensor_battery
+            name: Kitchen sink leak
           - entity: sensor.water_heater_leak_sensor_battery
-            name: Water heater
+            name: Water heater leak
           - entity: sensor.gaetan_battery
             name: Gaetan
           - entity: sensor.spidy_battery
@@ -219,6 +222,8 @@ views:
       - type: entities
         title: Water
         entities:
+          - entity: binary_sensor.kitchen_sink_leak
+            name: Kitchen sink
           - entity: binary_sensor.water_heater_leak
             name: Water heater
       - type: entities

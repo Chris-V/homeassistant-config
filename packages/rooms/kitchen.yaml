@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    sensor.kitchen_sink_leak_sensor_battery:
+      battery_type: "ER14250 3.6V"
+
 google_assistant:
   entity_config:
     light.kitchen:
@@ -6,6 +11,14 @@ google_assistant:
       aliases:
         - "Kitchen light"
         - "Kitchen"
+
+group:
+  all_batteries:
+    entities:
+      - sensor.kitchen_sink_leak_sensor_battery
+  all_water_leak_sensors:
+    entities:
+      - binary_sensor.kitchen_sink_leak
 
 light:
   - platform: group
@@ -26,3 +39,20 @@ light:
           service: "switch.turn_off"
           data:
             entity_id: "switch.kitchen_light"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      kitchen_sink_leak:
+        friendly_name: "Kitchen sink leak"
+        device_class: "moisture"
+        value_template: "{{ is_state('sensor.kitchen_sink_leak_sensor_flood', '2') }}"
+
+sensor:
+  - platform: template
+    sensors:
+      kitchen_sink_leak_sensor_battery:
+        friendly_name: "Kitchen sink leak sensor battery"
+        device_class: "battery"
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('zwave.kitchen_sink_leak_sensor', 'battery_level') }}"
