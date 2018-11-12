@@ -10,7 +10,7 @@ zwave:
       refresh_value: True
     light.lounge:
       refresh_value: True
-    light.main_bathroom:
+    light.main_bathroom_spots:
       refresh_value: True
     light.office:
       refresh_value: True

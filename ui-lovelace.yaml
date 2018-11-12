@@ -7,7 +7,7 @@ views:
     cards:
       - type: glance
         show_name: false
-        column_width: '50%'
+        columns: 2
         entities:
           - device_tracker.chris_pixel
           - device_tracker.karine_nexus5
@@ -115,17 +115,36 @@ views:
         entities:
           - light.bedside_chris
           - light.bedside_karine
-      - type: entities
-        title: Main bathroom
-        show_header_toggle: true
-        entities:
-          - entity: light.main_bathroom
-            name: Dimmer
-          - entity: light.main_bathroom_vanity
-            name: Vanity light
-          - entity: switch.main_bathroom_fan
-            name: Fan
-            icon: mdi:fan
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                title: Main bath
+                show_header_toggle: true
+                entities:
+                  - entity: light.main_bathroom_spots
+                    name: Spots
+                  - entity: light.main_bathroom_vanity
+                    name: Vanity
+                  - entity: switch.main_bathroom_fan
+                    name: Fan
+                    icon: mdi:fan
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - entity: sensor.main_bathroom_humidity
+                    name: Humidity
+                  - entity: sensor.main_bathroom_temperature
+                    name: Temperature
+                  - entity: binary_sensor.main_bathroom_motion
+                    name: Motion
+          - type: entities
+            entities:
+              - entity: input_boolean.main_bathroom_auto_lights
+                name: Automated lights
+                secondary_info: last-changed
       - type: entities
         title: Office
         show_header_toggle: true
@@ -154,9 +173,9 @@ views:
         show_header_toggle: true
         entities:
           - entity: light.basement_bathroom
-            name: Light
+            name: Spots
           - entity: light.basement_bathroom_vanity
-            name: Vanity light
+            name: Vanity
           - entity: switch.basement_bathroom_fan
             name: Fan
             icon: mdi:fan
@@ -205,21 +224,6 @@ views:
           - entity: input_boolean.notify_power_outages
             name: Power outages
       - type: entities
-        title: Batteries
-        entities:
-          - entity: binary_sensor.ups_battery_status
-            name: UPS
-          - entity: sensor.kitchen_sink_leak_sensor_battery
-            name: Kitchen sink leak
-          - entity: sensor.water_heater_leak_sensor_battery
-            name: Water heater leak
-          - entity: sensor.gaetan_battery
-            name: Gaetan
-          - entity: sensor.spidy_battery
-            name: Spidy
-          - entity: sensor.viny_battery
-            name: Viny
-      - type: entities
         title: Water
         entities:
           - entity: binary_sensor.kitchen_sink_leak
@@ -231,6 +235,23 @@ views:
         entities:
           - sun.sun
           - sensor.moon
+      - type: entities
+        title: Batteries
+        entities:
+          - entity: binary_sensor.ups_battery_status
+            name: UPS
+          - entity: sensor.kitchen_sink_leak_sensor_battery
+            name: Kitchen sink leak
+          - entity: sensor.water_heater_leak_sensor_battery
+            name: Water heater leak
+          - entity: sensor.main_bathroom_multisensor_battery
+            name: Main bathroom multisensor
+          - entity: sensor.gaetan_battery
+            name: Gaetan
+          - entity: sensor.spidy_battery
+            name: Spidy
+          - entity: sensor.viny_battery
+            name: Viny
 
   - title: Network
     id: network

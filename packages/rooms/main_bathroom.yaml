@@ -1,9 +1,15 @@
+homeassistant:
+  customize:
+    sensor.main_bathroom_multisensor_battery:
+      battery_type: "CR123A"
+
 google_assistant:
   entity_config:
-    light.main_bathroom:
+    light.main_bathroom_spots:
       expose: True
-      room: "Main bathroom"
+      room: "Main bathroom spots"
       aliases:
+        - "Bathroom spots"
         - "Bathroom light"
         - "Main bathroom light"
     light.main_bathroom_vanity:
@@ -21,11 +27,51 @@ google_assistant:
         - "Bathroom fan"
         - "Main bathroom fan"
 
+group:
+  all_batteries:
+    entities:
+      - sensor.main_bathroom_multisensor_battery
+
+input_boolean:
+  main_bathroom_auto_lights:
+    name: "Main bathroom's automated lights"
+    initial: True # Want to reset after reboot
+    icon: "mdi:jquery"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      main_bathroom_motion:
+        friendly_name: "Main bathroom motion"
+        device_class: "motion"
+        value_template: "{{ is_state('sensor.main_bathroom_multisensor_alarm_level', '255') }}"
+        delay_off:
+          seconds: 30
+
+sensor:
+  - platform: template
+    sensors:
+      main_bathroom_humidity:
+        friendly_name: "Main bathroom humidity"
+        device_class: "humidity"
+        unit_of_measurement: "%"
+        value_template: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | round }}"
+      main_bathroom_temperature:
+        friendly_name: "Main bathroom temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        value_template: "{{ states('sensor.main_bathroom_multisensor_temperature') | round }}"
+      main_bathroom_multisensor_battery:
+        friendly_name: "Main bathroom multisensor battery"
+        device_class: "battery"
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('zwave.main_bathroom_multisensor', 'battery_level') }}"
+
 light:
   - platform: group
     name: "Main bathroom lights"
     entities:
-      - light.main_bathroom
+      - light.main_bathroom_spots
       - light.main_bathroom_vanity
 
   - platform: template
@@ -43,16 +89,156 @@ light:
             entity_id: "switch.main_bathroom_vanity_light"
 
 automation:
-  - alias: "double_up_main_bathroom_lights"
+  # Automated fan management
+  - alias: "main_bathroom_auto_fan_on"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: numeric_state
+        entity_id: "sensor.main_bathroom_humidity"
+        above: 64
+      - platform: state
+        entity_id: "switch.main_bathroom_fan"
+        to: "off"
+        for:
+          minutes: 30
+    condition:
+      - condition: numeric_state
+        entity_id: "sensor.main_bathroom_humidity"
+        above: 64
+    action:
+      - service: switch.turn_on
+        data:
+          entity_id: "switch.main_bathroom_fan"
+  - alias: "main_bathroom_auto_fan_off"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: numeric_state
+        entity_id: "sensor.main_bathroom_humidity"
+        below: 65
+      - platform: state
+        entity_id: "switch.main_bathroom_fan"
+        to: "on"
+        for:
+          minutes: 30
+    condition:
+      - condition: numeric_state
+        entity_id: "sensor.main_bathroom_humidity"
+        below: 65
+    action:
+      - service: switch.turn_off
+        data:
+          entity_id: "switch.main_bathroom_fan"
+
+  # Automated light management
+  - alias: "main_bathroom_auto_lights_on"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.main_bathroom_motion"
+        to: "on"
+      - platform: state
+        entity_id: "input_boolean.main_bathroom_auto_lights"
+        to: "on"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.main_bathroom_auto_lights"
+        state: "on"
+      - condition: state
+        entity_id: "binary_sensor.main_bathroom_motion"
+        state: "on"
+      - condition: state
+        entity_id: "light.main_bathroom_lights"
+        state: "off"
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: "light.main_bathroom_spots"
+          brightness: >-
+            {% set time = now().strftime('%H%M') | int %}
+            {%- if time <= 600 -%} 30
+            {%- elif time >= 900 and time <= 1800 -%} 200
+            {%- else -%} 100
+            {%- endif -%}
+  - alias: "main_bathroom_auto_lights_off"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.main_bathroom_motion"
+        to: "off"
+      - platform: state
+        entity_id: "input_boolean.main_bathroom_auto_lights"
+        to: "on"
+      - platform: time
+        at: "9:00:00"
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.main_bathroom_motion"
+        state: "off"
+      - condition: state
+        entity_id: "input_boolean.main_bathroom_auto_lights"
+        state: "on"
+      - condition: time # Usual shower times
+        before: "8:00:00"
+        after: "8:59:59"
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: "light.main_bathroom_lights"
+
+  # Re-enable auto-lights after some time
+  - alias: "main_bathroom_reenable_auto_lights"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "input_boolean.main_bathroom_auto_lights"
+        to: "off"
+        for:
+          minutes: 30
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: "input_boolean.main_bathroom_auto_lights"
+
+  # Double tap fan switch will turn fan on/off
+  - alias: "main_bathroom_fan_double_up"
     hide_entity: True
     initial_state: True
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
-          entity_id: "zwave.main_bathroom_light_dimmer"
+          entity_id: "zwave.main_bathroom_fan_switch"
           scene_id: 1
           scene_data: 7860
+    action:
+      service: switch.turn_on
+      data:
+        entity_id: "switch.main_bathroom_fan"
+  - alias: "main_bathroom_fan_double_down"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_fan_switch"
+          scene_id: 2
+          scene_data: 7860
+    action:
+      service: switch.turn_off
+      data:
+        entity_id: "switch.main_bathroom_fan"
+
+  # Double tap vanity switch will turn vanity light on/off
+  - alias: "main_bathroom_vanity_double_up"
+    hide_entity: True
+    initial_state: True
+    trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
@@ -62,8 +248,38 @@ automation:
     action:
       service: light.turn_on
       data:
-        entity_id: "light.main_bathroom_lights"
-  - alias: "double_down_main_bathroom_lights"
+        entity_id: "light.main_bathroom_vanity"
+  - alias: "main_bathroom_vanity_double_down"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_vanity_light_switch"
+          scene_id: 2
+          scene_data: 7860
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.main_bathroom_vanity"
+
+  # Double tap spots switch will turn spots on/off
+  - alias: "main_bathroom_spots_double_up"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_light_dimmer"
+          scene_id: 1
+          scene_data: 7860
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.main_bathroom_spots"
+  - alias: "main_bathroom_spots_double_down"
     hide_entity: True
     initial_state: True
     trigger:
@@ -73,12 +289,68 @@ automation:
           entity_id: "zwave.main_bathroom_light_dimmer"
           scene_id: 2
           scene_data: 7860
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.main_bathroom_spots"
+
+  # Double tap any light switch will toggle motion detection
+  - alias: "main_bathroom_lights_double_up_down"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_light_dimmer"
+          scene_data: 7860
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_vanity_light_switch"
+          scene_data: 7860
+    action:
+      service: input_boolean.toggle
+      data:
+        entity_id: "input_boolean.main_bathroom_auto_lights"
+
+  # Triple tap any light switch will turn bathroom lights on/off
+  - alias: "main_bathroom_lights_triple_up"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_light_dimmer"
+          scene_id: 1
+          scene_data: 7920
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_vanity_light_switch"
+          scene_id: 1
+          scene_data: 7920
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.main_bathroom_lights"
+  - alias: "main_bathroom_lights_triple_down"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.main_bathroom_light_dimmer"
+          scene_id: 2
+          scene_data: 7920
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.main_bathroom_vanity_light_switch"
           scene_id: 2
-          scene_data: 7860
+          scene_data: 7920
     action:
       service: light.turn_off
       data:

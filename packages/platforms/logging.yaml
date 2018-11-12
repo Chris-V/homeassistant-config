@@ -1,6 +1,7 @@
 history: &history_config
   include:
     domains:
+      - binary_sensor
       - device_tracker
       - input_boolean
       - input_datetime

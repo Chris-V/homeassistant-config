@@ -39,7 +39,7 @@ light:
             entity_id: "switch.basement_bathroom_light"
 
 automation:
-  - alias: "double_up_basement_bathroom_lights"
+  - alias: "basement_bathroom_lights_triple_up"
     hide_entity: True
     initial_state: True
     trigger:
@@ -48,18 +48,18 @@ automation:
         event_data:
           entity_id: "zwave.basement_bathroom_vanity_light_dimmer"
           scene_id: 1
-          scene_data: 7860
+          scene_data: 7920
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.basement_bathroom_light_switch"
           scene_id: 1
-          scene_data: 7860
+          scene_data: 7920
     action:
       service: light.turn_on
       data:
         entity_id: "light.basement_bathroom_lights"
-  - alias: "double_down_basement_bathroom_lights"
+  - alias: "basement_bathroom_lights_triple_down"
     hide_entity: True
     initial_state: True
     trigger:
@@ -68,13 +68,13 @@ automation:
         event_data:
           entity_id: "zwave.basement_bathroom_vanity_light_dimmer"
           scene_id: 2
-          scene_data: 7860
+          scene_data: 7920
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.basement_bathroom_light_switch"
           scene_id: 2
-          scene_data: 7860
+          scene_data: 7920
     action:
       service: light.turn_off
       data:
