@@ -117,11 +117,16 @@ views:
           - light.bedside_karine
       - type: vertical-stack
         cards:
+          - type: entities # Title card with a toggle, no entities shown.
+            title: Main bathroom
+            show_header_toggle: true
+            entities:
+              - entity: light.main_bathroom_lights
+                type: divider
+                style: '' # TODO: Any value hides the divider. No properties work, so I can't remove the extra padding.
           - type: horizontal-stack
             cards:
               - type: entities
-                title: Main bathroom
-                show_header_toggle: true
                 entities:
                   - entity: light.main_bathroom_spots
                     name: Spots
@@ -170,11 +175,16 @@ views:
             name: Downstairs light
       - type: vertical-stack
         cards:
+          - type: entities # Title card with a toggle, no entities shown.
+            title: Basement bathroom
+            show_header_toggle: true
+            entities:
+              - entity: light.basement_bathroom_lights
+                type: divider
+                style: '' # TODO: Any value hides the divider. No properties work, so I can't remove the extra padding.
           - type: horizontal-stack
             cards:
               - type: entities
-                title: Basement bathroom
-                show_header_toggle: true
                 entities:
                   - entity: light.basement_bathroom
                     name: Ceiling
