@@ -22,9 +22,3 @@ script:
       - service: homeassistant.turn_off
         data:
           entity_id: "switch.bookshelf_outlet"
-      - service: homeassistant.turn_off
-        data:
-          entity_id: "switch.main_bathroom_fan"
-      - service: homeassistant.turn_off
-        data:
-          entity_id: "switch.basement_bathroom_fan"

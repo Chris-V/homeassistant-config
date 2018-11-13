@@ -120,7 +120,7 @@ views:
           - type: horizontal-stack
             cards:
               - type: entities
-                title: Main bath
+                title: Main bathroom
                 show_header_toggle: true
                 entities:
                   - entity: light.main_bathroom_spots
@@ -168,17 +168,36 @@ views:
             name: Hallway dimmer
           - entity: light.downstairs
             name: Downstairs light
-      - type: entities
-        title: Basement bathroom
-        show_header_toggle: true
-        entities:
-          - entity: light.basement_bathroom
-            name: Spots
-          - entity: light.basement_bathroom_vanity
-            name: Vanity
-          - entity: switch.basement_bathroom_fan
-            name: Fan
-            icon: mdi:fan
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                title: Basement bathroom
+                show_header_toggle: true
+                entities:
+                  - entity: light.basement_bathroom
+                    name: Ceiling
+                  - entity: light.basement_bathroom_vanity
+                    name: Vanity
+                  - entity: switch.basement_bathroom_fan
+                    name: Fan
+                    icon: mdi:fan
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - entity: sensor.basement_bathroom_humidity
+                    name: Humidity
+                  - entity: sensor.basement_bathroom_temperature
+                    name: Temperature
+                  - entity: binary_sensor.basement_bathroom_motion
+                    name: Motion
+          - type: entities
+            entities:
+              - entity: input_boolean.basement_bathroom_auto_lights
+                name: Automated lights
+                secondary_info: last-changed
       - type: entities
         title: Laundry room
         show_header_toggle: true
@@ -246,6 +265,8 @@ views:
             name: Water heater leak
           - entity: sensor.main_bathroom_multisensor_battery
             name: Main bathroom multisensor
+          - entity: sensor.basement_bathroom_multisensor_battery
+            name: Basement bathroom multisensor
           - entity: sensor.gaetan_battery
             name: Gaetan
           - entity: sensor.spidy_battery
