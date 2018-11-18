@@ -13,4 +13,4 @@
 #    icon: mdi:vector-square
 #    url: !secret z_wave_graph_url
 #shell_command:
-#  z_wave_graph: "/var/lib/homeassistant/bin/python /home/hass/.homeassistant/bin/z-wave-graph.py --config /home/hass/.homeassistant/configuration_z_wave_graph.yaml"
+#  z_wave_graph: "/srv/homeassistant/bin/python /home/homeassistant/.homeassistant/bin/z-wave-graph.py --config /home/homeassistant/.homeassistant/configuration_z_wave_graph.yaml"

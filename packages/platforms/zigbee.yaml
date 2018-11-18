@@ -1,5 +1,5 @@
 zha:
   usb_path: "/dev/zigbee"
   radio_type: "ezsp"
-  database_path: "/home/hass/.homeassistant/zigbee.db"
+  database_path: "/home/homeassistant/.homeassistant/zigbee.db"
 

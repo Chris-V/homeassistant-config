@@ -93,7 +93,7 @@ cat "$tmp_dir/panel_iframe.yaml" >> "$tmp_config"
 # Better to write our own shell cmd
 # Otherwise, sample is here: https://github.com/OmenWild/home-assistant-z-wave-graph/blob/master/config/shell_commands/z-wave-graph.yaml
 echo "shell_command:" >> "$tmp_config"
-echo "  z_wave_graph: \"/var/lib/homeassistant/bin/python /home/hass/.homeassistant/bin/z-wave-graph.py --config /home/hass/.homeassistant/configuration_z_wave_graph.yaml\"" >> "$tmp_config"
+echo "  z_wave_graph: \"/srv/homeassistant/bin/python /home/homeassistant/.homeassistant/bin/z-wave-graph.py --config /home/homeassistant/.homeassistant/configuration_z_wave_graph.yaml\"" >> "$tmp_config"
 
 diff "$dest_config" "$tmp_config" &>/dev/null
 if [ $? == 0 ]; then
