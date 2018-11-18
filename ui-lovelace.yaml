@@ -394,3 +394,29 @@ views:
             name: CPU temperature
           - entity: sensor.relay_north_ram_used
             name: Memory use
+      - type: entities
+        title: Z-Wave
+        entities:
+          - entity: zwave.usb_controller
+          - entity: zwave.basement_bathroom_fan_switch
+          - entity: zwave.basement_bathroom_light_switch
+          - entity: zwave.basement_bathroom_multisensor
+          - entity: zwave.basement_bathroom_vanity_light_dimmer
+          - entity: zwave.basement_hallway_light_dimmer
+          - entity: zwave.bookshelf_light_switch
+          - entity: zwave.dining_room_light_dimmer
+          - entity: zwave.downstairs_light_switch
+          - entity: zwave.front_porch_light_switch
+          - entity: zwave.kitchen_light_switch
+          - entity: zwave.kitchen_sink_leak_sensor
+          - entity: zwave.laundry_motion_sensor
+          - entity: zwave.laundry_room_light_switch
+          - entity: zwave.lounge_light_dimmer
+          - entity: zwave.main_bathroom_fan_switch
+          - entity: zwave.main_bathroom_light_dimmer
+          - entity: zwave.main_bathroom_vanity_light_switch
+          - entity: zwave.office_light_dimmer
+          - entity: zwave.shed_outdoor_light_switch
+          - entity: zwave.side_porch_light_switch
+          - entity: zwave.water_heater_leak_sensor
+          - entity: zwave.workshop_light_switch
