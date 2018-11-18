@@ -7,6 +7,14 @@ google_assistant:
         - "Laundry room light"
         - "Laundry room"
 
+binary_sensor:
+  - platform: template
+    sensors:
+      laundry_room_motion:
+        friendly_name: "Laundry room motion"
+        device_class: "motion"
+        value_template: "{{ is_state('sensor.laundry_motion_sensor_burglar', '8') }}"
+
 light:
   - platform: group
     name: "Laundry room lights"
@@ -26,3 +34,70 @@ light:
           service: "switch.turn_off"
           data:
             entity_id: "switch.laundry_room_light"
+
+automation:
+  # Automated light management
+  - alias: "laundry_room_auto_lights_on"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.laundry_room_motion"
+        to: "on"
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: "light.laundry_room"
+  - alias: "laundry_room_auto_lights_off"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.laundry_room_motion"
+        to: "off"
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: "light.laundry_room"
+
+  # Multi taps will turn light on/off
+  - alias: "laundry_room_multi_up"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.laundry_room_light_switch"
+          scene_id: 1
+          scene_data: 7860
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.laundry_room_light_switch"
+          scene_id: 1
+          scene_data: 7920
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.laundry_room"
+  - alias: "laundry_room_multi_down"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.laundry_room_light_switch"
+          scene_id: 2
+          scene_data: 7860
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.laundry_room_light_switch"
+          scene_id: 2
+          scene_data: 7920
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.laundry_room"

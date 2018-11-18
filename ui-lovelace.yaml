@@ -208,12 +208,27 @@ views:
               - entity: input_boolean.basement_bathroom_auto_lights
                 name: Automated lights
                 secondary_info: last-changed
-      - type: entities
-        title: Laundry room
-        show_header_toggle: true
-        entities:
-          - entity: light.laundry_room
-            name: Light
+      - type: vertical-stack
+        cards:
+          - type: entities # Title card with a toggle, no entities shown.
+            title: Laundry room
+            show_header_toggle: true
+            entities:
+              - entity: light.laundry_room_lights
+                type: divider
+                style: '' # TODO: Any value hides the divider. No properties work, so I can't remove the extra padding.
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                - entity: light.laundry_room
+                  name: Light
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - entity: binary_sensor.laundry_room_motion
+                    name: Motion
       - type: entities
         title: Workshop
         show_header_toggle: true
