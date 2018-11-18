@@ -18,10 +18,12 @@ automation:
       - condition: or
         conditions:
           - condition: template
-            # Binary sensors are on when battery is low, off otherwise
+            # Binary sensors are 'on' when battery is low, 'off' otherwise
             value_template: "{{ trigger.event.data.old_state.state == 'off' and trigger.event.data.new_state.state == 'on' }}"
           - condition: template
-            value_template: "{{ trigger.event.data.old_state.state | int(100) > 20 and trigger.event.data.new_state.state | int(100) <= 20 }}"
+            value_template: >-
+              {% set threshold = 15 %}
+              {{ trigger.event.data.old_state.state | int(100) > threshold and trigger.event.data.new_state.state | int(100) <= threshold }}
     action:
       - service: python_script.notify
         data_template:
