@@ -85,6 +85,7 @@ views:
           - entity: plant.viny
             name: Viny
           - entity: binary_sensor.kitchen_sink_leak
+            name: Sink
       - type: entities
         title: Dining room
         show_header_toggle: true
@@ -236,6 +237,7 @@ views:
           - entity: light.workshop
             name: Light
           - entity: binary_sensor.water_heater_leak
+            name: Water heater
 
   - title: Plants
     id: plants
@@ -268,6 +270,11 @@ views:
           - entity: input_boolean.notify_power_outages
             name: Power outages
       - type: entities
+        title: Celestial
+        entities:
+          - sun.sun
+          - sensor.moon
+      - type: entities
         title: Water
         entities:
           - entity: binary_sensor.kitchen_sink_leak
@@ -275,10 +282,14 @@ views:
           - entity: binary_sensor.water_heater_leak
             name: Water heater
       - type: entities
-        title: Celestial
+        title: Motion
         entities:
-          - sun.sun
-          - sensor.moon
+          - entity: binary_sensor.main_bathroom_motion
+            name: Main bathroom
+          - entity: binary_sensor.basement_bathroom_motion
+            name: Basement bathroom
+          - entity: binary_sensor.laundry_room_motion
+            name: Laundry room
       - type: entities
         title: Batteries
         entities:
