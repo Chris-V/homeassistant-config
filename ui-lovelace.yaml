@@ -209,6 +209,7 @@ views:
               - entity: input_boolean.basement_bathroom_auto_lights
                 name: Automated lights
                 secondary_info: last-changed
+
       - type: vertical-stack
         cards:
           - type: entities # Title card with a toggle, no entities shown.
@@ -230,14 +231,31 @@ views:
                 entities:
                   - entity: binary_sensor.laundry_room_motion
                     name: Motion
-      - type: entities
-        title: Workshop
-        show_header_toggle: true
-        entities:
-          - entity: light.workshop
-            name: Light
-          - entity: binary_sensor.water_heater_leak
-            name: Water heater
+
+
+      - type: vertical-stack
+        cards:
+          - type: entities # Title card with a toggle, no entities shown.
+            title: Workshop
+            show_header_toggle: true
+            entities:
+              - entity: light.workshop_lights
+                type: divider
+                style: '' # TODO: Any value hides the divider. No properties work, so I can't remove the extra padding.
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                - entity: light.workshop
+                  name: Light
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - entity: binary_sensor.workshop_motion
+                    name: Motion
+                  - entity: binary_sensor.water_heater_leak
+                    name: Water heater
 
   - title: Plants
     id: plants
@@ -289,7 +307,9 @@ views:
           - entity: binary_sensor.basement_bathroom_motion
             name: Basement bathroom
           - entity: binary_sensor.laundry_room_motion
-            name: Laundry room
+            name: Laundry
+          - entity: binary_sensor.workshop_motion
+            name: Workshop
       - type: entities
         title: Batteries
         entities:
@@ -420,3 +440,4 @@ views:
           - entity: zwave.side_porch_light_switch
           - entity: zwave.water_heater_leak_sensor
           - entity: zwave.workshop_light_switch
+          - entity: zwave.workshop_motion_sensor

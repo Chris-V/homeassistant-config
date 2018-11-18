@@ -48,6 +48,11 @@ binary_sensor:
         device_class: "moisture"
         value_template: "{{ is_state('sensor.water_heater_leak_sensor_flood', '2') }}"
 
+      workshop_motion:
+        friendly_name: "Workshop motion"
+        device_class: "motion"
+        value_template: "{{ is_state('sensor.workshop_motion_sensor_burglar', '8') }}"
+
 sensor:
   - platform: template
     sensors:
@@ -57,3 +62,27 @@ sensor:
         unit_of_measurement: "%"
         value_template: "{{ state_attr('zwave.water_heater_leak_sensor', 'battery_level') }}"
 
+automation:
+  # Automated light management
+  - alias: "workshop_auto_lights_on"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.workshop_motion"
+        to: "on"
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: "light.workshop"
+  - alias: "workshop_auto_lights_off"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.workshop_motion"
+        to: "off"
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: "light.workshop"
