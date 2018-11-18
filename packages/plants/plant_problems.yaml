@@ -8,15 +8,12 @@ automation:
   - alias: notify_plant_problems
     initial_state: True
     trigger:
-      - platform: state
-        entity_id:
-          - plant.gaetan
-          - plant.spidy
-          - plant.viny
-        to: "problem"
-    condition:
-      condition: template
-      value_template: "{{ not is_state_attr(trigger.to_state, 'problem', 'battery low') }}"
+      - platform: template
+        value_template: "{{ state_attr('plant.gaetan', 'problem') not in ('none', 'battery low') }}"
+      - platform: template
+        value_template: "{{ state_attr('plant.spidy', 'problem') not in ('none', 'battery low') }}"
+      - platform: template
+        value_template: "{{ state_attr('plant.viny', 'problem') not in ('none', 'battery low') }}"
     action:
       - service: python_script.notify
         data_template:
@@ -26,4 +23,23 @@ automation:
           tag: "plant_{{ trigger.to_state.object_id }}"
           url: "/lovelace/plants"
           title: "Check {{ trigger.to_state.name }}"
-          message: "{{ trigger.to_state.name }} has some problems: {{ trigger.to_state.attributes.problem }}"
+          message: >-
+            {%
+            set issues = (
+              trigger.to_state.attributes.problem
+                | lower
+                | replace('moisture low', 'thirsty')
+                | replace('temperature low', 'cold')
+                | replace('brightness low', 'dark')
+                | replace('conductivity low', 'hungry')
+                | replace('battery low', '')
+              ).split(', ')
+              | reject('equalto', '')
+              | sort
+              | list
+            %}
+            {% for issue in issues -%}
+              {%- if loop.first %}{{ trigger.to_state.name }} is {% elif loop.last %} and {% else %}, {% endif -%}
+              {{ issue }}
+              {%- if loop.last %}.{% endif %}
+            {%- endfor %}

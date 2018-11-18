@@ -96,7 +96,7 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: "sensor.main_bathroom_humidity"
-        above: 64
+        above: 64 # > 64
       - platform: state
         entity_id: "switch.main_bathroom_fan"
         to: "off"
@@ -116,7 +116,7 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: "sensor.main_bathroom_humidity"
-        below: 65
+        below: 65 # < 65
       - platform: state
         entity_id: "switch.main_bathroom_fan"
         to: "on"
