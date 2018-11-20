@@ -89,9 +89,9 @@ views:
               - type: glance
                 columns: 2
                 entities:
-                  - entity: binary_sensor.kitchen_door
-                    name: ''
                   - entity: binary_sensor.kitchen_sink_leak
+                    name: Sink
+                  - entity: binary_sensor.kitchen_door
                     name: ''
               - type: glance
                 entities:
@@ -126,20 +126,23 @@ views:
                     name: Ambiance light
                   - entity: switch.bookshelf_outlet
                     name: Bookshelf outlet
-              - type: glance
-                show_name: False
-                columns: 2
-                entities:
-                  - entity: binary_sensor.living_room_door
-          - type: glance
-            show_state: False
-            entities:
-              - entity: switch.living_room_tv
-                name: TV
-              - entity: media_player.living_room_chromecast
-                name: Chromecast
-              - entity: media_player.living_room_google_home
-                name: Google Home
+                  - entity: switch.living_room_tv
+                    name: TV
+              - type: vertical-stack
+                cards:
+                - type: glance
+                  show_state: False
+                  columns: 2
+                  entities:
+                    - entity: media_player.living_room_chromecast
+                      name: Chromecast
+                    - entity: media_player.living_room_google_home
+                      name: Google Home
+                - type: glance
+                  show_name: False
+                  columns: 2
+                  entities:
+                    - entity: binary_sensor.living_room_door
       - type: entities
         title: Master bedroom
         show_header_toggle: true
@@ -150,7 +153,7 @@ views:
       - type: vertical-stack
         cards:
           - type: entities # Title card with a toggle, no entities shown.
-            title: Main bathroom
+            title: Bathroom
             show_header_toggle: true
             entities:
               - entity: light.main_bathroom_lights
@@ -209,7 +212,7 @@ views:
       - type: vertical-stack
         cards:
           - type: entities # Title card with a toggle, no entities shown.
-            title: Basement bathroom
+            title: Bathroom
             show_header_toggle: true
             entities:
               - entity: light.basement_bathroom_lights
@@ -244,7 +247,7 @@ views:
       - type: vertical-stack
         cards:
           - type: entities # Title card with a toggle, no entities shown.
-            title: Laundry room
+            title: Laundry
             show_header_toggle: true
             entities:
               - entity: light.laundry_room_lights
@@ -316,10 +319,21 @@ views:
           - entity: input_boolean.notify_power_outages
             name: Power outages
       - type: entities
-        title: Celestial
+        title: Doors
         entities:
-          - sun.sun
-          - sensor.moon
+          - entity: binary_sensor.kitchen_door
+            name: Kitchen
+          - entity: binary_sensor.living_room_door
+            name: Living room
+      - type: entities
+        title: Windows
+        entities:
+          - entity: sun.sun
+            name: Lounge
+          - entity: sun.sun
+            name: Guest room (east)
+          - entity: sun.sun
+            name: Guest room (west)
       - type: entities
         title: Water
         entities:
@@ -338,6 +352,11 @@ views:
             name: Laundry
           - entity: binary_sensor.workshop_motion
             name: Workshop
+      - type: entities
+        title: Celestial
+        entities:
+          - sun.sun
+          - sensor.moon
       - type: entities
         title: Batteries
         entities:
