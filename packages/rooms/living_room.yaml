@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    sensor.living_room_door_sensor_battery:
+      battery_type: "Sensative Strip"
+
 google_assistant:
   entity_config:
     switch.living_room_tv:
@@ -24,6 +29,11 @@ google_assistant:
         - "Bookshelf outlet"
         - "Christmas tree"
         - "Xmas tree"
+
+group:
+  all_batteries:
+    entities:
+      - sensor.living_room_door_sensor_battery
 
 cast:
   media_player:
@@ -80,6 +90,23 @@ switch:
         friendly_name: "Bookshelf outlet"
         command_on: "sggyAAYUEggGFBMIBhQGFAYUEgcGFBIIBhQSCAYUEggGFBIIEwcSCAYUBhQGFAcUEggSCAa/AAAA"
         command_off: "sgkyAAYUEgcGFBIHBhQGFAYUEgcGFBIHBhQSCAYUEggGFBIHEggSCAYUBhQSBxMHBhQGFAa/AAAA"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      living_room_door:
+        friendly_name: "Living room door"
+        device_class: "door"
+        value_template: "{{ is_state('sensor.living_room_door_sensor_access_control', '22') }}"
+
+sensor:
+  - platform: template
+    sensors:
+      living_room_door_sensor_battery:
+        friendly_name: "Living room door sensor battery"
+        device_class: "battery"
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('zwave.living_room_door_sensor', 'battery_level') }}"
 
 automation:
   - alias: "double_up_bookshelf"

@@ -87,13 +87,12 @@ views:
           - type: horizontal-stack
             cards:
               - type: glance
-                show_name: False
                 columns: 2
                 entities:
                   - entity: binary_sensor.kitchen_door
-                    name: Door
+                    name: ''
                   - entity: binary_sensor.kitchen_sink_leak
-                    name: Sink
+                    name: ''
               - type: glance
                 entities:
                   - entity: plant.spidy
@@ -109,25 +108,40 @@ views:
             name: Dimmer
           - entity: plant.gaetan
             name: Gaétan
+      - type: vertical-stack
+        cards:
+          - type: entities # Title card with a toggle, no entities shown.
+            title: Living room
+            show_header_toggle: true
+            entities:
+              - entity: light.living_room_lights
+                type: divider
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: light.bookshelf
+                    name: Bookshelf light
+                  - entity: light.living_room_ambiance
+                    name: Ambiance light
+                  - entity: switch.bookshelf_outlet
+                    name: Bookshelf outlet
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - entity: binary_sensor.living_room_door
+          - type: glance
+            show_state: False
+            entities:
+              - entity: switch.living_room_tv
+                name: TV
+              - entity: media_player.living_room_chromecast
+                name: Chromecast
+              - entity: media_player.living_room_google_home
+                name: Google Home
       - type: entities
-        title: Living Room
-        show_header_toggle: true
-        entities:
-          - type: divider
-          - entity: light.bookshelf
-            name: Bookshelf light
-          - entity: light.living_room_ambiance
-            name: Ambiance light
-          - entity: switch.bookshelf_outlet
-            name: Bookshelf outlet
-          - entity: switch.living_room_tv
-            name: TV
-          - entity: media_player.living_room_chromecast
-            name: Chromecast
-          - entity: media_player.living_room_google_home
-            name: Google Home
-      - type: entities
-        title: Master Bedroom
+        title: Master bedroom
         show_header_toggle: true
         entities:
           - type: divider
@@ -333,6 +347,8 @@ views:
             name: Kitchen door
           - entity: sensor.kitchen_sink_leak_sensor_battery
             name: Kitchen sink leak
+          - entity: sensor.living_room_door_sensor_battery
+            name: Living room door
           - entity: sensor.main_bathroom_multisensor_battery
             name: Main bathroom multisensor
           - entity: binary_sensor.ups_battery_status
@@ -465,5 +481,6 @@ views:
           - entity: zwave.basement_bathroom_multisensor
           - entity: zwave.kitchen_door_sensor
           - entity: zwave.kitchen_sink_leak_sensor
+          - entity: zwave.living_room_door_sensor
           - entity: zwave.main_bathroom_multisensor
           - entity: zwave.water_heater_leak_sensor
