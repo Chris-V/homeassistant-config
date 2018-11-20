@@ -68,28 +68,43 @@ views:
         title: Outdoor
         show_header_toggle: true
         entities:
+          - type: divider
           - entity: light.side_porch
             name: Side porch light
           - entity: light.front_porch
             name: Front porch light
           - entity: light.shed
             name: Shed light
-      - type: entities
-        title: Kitchen
-        show_header_toggle: true
-        entities:
-          - entity: light.kitchen
-            name: Light
-          - entity: plant.spidy
-            name: Spidy
-          - entity: plant.viny
-            name: Viny
-          - entity: binary_sensor.kitchen_sink_leak
-            name: Sink
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Kitchen
+            show_header_toggle: true
+            entities:
+              - type: divider
+              - entity: light.kitchen
+                name: Light
+          - type: horizontal-stack
+            cards:
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - entity: binary_sensor.kitchen_door
+                    name: Door
+                  - entity: binary_sensor.kitchen_sink_leak
+                    name: Sink
+              - type: glance
+                entities:
+                  - entity: plant.spidy
+                    name: Spidy
+                  - entity: plant.viny
+                    name: Viny
       - type: entities
         title: Dining room
         show_header_toggle: true
         entities:
+          - type: divider
           - entity: light.dining_room
             name: Dimmer
           - entity: plant.gaetan
@@ -98,6 +113,7 @@ views:
         title: Living Room
         show_header_toggle: true
         entities:
+          - type: divider
           - entity: light.bookshelf
             name: Bookshelf light
           - entity: light.living_room_ambiance
@@ -114,8 +130,9 @@ views:
         title: Master Bedroom
         show_header_toggle: true
         entities:
-          - light.bedside_chris
-          - light.bedside_karine
+          - type: divider
+          - entity: light.bedside_chris
+          - entity: light.bedside_karine
       - type: vertical-stack
         cards:
           - type: entities # Title card with a toggle, no entities shown.
@@ -124,7 +141,6 @@ views:
             entities:
               - entity: light.main_bathroom_lights
                 type: divider
-                style: '' # TODO: Any value hides the divider. No properties work, so I can't remove the extra padding.
           - type: horizontal-stack
             cards:
               - type: entities
@@ -155,6 +171,7 @@ views:
         title: Office
         show_header_toggle: true
         entities:
+          - type: divider
           - entity: light.office
             name: Dimmer
 
@@ -166,6 +183,7 @@ views:
         title: Lounge
         show_header_toggle: true
         entities:
+          - type: divider
           - entity: light.lounge
             name: Dimmer
           - entity: light.lounge_ambiance
@@ -182,7 +200,6 @@ views:
             entities:
               - entity: light.basement_bathroom_lights
                 type: divider
-                style: '' # TODO: Any value hides the divider. No properties work, so I can't remove the extra padding.
           - type: horizontal-stack
             cards:
               - type: entities
@@ -218,7 +235,6 @@ views:
             entities:
               - entity: light.laundry_room_lights
                 type: divider
-                style: '' # TODO: Any value hides the divider. No properties work, so I can't remove the extra padding.
           - type: horizontal-stack
             cards:
               - type: entities
@@ -232,7 +248,6 @@ views:
                   - entity: binary_sensor.laundry_room_motion
                     name: Motion
 
-
       - type: vertical-stack
         cards:
           - type: entities # Title card with a toggle, no entities shown.
@@ -241,7 +256,6 @@ views:
             entities:
               - entity: light.workshop_lights
                 type: divider
-                style: '' # TODO: Any value hides the divider. No properties work, so I can't remove the extra padding.
           - type: horizontal-stack
             cards:
               - type: entities
@@ -302,10 +316,10 @@ views:
       - type: entities
         title: Motion
         entities:
-          - entity: binary_sensor.main_bathroom_motion
-            name: Main bathroom
           - entity: binary_sensor.basement_bathroom_motion
             name: Basement bathroom
+          - entity: binary_sensor.main_bathroom_motion
+            name: Main bathroom
           - entity: binary_sensor.laundry_room_motion
             name: Laundry
           - entity: binary_sensor.workshop_motion
@@ -313,16 +327,20 @@ views:
       - type: entities
         title: Batteries
         entities:
-          - entity: binary_sensor.ups_battery_status
-            name: UPS
-          - entity: sensor.kitchen_sink_leak_sensor_battery
-            name: Kitchen sink leak
-          - entity: sensor.water_heater_leak_sensor_battery
-            name: Water heater leak
-          - entity: sensor.main_bathroom_multisensor_battery
-            name: Main bathroom multisensor
           - entity: sensor.basement_bathroom_multisensor_battery
             name: Basement bathroom multisensor
+          - entity: sensor.kitchen_door_sensor_battery
+            name: Kitchen door
+          - entity: sensor.kitchen_sink_leak_sensor_battery
+            name: Kitchen sink leak
+          - entity: sensor.main_bathroom_multisensor_battery
+            name: Main bathroom multisensor
+          - entity: binary_sensor.ups_battery_status
+            name: UPS
+          - entity: sensor.water_heater_leak_sensor_battery
+            name: Water heater leak
+          - type: section
+            label: Plants
           - entity: sensor.gaetan_battery
             name: Gaetan
           - entity: sensor.spidy_battery
@@ -418,9 +436,10 @@ views:
         title: Z-Wave
         entities:
           - entity: zwave.usb_controller
+          - type: section
+            label: Hard-wired
           - entity: zwave.basement_bathroom_fan_switch
           - entity: zwave.basement_bathroom_light_switch
-          - entity: zwave.basement_bathroom_multisensor
           - entity: zwave.basement_bathroom_vanity_light_dimmer
           - entity: zwave.basement_hallway_light_dimmer
           - entity: zwave.bookshelf_light_switch
@@ -428,8 +447,6 @@ views:
           - entity: zwave.downstairs_light_switch
           - entity: zwave.front_porch_light_switch
           - entity: zwave.kitchen_light_switch
-          - entity: zwave.kitchen_sink_leak_sensor
-          - entity: zwave.laundry_motion_sensor
           - entity: zwave.laundry_room_light_switch
           - entity: zwave.lounge_light_dimmer
           - entity: zwave.main_bathroom_fan_switch
@@ -438,6 +455,15 @@ views:
           - entity: zwave.office_light_dimmer
           - entity: zwave.shed_outdoor_light_switch
           - entity: zwave.side_porch_light_switch
-          - entity: zwave.water_heater_leak_sensor
           - entity: zwave.workshop_light_switch
+          - type: section
+            label: Hard-wired sensors
+          - entity: zwave.laundry_motion_sensor
           - entity: zwave.workshop_motion_sensor
+          - type: section
+            label: Battery sensors
+          - entity: zwave.basement_bathroom_multisensor
+          - entity: zwave.kitchen_door_sensor
+          - entity: zwave.kitchen_sink_leak_sensor
+          - entity: zwave.main_bathroom_multisensor
+          - entity: zwave.water_heater_leak_sensor

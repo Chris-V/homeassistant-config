@@ -1,5 +1,7 @@
 homeassistant:
   customize:
+    sensor.kitchen_door_sensor_battery:
+      battery_type: "Sensative Strip"
     sensor.kitchen_sink_leak_sensor_battery:
       battery_type: "ER14250 3.6V"
 
@@ -15,6 +17,7 @@ google_assistant:
 group:
   all_batteries:
     entities:
+      - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
   all_water_leak_sensors:
     entities:
@@ -43,6 +46,10 @@ light:
 binary_sensor:
   - platform: template
     sensors:
+      kitchen_door:
+        friendly_name: "Kitchen door"
+        device_class: "door"
+        value_template: "{{ is_state('sensor.kitchen_door_sensor_access_control', '22') }}"
       kitchen_sink_leak:
         friendly_name: "Kitchen sink leak"
         device_class: "moisture"
@@ -51,6 +58,11 @@ binary_sensor:
 sensor:
   - platform: template
     sensors:
+      kitchen_door_sensor_battery:
+        friendly_name: "Kitchen door sensor battery"
+        device_class: "battery"
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('zwave.kitchen_door_sensor', 'battery_level') }}"
       kitchen_sink_leak_sensor_battery:
         friendly_name: "Kitchen sink leak sensor battery"
         device_class: "battery"
