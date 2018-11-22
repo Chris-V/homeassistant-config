@@ -6,58 +6,57 @@ views:
     icon: mdi:home
     cards:
       - type: glance
+        id: people
         show_name: false
         columns: 2
         entities:
           - device_tracker.chris_pixel
           - device_tracker.karine_nexus5
-      - type: conditional
-        conditions:
-          - entity: group.all_water_leak_sensors
-            state: "on"
-        card:
-          type: glance
-          entities:
-            - group.all_water_leak_sensors
+      - type: glance
+        id: platforms-overview
+        entities:
+          - group.all_water_leak_sensors
       - type: vertical-stack
+        id: quick-actions
         cards:
-        - type: horizontal-stack
-          cards:
-            - type: entity-button
-              entity: light.outdoor_lights
-              name: Outdoor
-              icon: mdi:tree
-              tap_action: toggle
-              hold_action: more-info
-            - type: entity-button
-              entity: light.ground_floor_lights
-              name: Main
-              icon: mdi:arrow-up-thick
-              tap_action: toggle
-              hold_action: more-info
-            - type: entity-button
-              entity: light.basement_lights
-              name: Basement
-              icon: mdi:arrow-down-thick
-              tap_action: toggle
-              hold_action: more-info
-        - type: horizontal-stack
-          cards:
-            - type: entity-button
-              entity: script.ambiance
-              name: Ambiance
-              icon: mdi:weather-night
-              tap_action: call-service
-              service: script.turn_on
-            - type: entity-button
-              entity: script.everything_off
-              name: Everything off
-              icon: mdi:sleep
-              tap_action: call-service
-              service: script.turn_on
-            - type: horizontal-stack
-              cards: [] # Empty place holder
+          - type: horizontal-stack
+            cards:
+              - type: entity-button
+                entity: light.outdoor_lights
+                name: Outdoor
+                icon: mdi:tree
+                tap_action: toggle
+                hold_action: more-info
+              - type: entity-button
+                entity: light.ground_floor_lights
+                name: Main
+                icon: mdi:arrow-up-thick
+                tap_action: toggle
+                hold_action: more-info
+              - type: entity-button
+                entity: light.basement_lights
+                name: Basement
+                icon: mdi:arrow-down-thick
+                tap_action: toggle
+                hold_action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: entity-button
+                entity: script.ambiance
+                name: Ambiance
+                icon: mdi:weather-night
+                tap_action: call-service
+                service: script.turn_on
+              - type: entity-button
+                entity: script.everything_off
+                name: Everything off
+                icon: mdi:sleep
+                tap_action: call-service
+                service: script.turn_on
+              - type: horizontal-stack
+                cards: [] # Empty place holder
       - type: weather-forecast
+        id: weather
         entity: weather.dark_sky
 
   - title: Ground Floor
@@ -65,6 +64,7 @@ views:
     icon: mdi:arrow-up-thick
     cards:
       - type: entities
+        id: outdoor
         title: Outdoor
         show_header_toggle: true
         entities:
@@ -76,6 +76,7 @@ views:
           - entity: light.shed
             name: Shed light
       - type: vertical-stack
+        id: room-kitchen
         cards:
           - type: entities
             title: Kitchen
@@ -100,6 +101,7 @@ views:
                   - entity: plant.viny
                     name: Viny
       - type: entities
+        id: room-dining-room
         title: Dining room
         show_header_toggle: true
         entities:
@@ -109,6 +111,7 @@ views:
           - entity: plant.gaetan
             name: Gaétan
       - type: vertical-stack
+        id: room-living-room
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Living room
@@ -144,6 +147,7 @@ views:
                   entities:
                     - entity: binary_sensor.living_room_door
       - type: entities
+        id: room-master-bedroom
         title: Master bedroom
         show_header_toggle: true
         entities:
@@ -151,6 +155,7 @@ views:
           - entity: light.bedside_chris
           - entity: light.bedside_karine
       - type: vertical-stack
+        id: room-main-bathroom
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Bathroom
@@ -185,6 +190,7 @@ views:
                 name: Automated lights
                 secondary_info: last-changed
       - type: entities
+        id: room-office
         title: Office
         show_header_toggle: true
         entities:
@@ -197,6 +203,7 @@ views:
     icon: mdi:arrow-down-thick
     cards:
       - type: entities
+        id: room-lounge
         title: Lounge
         show_header_toggle: true
         entities:
@@ -210,6 +217,7 @@ views:
           - entity: light.downstairs
             name: Downstairs light
       - type: vertical-stack
+        id: room-basement-bathroom
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Bathroom
@@ -243,8 +251,8 @@ views:
               - entity: input_boolean.basement_bathroom_auto_lights
                 name: Automated lights
                 secondary_info: last-changed
-
       - type: vertical-stack
+        id: room-laundry
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Laundry
@@ -264,8 +272,8 @@ views:
                 entities:
                   - entity: binary_sensor.laundry_room_motion
                     name: Motion
-
       - type: vertical-stack
+        id: room-workshop
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Workshop
@@ -293,10 +301,13 @@ views:
     icon: mdi:flower
     cards:
       - type: plant-status
+        id: plant-gaetan
         entity: plant.gaetan
       - type: plant-status
+        id: plant-spidy
         entity: plant.spidy
       - type: plant-status
+        id: plant-viny
         entity: plant.viny
 
   - title: Settings
@@ -304,6 +315,7 @@ views:
     icon: mdi:settings
     cards:
       - type: entities
+        id: main-settings
         title: Settings
         show_header_toggle: false
         entities:
@@ -311,6 +323,7 @@ views:
           - input_boolean.automatic_night_theme
           - input_select.default_theme
       - type: entities
+        id: main-notifications
         title: Notifications
         show_header_toggle: false
         entities:
@@ -319,6 +332,7 @@ views:
           - entity: input_boolean.notify_power_outages
             name: Power outages
       - type: entities
+        id: details-doors
         title: Doors
         entities:
           - entity: binary_sensor.kitchen_door
@@ -326,6 +340,7 @@ views:
           - entity: binary_sensor.living_room_door
             name: Living room
       - type: entities
+        id: details-windows
         title: Windows
         entities:
           - entity: sun.sun
@@ -335,6 +350,7 @@ views:
           - entity: sun.sun
             name: Guest room (west)
       - type: entities
+        id: details-water
         title: Water
         entities:
           - entity: binary_sensor.kitchen_sink_leak
@@ -342,6 +358,7 @@ views:
           - entity: binary_sensor.water_heater_leak
             name: Water heater
       - type: entities
+        id: details-motion
         title: Motion
         entities:
           - entity: binary_sensor.basement_bathroom_motion
@@ -353,11 +370,7 @@ views:
           - entity: binary_sensor.workshop_motion
             name: Workshop
       - type: entities
-        title: Celestial
-        entities:
-          - sun.sun
-          - sensor.moon
-      - type: entities
+        id: details-batteries
         title: Batteries
         entities:
           - entity: sensor.basement_bathroom_multisensor_battery
@@ -388,11 +401,13 @@ views:
     icon: mdi:server-network
     cards:
       - type: entities
+        id: network-settings
         title: Settings
         show_header_toggle: false
         entities:
           - input_boolean.power_outage_manage_devices
       - type: entities
+        id: network-notifications
         title: Notifications
         show_header_toggle: false
         entities:
@@ -401,6 +416,7 @@ views:
           - entity: input_boolean.notify_network_device_outages
             name: Network device outages
       - type: entities
+        id: network-ups
         title: UPS
         entities:
           - entity: sensor.ups_status
@@ -416,12 +432,14 @@ views:
           - entity: sensor.ups_time_on_battery
             name: Time on battery
       - type: entities
+        id: network-hass
         title: Home Assistant
         entities:
           - sensor.connected_clients
           - sensor.current_home_assistant_version
           - sensor.latest_home_assistant_version
       - type: entities
+        id: network-automate
         title: Automate
         entities:
           - sensor.processor_use
@@ -429,6 +447,7 @@ views:
           - sensor.memory_use_percent
           - sensor.since_last_boot
       - type: entities
+        id: network-media
         title: Media
         show_header_toggle: false
         entities:
@@ -442,6 +461,7 @@ views:
           - entity: sensor.media_ram_used
             name: Memory use
       - type: entities
+        id: network-relay-south
         title: Relay South
         show_header_toggle: false
         entities:
@@ -455,6 +475,7 @@ views:
           - entity: sensor.relay_south_ram_used
             name: Memory use
       - type: entities
+        id: network-relay-north
         title: Relay North
         show_header_toggle: false
         entities:
@@ -468,6 +489,7 @@ views:
           - entity: sensor.relay_north_ram_used
             name: Memory use
       - type: entities
+        id: zwave-status
         title: Z-Wave
         entities:
           - entity: zwave.usb_controller
