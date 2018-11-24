@@ -26,11 +26,6 @@ plant:
     min_moisture: 10
     min_temperature: 14
 
-group:
-  all_batteries:
-    entities:
-      - sensor.spidy_battery
-
 sensor:
   - platform: mqtt
     name: "spidy_battery"
@@ -38,7 +33,7 @@ sensor:
     device_class: "battery"
     unit_of_measurement: "%"
     state_topic: "plants/spidy"
-    value_template: "{{ value_json.battery }}"
+    value_template: "{{ value_json.battery | int('unknown') }}"
     json_attributes:
       - timestamp
   - platform: mqtt
@@ -47,7 +42,7 @@ sensor:
     device_class: "illuminance"
     unit_of_measurement: "lx"
     state_topic: "plants/spidy"
-    value_template: "{{ value_json.brightness }}"
+    value_template: "{{ value_json.brightness | int('unknown') }}"
     json_attributes:
       - timestamp
   - platform: mqtt
@@ -56,7 +51,7 @@ sensor:
     unit_of_measurement: "µS/cm"
     icon: "mdi:poop"
     state_topic: "plants/spidy"
-    value_template: "{{ value_json.conductivity }}"
+    value_template: "{{ value_json.conductivity | int('unknown') }}"
     json_attributes:
       - timestamp
   - platform: mqtt
@@ -65,7 +60,7 @@ sensor:
     device_class: "humidity"
     unit_of_measurement: "%"
     state_topic: "plants/spidy"
-    value_template: "{{ value_json.moisture }}"
+    value_template: "{{ value_json.moisture | int('unknown') }}"
     json_attributes:
       - timestamp
   - platform: mqtt
@@ -74,6 +69,6 @@ sensor:
     device_class: "temperature"
     unit_of_measurement: "°C"
     state_topic: "plants/spidy"
-    value_template: "{{ value_json.temperature }}"
+    value_template: "{{ value_json.temperature | float('unknown') }}"
     json_attributes:
       - timestamp

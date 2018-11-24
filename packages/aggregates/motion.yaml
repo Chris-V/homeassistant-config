@@ -1,0 +1,40 @@
+group:
+  all_motions:
+    name: "All motions"
+    icon: "mdi:run"
+    control: "hidden"
+    entities: &motion_entities
+      - binary_sensor.basement_bathroom_motion
+      - binary_sensor.laundry_room_motion
+      - binary_sensor.main_bathroom_motion
+      - binary_sensor.workshop_motion
+
+binary_sensor:
+  - platform: template
+    sensors:
+      all_motions:
+        friendly_name: "All motions"
+        device_class: "motion"
+        entity_id: *motion_entities
+        value_template: >
+          {%- set state = False %}
+          {%- for entity_id in state_attr('group.all_motions', 'entity_id') %}
+            {%- set state = state or is_state(entity_id, 'on') %}
+          {%- endfor -%}
+          {{ state }}
+
+sensor:
+  - platform: template
+    sensors:
+      last_motion:
+        friendly_name: "Last motion"
+        entity_id: *motion_entities
+        icon_template: >-
+          mdi:run{% if is_state('binary_sensor.all_motions', 'on') %}-fast{% endif %}
+        value_template: >-
+          {{
+             (states
+             | selectattr('entity_id', 'in', state_attr('group.all_motions', 'entity_id'))
+             | sort(attribute='last_changed')
+             | last).name
+          }}

@@ -1,0 +1,22 @@
+group:
+  all_doors:
+    name: "All doors"
+    icon: "mdi:door"
+    control: "hidden"
+    entities: &door_entities
+      - binary_sensor.kitchen_door
+      - binary_sensor.living_room_door
+
+binary_sensor:
+  - platform: template
+    sensors:
+      all_doors:
+        friendly_name: "All doors"
+        device_class: "door"
+        entity_id: *door_entities
+        value_template: >
+          {%- set state = False %}
+          {%- for entity_id in state_attr('group.all_doors', 'entity_id') %}
+            {%- set state = state or is_state(entity_id, 'on') %}
+          {%- endfor -%}
+          {{ state }}

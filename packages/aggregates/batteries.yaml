@@ -1,0 +1,51 @@
+# TODO: Appropriate battery level on icon
+
+homeassistant:
+  customize:
+    sensor.all_batteries:
+      friendly_name: "All batteries"
+      icon: "mdi:battery-70"
+      device_class: "battery"
+
+group:
+  all_batteries:
+    name: "Batteries"
+    icon: "mdi:battery-70"
+    control: "hidden"
+    entities: &battery_entities
+      - sensor.basement_bathroom_multisensor_battery
+      - sensor.gaetan_battery
+      - sensor.kitchen_door_sensor_battery
+      - sensor.kitchen_sink_leak_sensor_battery
+      - sensor.living_room_door_sensor_battery
+      - sensor.main_bathroom_multisensor_battery
+      - sensor.spidy_battery
+      - sensor.ups_battery_status
+      - sensor.viny_battery
+      - sensor.water_heater_leak_sensor_battery
+
+sensor:
+  - platform: min_max
+    name: "all_batteries"
+    type: "min"
+    round_digits: 0
+    entity_ids: *battery_entities
+
+automation:
+  - id: notify_low_batteries
+    alias: "Notify low batteries"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: numeric_state
+        below: 15
+        entity_id: *battery_entities
+    action:
+      - service: python_script.notify
+        data_template:
+          persistent: True
+          push_target: "household"
+          tag: "battery_low_{{ trigger.to_state.object_id }}"
+          url: "https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.to_state.entity_id, 'battery_type') | d('', True)  | replace(' ', '+') }}"
+          title: "Replace {{ trigger.to_state.name | lower }}"
+          message: "Search on Amazon for \"{{ state_attr(trigger.to_state.entity_id, 'battery_type') }}\" batteries."

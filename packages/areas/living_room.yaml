@@ -30,11 +30,6 @@ google_assistant:
         - "Christmas tree"
         - "Xmas tree"
 
-group:
-  all_batteries:
-    entities:
-      - sensor.living_room_door_sensor_battery
-
 cast:
   media_player:
     - host: !secret media_player_cast_host
@@ -106,7 +101,7 @@ sensor:
         friendly_name: "Living room door sensor battery"
         device_class: "battery"
         unit_of_measurement: "%"
-        value_template: "{{ state_attr('zwave.living_room_door_sensor', 'battery_level') }}"
+        value_template: "{{ state_attr('zwave.living_room_door_sensor', 'battery_level') | int('unknown') }}"
 
 automation:
   - alias: "double_up_bookshelf"

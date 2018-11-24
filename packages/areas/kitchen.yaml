@@ -14,15 +14,6 @@ google_assistant:
         - "Kitchen light"
         - "Kitchen"
 
-group:
-  all_batteries:
-    entities:
-      - sensor.kitchen_door_sensor_battery
-      - sensor.kitchen_sink_leak_sensor_battery
-  all_water_leak_sensors:
-    entities:
-      - binary_sensor.kitchen_sink_leak
-
 light:
   - platform: group
     name: "Kitchen lights"
@@ -62,9 +53,9 @@ sensor:
         friendly_name: "Kitchen door sensor battery"
         device_class: "battery"
         unit_of_measurement: "%"
-        value_template: "{{ state_attr('zwave.kitchen_door_sensor', 'battery_level') }}"
+        value_template: "{{ state_attr('zwave.kitchen_door_sensor', 'battery_level') | int('unknown') }}"
       kitchen_sink_leak_sensor_battery:
         friendly_name: "Kitchen sink leak sensor battery"
         device_class: "battery"
         unit_of_measurement: "%"
-        value_template: "{{ state_attr('zwave.kitchen_sink_leak_sensor', 'battery_level') }}"
+        value_template: "{{ state_attr('zwave.kitchen_sink_leak_sensor', 'battery_level') | int('unknown') }}"

@@ -1,0 +1,11 @@
+binary_sensor:
+  - platform: template
+    sensors:
+      guest_east_window:
+        friendly_name: "Guest window (east)"
+        device_class: "window"
+        value_template: "off"
+      guest_west_window:
+        friendly_name: "Guest window (west)"
+        device_class: "window"
+        value_template: "off"

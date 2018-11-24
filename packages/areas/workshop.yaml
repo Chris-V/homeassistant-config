@@ -12,14 +12,6 @@ google_assistant:
         - "Workshop light"
         - "Workshop"
 
-group:
-  all_batteries:
-    entities:
-      - sensor.water_heater_leak_sensor_battery
-  all_water_leak_sensors:
-    entities:
-      - binary_sensor.water_heater_leak
-
 light:
   - platform: group
     name: "Workshop lights"
@@ -60,7 +52,7 @@ sensor:
         friendly_name: "Water heater leak sensor battery"
         device_class: "battery"
         unit_of_measurement: "%"
-        value_template: "{{ state_attr('zwave.water_heater_leak_sensor', 'battery_level') }}"
+        value_template: "{{ state_attr('zwave.water_heater_leak_sensor', 'battery_level') | int('unknown') }}"
 
 automation:
   # Automated light management

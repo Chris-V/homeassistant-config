@@ -1,0 +1,23 @@
+group:
+  all_windows:
+    name: "All windows"
+    icon: "mdi:window-closed"
+    control: "hidden"
+    entities: &window_entities
+      - binary_sensor.guest_east_window
+      - binary_sensor.guest_west_window
+      - binary_sensor.lounge_window
+
+binary_sensor:
+  - platform: template
+    sensors:
+      all_windows:
+        friendly_name: "All windows"
+        device_class: "window"
+        entity_id: *window_entities
+        value_template: >
+          {%- set state = False %}
+          {%- for entity_id in state_attr('group.all_windows', 'entity_id') %}
+            {%- set state = state or is_state(entity_id, 'on') %}
+          {%- endfor -%}
+          {{ state }}

@@ -49,6 +49,14 @@ light:
           data:
             entity_id: "switch.downstairs_light"
 
+binary_sensor:
+  - platform: template
+    sensors:
+      lounge_window:
+        friendly_name: "Lounge window"
+        device_class: "window"
+        value_template: "off"
+
 automation:
   - alias: "double_up_lounge"
     hide_entity: True

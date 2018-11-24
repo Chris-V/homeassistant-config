@@ -1,12 +1,7 @@
 homeassistant:
   customize:
-    binary_sensor.ups_battery_status:
+    sensor.ups_battery_status:
       battery_type: "APC BR1500G RS 1500 12V"
-
-group:
-  all_batteries:
-    entities:
-      - binary_sensor.ups_battery_status
 
 apcupsd:
   host: !secret ups_host
@@ -14,12 +9,24 @@ apcupsd:
 
 binary_sensor:
   - platform: apcupsd
+
+sensor:
+  - platform: apcupsd
+    resources:
+      - bcharge # Battery Charge
+      - linev # Input Voltage
+      - loadpct # Load %
+      - status
+      - timeleft # Time Left on Battery
+      - tonbatt # Time on Battery
   - platform: template
     sensors:
       ups_battery_status:
-        friendly_name: "UPS battery"
-        value_template: "{{ 'REPLACEBATT' in states('sensor.ups_status') }}"
+        friendly_name: "UPS battery status"
         device_class: "battery"
+        unit_of_measurement: "%"
+        value_template: >-
+          {% if 'REPLACEBATT' in states('sensor.ups_status') %}0{% else %}100{% endif %}
 
 input_boolean:
   notify_power_outages:
@@ -32,16 +39,6 @@ input_boolean:
 input_text:
   power_outage_id:
     name: "Power outage ID"
-
-sensor:
-  - platform: apcupsd
-    resources:
-      - bcharge # Battery Charge
-      - linev # Input Voltage
-      - loadpct # Load %
-      - status
-      - timeleft # Time Left on Battery
-      - tonbatt # Time on Battery
 
 automation:
   - alias: notify_power_restored

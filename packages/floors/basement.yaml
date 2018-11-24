@@ -1,8 +1,0 @@
-light:
-  - platform: group
-    name: "Basement lights"
-    entities:
-      - light.basement_bathroom_lights
-      - light.laundry_room_lights
-      - light.lounge_lights
-      - light.workshop_lights

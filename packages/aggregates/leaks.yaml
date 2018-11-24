@@ -1,0 +1,42 @@
+group:
+  all_leaks:
+    name: "All leaks"
+    icon: "mdi:pipe-leak"
+    control: "hidden"
+    entities: &leak_entities
+      - binary_sensor.kitchen_sink_leak
+      - binary_sensor.water_heater_leak
+
+binary_sensor:
+  - platform: template
+    sensors:
+      all_leaks:
+        friendly_name: "All leaks"
+        device_class: "moisture"
+        entity_id: *leak_entities
+        value_template: >
+          {%- set state = False %}
+          {%- for entity_id in state_attr('group.all_leaks', 'entity_id') %}
+            {%- set state = state or is_state(entity_id, 'on') %}
+          {%- endfor -%}
+          {{ state }}
+
+automation:
+  - id: notify_water_leaks
+    alias: "Notify water leaks"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: *leak_entities
+        to: "on"
+    action:
+      - service: python_script.notify
+        data_template:
+          audio: True
+          persistent: True
+          push_target: "household"
+          tag: "water_{{ trigger.to_state.object_id }}"
+          url: "/lovelace/settings"
+          title: "Water leak detected"
+          message: "A water leak has been detected at the {{ trigger.to_state.name | title | replace('Leak', '') | replace('Sensor', '') | trim }}."

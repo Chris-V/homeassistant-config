@@ -27,11 +27,6 @@ google_assistant:
         - "Bathroom fan"
         - "Main bathroom fan"
 
-group:
-  all_batteries:
-    entities:
-      - sensor.main_bathroom_multisensor_battery
-
 input_boolean:
   main_bathroom_auto_lights:
     name: "Main bathroom's automated lights"
@@ -46,7 +41,7 @@ binary_sensor:
         device_class: "motion"
         value_template: "{{ is_state('sensor.main_bathroom_multisensor_burglar', '8') }}"
         delay_off:
-          seconds: 30
+          seconds: 15
 
 sensor:
   - platform: template
@@ -65,7 +60,7 @@ sensor:
         friendly_name: "Main bathroom multisensor battery"
         device_class: "battery"
         unit_of_measurement: "%"
-        value_template: "{{ state_attr('zwave.main_bathroom_multisensor', 'battery_level') }}"
+        value_template: "{{ state_attr('zwave.main_bathroom_multisensor', 'battery_level') | int('unknown') }}"
 
 light:
   - platform: group
