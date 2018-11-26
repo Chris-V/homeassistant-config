@@ -166,7 +166,7 @@ automation:
         entity_id: "input_boolean.basement_bathroom_auto_lights"
         state: "on"
       - condition: time # Usual shower times
-        before: "8:00:00"
+        before: "7:30:00"
         after: "8:59:59"
     action:
       - service: light.turn_off
