@@ -1,16 +1,4 @@
-# Not compatible with oauth. Disable for now
-#automation:
-#  - alias: Generate Z-Wave graph
-#    trigger:
-#      platform: time
-#      minutes: '/5'
-#      seconds: 00
-#    action:
-#      - service: shell_command.z_wave_graph
-#panel_iframe:
-#  z_wave_graph:
-#    title: 'Z-Wave Graph'
-#    icon: mdi:vector-square
-#    url: !secret z_wave_graph_url
-#shell_command:
-#  z_wave_graph: "/srv/homeassistant/bin/python /home/homeassistant/.homeassistant/bin/z-wave-graph.py --config /home/homeassistant/.homeassistant/configuration_z_wave_graph.yaml"
+panel_custom:
+  - name: "z-wave-graph"
+    sidebar_title: "Z-Wave Graph"
+    sidebar_icon: "mdi:sitemap"

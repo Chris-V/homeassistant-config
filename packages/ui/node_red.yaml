@@ -1,5 +1,0 @@
-panel_iframe:
-  node_red:
-    title: "Flows (node-RED)"
-    icon: "mdi:vector-polyline"
-    url: !secret node_red_host
