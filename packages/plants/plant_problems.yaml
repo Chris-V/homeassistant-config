@@ -31,9 +31,13 @@ automation:
               trigger.to_state.attributes.problem
                 | lower
                 | replace('moisture low', 'thirsty')
+                | replace('moisture high', 'drowning')
                 | replace('temperature low', 'cold')
-                | replace('brightness low', 'dark')
+                | replace('temperature high', 'hot')
+                | replace('brightness low', 'afraid')
+                | replace('brightness high', 'blinded')
                 | replace('conductivity low', 'hungry')
+                | replace('conductivity high', 'a glutton')
                 | replace('battery low', '')
               ).split(', ')
               | reject('equalto', '')
