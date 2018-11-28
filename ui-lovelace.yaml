@@ -146,27 +146,39 @@ views:
                     name: TV
               - type: vertical-stack
                 cards:
-                - type: glance
-                  show_state: False
-                  columns: 2
-                  entities:
-                    - entity: media_player.living_room_chromecast
-                      name: Chromecast
-                    - entity: media_player.living_room_google_home
-                      name: Google Home
-                - type: glance
-                  show_name: False
-                  columns: 2
-                  entities:
-                    - entity: binary_sensor.living_room_door
-      - type: entities
+                  - type: glance
+                    show_state: False
+                    columns: 2
+                    entities:
+                      - entity: media_player.living_room_chromecast
+                        name: Chromecast
+                      - entity: media_player.living_room_google_home
+                        name: Google Home
+                  - type: glance
+                    show_name: False
+                    columns: 2
+                    entities:
+                      - entity: binary_sensor.living_room_door
+      - type: vertical-stack
         id: room-master-bedroom
-        title: Master bedroom
-        show_header_toggle: true
-        entities:
-          - type: divider
-          - entity: light.bedside_chris
-          - entity: light.bedside_karine
+        cards:
+          - type: entities # Title card with a toggle, no entities shown.
+            title: Master Bedroom
+            show_header_toggle: true
+            entities:
+              - entity: light.master_bedroom_lights
+                type: divider
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: light.bedside_chris
+                  - entity: light.bedside_karine
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - media_player.master_bedroom_google_home
       - type: vertical-stack
         id: room-main-bathroom
         cards:
@@ -215,20 +227,33 @@ views:
     id: basement
     icon: mdi:arrow-down-thick
     cards:
-      - type: entities
+      - type: vertical-stack
         id: room-lounge
-        title: Lounge
-        show_header_toggle: true
-        entities:
-          - type: divider
-          - entity: light.lounge
-            name: Dimmer
-          - entity: light.lounge_ambiance
-            name: Ambiance
-          - entity: light.basement_hallway
-            name: Hallway dimmer
-          - entity: light.downstairs
-            name: Downstairs light
+        cards:
+          - type: entities # Title card with a toggle, no entities shown.
+            title: Lounge
+            show_header_toggle: true
+            entities:
+              - entity: light.lounge_lights
+                type: divider
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                  - type: divider
+                  - entity: light.lounge
+                    name: Dimmer
+                  - entity: light.lounge_ambiance
+                    name: Ambiance
+                  - entity: light.basement_hallway
+                    name: Hallway dimmer
+                  - entity: light.downstairs
+                    name: Downstairs light
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - media_player.lounge_google_home
       - type: vertical-stack
         id: room-basement-bathroom
         cards:
@@ -277,8 +302,8 @@ views:
             cards:
               - type: entities
                 entities:
-                - entity: light.laundry_room
-                  name: Light
+                  - entity: light.laundry_room
+                    name: Light
               - type: glance
                 show_name: False
                 columns: 2
@@ -298,8 +323,8 @@ views:
             cards:
               - type: entities
                 entities:
-                - entity: light.workshop
-                  name: Light
+                  - entity: light.workshop
+                    name: Light
               - type: glance
                 show_name: False
                 columns: 2

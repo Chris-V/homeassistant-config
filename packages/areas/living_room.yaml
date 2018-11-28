@@ -32,8 +32,8 @@ google_assistant:
 
 cast:
   media_player:
-    - host: !secret media_player_cast_host
-    - host: !secret media_player_home_host
+    - host: !secret media_player_cast_lr_host
+    - host: !secret media_player_home_lr_host
 
 light:
   - platform: group

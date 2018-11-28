@@ -58,26 +58,29 @@ automation:
         state: "home"
       - condition: or
         conditions:
-        - condition: time
-          after: "8:00:00"
-          before: "23:59:59"
-          weekday:
-            - mon
-            - tue
-            - wed
-            - thu
-            - fri
-            - sat
-        - condition: time
-          after: "9:30:00"
-          before: "23:59:59"
-          weekday:
-            - sun
+          - condition: time
+            after: "8:00:00"
+            before: "23:59:59"
+            weekday:
+              - mon
+              - tue
+              - wed
+              - thu
+              - fri
+              - sat
+          - condition: time
+            after: "9:30:00"
+            before: "23:59:59"
+            weekday:
+              - sun
 
     action:
       - service: tts.google_say
         data_template:
-          entity_id: "media_player.living_room_google_home"
+          entity_id:
+            - media_player.living_room_google_home
+            - media_player.lounge_google_home
+            - media_player.master_bedroom_google_home
           message: "{{ states.custom_storage.audio_notifications.attributes.item_0_data }}"
       - service: custom_storage.remove
         data_template:

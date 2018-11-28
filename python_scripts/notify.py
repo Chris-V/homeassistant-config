@@ -15,7 +15,6 @@ PUSH_GROUPS = {
     ATTR_ADMIN_TARGET: 'admin',
     ATTR_HOUSEHOLD_TARGET: 'household',
 }
-TTS_ENTITIES = ['media_player.living_room_google_home']
 
 audio = data.get(ATTR_AUDIO, False)
 message = data.get(ATTR_MESSAGE, '')

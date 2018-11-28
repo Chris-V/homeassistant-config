@@ -26,6 +26,10 @@ google_assistant:
         - "Downstairs light"
         - "Downstairs"
 
+cast:
+  media_player:
+    - host: !secret media_player_home_lounge_host
+
 light:
   - platform: group
     name: "Lounge lights"

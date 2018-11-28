@@ -16,6 +16,10 @@ google_assistant:
       aliases:
         - "Bedside Karine"
 
+cast:
+  media_player:
+    - host: !secret media_player_home_mbr_host
+
 light:
   - platform: group
     name: "Master bedroom lights"
