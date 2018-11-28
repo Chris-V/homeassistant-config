@@ -11,7 +11,7 @@ automation:
     initial_state: True
     trigger:
       - platform: template
-        value_template: "{{ state_attr('plant.gaetan', 'problem') not in ('none', 'battery low') }}"
+        value_template: "{{ state_attr('plant.maitre_doyle', 'problem') not in ('none', 'battery low') }}"
       - platform: template
         value_template: "{{ state_attr('plant.spidy', 'problem') not in ('none', 'battery low') }}"
       - platform: template

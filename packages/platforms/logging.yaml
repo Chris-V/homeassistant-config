@@ -54,18 +54,18 @@ recorder:
       - light.workshop
       - media_player.living_room_chromecast
       - media_player.living_room_google_home
-      - plant.gaetan
+      - plant.maitre_doyle
       - plant.spidy
       - plant.viny
       - sensor.basement_bathroom_humidity
       - sensor.basement_bathroom_multisensor_battery
       - sensor.basement_bathroom_temperature
       - sensor.current_home_assistant_version
-      - sensor.gaetan_battery
-      - sensor.gaetan_brightness
-      - sensor.gaetan_conductivity
-      - sensor.gaetan_moisture
-      - sensor.gaetan_temperature
+      - sensor.maitre_doyle_battery
+      - sensor.maitre_doyle_brightness
+      - sensor.maitre_doyle_conductivity
+      - sensor.maitre_doyle_moisture
+      - sensor.maitre_doyle_temperature
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
       - sensor.latest_home_assistant_version

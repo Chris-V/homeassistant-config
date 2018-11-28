@@ -121,8 +121,8 @@ views:
           - type: divider
           - entity: light.dining_room
             name: Dimmer
-          - entity: plant.gaetan
-            name: Gaétan
+          - entity: plant.maitre_doyle
+            name: Maître Doyle
       - type: vertical-stack
         id: room-living-room
         cards:
@@ -314,8 +314,8 @@ views:
     icon: mdi:flower
     cards:
       - type: plant-status
-        id: plant-gaetan
-        entity: plant.gaetan
+        id: plant-maitre-doyle
+        entity: plant.maitre_doyle
       - type: plant-status
         id: plant-spidy
         entity: plant.spidy
@@ -402,8 +402,8 @@ views:
             name: Water heater leak
           - type: section
             label: Plants
-          - entity: sensor.gaetan_battery
-            name: Gaetan
+          - entity: sensor.maitre_doyle_battery
+            name: Maître Doyle
           - entity: sensor.spidy_battery
             name: Spidy
           - entity: sensor.viny_battery

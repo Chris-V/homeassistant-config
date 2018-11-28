@@ -1,76 +1,74 @@
-# Pineapple bush
-
 homeassistant:
   customize:
-    plant.gaetan:
-      friendly_name: "Gaétan"
-    sensor.gaetan_battery:
-      friendly_name: "Gaétan's battery"
+    plant.maitre_doyle:
+      friendly_name: "Maître Doyle"
+    sensor.maitre_doyle_battery:
+      friendly_name: "Maître Doyle's battery"
       battery_type: "CR2032 3V"
-    sensor.gaetan_brightness:
-      friendly_name: "Gaétan's brightness"
-    sensor.gaetan_conductivity:
-      friendly_name: "Gaétan's conductivity"
-    sensor.gaetan_moisture:
-      friendly_name: "Gaétan's moisture"
-    sensor.gaetan_temperature:
-      friendly_name: "Gaétan's temperature"
+    sensor.maitre_doyle_brightness:
+      friendly_name: "Maître Doyle's brightness"
+    sensor.maitre_doyle_conductivity:
+      friendly_name: "Maître Doyle's conductivity"
+    sensor.maitre_doyle_moisture:
+      friendly_name: "Maître Doyle's moisture"
+    sensor.maitre_doyle_temperature:
+      friendly_name: "Maître Doyle's temperature"
 
 plant:
-  gaetan:
+  maitre_doyle:
     sensors:
-      battery: sensor.gaetan_battery
-      brightness: sensor.gaetan_brightness
-      conductivity: sensor.gaetan_conductivity
-      moisture: sensor.gaetan_moisture
-      temperature: sensor.gaetan_temperature
+      battery: sensor.maitre_doyle_battery
+      brightness: sensor.maitre_doyle_brightness
+      conductivity: sensor.maitre_doyle_conductivity
+      moisture: sensor.maitre_doyle_moisture
+      temperature: sensor.maitre_doyle_temperature
     min_battery: 20
     min_moisture: 10
     min_temperature: 14
 
 sensor:
   - platform: mqtt
-    name: "gaetan_battery"
+    name: "maitre_doyle_battery"
     force_update: True
     device_class: "battery"
     unit_of_measurement: "%"
-    state_topic: "plants/gaetan"
+    state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.battery | int('unknown') }}"
     json_attributes:
       - timestamp
   - platform: mqtt
-    name: "gaetan_brightness"
+    name: "maitre_doyle_brightness"
     force_update: True
     device_class: "illuminance"
     unit_of_measurement: "lx"
-    state_topic: "plants/gaetan"
+    state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.brightness | int('unknown') }}"
     json_attributes:
       - timestamp
   - platform: mqtt
-    name: "gaetan_conductivity"
+    name: "maitre_doyle_conductivity"
     force_update: True
     unit_of_measurement: "µS/cm"
     icon: "mdi:poop"
-    state_topic: "plants/gaetan"
+    state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.conductivity | int('unknown') }}"
     json_attributes:
       - timestamp
   - platform: mqtt
-    name: "gaetan_moisture"
+    name: "maitre_doyle_moisture"
     force_update: True
     device_class: "humidity"
     unit_of_measurement: "%"
-    state_topic: "plants/gaetan"
+    state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.moisture | int('unknown') }}"
     json_attributes:
       - timestamp
   - platform: mqtt
-    name: "gaetan_temperature"
+    name: "maitre_doyle_temperature"
     force_update: True
     device_class: "temperature"
     unit_of_measurement: "°C"
-    state_topic: "plants/gaetan"
+    state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.temperature | float('unknown') }}"
     json_attributes:
       - timestamp
