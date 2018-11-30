@@ -240,7 +240,6 @@ views:
             cards:
               - type: entities
                 entities:
-                  - type: divider
                   - entity: light.lounge
                     name: Dimmer
                   - entity: light.lounge_ambiance
@@ -249,11 +248,18 @@ views:
                     name: Hallway dimmer
                   - entity: light.downstairs
                     name: Downstairs light
-              - type: glance
-                show_name: False
-                columns: 2
-                entities:
-                  - media_player.lounge_google_home
+              - type: vertical-stack
+                cards:
+                  - type: glance
+                    show_name: False
+                    columns: 2
+                    entities:
+                      - media_player.lounge_google_home
+                  - type: glance
+                    show_name: False
+                    columns: 2
+                    entities:
+                      - binary_sensor.lounge_window
       - type: vertical-stack
         id: room-basement-bathroom
         cards:
@@ -333,6 +339,25 @@ views:
                     name: Motion
                   - entity: binary_sensor.water_heater_leak
                     name: Water heater
+      - type: vertical-stack
+        id: room-guests
+        cards:
+          - type: entities
+            title: Guest rooms
+            entities:
+              - type: divider
+          - type: horizontal-stack
+            cards:
+              - type: glance
+                title: East
+                show_name: False
+                entities:
+                  - entity: binary_sensor.guest_east_window
+              - type: glance
+                title: West
+                show_name: False
+                entities:
+                  - entity: binary_sensor.guest_west_window
 
   - title: Plants
     id: plants
@@ -375,38 +400,49 @@ views:
         entities:
           - entity: binary_sensor.kitchen_door
             name: Kitchen
+            secondary_info: last-changed
           - entity: binary_sensor.living_room_door
             name: Living room
+            secondary_info: last-changed
       - type: entities
         id: details-windows
         title: Windows
         entities:
           - entity: binary_sensor.lounge_window
             name: Lounge
+            secondary_info: last-changed
           - entity: binary_sensor.guest_east_window
             name: Guest room (east)
+            secondary_info: last-changed
           - entity: binary_sensor.guest_west_window
             name: Guest room (west)
+            secondary_info: last-changed
       - type: entities
         id: details-water
         title: Water
         entities:
           - entity: binary_sensor.kitchen_sink_leak
             name: Kitchen sink
+            secondary_info: last-changed
           - entity: binary_sensor.water_heater_leak
             name: Water heater
+            secondary_info: last-changed
       - type: entities
         id: details-motion
         title: Motion
         entities:
           - entity: binary_sensor.basement_bathroom_motion
             name: Basement bathroom
+            secondary_info: last-changed
           - entity: binary_sensor.main_bathroom_motion
             name: Main bathroom
+            secondary_info: last-changed
           - entity: binary_sensor.laundry_room_motion
             name: Laundry
+            secondary_info: last-changed
           - entity: binary_sensor.workshop_motion
             name: Workshop
+            secondary_info: last-changed
       - type: entities
         id: details-batteries
         title: Batteries
@@ -417,10 +453,16 @@ views:
             name: Kitchen door
           - entity: sensor.kitchen_sink_leak_sensor_battery
             name: Kitchen sink leak
+          - entity: sensor.guest_east_window_sensor_battery
+            name: East guest window
+          - entity: sensor.guest_west_window_sensor_battery
+            name: West guest window
           - entity: sensor.living_room_door_sensor_battery
             name: Living room door
           - entity: sensor.main_bathroom_multisensor_battery
             name: Main bathroom multisensor
+          - entity: sensor.lounge_window_sensor_battery
+            name: Lounge window
           - entity: sensor.ups_battery_status
             name: UPS
           - entity: sensor.water_heater_leak_sensor_battery
@@ -558,8 +600,11 @@ views:
           - type: section
             label: Battery sensors
           - entity: zwave.basement_bathroom_multisensor
+          - entity: zwave.guest_east_window_sensor
+          - entity: zwave.guest_west_window_sensor
           - entity: zwave.kitchen_door_sensor
           - entity: zwave.kitchen_sink_leak_sensor
           - entity: zwave.living_room_door_sensor
+          - entity: zwave.lounge_window_sensor
           - entity: zwave.main_bathroom_multisensor
           - entity: zwave.water_heater_leak_sensor
