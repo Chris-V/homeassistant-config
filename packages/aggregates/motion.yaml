@@ -17,11 +17,11 @@ binary_sensor:
         device_class: "motion"
         entity_id: *motion_entities
         value_template: >
-          {%- set state = False %}
+          {%- set ns = namespace(state = False) %}
           {%- for entity_id in state_attr('group.all_motions', 'entity_id') %}
-            {%- set state = state or is_state(entity_id, 'on') %}
+            {%- set ns.state = ns.state or is_state(entity_id, 'on') %}
           {%- endfor -%}
-          {{ state }}
+          {{ ns.state }}
 
 sensor:
   - platform: template
@@ -30,7 +30,7 @@ sensor:
         friendly_name: "Last motion"
         entity_id: *motion_entities
         icon_template: >-
-          mdi:run{% if is_state('binary_sensor.all_motions', 'on') %}-fast{% endif %}
+          mdi:{% if is_state('binary_sensor.all_motions', 'on') %}run{% else %}walk{% endif %}
         value_template: >-
           {{
              (states
