@@ -91,28 +91,24 @@ views:
       - type: vertical-stack
         id: room-kitchen
         cards:
-          - type: entities
+          - type: entities # Title card with a toggle, no entities shown.
             title: Kitchen
             show_header_toggle: true
             entities:
-              - type: divider
-              - entity: light.kitchen
-                name: Light
+              - entity: light.kitchen_lights
+                type: divider
           - type: horizontal-stack
             cards:
+              - type: entities
+                entities:
+                  - entity: light.kitchen
+                    name: Light
               - type: glance
                 columns: 2
+                show_name: False
                 entities:
                   - entity: binary_sensor.kitchen_sink_leak
-                    name: Sink
                   - entity: binary_sensor.kitchen_door
-                    name: ''
-              - type: glance
-                entities:
-                  - entity: plant.spidy
-                    name: Spidy
-                  - entity: plant.viny
-                    name: Viny
       - type: entities
         id: room-dining-room
         title: Dining room
@@ -121,8 +117,6 @@ views:
           - type: divider
           - entity: light.dining_room
             name: Dimmer
-          - entity: plant.maitre_doyle
-            name: Maître Doyle
       - type: vertical-stack
         id: room-living-room
         cards:
