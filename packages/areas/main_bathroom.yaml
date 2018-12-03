@@ -40,8 +40,6 @@ binary_sensor:
         friendly_name: "Main bathroom motion"
         device_class: "motion"
         value_template: "{{ is_state('sensor.main_bathroom_multisensor_burglar', '8') }}"
-        delay_off:
-          seconds: 15
 
 sensor:
   - platform: template
@@ -91,16 +89,16 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: "sensor.main_bathroom_humidity"
-        above: 64 # > 64
+        above: &main_bathroom_fan_on_humidity 64 # Exclusive
       - platform: state
         entity_id: "switch.main_bathroom_fan"
         to: "off"
-        for:
+        for: &main_bathroom_fan_manual_time
           minutes: 30
     condition:
       - condition: numeric_state
         entity_id: "sensor.main_bathroom_humidity"
-        above: 64
+        above: *main_bathroom_fan_on_humidity
     action:
       - service: switch.turn_on
         data:
@@ -111,16 +109,15 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: "sensor.main_bathroom_humidity"
-        below: 65 # < 65
+        below: &main_bathroom_fan_off_humidity 65 # Exclusive
       - platform: state
         entity_id: "switch.main_bathroom_fan"
         to: "on"
-        for:
-          minutes: 30
+        for: *main_bathroom_fan_manual_time
     condition:
       - condition: numeric_state
         entity_id: "sensor.main_bathroom_humidity"
-        below: 65
+        below: *main_bathroom_fan_off_humidity
     action:
       - service: switch.turn_off
         data:
@@ -164,6 +161,8 @@ automation:
       - platform: state
         entity_id: "binary_sensor.main_bathroom_motion"
         to: "off"
+        for: &main_bathroom_no_motion_delay
+          minutes: 2
       - platform: state
         entity_id: "input_boolean.main_bathroom_auto_lights"
         to: "on"
@@ -173,6 +172,7 @@ automation:
       - condition: state
         entity_id: "binary_sensor.main_bathroom_motion"
         state: "off"
+        for: *main_bathroom_no_motion_delay
       - condition: state
         entity_id: "input_boolean.main_bathroom_auto_lights"
         state: "on"
