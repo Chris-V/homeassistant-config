@@ -205,12 +205,12 @@
                     'label': (node.attributes['node_name'] + ' (' + node.attributes['averageResponseRTT'] + 'ms)').replace(/ /g, '\n'),
                     'class': 'unset',
                     'shape': batlev != undefined ? 'rect' : 'circle',
-                    'title': '<b>' + node.attributes['node_name'] + '</b>' +
-                        '<br />Node: ' + id + (node.attributes['is_zwave_plus'] ? '+' : '') +
-                        '<br />Product Name: ' + node.attributes['product_name'] +
-                        '<br />Average Request RTT: ' + node.attributes['averageResponseRTT'] + 'ms' +
-                        '<br />Power source: ' + (batlev != undefined ? 'battery (' + batlev + '%)' : 'mains') +
-                        '<br />' + entities.length + ' entities',
+                    'title': '[' + node.attributes['node_name'] + ']' +
+                        '\nNode: ' + id + (node.attributes['is_zwave_plus'] ? '+' : '') +
+                        '\nProduct Name: ' + node.attributes['product_name'] +
+                        '\nAverage Request RTT: ' + node.attributes['averageResponseRTT'] + 'ms' +
+                        '\nPower source: ' + (batlev != undefined ? 'battery (' + batlev + '%)' : 'mains') +
+                        '\n' + entities.length + ' entities',
                     'forwards': (node.attributes.is_awake && node.attributes.is_ready && !node.attributes.is_failed &&
                         node.attributes.capabilities.includes('listening')),
                 };
