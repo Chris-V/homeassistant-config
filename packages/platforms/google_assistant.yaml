@@ -4,3 +4,15 @@ google_assistant:
   expose_by_default: false
   exposed_domains: []
 
+automation:
+  - alias: "Sync Google Assistant"
+    hide_entity: True
+    # TODO: Getting 404s. Looks related: https://github.com/home-assistant/home-assistant/pull/17415
+    initial_state: False
+    trigger:
+      - platform: event
+        event_type: "zwave.network_ready"
+    action:
+      - service: google_assistant.request_sync
+        data:
+          agent_user_id: "d81d86b73a3f4ae78e22362a8ab9a2bb"
