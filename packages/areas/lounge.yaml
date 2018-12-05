@@ -2,6 +2,8 @@ homeassistant:
   customize:
     sensor.lounge_window_sensor_battery:
       battery_type: "Sensative Strip"
+    light.downstairs:
+      friendly_name: "Downstairs light"
 
 google_assistant:
   entity_config:
@@ -44,19 +46,9 @@ light:
       - light.basement_hallway
       - light.downstairs
 
-  - platform: template
-    lights:
-      downstairs:
-        friendly_name: "Downstairs light"
-        value_template: "{{ is_state('switch.downstairs_light', 'on') }}"
-        turn_on:
-          service: "switch.turn_on"
-          data:
-            entity_id: "switch.downstairs_light"
-        turn_off:
-          service: "switch.turn_off"
-          data:
-            entity_id: "switch.downstairs_light"
+  - platform: switch
+    name: downstairs
+    entity_id: "switch.downstairs_light"
 
 binary_sensor:
   - platform: template
