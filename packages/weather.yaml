@@ -6,13 +6,23 @@ homeassistant:
 weather:
   - platform: darksky
     api_key: !secret weather_dark_sky_api_key
+    mode: "daily"
 
 sun: {}
+
 sensor:
   - platform: moon
   - platform: darksky
     api_key: !secret weather_dark_sky_api_key
-    forecast: []
+    forecast:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
     language: "en"
     monitored_conditions:
       - humidity
@@ -20,4 +30,4 @@ sensor:
       - summary
       - temperature
       - uv_index
-    update_interval: "00:03"
+    update_interval: "00:10"
