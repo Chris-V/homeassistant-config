@@ -11,7 +11,7 @@ views:
         columns: 2
         entities:
           - device_tracker.chris_pixel
-          - device_tracker.karine_nexus5
+          - device_tracker.karine_pixel
       - type: vertical-stack
         id: quick-actions
         cards:

@@ -7,7 +7,7 @@ group:
   person_karine:
     name: "Karine"
     entities:
-      - device_tracker.karine_nexus5
+      - device_tracker.karine_pixel
 
   household:
     name: "Household"
@@ -15,4 +15,4 @@ group:
     entities:
       # Not using person groups because we lose the Gravatar config and groups support only icon.
       - device_tracker.chris_pixel
-      - device_tracker.karine_nexus5
+      - device_tracker.karine_pixel
