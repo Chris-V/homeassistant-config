@@ -21,34 +21,44 @@ views:
                 entity: light.outdoor_lights
                 name: Outdoor
                 icon: mdi:tree
-                tap_action: toggle
-                hold_action: more-info
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
               - type: entity-button
                 entity: light.ground_floor_lights
                 name: Main
                 icon: mdi:arrow-up-thick
-                tap_action: toggle
-                hold_action: more-info
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
               - type: entity-button
                 entity: light.basement_lights
                 name: Basement
                 icon: mdi:arrow-down-thick
-                tap_action: toggle
-                hold_action: more-info
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
           - type: horizontal-stack
             cards:
               - type: entity-button
                 entity: script.ambiance
                 name: Ambiance
                 icon: mdi:weather-night
-                tap_action: call-service
-                service: script.turn_on
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data: script.ambiance
               - type: entity-button
                 entity: script.everything_off
                 name: Everything off
                 icon: mdi:sleep
-                tap_action: call-service
-                service: script.turn_on
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data: script.everything_off
               - type: horizontal-stack
                 cards: [] # Empty place holder
       - type: weather-forecast
@@ -338,6 +348,7 @@ views:
         cards:
           - type: entities
             title: Guest rooms
+            show_header_toggle: false
             entities:
               - type: divider
           - type: horizontal-stack
@@ -491,6 +502,7 @@ views:
             name: Network device outages
       - type: entities
         id: network-ups
+        show_header_toggle: false
         title: UPS
         entities:
           - entity: sensor.ups_status
@@ -508,18 +520,18 @@ views:
       - type: entities
         id: network-hass
         title: Home Assistant
+        show_header_toggle: false
         entities:
-          - sensor.connected_clients
           - sensor.current_home_assistant_version
           - sensor.latest_home_assistant_version
       - type: entities
         id: network-automate
         title: Automate
+        show_header_toggle: false
         entities:
           - sensor.processor_use
           - sensor.processor_temperature
           - sensor.memory_use_percent
-          - sensor.since_last_boot
       - type: entities
         id: network-media
         title: Media
@@ -565,6 +577,7 @@ views:
       - type: entities
         id: zwave-status
         title: Z-Wave
+        show_header_toggle: false
         entities:
           - entity: zwave.usb_controller
           - type: section
