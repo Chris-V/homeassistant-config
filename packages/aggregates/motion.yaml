@@ -36,5 +36,5 @@ sensor:
              (states
              | selectattr('entity_id', 'in', state_attr('group.all_motions', 'entity_id'))
              | sort(attribute='last_changed')
-             | last).name
+             | last).name  | replace(' motion', '')
           }}
