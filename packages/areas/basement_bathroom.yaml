@@ -133,8 +133,14 @@ automation:
         state: "off"
     action:
       - service: light.turn_on
-        data:
-          entity_id: "light.basement_bathroom"
+        data_template:
+          entity_id: "light.basement_bathroom_vanity"
+          brightness_pct: >-
+            {% set time = now().strftime('%H%M') | int %}
+            {%- if time <= 600 -%} 5
+            {%- elif time >= 900 and time <= 1800 -%} 85
+            {%- else -%} 50
+            {%- endif -%}
   - alias: "basement_bathroom_auto_lights_off"
     hide_entity: True
     initial_state: True

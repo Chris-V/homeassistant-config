@@ -140,11 +140,11 @@ automation:
       - service: light.turn_on
         data_template:
           entity_id: "light.main_bathroom_spots"
-          brightness: >-
+          brightness_pct: >-
             {% set time = now().strftime('%H%M') | int %}
-            {%- if time <= 600 -%} 30
-            {%- elif time >= 900 and time <= 1800 -%} 200
-            {%- else -%} 100
+            {%- if time <= 600 -%} 5
+            {%- elif time >= 900 and time <= 1800 -%} 85
+            {%- else -%} 50
             {%- endif -%}
   - alias: "main_bathroom_auto_lights_off"
     hide_entity: True
