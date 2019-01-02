@@ -174,7 +174,7 @@ automation:
         entity_id: "input_boolean.basement_bathroom_auto_lights"
         to: "off"
         for:
-          minutes: 30
+          minutes: 45
     action:
       - service: input_boolean.turn_on
         data:
