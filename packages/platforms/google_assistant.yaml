@@ -1,14 +1,14 @@
 google_assistant:
   project_id: !secret google_assistant_project_id
   api_key: !secret google_assistant_api_key
-  expose_by_default: false
+  expose_by_default: False
   exposed_domains: []
 
+# Sync Assistant devices when Z-Wave network is ready. This should leave plenty of time for HA to be up and running.
 automation:
   - alias: "Sync Google Assistant"
     hide_entity: True
-    # TODO: Getting 404s. Looks related: https://github.com/home-assistant/home-assistant/pull/17415
-    initial_state: False
+    initial_state: True
     trigger:
       - platform: event
         event_type: "zwave.network_ready"
