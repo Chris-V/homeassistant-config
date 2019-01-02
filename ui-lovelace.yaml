@@ -402,6 +402,7 @@ views:
       - type: entities
         id: details-doors
         title: Doors
+        show_header_toggle: false
         entities:
           - entity: binary_sensor.kitchen_door
             name: Kitchen
@@ -412,6 +413,7 @@ views:
       - type: entities
         id: details-windows
         title: Windows
+        show_header_toggle: false
         entities:
           - entity: binary_sensor.lounge_window
             name: Lounge
@@ -425,6 +427,7 @@ views:
       - type: entities
         id: details-water
         title: Water
+        show_header_toggle: false
         entities:
           - entity: binary_sensor.kitchen_sink_leak
             name: Kitchen sink
@@ -435,6 +438,7 @@ views:
       - type: entities
         id: details-motion
         title: Motion
+        show_header_toggle: false
         entities:
           - entity: binary_sensor.basement_bathroom_motion
             name: Basement bathroom
@@ -451,6 +455,7 @@ views:
       - type: entities
         id: details-batteries
         title: Batteries
+        show_header_toggle: false
         entities:
           - entity: sensor.basement_bathroom_multisensor_battery
             name: Basement bathroom multisensor
