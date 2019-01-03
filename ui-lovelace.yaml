@@ -93,11 +93,11 @@ views:
         entities:
           - type: divider
           - entity: light.side_porch
-            name: Side porch light
+            name: Side porch
           - entity: light.front_porch
-            name: Front porch light
+            name: Front porch
           - entity: light.shed
-            name: Shed light
+            name: Shed
       - type: vertical-stack
         id: room-kitchen
         cards:
@@ -112,7 +112,7 @@ views:
               - type: entities
                 entities:
                   - entity: light.kitchen
-                    name: Light
+                    name: Spots
               - type: glance
                 columns: 2
                 show_name: False
@@ -126,7 +126,7 @@ views:
         entities:
           - type: divider
           - entity: light.dining_room
-            name: Dimmer
+            name: Table
       - type: vertical-stack
         id: room-living-room
         cards:
@@ -141,9 +141,9 @@ views:
               - type: entities
                 entities:
                   - entity: light.bookshelf
-                    name: Bookshelf light
+                    name: Bookshelf
                   - entity: light.living_room_ambiance
-                    name: Ambiance light
+                    name: Ambiance
                   - entity: switch.bookshelf_outlet
                     name: Bookshelf outlet
                   - entity: switch.living_room_tv
@@ -225,7 +225,7 @@ views:
         entities:
           - type: divider
           - entity: light.office
-            name: Dimmer
+            name: Light
 
   - title: Basement
     id: basement
@@ -245,13 +245,13 @@ views:
               - type: entities
                 entities:
                   - entity: light.lounge
-                    name: Dimmer
+                    name: Spots
                   - entity: light.lounge_ambiance
                     name: Ambiance
                   - entity: light.basement_hallway
-                    name: Hallway dimmer
+                    name: Hallway
                   - entity: light.downstairs
-                    name: Downstairs light
+                    name: Downstairs
               - type: vertical-stack
                 cards:
                   - type: glance
