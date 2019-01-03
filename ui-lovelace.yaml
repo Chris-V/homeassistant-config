@@ -50,7 +50,10 @@ views:
                 tap_action:
                   action: call-service
                   service: script.turn_on
-                  service_data: script.ambiance
+                  service_data:
+                    entity_id: script.ambiance
+                hold_action:
+                  action: none
               - type: entity-button
                 entity: script.everything_off
                 name: Everything off
@@ -58,7 +61,10 @@ views:
                 tap_action:
                   action: call-service
                   service: script.turn_on
-                  service_data: script.everything_off
+                  service_data:
+                    entity_id: script.everything_off
+                hold_action:
+                  action: none
               - type: horizontal-stack
                 cards: [] # Empty place holder
       - type: weather-forecast
