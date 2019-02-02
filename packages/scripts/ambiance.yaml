@@ -14,8 +14,8 @@ script:
       - service: homeassistant.turn_on
         data:
           entity_id: "light.master_bedroom_bedsides"
-          brightness: 15
-          rgb_color: [255, 160, 40]
+          brightness_pct: 5
+          kelvin: 2200
       - service: homeassistant.turn_on
         data:
           entity_id: "light.bookshelf"
@@ -26,5 +26,5 @@ script:
       - service: homeassistant.turn_on
         data:
           entity_id: "light.lounge_ambiance"
-          brightness: 80
-          rgb_color: [255, 160, 40]
+          brightness_pct: 30
+          kelvin: 2200

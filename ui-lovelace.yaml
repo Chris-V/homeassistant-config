@@ -55,9 +55,20 @@ views:
                 hold_action:
                   action: none
               - type: entity-button
+                entity: script.bedtime
+                name: Bedtime
+                icon: mdi:hotel
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.bedtime
+                hold_action:
+                  action: none
+              - type: entity-button
                 entity: script.everything_off
-                name: Everything off
-                icon: mdi:sleep
+                name: All off
+                icon: mdi:close-circle-outline
                 tap_action:
                   action: call-service
                   service: script.turn_on
@@ -65,8 +76,6 @@ views:
                     entity_id: script.everything_off
                 hold_action:
                   action: none
-              - type: horizontal-stack
-                cards: [] # Empty place holder
       - type: weather-forecast
         id: weather
         entity: weather.dark_sky

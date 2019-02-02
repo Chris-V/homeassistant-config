@@ -1,0 +1,76 @@
+google_assistant:
+  entity_config:
+    script.bedtime:
+      expose: True
+      name: "Bedtime"
+      aliases:
+        - Prepare to sleep
+
+script:
+  bedtime:
+    alias: "Bedtime"
+    sequence:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.master_bedroom_bedsides"
+          brightness_pct: 5
+          kelvin: 2200
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "light.kitchen_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "light.living_room_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "light.lounge_lights"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "light.office_lights"
+      - service: script.bedtime_maybe_basement_bathroom
+      - service: script.bedtime_maybe_dining_room
+      - service: script.bedtime_maybe_laundry_room
+      - service: script.bedtime_maybe_main_bathroom
+      - service: script.bedtime_maybe_workshop
+
+  bedtime_maybe_basement_bathroom:
+    sequence:
+      - condition: state
+        entity_id: "binary_sensor.basement_bathroom_motion"
+        state: "off"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "light.basement_bathroom_lights"
+  bedtime_maybe_dining_room:
+    sequence:
+      - condition: state
+        entity_id: "light.dining_room"
+        state: "on"
+      - service: light.turn_on
+        data:
+          entity_id: "light.dining_room"
+          brightness_pct: 10
+  bedtime_maybe_laundry_room:
+    sequence:
+      - condition: state
+        entity_id: "binary_sensor.laundry_room_motion"
+        state: "off"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "light.laundry_room_lights"
+  bedtime_maybe_main_bathroom:
+    sequence:
+      - condition: state
+        entity_id: "binary_sensor.main_bathroom_motion"
+        state: "off"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "light.main_bathroom_lights"
+  bedtime_maybe_workshop:
+    sequence:
+      - condition: state
+        entity_id: "binary_sensor.workshop_motion"
+        state: "off"
+      - service: homeassistant.turn_off
+        data:
+          entity_id: "light.workshop_lights"
