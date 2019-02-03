@@ -4,26 +4,38 @@ homeassistant:
       battery_type: "Sensative Strip"
     sensor.kitchen_sink_leak_sensor_battery:
       battery_type: "ER14250 3.6V"
+    light.hallway:
+      friendly_name: "Hallway light"
     light.kitchen:
       friendly_name: "Kitchen light"
 
 google_assistant:
   entity_config:
+    light.hallway:
+      expose: True
+      room: "Kitchen"
+      name: "Hallway light"
+      aliases:
+        - "Hallway"
     light.kitchen:
       expose: True
       room: "Kitchen"
+      name: "Kitchen light"
       aliases:
-        - "Kitchen light"
         - "Kitchen"
 
 light:
   - platform: group
     name: "Kitchen lights"
     entities:
+      - light.hallway
       - light.kitchen
   - platform: switch
     name: kitchen
     entity_id: "switch.kitchen_light"
+  - platform: switch
+    name: hallway
+    entity_id: "switch.hallway_light"
 
 binary_sensor:
   - platform: template

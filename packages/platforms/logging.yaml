@@ -39,6 +39,7 @@ recorder:
       - light.dining_room
       - light.downstairs
       - light.front_porch
+      - light.hallway
       - light.kitchen
       - light.kitchen_lights
       - light.laundry_room
@@ -48,6 +49,8 @@ recorder:
       - light.lounge_lights
       - light.main_bathroom_spots
       - light.main_bathroom_vanity
+      - light.master_bedroom
+      - light.master_bedroom_bedsides
       - light.office
       - light.shed
       - light.side_porch

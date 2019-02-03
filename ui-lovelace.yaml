@@ -128,6 +128,8 @@ views:
                 entities:
                   - entity: light.kitchen
                     name: Spots
+                  - entity: light.hallway
+                    name: Hallway
               - type: glance
                 columns: 2
                 show_name: False
@@ -614,9 +616,11 @@ views:
           - entity: zwave.dining_room_light_dimmer
           - entity: zwave.downstairs_light_switch
           - entity: zwave.front_porch_light_switch
+          - entity: zwave.hallway_light_switch
           - entity: zwave.kitchen_light_switch
           - entity: zwave.laundry_room_light_switch
           - entity: zwave.lounge_light_dimmer
+          - entity: zwave.master_bedroom_light_switch
           - entity: zwave.main_bathroom_fan_switch
           - entity: zwave.main_bathroom_light_dimmer
           - entity: zwave.main_bathroom_vanity_light_switch
