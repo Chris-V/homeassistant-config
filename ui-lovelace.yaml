@@ -191,8 +191,12 @@ views:
             cards:
               - type: entities
                 entities:
+                  - entity: light.master_bedroom
+                    name: Light
                   - entity: light.bedside_chris
+                    name: Chris' lamp
                   - entity: light.bedside_karine
+                    name: Karine's lamp
               - type: glance
                 show_name: False
                 columns: 2

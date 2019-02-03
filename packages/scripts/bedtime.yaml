@@ -32,6 +32,11 @@ script:
       - service: script.bedtime_maybe_laundry_room
       - service: script.bedtime_maybe_main_bathroom
       - service: script.bedtime_maybe_workshop
+      - service: tts.google_say
+        data_template:
+          entity_id:
+            - media_player.master_bedroom_google_home
+          message: "Sweet dreams!"
 
   bedtime_maybe_basement_bathroom:
     sequence:
