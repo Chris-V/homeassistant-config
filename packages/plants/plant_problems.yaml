@@ -37,8 +37,8 @@ automation:
                 | replace('brightness low', 'afraid')
                 | replace('brightness high', 'blinded')
                 | replace('conductivity low', 'hungry')
-                | replace('conductivity high', 'a glutton')
-                | replace('battery low', '')
+                | replace('conductivity high', 'bursting')
+                | replace('battery low', 'in need of a new battery')
               ).split(', ')
               | reject('equalto', '')
               | sort
