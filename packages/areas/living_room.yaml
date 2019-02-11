@@ -18,8 +18,10 @@ google_assistant:
     light.living_room_ambiance:
       expose: True
       room: "Living room"
+      name: "Ambiance"
       aliases:
         - "Living room light"
+        - "Living room"
     light.bookshelf:
       expose: True
       room: "Living room"
