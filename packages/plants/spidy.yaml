@@ -28,6 +28,12 @@ plant:
     min_conductivity: 30
 
 sensor:
+  - platform: template
+    sensors:
+      spidy_problems:
+        friendly_name: "Spidy"
+        value_template: "{{ state_attr('plant.spidy', 'problem') or 'none' }}"
+
   - platform: mqtt
     name: "spidy_battery"
     force_update: True

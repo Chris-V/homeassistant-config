@@ -28,6 +28,12 @@ plant:
     min_conductivity: 30
 
 sensor:
+  - platform: template
+    sensors:
+      maitre_doyle_problems:
+        friendly_name: "Maître Doyle"
+        value_template: "{{ state_attr('plant.maitre_doyle', 'problem') or 'none' }}"
+
   - platform: mqtt
     name: "maitre_doyle_battery"
     force_update: True

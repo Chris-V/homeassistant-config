@@ -28,6 +28,12 @@ plant:
     min_conductivity: 30
 
 sensor:
+  - platform: template
+    sensors:
+      viny_problems:
+        friendly_name: "Viny"
+        value_template: "{{ state_attr('plant.viny', 'problem') or 'none' }}"
+
   - platform: mqtt
     name: "viny_battery"
     force_update: True
