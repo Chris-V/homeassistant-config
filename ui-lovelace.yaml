@@ -2,18 +2,16 @@ title: Avatar
 views:
 
   - title: Home
-    id: home
+    path: home
     icon: mdi:home
     cards:
       - type: glance
-        id: people
         show_name: false
         columns: 2
         entities:
           - device_tracker.chris_pixel
           - device_tracker.karine_pixel
       - type: vertical-stack
-        id: quick-actions
         cards:
           - type: horizontal-stack
             cards:
@@ -77,10 +75,8 @@ views:
                 hold_action:
                   action: none
       - type: weather-forecast
-        id: weather
         entity: weather.dark_sky
       - type: glance
-        id: platforms-overview
         columns: 4
         entities:
           - entity: binary_sensor.all_motions
@@ -98,11 +94,10 @@ views:
             name: Batteries
 
   - title: Ground Floor
-    id: ground-floor
+    path: ground-floor
     icon: mdi:arrow-up-thick
     cards:
       - type: entities
-        id: outdoor
         title: Outdoor
         show_header_toggle: true
         entities:
@@ -114,7 +109,6 @@ views:
           - entity: light.shed
             name: Shed
       - type: vertical-stack
-        id: room-kitchen
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Kitchen
@@ -135,7 +129,6 @@ views:
                   - entity: binary_sensor.kitchen_sink_leak
                   - entity: binary_sensor.kitchen_door
       - type: entities
-        id: room-dining-room
         title: Dining room
         show_header_toggle: true
         entities:
@@ -145,7 +138,6 @@ views:
           - entity: light.hallway
             name: Hallway
       - type: vertical-stack
-        id: room-living-room
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Living room
@@ -181,7 +173,6 @@ views:
                     entities:
                       - entity: binary_sensor.living_room_door
       - type: vertical-stack
-        id: room-master-bedroom
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Master Bedroom
@@ -205,7 +196,6 @@ views:
                 entities:
                   - media_player.master_bedroom_google_home
       - type: vertical-stack
-        id: room-main-bathroom
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Bathroom
@@ -240,7 +230,6 @@ views:
                 name: Automated lights
                 secondary_info: last-changed
       - type: entities
-        id: room-office
         title: Office
         show_header_toggle: true
         entities:
@@ -249,11 +238,10 @@ views:
             name: Light
 
   - title: Basement
-    id: basement
+    path: basement
     icon: mdi:arrow-down-thick
     cards:
       - type: vertical-stack
-        id: room-lounge
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Lounge
@@ -286,7 +274,6 @@ views:
                     entities:
                       - binary_sensor.lounge_window
       - type: vertical-stack
-        id: room-basement-bathroom
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Bathroom
@@ -321,7 +308,6 @@ views:
                 name: Automated lights
                 secondary_info: last-changed
       - type: vertical-stack
-        id: room-laundry
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Laundry
@@ -342,7 +328,6 @@ views:
                   - entity: binary_sensor.laundry_room_motion
                     name: Motion
       - type: vertical-stack
-        id: room-workshop
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Workshop
@@ -365,7 +350,6 @@ views:
                   - entity: binary_sensor.water_heater_leak
                     name: Water heater
       - type: vertical-stack
-        id: room-guests
         cards:
           - type: entities
             title: Guest rooms
@@ -386,25 +370,21 @@ views:
                   - entity: binary_sensor.guest_west_window
 
   - title: Plants
-    id: plants
+    path: plants
     icon: mdi:flower
     cards:
       - type: plant-status
-        id: plant-maitre-doyle
         entity: plant.maitre_doyle
       - type: plant-status
-        id: plant-spidy
         entity: plant.spidy
       - type: plant-status
-        id: plant-viny
         entity: plant.viny
 
   - title: Settings
-    id: settings
+    path: settings
     icon: mdi:settings
     cards:
       - type: entities
-        id: main-settings
         title: Settings
         show_header_toggle: false
         entities:
@@ -412,8 +392,6 @@ views:
           - input_boolean.automatic_night_theme
           - input_select.default_theme
       - type: entities
-        id: main-notifications
-        title: Notifications
         show_header_toggle: false
         entities:
           - entity: automation.notify_plant_problems
@@ -421,8 +399,6 @@ views:
           - entity: input_boolean.notify_power_outages
             name: Power outages
       - type: entities
-        id: details-doors
-        title: Doors
         show_header_toggle: false
         entities:
           - entity: binary_sensor.kitchen_door
@@ -432,8 +408,6 @@ views:
             name: Living room
             secondary_info: last-changed
       - type: entities
-        id: details-windows
-        title: Windows
         show_header_toggle: false
         entities:
           - entity: binary_sensor.lounge_window
@@ -446,8 +420,6 @@ views:
             name: Guest room (west)
             secondary_info: last-changed
       - type: entities
-        id: details-water
-        title: Water
         show_header_toggle: false
         entities:
           - entity: binary_sensor.kitchen_sink_leak
@@ -457,8 +429,6 @@ views:
             name: Water heater
             secondary_info: last-changed
       - type: entities
-        id: details-motion
-        title: Motion
         show_header_toggle: false
         entities:
           - entity: binary_sensor.basement_bathroom_motion
@@ -474,7 +444,6 @@ views:
             name: Workshop
             secondary_info: last-changed
       - type: entities
-        id: details-batteries
         title: Batteries
         show_header_toggle: false
         entities:
@@ -508,17 +477,15 @@ views:
             name: Viny
 
   - title: Network
-    id: network
+    path: network
     icon: mdi:server-network
     cards:
       - type: entities
-        id: network-settings
         title: Settings
         show_header_toggle: false
         entities:
           - input_boolean.power_outage_manage_devices
       - type: entities
-        id: network-notifications
         title: Notifications
         show_header_toggle: false
         entities:
@@ -527,7 +494,6 @@ views:
           - entity: input_boolean.notify_network_device_outages
             name: Network device outages
       - type: entities
-        id: network-ups
         show_header_toggle: false
         title: UPS
         entities:
@@ -544,14 +510,12 @@ views:
           - entity: sensor.ups_time_on_battery
             name: Time on battery
       - type: entities
-        id: network-hass
         title: Home Assistant
         show_header_toggle: false
         entities:
           - sensor.current_home_assistant_version
           - sensor.latest_home_assistant_version
       - type: entities
-        id: network-automate
         title: Automate
         show_header_toggle: false
         entities:
@@ -559,7 +523,6 @@ views:
           - sensor.processor_temperature
           - sensor.memory_use_percent
       - type: entities
-        id: network-media
         title: Media
         show_header_toggle: false
         entities:
@@ -573,7 +536,6 @@ views:
           - entity: sensor.media_ram_used
             name: Memory use
       - type: entities
-        id: network-relay-south
         title: Relay South
         show_header_toggle: false
         entities:
@@ -587,7 +549,6 @@ views:
           - entity: sensor.relay_south_ram_used
             name: Memory use
       - type: entities
-        id: network-relay-north
         title: Relay North
         show_header_toggle: false
         entities:
@@ -601,7 +562,6 @@ views:
           - entity: sensor.relay_north_ram_used
             name: Memory use
       - type: entities
-        id: zwave-status
         title: Z-Wave
         show_header_toggle: false
         entities:
