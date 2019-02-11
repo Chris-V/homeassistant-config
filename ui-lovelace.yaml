@@ -128,8 +128,6 @@ views:
                 entities:
                   - entity: light.kitchen
                     name: Spots
-                  - entity: light.hallway
-                    name: Hallway
               - type: glance
                 columns: 2
                 show_name: False
@@ -144,6 +142,8 @@ views:
           - type: divider
           - entity: light.dining_room
             name: Table
+          - entity: light.hallway
+            name: Hallway
       - type: vertical-stack
         id: room-living-room
         cards:

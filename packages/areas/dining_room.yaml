@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    light.hallway:
+      friendly_name: "Hallway light"
+
 google_assistant:
   entity_config:
     light.dining_room:
@@ -8,9 +13,19 @@ google_assistant:
         - "Dining room"
         - "Table light"
         - "Table"
+    light.hallway:
+      expose: True
+      room: "Kitchen"
+      name: "Hallway light"
+      aliases:
+        - "Hallway"
 
 light:
   - platform: group
     name: "Dining room lights"
     entities:
       - light.dining_room
+      - light.hallway
+  - platform: switch
+    name: hallway
+    entity_id: "switch.hallway_light"
