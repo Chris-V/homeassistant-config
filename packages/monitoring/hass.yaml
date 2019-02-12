@@ -9,9 +9,6 @@ homeassistant:
 
 system_health:
 
-updater:
-  reporting: False
-
 sensor:
   - platform: version
     name: "latest_home_assistant_version"
