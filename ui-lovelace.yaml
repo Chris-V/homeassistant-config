@@ -211,9 +211,8 @@ views:
                     name: Spots
                   - entity: light.main_bathroom_vanity
                     name: Vanity
-                  - entity: switch.main_bathroom_fan
+                  - entity: fan.main_bathroom
                     name: Fan
-                    icon: mdi:fan
               - type: glance
                 show_name: False
                 columns: 2
@@ -289,9 +288,8 @@ views:
                     name: Ceiling
                   - entity: light.basement_bathroom_vanity
                     name: Vanity
-                  - entity: switch.basement_bathroom_fan
+                  - entity: fan.basement_bathroom
                     name: Fan
-                    icon: mdi:fan
               - type: glance
                 show_name: False
                 columns: 2

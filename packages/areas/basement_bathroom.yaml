@@ -18,11 +18,10 @@ google_assistant:
       aliases:
         - "Basement bathroom vanity light"
         - "Basement bathroom vanity"
-    switch.basement_bathroom_fan:
+    fan.basement_bathroom:
       expose: True
       room: "Basement bathroom"
-      aliases:
-        - "Basement bathroom fan"
+      name: "Basement bathroom fan"
 
 input_boolean:
   basement_bathroom_auto_lights:
@@ -57,6 +56,24 @@ sensor:
         unit_of_measurement: "%"
         value_template: "{{ state_attr('zwave.basement_bathroom_multisensor', 'battery_level') | int('unknown') }}"
 
+fan:
+  - platform: template
+    fans:
+      basement_bathroom:
+        friendly_name: "Basement bathroom fan"
+        value_template: "{{ states('switch.basement_bathroom_fan') }}"
+        speed_template: "Normal"
+        speeds:
+          - "Normal"
+        turn_on:
+          service: "switch.turn_on"
+          data:
+            entity_id: "switch.basement_bathroom_fan"
+        turn_off:
+          service: "switch.turn_off"
+          data:
+            entity_id: "switch.basement_bathroom_fan"
+
 light:
   - platform: group
     name: "Basement bathroom lights"
@@ -78,7 +95,7 @@ automation:
         entity_id: "sensor.basement_bathroom_humidity"
         above: &basement_bathroom_fan_on_humidity 64 # Exclusive
       - platform: state
-        entity_id: "switch.basement_bathroom_fan"
+        entity_id: "fan.basement_bathroom"
         to: "off"
         for: &basement_bathroom_fan_manual_time
           minutes: 30
@@ -87,9 +104,9 @@ automation:
         entity_id: "sensor.basement_bathroom_humidity"
         above: *basement_bathroom_fan_on_humidity
     action:
-      - service: switch.turn_on
+      - service: fan.turn_on
         data:
-          entity_id: "switch.basement_bathroom_fan"
+          entity_id: "fan.basement_bathroom"
   - alias: "basement_bathroom_auto_fan_off"
     hide_entity: True
     initial_state: True
@@ -98,7 +115,7 @@ automation:
         entity_id: "sensor.basement_bathroom_humidity"
         below: &basement_bathroom_fan_off_humidity 65 # Exclusive
       - platform: state
-        entity_id: "switch.basement_bathroom_fan"
+        entity_id: "fan.basement_bathroom"
         to: "on"
         for: *basement_bathroom_fan_manual_time
     condition:
@@ -106,9 +123,9 @@ automation:
         entity_id: "sensor.basement_bathroom_humidity"
         below: *basement_bathroom_fan_off_humidity
     action:
-      - service: switch.turn_off
+      - service: fan.turn_off
         data:
-          entity_id: "switch.basement_bathroom_fan"
+          entity_id: "fan.basement_bathroom"
 
   # Automated light management
   - alias: "basement_bathroom_auto_lights_on"
@@ -198,9 +215,9 @@ automation:
           scene_id: 1
           scene_data: 7860
     action:
-      service: switch.turn_on
+      service: fan.turn_on
       data:
-        entity_id: "switch.basement_bathroom_fan"
+        entity_id: "fan.basement_bathroom"
   - alias: "basement_bathroom_fan_double_down"
     hide_entity: True
     initial_state: True
@@ -212,9 +229,9 @@ automation:
           scene_id: 2
           scene_data: 7860
     action:
-      service: switch.turn_off
+      service: fan.turn_off
       data:
-        entity_id: "switch.basement_bathroom_fan"
+        entity_id: "fan.basement_bathroom"
 
   # Double tap vanity switch will turn vanity light on/off
   - alias: "basement_bathroom_vanity_double_up"

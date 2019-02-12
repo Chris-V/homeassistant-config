@@ -18,6 +18,8 @@ recorder:
       - binary_sensor.ups_online_status
       - binary_sensor.water_heater_leak
       - binary_sensor.workshop_motion
+      - fan.basement_bathroom
+      - fan.main_bathroom
       - group.household
       - group.person_chris
       - group.person_karine
@@ -106,10 +108,8 @@ recorder:
       - sensor.viny_moisture
       - sensor.viny_temperature
       - sensor.water_heater_leak_sensor_battery
-      - switch.basement_bathroom_fan
       - switch.bookshelf_outlet
       - switch.living_room_tv
-      - switch.main_bathroom_fan
       - switch.network_media
       - switch.network_relay_north
       - switch.network_relay_south

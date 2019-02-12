@@ -22,11 +22,11 @@ google_assistant:
         - "Vanity"
         - "Bathroom vanity light"
         - "Main bathroom vanity light"
-    switch.main_bathroom_fan:
+    fan.main_bathroom:
       expose: True
       room: "Main bathroom"
+      name: "Bathroom fan"
       aliases:
-        - "Bathroom fan"
         - "Main bathroom fan"
 
 input_boolean:
@@ -62,6 +62,24 @@ sensor:
         unit_of_measurement: "%"
         value_template: "{{ state_attr('zwave.main_bathroom_multisensor', 'battery_level') | int('unknown') }}"
 
+fan:
+  - platform: template
+    fans:
+      main_bathroom:
+        friendly_name: "Main bathroom fan"
+        value_template: "{{ states('switch.main_bathroom_fan') }}"
+        speed_template: "Normal"
+        speeds:
+          - "Normal"
+        turn_on:
+          service: "switch.turn_on"
+          data:
+            entity_id: "switch.main_bathroom_fan"
+        turn_off:
+          service: "switch.turn_off"
+          data:
+            entity_id: "switch.main_bathroom_fan"
+
 light:
   - platform: group
     name: "Main bathroom lights"
@@ -83,7 +101,7 @@ automation:
         entity_id: "sensor.main_bathroom_humidity"
         above: &main_bathroom_fan_on_humidity 64 # Exclusive
       - platform: state
-        entity_id: "switch.main_bathroom_fan"
+        entity_id: "fan.main_bathroom"
         to: "off"
         for: &main_bathroom_fan_manual_time
           minutes: 30
@@ -92,9 +110,9 @@ automation:
         entity_id: "sensor.main_bathroom_humidity"
         above: *main_bathroom_fan_on_humidity
     action:
-      - service: switch.turn_on
+      - service: fan.turn_on
         data:
-          entity_id: "switch.main_bathroom_fan"
+          entity_id: "fan.main_bathroom"
   - alias: "main_bathroom_auto_fan_off"
     hide_entity: True
     initial_state: True
@@ -103,7 +121,7 @@ automation:
         entity_id: "sensor.main_bathroom_humidity"
         below: &main_bathroom_fan_off_humidity 65 # Exclusive
       - platform: state
-        entity_id: "switch.main_bathroom_fan"
+        entity_id: "fan.main_bathroom"
         to: "on"
         for: *main_bathroom_fan_manual_time
     condition:
@@ -111,9 +129,9 @@ automation:
         entity_id: "sensor.main_bathroom_humidity"
         below: *main_bathroom_fan_off_humidity
     action:
-      - service: switch.turn_off
+      - service: fan.turn_off
         data:
-          entity_id: "switch.main_bathroom_fan"
+          entity_id: "fan.main_bathroom"
 
   # Automated light management
   - alias: "main_bathroom_auto_lights_on"
@@ -205,7 +223,7 @@ automation:
     action:
       service: switch.turn_on
       data:
-        entity_id: "switch.main_bathroom_fan"
+        entity_id: "fan.main_bathroom"
   - alias: "main_bathroom_fan_double_down"
     hide_entity: True
     initial_state: True
@@ -217,9 +235,9 @@ automation:
           scene_id: 2
           scene_data: 7860
     action:
-      service: switch.turn_off
+      service: fan.turn_off
       data:
-        entity_id: "switch.main_bathroom_fan"
+        entity_id: "fan.main_bathroom"
 
   # Double tap vanity switch will turn vanity light on/off
   - alias: "main_bathroom_vanity_double_up"
