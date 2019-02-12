@@ -1,4 +1,11 @@
 title: Avatar
+
+resources:
+  - url: /local/tracker-card.js?v=0.3.0
+    type: js
+  - url: /local/vertical-stack-in-card.js?v=v0.1.1
+    type: js
+
 views:
 
   - title: Home
@@ -108,7 +115,7 @@ views:
             name: Front porch
           - entity: light.shed
             name: Shed
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Kitchen
@@ -137,7 +144,7 @@ views:
             name: Table
           - entity: light.hallway
             name: Hallway
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Living room
@@ -172,7 +179,7 @@ views:
                     columns: 2
                     entities:
                       - entity: binary_sensor.living_room_door
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Master Bedroom
@@ -195,7 +202,7 @@ views:
                 columns: 2
                 entities:
                   - media_player.master_bedroom_google_home
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Bathroom
@@ -203,6 +210,12 @@ views:
             entities:
               - entity: light.main_bathroom_lights
                 type: divider
+          - type: entities
+            entities:
+              - entity: input_boolean.main_bathroom_auto_lights
+                name: Automated lights
+                secondary_info: last-changed
+          - type: divider
           - type: horizontal-stack
             cards:
               - type: entities
@@ -223,11 +236,6 @@ views:
                     name: Temperature
                   - entity: binary_sensor.main_bathroom_motion
                     name: Motion
-          - type: entities
-            entities:
-              - entity: input_boolean.main_bathroom_auto_lights
-                name: Automated lights
-                secondary_info: last-changed
       - type: entities
         title: Office
         show_header_toggle: true
@@ -240,7 +248,7 @@ views:
     path: basement
     icon: mdi:arrow-down-thick
     cards:
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Lounge
@@ -272,7 +280,7 @@ views:
                     columns: 2
                     entities:
                       - binary_sensor.lounge_window
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Bathroom
@@ -280,6 +288,12 @@ views:
             entities:
               - entity: light.basement_bathroom_lights
                 type: divider
+          - type: entities
+            entities:
+              - entity: input_boolean.basement_bathroom_auto_lights
+                name: Automated lights
+                secondary_info: last-changed
+          - type: divider
           - type: horizontal-stack
             cards:
               - type: entities
@@ -300,12 +314,7 @@ views:
                     name: Temperature
                   - entity: binary_sensor.basement_bathroom_motion
                     name: Motion
-          - type: entities
-            entities:
-              - entity: input_boolean.basement_bathroom_auto_lights
-                name: Automated lights
-                secondary_info: last-changed
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Laundry
@@ -325,7 +334,7 @@ views:
                 entities:
                   - entity: binary_sensor.laundry_room_motion
                     name: Motion
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities # Title card with a toggle, no entities shown.
             title: Workshop
@@ -347,7 +356,7 @@ views:
                     name: Motion
                   - entity: binary_sensor.water_heater_leak
                     name: Water heater
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
           - type: entities
             title: Guest rooms
@@ -513,6 +522,11 @@ views:
         entities:
           - sensor.current_home_assistant_version
           - sensor.latest_home_assistant_version
+      - type: custom:tracker-card
+        title:
+        trackers:
+          - sensor.custom_card_tracker
+          - sensor.custom_component_tracker
       - type: entities
         title: Automate
         show_header_toggle: false

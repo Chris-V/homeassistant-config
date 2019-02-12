@@ -1,0 +1,4 @@
+custom_updater:
+  track:
+    - "cards"
+    - "components"
