@@ -22,8 +22,7 @@ binary_sensor:
           {{ ns.state }}
 
 automation:
-  - id: notify_water_leaks
-    alias: "Notify water leaks"
+  - alias: "Notify water leaks"
     hide_entity: True
     initial_state: True
     trigger:

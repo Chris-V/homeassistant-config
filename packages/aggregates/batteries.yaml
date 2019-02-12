@@ -35,8 +35,7 @@ sensor:
     entity_ids: *battery_entities
 
 automation:
-  - id: notify_low_batteries
-    alias: "Notify low batteries"
+  - alias: "Notify low batteries"
     hide_entity: True
     initial_state: True
     trigger:
