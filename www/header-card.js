@@ -1,4 +1,6 @@
 class HeaderCard extends HTMLElement {
+    _children = [];
+
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
@@ -8,7 +10,10 @@ class HeaderCard extends HTMLElement {
         this._hass = hass;
 
         if (!this.hasRendered()) {
-            this.render();
+            this.maybeRender();
+        }
+        if (this.hasRendered()) {
+            this._children.forEach(c => c.hass = hass)
         }
     }
 
@@ -19,18 +24,15 @@ class HeaderCard extends HTMLElement {
         }
 
         this._config = config;
-        this.render();
+        this.maybeRender();
     }
 
-    render() {
-        const root = this.shadowRoot;
-        while (root.hasChildNodes()) {
-            root.removeChild(root.lastChild);
-        }
-
+    maybeRender() {
         if (!this._config || !this._hass) {
             return;
         }
+
+        this.clearShadowRoot();
 
         const header = document.createElement("div");
         header.className = "header";
@@ -55,9 +57,19 @@ class HeaderCard extends HTMLElement {
             toggle.entities = Array.isArray(this._config.entities) ? this._config.entities : [this._config.entities];
 
             header.appendChild(toggle);
+            this._children.push(toggle);
         }
 
-        root.appendChild(header);
+        this.shadowRoot.appendChild(header);
+    }
+
+    clearShadowRoot() {
+        const root = this.shadowRoot;
+        while (root.hasChildNodes()) {
+            root.removeChild(root.lastChild);
+        }
+
+        this._children = [];
     }
 
     hasRendered() {
