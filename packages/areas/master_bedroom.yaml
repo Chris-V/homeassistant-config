@@ -100,9 +100,7 @@ automation:
           scene_id: 2
           scene_data: 5
     action:
-      service: light.turn_on
-      data:
-        entity_id: "light.master_bedroom_bedsides"
+      service: script.bedtime
 
   - alias: "master_bedroom_quint_tap"
     hide_entity: True
