@@ -1,21 +1,19 @@
 device_tracker:
-- platform: nmap_tracker
-  hosts: !secret device_tracker_hosts
+  - platform: nmap_tracker
+    hosts: !secret device_tracker_hosts
 
-  # Options shared by all trackers
-  interval_seconds: 10 # seconds between each scan
-  consider_home: 30 # seconds unseen but considered home
-  new_device_defaults:
-    track_new_devices: false
+    # Options shared by all trackers
+    interval_seconds: 10 # seconds between each scan
+    consider_home: 30 # seconds unseen but considered home
+    new_device_defaults:
+      track_new_devices: false
 
-- platform: snmp
-  host: !secret device_tracker_router_host
-  community: "public"
-  baseoid: "1.3.6.1.2.1.4.22.1.2"
+  - platform: snmp
+    host: !secret device_tracker_router_host
+    community: "public"
+    baseoid: "1.3.6.1.2.1.4.22.1.2"
 
-- platform: tomato
-  host: !secret device_tracker_router_host
-  username: !secret device_tracker_tomato_username
-  password: !secret device_tracker_tomato_password
-  http_id: !secret device_tracker_tomato_http_id
-  minimum_quality: 6
+  - platform: ddwrt
+    host: !secret device_tracker_router_host
+    username: !secret device_tracker_ddwrt_username
+    password: !secret device_tracker_ddwrt_password
