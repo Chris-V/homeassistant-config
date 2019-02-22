@@ -1,11 +1,11 @@
 title: Avatar
 
 resources:
-  - url: /local/tracker-card.js?v=0.3.0
+  - url: /customcards/tracker-card.js
+    type: module
+  - url: /customcards/vertical-stack-in-card.js
     type: js
-  - url: /local/vertical-stack-in-card.js?v=v0.1.1
-    type: js
-  - url: /local/header-card.js?v=v0.0.3
+  - url: /customcards/header-card.js
     type: js
 
 views:
