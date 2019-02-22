@@ -13,7 +13,7 @@ device_tracker:
   community: "public"
   baseoid: "1.3.6.1.2.1.4.22.1.2"
 
-- platform: tomato_custom
+- platform: tomato
   host: !secret device_tracker_router_host
   username: !secret device_tracker_tomato_username
   password: !secret device_tracker_tomato_password

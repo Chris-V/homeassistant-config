@@ -30,4 +30,4 @@ sensor:
       - summary
       - temperature
       - uv_index
-    update_interval: "00:10"
+    scan_interval: "00:15"
