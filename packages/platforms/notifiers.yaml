@@ -1,8 +1,9 @@
 notify:
   - platform: html5
     name: "html5"
-    gcm_api_key: !secret notifier_gcm_key
-    gcm_sender_id: !secret notifier_gcm_sender_id
+    vapid_email: !secret notifier_vapid_email
+    vapid_pub_key: !secret notifier_vapid_public_key
+    vapid_prv_key: !secret notifier_vapid_private_key
 
   - platform: group
     name: "default"
@@ -14,7 +15,7 @@ notify:
     services:
       - service: html5
         data:
-          target: ["chris aero chrome arch", "chris aero chrome windows", "chris pixel chrome"]
+          target: ["chris aero chrome arch", "chris pixel chrome"]
 
   - platform: group
     name: "household"
@@ -22,7 +23,7 @@ notify:
       - service: admin
       - service: html5
         data:
-          target: ["karine nexus5 chrome"]
+          target: ["karine pixel chrome"]
 
 custom_storage:
   audio_notifications:
