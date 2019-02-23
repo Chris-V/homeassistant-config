@@ -18,8 +18,8 @@ automation:
     trigger:
       platform: state
       entity_id:
-        - group.person_chris
-        - group.person_karine
+        - person.chris
+        - person.karine
       to: "home"
     condition:
       condition: state
@@ -38,8 +38,8 @@ automation:
     trigger:
       platform: state
       entity_id:
-        - group.person_chris
-        - group.person_karine
+        - person.chris
+        - person.karine
       from: "home"
     condition:
       condition: state

@@ -65,8 +65,8 @@
 
 - name: "Presence tracker"
   entities:
-    - device_tracker.chris_pixel
-    - device_tracker.karine_pixel
+    - person.chris
+    - person.karine
   class_template: "
     let state = entity.state;
     let cssClass = 'unknown';

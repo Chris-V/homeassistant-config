@@ -20,8 +20,8 @@ views:
         show_name: false
         columns: 2
         entities:
-          - device_tracker.chris_pixel
-          - device_tracker.karine_pixel
+          - person.chris
+          - person.karine
       - type: vertical-stack
         cards:
           - type: horizontal-stack

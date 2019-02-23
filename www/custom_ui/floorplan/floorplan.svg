@@ -421,8 +421,8 @@
          style="stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          transform="matrix(0.8,0,0,0.80000009,77.56037,-1.4000016)"
          clip-path="url(#clipPath4764)"
-         inkscape:label="Tracker Chris"
-         id="device_tracker.chris_pixel">
+         inkscape:label="Person Chris"
+         id="person.chris">
         <image
            clip-path="none"
            y="-32"
@@ -447,8 +447,8 @@
          style="stroke-width:1.25"
          transform="matrix(0.8,0,0,0.8,75.56037,-1.4)"
          clip-path="url(#clipPath4753)"
-         inkscape:label="Tracker Karine"
-         id="device_tracker.karine_pixel">
+         inkscape:label="Person Karine"
+         id="person.karine">
         <image
            style="stroke-width:11.17500019"
            width="50"

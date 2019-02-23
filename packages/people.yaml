@@ -1,18 +1,15 @@
+homeassistant:
+  customize:
+    person.chris:
+      entity_picture: !secret people_chris_picture_url
+    person.karine:
+      entity_picture: !secret people_karine_picture_url
+
 group:
-  person_chris:
-    name: "Chris"
-    entities:
-      - device_tracker.chris_pixel
-
-  person_karine:
-    name: "Karine"
-    entities:
-      - device_tracker.karine_pixel
-
   household:
     name: "Household"
     icon: "mdi:account-multiple"
     entities:
       # Not using person groups because we lose the Gravatar config and groups support only icon.
-      - device_tracker.chris_pixel
-      - device_tracker.karine_pixel
+      - person.chris
+      - person.karine

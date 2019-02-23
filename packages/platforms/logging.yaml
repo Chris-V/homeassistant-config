@@ -21,8 +21,8 @@ recorder:
       - fan.basement_bathroom
       - fan.main_bathroom
       - group.household
-      - group.person_chris
-      - group.person_karine
+      - person.chris
+      - person.karine
       - input_boolean.automatic_night_theme
       - input_boolean.basement_bathroom_auto_lights
       - input_boolean.guest_mode
