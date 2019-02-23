@@ -1,3 +1,5 @@
+# Icon reference: https://materialdesignicons.com/tag/home-automation
+
 title: Avatar
 
 resources:
@@ -91,6 +93,8 @@ views:
           - entity: binary_sensor.all_motions
             name: Motion
           - entity: sensor.last_motion
+            name: Last motion
+            icon: mdi:motion-sensor
           - entity: binary_sensor.all_doors
             name: Doors
           - entity: binary_sensor.all_windows
@@ -116,10 +120,13 @@ views:
             entities:
               - entity: light.side_porch
                 name: Side porch
+                icon: mdi:wall-sconce
               - entity: light.front_porch
                 name: Front porch
+                icon: mdi:wall-sconce
               - entity: light.shed
                 name: Shed
+                icon: mdi:wall-sconce
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:header-card
@@ -132,6 +139,7 @@ views:
                 entities:
                   - entity: light.kitchen
                     name: Spots
+                    icon: mdi:wall-sconce-flat
               - type: glance
                 columns: 2
                 show_name: False
@@ -148,6 +156,7 @@ views:
             entities:
               - entity: light.dining_room
                 name: Table
+                icon: mdi:ceiling-light
               - entity: light.hallway
                 name: Hallway
       - type: custom:vertical-stack-in-card
@@ -162,12 +171,16 @@ views:
                 entities:
                   - entity: light.bookshelf
                     name: Bookshelf
+                    icon: mdi:wall-sconce-flat
                   - entity: light.living_room_ambiance
                     name: Ambiance
+                    icon: mdi:floor-lamp
                   - entity: switch.bookshelf_outlet
                     name: Bookshelf outlet
+                    icon: mdi:power-socket-us
                   - entity: switch.living_room_tv
                     name: TV
+                    icon: mdi:television
               - type: vertical-stack
                 cards:
                   - type: glance
@@ -197,8 +210,10 @@ views:
                     name: Light
                   - entity: light.bedside_chris
                     name: Chris' lamp
+                    icon: mdi:lamp
                   - entity: light.bedside_karine
                     name: Karine's lamp
+                    icon: mdi:lamp
               - type: glance
                 show_name: False
                 columns: 2
@@ -214,6 +229,7 @@ views:
             entities:
               - entity: input_boolean.main_bathroom_auto_lights
                 name: Automated lights
+                icon: mdi:motion-sensor
                 secondary_info: last-changed
           - type: divider
           - type: horizontal-stack
@@ -222,8 +238,10 @@ views:
                 entities:
                   - entity: light.main_bathroom_spots
                     name: Spots
+                    icon: mdi:wall-sconce-flat
                   - entity: light.main_bathroom_vanity
                     name: Vanity
+                    icon: mdi:ceiling-light
                   - entity: fan.main_bathroom
                     name: Fan
               - type: glance
@@ -263,8 +281,10 @@ views:
                 entities:
                   - entity: light.lounge
                     name: Spots
+                    icon: mdi:wall-sconce-flat
                   - entity: light.lounge_ambiance
                     name: Ambiance
+                    icon: mdi:floor-lamp
                   - entity: light.basement_hallway
                     name: Hallway
                   - entity: light.downstairs
@@ -291,6 +311,7 @@ views:
             entities:
               - entity: input_boolean.basement_bathroom_auto_lights
                 name: Automated lights
+                icon: mdi:motion-sensor
                 secondary_info: last-changed
           - type: divider
           - type: horizontal-stack
@@ -298,9 +319,11 @@ views:
               - type: entities
                 entities:
                   - entity: light.basement_bathroom
-                    name: Ceiling
+                    name: Spots
+                    icon: mdi:wall-sconce-flat
                   - entity: light.basement_bathroom_vanity
                     name: Vanity
+                    icon: mdi:ceiling-light
                   - entity: fan.basement_bathroom
                     name: Fan
               - type: glance
