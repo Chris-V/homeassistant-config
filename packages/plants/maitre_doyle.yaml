@@ -9,6 +9,8 @@ homeassistant:
       friendly_name: "Maître Doyle's brightness"
     sensor.maitre_doyle_conductivity:
       friendly_name: "Maître Doyle's conductivity"
+    sensor.maitre_doyle_last_update:
+      friendly_name: "Maître Doyle's last update"
     sensor.maitre_doyle_moisture:
       friendly_name: "Maître Doyle's moisture"
     sensor.maitre_doyle_temperature:
@@ -41,8 +43,6 @@ sensor:
     unit_of_measurement: "%"
     state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.battery | int('unknown') }}"
-    json_attributes:
-      - timestamp
   - platform: mqtt
     name: "maitre_doyle_brightness"
     force_update: True
@@ -50,8 +50,6 @@ sensor:
     unit_of_measurement: "lx"
     state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.brightness | int('unknown') }}"
-    json_attributes:
-      - timestamp
   - platform: mqtt
     name: "maitre_doyle_conductivity"
     force_update: True
@@ -59,8 +57,12 @@ sensor:
     icon: "mdi:poop"
     state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.conductivity | int('unknown') }}"
-    json_attributes:
-      - timestamp
+  - platform: mqtt
+    name: "maitre_doyle_last_update"
+    force_update: True
+    device_class: "timestamp"
+    state_topic: "plants/maitre_doyle"
+    value_template: "{{ value_json.timestamp | int('unknown') }}"
   - platform: mqtt
     name: "maitre_doyle_moisture"
     force_update: True
@@ -68,8 +70,6 @@ sensor:
     unit_of_measurement: "%"
     state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.moisture | int('unknown') }}"
-    json_attributes:
-      - timestamp
   - platform: mqtt
     name: "maitre_doyle_temperature"
     force_update: True
@@ -77,5 +77,3 @@ sensor:
     unit_of_measurement: "°C"
     state_topic: "plants/maitre_doyle"
     value_template: "{{ value_json.temperature | float('unknown') }}"
-    json_attributes:
-      - timestamp

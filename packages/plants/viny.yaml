@@ -9,6 +9,8 @@ homeassistant:
       friendly_name: "Viny's brightness"
     sensor.viny_conductivity:
       friendly_name: "Viny's conductivity"
+    sensor.viny_last_update:
+      friendly_name: "Viny's last update"
     sensor.viny_moisture:
       friendly_name: "Viny's moisture"
     sensor.viny_temperature:
@@ -41,8 +43,6 @@ sensor:
     unit_of_measurement: "%"
     state_topic: "plants/viny"
     value_template: "{{ value_json.battery | int('unknown') }}"
-    json_attributes:
-      - timestamp
   - platform: mqtt
     name: "viny_brightness"
     force_update: True
@@ -50,8 +50,6 @@ sensor:
     unit_of_measurement: "lx"
     state_topic: "plants/viny"
     value_template: "{{ value_json.brightness | int('unknown') }}"
-    json_attributes:
-      - timestamp
   - platform: mqtt
     name: "viny_conductivity"
     force_update: True
@@ -59,8 +57,12 @@ sensor:
     icon: "mdi:poop"
     state_topic: "plants/viny"
     value_template: "{{ value_json.conductivity | int('unknown') }}"
-    json_attributes:
-      - timestamp
+  - platform: mqtt
+    name: "viny_last_update"
+    force_update: True
+    device_class: "timestamp"
+    state_topic: "plants/viny"
+    value_template: "{{ value_json.timestamp | int('unknown') }}"
   - platform: mqtt
     name: "viny_moisture"
     force_update: True
@@ -68,8 +70,6 @@ sensor:
     unit_of_measurement: "%"
     state_topic: "plants/viny"
     value_template: "{{ value_json.moisture | int('unknown') }}"
-    json_attributes:
-      - timestamp
   - platform: mqtt
     name: "viny_temperature"
     force_update: True
@@ -77,5 +77,3 @@ sensor:
     unit_of_measurement: "°C"
     state_topic: "plants/viny"
     value_template: "{{ value_json.temperature | float('unknown') }}"
-    json_attributes:
-      - timestamp
