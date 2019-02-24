@@ -9,6 +9,10 @@ recorder:
       - zha
       - zwave
     entities:
+      - binary_sensor.all_doors
+      - binary_sensor.all_leaks
+      - binary_sensor.all_motions
+      - binary_sensor.all_windows
       - binary_sensor.basement_bathroom_motion
       - binary_sensor.guest_bedroom_window
       - binary_sensor.kitchen_door
@@ -23,6 +27,12 @@ recorder:
       - binary_sensor.workshop_motion
       - fan.basement_bathroom
       - fan.main_bathroom
+      - group.all_batteries
+      - group.all_doors
+      - group.all_leaks
+      - group.all_motions
+      - group.all_plants
+      - group.all_windows
       - group.household
       - input_boolean.automatic_night_theme
       - input_boolean.basement_bathroom_auto_lights
@@ -59,6 +69,7 @@ recorder:
       - light.shed
       - light.side_porch
       - light.workshop
+      - sensor.all_batteries
       - sensor.basement_bathroom_humidity
       - sensor.basement_bathroom_multisensor_battery
       - sensor.basement_bathroom_temperature
