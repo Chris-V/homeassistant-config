@@ -7,6 +7,11 @@ homeassistant:
   unit_system: metric
   packages: !include_dir_named packages/
 
+logger:
+  default: "warn"
+
+discovery:
+
 # TODO: Person component doesn't support merging. Move to person.yaml when it does.
 person:
   - id: "chris"

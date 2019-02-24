@@ -1,10 +1,13 @@
-logger:
-  default: "warn"
-
 recorder:
   purge_interval: 2
   purge_keep_days: 14
   include: &recorder_inclusion
+    domains:
+      - media_player
+      - person
+      - plant
+      - zha
+      - zwave
     entities:
       - binary_sensor.basement_bathroom_motion
       - binary_sensor.guest_bedroom_window
@@ -21,8 +24,6 @@ recorder:
       - fan.basement_bathroom
       - fan.main_bathroom
       - group.household
-      - person.chris
-      - person.karine
       - input_boolean.automatic_night_theme
       - input_boolean.basement_bathroom_auto_lights
       - input_boolean.guest_mode
@@ -58,11 +59,6 @@ recorder:
       - light.shed
       - light.side_porch
       - light.workshop
-      - media_player.living_room_chromecast
-      - media_player.living_room_google_home
-      - plant.maitre_doyle
-      - plant.spidy
-      - plant.viny
       - sensor.basement_bathroom_humidity
       - sensor.basement_bathroom_multisensor_battery
       - sensor.basement_bathroom_temperature
@@ -79,6 +75,7 @@ recorder:
       - sensor.maitre_doyle_brightness
       - sensor.maitre_doyle_conductivity
       - sensor.maitre_doyle_moisture
+      - sensor.maitre_doyle_problems
       - sensor.maitre_doyle_temperature
       - sensor.media_cpu_load
       - sensor.media_cpu_temp
@@ -96,6 +93,7 @@ recorder:
       - sensor.spidy_brightness
       - sensor.spidy_conductivity
       - sensor.spidy_moisture
+      - sensor.spidy_problems
       - sensor.spidy_temperature
       - sensor.studio_window_sensor_battery
       - sensor.ups_battery
@@ -109,6 +107,7 @@ recorder:
       - sensor.viny_brightness
       - sensor.viny_conductivity
       - sensor.viny_moisture
+      - sensor.viny_problems
       - sensor.viny_temperature
       - sensor.water_heater_leak_sensor_battery
       - switch.bookshelf_outlet

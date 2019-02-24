@@ -4,3 +4,5 @@ frontend:
 
 lovelace:
   mode: "yaml"
+
+map:

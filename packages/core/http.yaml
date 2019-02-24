@@ -5,4 +5,3 @@ http:
   trusted_proxies: !secret http_trusted_proxy_ips
   cors_allowed_origins:
     - !secret http_public_host
-

@@ -10,6 +10,5 @@ group:
     name: "Household"
     icon: "mdi:account-multiple"
     entities:
-      # Not using person groups because we lose the Gravatar config and groups support only icon.
       - person.chris
       - person.karine

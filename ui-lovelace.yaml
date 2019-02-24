@@ -643,7 +643,7 @@ views:
             label: Battery sensors
           - entity: zwave.basement_bathroom_multisensor
           - entity: zwave.guest_bedroom_window_sensor
-          - entity: zwave.guest_studio_window_sensor
+          - entity: zwave.studio_window_sensor
           - entity: zwave.kitchen_door_sensor
           - entity: zwave.kitchen_sink_leak_sensor
           - entity: zwave.living_room_door_sensor
