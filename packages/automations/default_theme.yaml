@@ -9,6 +9,8 @@ input_select:
     name: 'Default theme'
     options:
       - 'default'
+      - &day_theme 'light'
+      - &night_theme 'dark'
       - 'night'
     initial: 'default'
     icon: 'mdi:palette'
@@ -24,3 +26,45 @@ automation:
         data_template:
           name: "{{trigger.to_state.state}}"
 
+  - alias: sunrise_theme
+    initial_state: True
+    trigger:
+      - platform: sun
+        event: "sunrise"
+      - platform: homeassistant
+        event: "start"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.automatic_night_theme"
+        state: "on"
+      - condition: sun
+        after: "sunrise"
+      - condition: sun
+        before: "sunset"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: "input_select.default_theme"
+          option: *day_theme
+  - alias: sunset_theme
+    initial_state: True
+    trigger:
+      - platform: sun
+        event: "sunset"
+      - platform: homeassistant
+        event: "start"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.automatic_night_theme"
+        state: "on"
+      - condition: or
+        conditions:
+          - condition: sun
+            after: "sunset"
+          - condition: sun
+            before: "sunrise"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: "input_select.default_theme"
+          option: *night_theme
