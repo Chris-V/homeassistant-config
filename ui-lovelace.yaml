@@ -377,15 +377,33 @@ views:
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:header-card
-            title: Guest rooms
+            title: Guest's bedroom
           - type: divider
-          - type: glance
-            columns: 2
-            entities:
-              - entity: binary_sensor.guest_east_window
-                name: East
-              - entity: binary_sensor.guest_west_window
-                name: West
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: light.guest_bedroom
+                    name: Light
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - entity: binary_sensor.guest_bedroom_window
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: custom:header-card
+            title: Studio
+          - type: divider
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                entities: []
+              - type: glance
+                show_name: False
+                columns: 2
+                entities:
+                  - entity: binary_sensor.studio_window
 
   - title: Plants
     path: plants
@@ -410,6 +428,7 @@ views:
           - input_boolean.automatic_night_theme
           - input_select.default_theme
       - type: entities
+        title: Notifications
         show_header_toggle: false
         entities:
           - entity: automation.notify_plant_problems
@@ -417,6 +436,7 @@ views:
           - entity: input_boolean.notify_power_outages
             name: Power outages
       - type: entities
+        title: Doors
         show_header_toggle: false
         entities:
           - entity: binary_sensor.kitchen_door
@@ -426,18 +446,20 @@ views:
             name: Living room
             secondary_info: last-changed
       - type: entities
+        title: Windows
         show_header_toggle: false
         entities:
           - entity: binary_sensor.lounge_window
             name: Lounge
             secondary_info: last-changed
-          - entity: binary_sensor.guest_east_window
-            name: Guest room (east)
+          - entity: binary_sensor.guest_bedroom_window
+            name: Guest's bedroom
             secondary_info: last-changed
-          - entity: binary_sensor.guest_west_window
-            name: Guest room (west)
+          - entity: binary_sensor.studio_window
+            name: Studio
             secondary_info: last-changed
       - type: entities
+        title: Leaks
         show_header_toggle: false
         entities:
           - entity: binary_sensor.kitchen_sink_leak
@@ -447,6 +469,7 @@ views:
             name: Water heater
             secondary_info: last-changed
       - type: entities
+        title: Motion
         show_header_toggle: false
         entities:
           - entity: binary_sensor.basement_bathroom_motion
@@ -471,10 +494,10 @@ views:
             name: Kitchen door
           - entity: sensor.kitchen_sink_leak_sensor_battery
             name: Kitchen sink leak
-          - entity: sensor.guest_east_window_sensor_battery
-            name: East guest window
-          - entity: sensor.guest_west_window_sensor_battery
-            name: West guest window
+          - entity: sensor.guest_bedroom_window_sensor_battery
+            name: Guest's bedroom window
+          - entity: sensor.studio_window_sensor_battery
+            name: Studio window
           - entity: sensor.living_room_door_sensor_battery
             name: Living room door
           - entity: sensor.main_bathroom_multisensor_battery
@@ -599,6 +622,7 @@ views:
           - entity: zwave.dining_room_light_dimmer
           - entity: zwave.downstairs_light_switch
           - entity: zwave.front_porch_light_switch
+          - entity: zwave.guest_bedroom_light_switch
           - entity: zwave.hallway_light_switch
           - entity: zwave.kitchen_light_switch
           - entity: zwave.laundry_room_light_switch
@@ -618,8 +642,8 @@ views:
           - type: section
             label: Battery sensors
           - entity: zwave.basement_bathroom_multisensor
-          - entity: zwave.guest_east_window_sensor
-          - entity: zwave.guest_west_window_sensor
+          - entity: zwave.guest_bedroom_window_sensor
+          - entity: zwave.guest_studio_window_sensor
           - entity: zwave.kitchen_door_sensor
           - entity: zwave.kitchen_sink_leak_sensor
           - entity: zwave.living_room_door_sensor

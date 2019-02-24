@@ -4,8 +4,8 @@ group:
     icon: "mdi:window-closed"
     control: "hidden"
     entities: &window_entities
-      - binary_sensor.guest_east_window
-      - binary_sensor.guest_west_window
+      - binary_sensor.guest_bedroom_window
+      - binary_sensor.studio_window
       - binary_sensor.lounge_window
 
 binary_sensor:

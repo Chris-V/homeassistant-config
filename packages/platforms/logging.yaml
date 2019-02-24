@@ -7,14 +7,14 @@ recorder:
   include: &recorder_inclusion
     entities:
       - binary_sensor.basement_bathroom_motion
-      - binary_sensor.guest_east_window
-      - binary_sensor.guest_west_window
+      - binary_sensor.guest_bedroom_window
       - binary_sensor.kitchen_door
       - binary_sensor.kitchen_sink_leak
       - binary_sensor.laundry_room_motion
       - binary_sensor.living_room_door
       - binary_sensor.lounge_window
       - binary_sensor.main_bathroom_motion
+      - binary_sensor.studio_window
       - binary_sensor.ups_online_status
       - binary_sensor.water_heater_leak
       - binary_sensor.workshop_motion
@@ -41,6 +41,7 @@ recorder:
       - light.dining_room
       - light.downstairs
       - light.front_porch
+      - light.guest_bedroom
       - light.hallway
       - light.kitchen
       - light.kitchen_lights
@@ -66,18 +67,19 @@ recorder:
       - sensor.basement_bathroom_multisensor_battery
       - sensor.basement_bathroom_temperature
       - sensor.current_home_assistant_version
-      - sensor.maitre_doyle_battery
-      - sensor.maitre_doyle_brightness
-      - sensor.maitre_doyle_conductivity
-      - sensor.maitre_doyle_moisture
-      - sensor.maitre_doyle_temperature
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
+      - sensor.guest_bedroom_window_sensor_battery
       - sensor.latest_home_assistant_version
       - sensor.living_room_door_sensor_battery
       - sensor.main_bathroom_humidity
       - sensor.main_bathroom_multisensor_battery
       - sensor.main_bathroom_temperature
+      - sensor.maitre_doyle_battery
+      - sensor.maitre_doyle_brightness
+      - sensor.maitre_doyle_conductivity
+      - sensor.maitre_doyle_moisture
+      - sensor.maitre_doyle_temperature
       - sensor.media_cpu_load
       - sensor.media_cpu_temp
       - sensor.media_ram_used
@@ -95,6 +97,7 @@ recorder:
       - sensor.spidy_conductivity
       - sensor.spidy_moisture
       - sensor.spidy_temperature
+      - sensor.studio_window_sensor_battery
       - sensor.ups_battery
       - sensor.ups_battery_status
       - sensor.ups_input_voltage

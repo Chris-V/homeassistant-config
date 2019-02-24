@@ -1,0 +1,42 @@
+homeassistant:
+  customize:
+    light.guest_bedroom:
+      friendly_name: "Guest's bedroom light"
+    sensor.guest_bedroom_window_sensor_battery:
+      battery_type: "Sensative Strip"
+
+google_assistant:
+  entity_config:
+    light.guest_bedroom:
+      expose: True
+      room: "Guest's bedroom"
+      name: "Guest's bedroom light"
+      aliases:
+        - "Guest's bedroom"
+
+light:
+  - platform: group
+    name: "Guest bedroom lights"
+    entities:
+      - light.guest_bedroom
+
+  - platform: switch
+    name: "guest_bedroom"
+    entity_id: "switch.guest_bedroom_light"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      guest_bedroom_window:
+        friendly_name: "Guest bedroom window"
+        device_class: "window"
+        value_template: "{{ is_state('sensor.guest_bedroom_window_sensor_access_control', '22') }}"
+
+sensor:
+  - platform: template
+    sensors:
+      guest_bedroom_window_sensor_battery:
+        friendly_name: "Guest bedroom window sensor battery"
+        device_class: "battery"
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('zwave.guest_bedroom_window_sensor', 'battery_level') | int('unknown') }}"
