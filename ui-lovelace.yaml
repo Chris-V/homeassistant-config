@@ -3,9 +3,9 @@
 title: Avatar
 
 resources:
-  - url: /customcards/tracker-card.js
+  - url: /customcards/github/custom-cards/tracker-card.js?track=true
     type: module
-  - url: /customcards/vertical-stack-in-card.js
+  - url: /customcards/github/custom-cards/vertical-stack-in-card.js?track=true
     type: js
   - url: /customcards/header-card.js
     type: js
@@ -557,7 +557,7 @@ views:
           - sensor.current_home_assistant_version
           - sensor.latest_home_assistant_version
       - type: custom:tracker-card
-        title:
+        title: Updates
         trackers:
           - sensor.custom_card_tracker
           - sensor.custom_component_tracker

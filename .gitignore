@@ -15,6 +15,7 @@ panels/floorplan.html
 
 www/custom_ui/floorplan/ha-floorplan.html
 www/custom_ui/floorplan/lib/
+www/github
 
 deps/
 __pycache__/
