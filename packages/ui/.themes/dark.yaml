@@ -2,6 +2,8 @@
 # https://community.home-assistant.io/t/clear-theme-dark/100960
 #
 
+view-background-url: 'url("/local/backgrounds/dark.jpeg")'
+
 # Colors
 text-color: '#DADADB'                                                           # Grey text
 text-medium-light-color: '#A0A2A8'                                              # Medium-light grey text

@@ -15,6 +15,7 @@ views:
   - title: Home
     path: home
     icon: mdi:home
+    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: glance
         show_name: false
@@ -109,6 +110,7 @@ views:
   - title: Ground Floor
     path: ground
     icon: mdi:arrow-up-thick
+    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: custom:vertical-stack-in-card
         cards:
@@ -268,6 +270,7 @@ views:
   - title: Basement
     path: basement
     icon: mdi:arrow-down-thick
+    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: custom:vertical-stack-in-card
         cards:
@@ -408,6 +411,7 @@ views:
   - title: Plants
     path: plants
     icon: mdi:flower
+    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: plant-status
         entity: plant.maitre_doyle
@@ -419,6 +423,7 @@ views:
   - title: Settings
     path: settings
     icon: mdi:settings
+    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: entities
         title: Settings
@@ -520,6 +525,7 @@ views:
   - title: Network
     path: network
     icon: mdi:server-network
+    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: entities
         title: Settings
