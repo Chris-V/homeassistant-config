@@ -1,7 +1,28 @@
 homeassistant:
   customize:
+    light.studio:
+      friendly_name: "Studio light"
     sensor.studio_window_sensor_battery:
       battery_type: "Sensative Strip"
+
+google_assistant:
+  entity_config:
+    light.studio:
+      expose: True
+      room: "Studio"
+      name: "Studio light"
+      aliases:
+        - "Studio"
+
+light:
+  - platform: group
+    name: "Studio lights"
+    entities:
+      - light.studio
+
+  - platform: switch
+    name: "studio"
+    entity_id: "switch.studio_light"
 
 binary_sensor:
   - platform: template

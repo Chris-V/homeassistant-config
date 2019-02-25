@@ -385,6 +385,7 @@ views:
         cards:
           - type: custom:header-card
             title: Guest's bedroom
+            entities: light.guest_bedroom_lights
           - type: divider
           - type: horizontal-stack
             cards:
@@ -401,11 +402,14 @@ views:
         cards:
           - type: custom:header-card
             title: Studio
+            entities: light.studio_lights
           - type: divider
           - type: horizontal-stack
             cards:
               - type: entities
-                entities: []
+                entities:
+                  - entity: light.studio
+                    name: Light
               - type: glance
                 show_name: False
                 columns: 2

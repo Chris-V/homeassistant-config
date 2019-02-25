@@ -6,6 +6,7 @@ light:
       - light.guest_bedroom_lights
       - light.laundry_room_lights
       - light.lounge_lights
+      - light.studio_lights
       - light.workshop_lights
   - platform: group
     name: "Ground floor lights"

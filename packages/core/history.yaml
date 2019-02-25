@@ -68,6 +68,7 @@ recorder:
       - light.office
       - light.shed
       - light.side_porch
+      - light.studio
       - light.workshop
       - sensor.all_batteries
       - sensor.basement_bathroom_humidity
