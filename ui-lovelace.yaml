@@ -7,6 +7,10 @@ resources:
     type: module
   - url: /customcards/github/custom-cards/vertical-stack-in-card.js?track=true
     type: js
+  - url: /customcards/github/thomasloven/lovelace-card-tools/card-tools.js?track=true
+    type: js
+  - url: /customcards/github/thomasloven/lovelace-fold-entity-row/fold-entity-row.js?track=true
+    type: js
   - url: /customcards/header-card.js
     type: js
 
@@ -618,41 +622,53 @@ views:
         show_header_toggle: false
         entities:
           - entity: zwave.usb_controller
-          - type: section
-            label: Hard-wired
-          - entity: zwave.basement_bathroom_fan_switch
-          - entity: zwave.basement_bathroom_light_switch
-          - entity: zwave.basement_bathroom_vanity_light_dimmer
-          - entity: zwave.basement_hallway_light_dimmer
-          - entity: zwave.bookshelf_light_switch
-          - entity: zwave.dining_room_light_dimmer
-          - entity: zwave.downstairs_light_switch
-          - entity: zwave.front_porch_light_switch
-          - entity: zwave.guest_bedroom_light_switch
-          - entity: zwave.hallway_light_switch
-          - entity: zwave.kitchen_light_switch
-          - entity: zwave.laundry_room_light_switch
-          - entity: zwave.lounge_light_dimmer
-          - entity: zwave.master_bedroom_light_switch
-          - entity: zwave.main_bathroom_fan_switch
-          - entity: zwave.main_bathroom_light_dimmer
-          - entity: zwave.main_bathroom_vanity_light_switch
-          - entity: zwave.office_light_dimmer
-          - entity: zwave.shed_outdoor_light_switch
-          - entity: zwave.side_porch_light_switch
-          - entity: zwave.workshop_light_switch
-          - type: section
-            label: Hard-wired sensors
-          - entity: zwave.laundry_motion_sensor
-          - entity: zwave.workshop_motion_sensor
-          - type: section
-            label: Battery sensors
-          - entity: zwave.basement_bathroom_multisensor
-          - entity: zwave.guest_bedroom_window_sensor
-          - entity: zwave.studio_window_sensor
-          - entity: zwave.kitchen_door_sensor
-          - entity: zwave.kitchen_sink_leak_sensor
-          - entity: zwave.living_room_door_sensor
-          - entity: zwave.lounge_window_sensor
-          - entity: zwave.main_bathroom_multisensor
-          - entity: zwave.water_heater_leak_sensor
+          - type: custom:fold-entity-row
+            open: False
+            head:
+              type: section
+              label: Hard-wired
+            items:
+              - entity: zwave.basement_bathroom_fan_switch
+              - entity: zwave.basement_bathroom_light_switch
+              - entity: zwave.basement_bathroom_vanity_light_dimmer
+              - entity: zwave.basement_hallway_light_dimmer
+              - entity: zwave.bookshelf_light_switch
+              - entity: zwave.dining_room_light_dimmer
+              - entity: zwave.downstairs_light_switch
+              - entity: zwave.front_porch_light_switch
+              - entity: zwave.guest_bedroom_light_switch
+              - entity: zwave.hallway_light_switch
+              - entity: zwave.kitchen_light_switch
+              - entity: zwave.laundry_room_light_switch
+              - entity: zwave.lounge_light_dimmer
+              - entity: zwave.master_bedroom_light_switch
+              - entity: zwave.main_bathroom_fan_switch
+              - entity: zwave.main_bathroom_light_dimmer
+              - entity: zwave.main_bathroom_vanity_light_switch
+              - entity: zwave.office_light_dimmer
+              - entity: zwave.shed_outdoor_light_switch
+              - entity: zwave.side_porch_light_switch
+              - entity: zwave.workshop_light_switch
+          - type: custom:fold-entity-row
+            open: False
+            head:
+              type: section
+              label: Hard-wired sensors
+            items:
+              - entity: zwave.laundry_motion_sensor
+              - entity: zwave.workshop_motion_sensor
+          - type: custom:fold-entity-row
+            open: False
+            head:
+              type: section
+              label: Battery sensors
+            items:
+              - entity: zwave.basement_bathroom_multisensor
+              - entity: zwave.guest_bedroom_window_sensor
+              - entity: zwave.studio_window_sensor
+              - entity: zwave.kitchen_door_sensor
+              - entity: zwave.kitchen_sink_leak_sensor
+              - entity: zwave.living_room_door_sensor
+              - entity: zwave.lounge_window_sensor
+              - entity: zwave.main_bathroom_multisensor
+              - entity: zwave.water_heater_leak_sensor
