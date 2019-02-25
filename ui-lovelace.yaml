@@ -7,9 +7,9 @@ resources:
     type: module
   - url: /customcards/github/custom-cards/vertical-stack-in-card.js?track=true
     type: js
-  - url: /customcards/github/thomasloven/lovelace-card-tools/card-tools.js?track=true
+  - url: /customcards/github/thomasloven/card-tools.js?track=true
     type: js
-  - url: /customcards/github/thomasloven/lovelace-fold-entity-row/fold-entity-row.js?track=true
+  - url: /customcards/github/thomasloven/fold-entity-row.js?track=true
     type: js
   - url: /customcards/header-card.js
     type: js
