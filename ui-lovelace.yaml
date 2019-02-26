@@ -7,6 +7,8 @@ resources:
     type: module
   - url: /customcards/github/custom-cards/vertical-stack-in-card.js?track=true
     type: js
+  - url: /customcards/github/maykar/compact-custom-header.js?track=true
+    type: module
   - url: /customcards/github/thomasloven/card-tools.js?track=true
     type: js
   - url: /customcards/github/thomasloven/fold-entity-row.js?track=true
@@ -21,6 +23,26 @@ views:
     icon: mdi:home
     background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
+      - type: custom:compact-custom-header
+        main_config: True
+        header: True
+        background_image: True
+        menu: show
+        notifications: show
+        voice: hide
+        options: clock
+        clock_format: 24
+        hide_tabs: 6
+        exception:
+          - conditions:
+              user_agent: Mobile
+            config:
+              menu: hide
+              options: hide
+          - conditions:
+              user: chris
+            config:
+              hide_tabs:
       - type: glance
         show_name: false
         columns: 2
@@ -116,6 +138,7 @@ views:
     icon: mdi:arrow-up-thick
     background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
+      - type: custom:compact-custom-header
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:header-card
@@ -276,6 +299,7 @@ views:
     icon: mdi:arrow-down-thick
     background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
+      - type: custom:compact-custom-header
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:header-card
@@ -421,6 +445,7 @@ views:
     icon: mdi:flower
     background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
+      - type: custom:compact-custom-header
       - type: plant-status
         entity: plant.maitre_doyle
       - type: plant-status
@@ -433,6 +458,7 @@ views:
     icon: mdi:settings
     background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
+      - type: custom:compact-custom-header
       - type: entities
         title: Settings
         show_header_toggle: false
@@ -535,6 +561,7 @@ views:
     icon: mdi:server-network
     background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
+      - type: custom:compact-custom-header
       - type: entities
         title: Settings
         show_header_toggle: false
