@@ -78,6 +78,7 @@ recorder:
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
       - sensor.guest_bedroom_window_sensor_battery
+      - sensor.last_motion
       - sensor.latest_home_assistant_version
       - sensor.living_room_door_sensor_battery
       - sensor.main_bathroom_humidity
