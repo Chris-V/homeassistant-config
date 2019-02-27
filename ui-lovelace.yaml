@@ -16,12 +16,12 @@ resources:
   - url: /customcards/header-card.js
     type: js
 
+background: 'center / cover no-repeat var(--view-background-url) fixed'
 views:
 
   - title: Home
     path: home
     icon: mdi:home
-    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: custom:compact-custom-header
         main_config: True
@@ -136,7 +136,6 @@ views:
   - title: Ground Floor
     path: ground
     icon: mdi:arrow-up-thick
-    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: custom:compact-custom-header
       - type: custom:vertical-stack-in-card
@@ -297,7 +296,6 @@ views:
   - title: Basement
     path: basement
     icon: mdi:arrow-down-thick
-    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: custom:compact-custom-header
       - type: custom:vertical-stack-in-card
@@ -443,7 +441,6 @@ views:
   - title: Plants
     path: plants
     icon: mdi:flower
-    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: custom:compact-custom-header
       - type: plant-status
@@ -456,7 +453,6 @@ views:
   - title: Settings
     path: settings
     icon: mdi:settings
-    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: custom:compact-custom-header
       - type: entities
@@ -559,7 +555,6 @@ views:
   - title: Network
     path: network
     icon: mdi:server-network
-    background: 'center / cover no-repeat var(--view-background-url) fixed'
     cards:
       - type: custom:compact-custom-header
       - type: entities
