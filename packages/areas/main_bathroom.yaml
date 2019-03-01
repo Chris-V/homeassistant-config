@@ -1,5 +1,7 @@
 homeassistant:
   customize:
+    sensor.main_bathroom_door_sensor_battery:
+      battery_type: "Sensative Strip"
     sensor.main_bathroom_multisensor_battery:
       battery_type: "CR123A"
     light.main_bathroom_vanity:
@@ -32,18 +34,23 @@ google_assistant:
 binary_sensor:
   - platform: template
     sensors:
-      main_bathroom_motion:
-        friendly_name: "Main bathroom motion"
-        device_class: "motion"
-        value_template: "{{ is_state('sensor.main_bathroom_multisensor_burglar', '8') }}"
       main_bathroom_door:
         friendly_name: "Main bathroom door"
         device_class: "door"
         value_template: "{{ is_state('sensor.main_bathroom_door_sensor_access_control', '22') }}"
+      main_bathroom_motion:
+        friendly_name: "Main bathroom motion"
+        device_class: "motion"
+        value_template: "{{ is_state('sensor.main_bathroom_multisensor_burglar', '8') }}"
 
 sensor:
   - platform: template
     sensors:
+      main_bathroom_door_sensor_battery:
+        friendly_name: "Main bathroom door sensor battery"
+        device_class: "battery"
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('zwave.main_bathroom_door_sensor', 'battery_level') | int('unknown') }}"
       main_bathroom_humidity:
         friendly_name: "Main bathroom humidity"
         device_class: "humidity"

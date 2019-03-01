@@ -81,6 +81,7 @@ recorder:
       - sensor.last_motion
       - sensor.latest_home_assistant_version
       - sensor.living_room_door_sensor_battery
+      - sensor.main_bathroom_door_sensor_battery
       - sensor.main_bathroom_humidity
       - sensor.main_bathroom_multisensor_battery
       - sensor.main_bathroom_temperature

@@ -19,6 +19,7 @@ group:
       - sensor.kitchen_sink_leak_sensor_battery
       - sensor.living_room_door_sensor_battery
       - sensor.lounge_window_sensor_battery
+      - sensor.main_bathroom_door_sensor_battery
       - sensor.main_bathroom_multisensor_battery
       - sensor.maitre_doyle_battery
       - sensor.spidy_battery

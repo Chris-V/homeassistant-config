@@ -530,6 +530,8 @@ views:
             name: Studio window
           - entity: sensor.living_room_door_sensor_battery
             name: Living room door
+          - entity: sensor.main_bathroom_door_sensor_battery
+            name: Main bathroom door sensor
           - entity: sensor.main_bathroom_multisensor_battery
             name: Main bathroom multisensor
           - entity: sensor.lounge_window_sensor_battery
@@ -691,5 +693,6 @@ views:
               - entity: zwave.kitchen_sink_leak_sensor
               - entity: zwave.living_room_door_sensor
               - entity: zwave.lounge_window_sensor
+              - entity: zwave.main_bathroom_door_sensor
               - entity: zwave.main_bathroom_multisensor
               - entity: zwave.water_heater_leak_sensor
