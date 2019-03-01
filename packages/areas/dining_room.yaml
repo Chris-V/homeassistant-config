@@ -15,7 +15,7 @@ google_assistant:
         - "Table"
     light.hallway:
       expose: True
-      room: "Kitchen"
+      room: "Dining room"
       name: "Hallway light"
       aliases:
         - "Hallway"
