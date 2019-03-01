@@ -20,6 +20,7 @@ recorder:
       - binary_sensor.laundry_room_motion
       - binary_sensor.living_room_door
       - binary_sensor.lounge_window
+      - binary_sensor.main_bathroom_door
       - binary_sensor.main_bathroom_motion
       - binary_sensor.studio_window
       - binary_sensor.ups_online_status
@@ -37,7 +38,6 @@ recorder:
       - input_boolean.automatic_night_theme
       - input_boolean.basement_bathroom_auto_lights
       - input_boolean.guest_mode
-      - input_boolean.main_bathroom_auto_lights
       - input_boolean.notify_household_changes
       - input_boolean.notify_network_device_outages
       - input_boolean.notify_power_outages

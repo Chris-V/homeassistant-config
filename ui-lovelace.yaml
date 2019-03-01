@@ -253,13 +253,6 @@ views:
             title: Bathroom
             entities: light.main_bathroom_lights
           - type: divider
-          - type: entities
-            entities:
-              - entity: input_boolean.main_bathroom_auto_lights
-                name: Automated lights
-                icon: mdi:motion-sensor
-                secondary_info: last-changed
-          - type: divider
           - type: horizontal-stack
             cards:
               - type: entities
@@ -282,6 +275,8 @@ views:
                     name: Temperature
                   - entity: binary_sensor.main_bathroom_motion
                     name: Motion
+                  - entity: binary_sensor.main_bathroom_door
+                    name: Door
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:header-card
