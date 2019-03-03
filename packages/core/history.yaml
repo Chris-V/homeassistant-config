@@ -13,6 +13,7 @@ recorder:
       - binary_sensor.all_leaks
       - binary_sensor.all_motions
       - binary_sensor.all_windows
+      - binary_sensor.basement_bathroom_door
       - binary_sensor.basement_bathroom_motion
       - binary_sensor.guest_bedroom_window
       - binary_sensor.kitchen_door
@@ -36,7 +37,6 @@ recorder:
       - group.all_windows
       - group.household
       - input_boolean.automatic_night_theme
-      - input_boolean.basement_bathroom_auto_lights
       - input_boolean.guest_mode
       - input_boolean.notify_household_changes
       - input_boolean.notify_network_device_outages
@@ -71,6 +71,7 @@ recorder:
       - light.studio
       - light.workshop
       - sensor.all_batteries
+      - sensor.basement_bathroom_door_sensor_battery
       - sensor.basement_bathroom_humidity
       - sensor.basement_bathroom_multisensor_battery
       - sensor.basement_bathroom_temperature

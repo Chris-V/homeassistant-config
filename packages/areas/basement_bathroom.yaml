@@ -1,5 +1,7 @@
 homeassistant:
   customize:
+    sensor.basement_bathroom_door_sensor_battery:
+      battery_type: "Sensative Strip"
     sensor.basement_bathroom_multisensor_battery:
       battery_type: "CR123A"
     light.basement_bathroom:
@@ -23,15 +25,13 @@ google_assistant:
       room: "Basement bathroom"
       name: "Basement bathroom fan"
 
-input_boolean:
-  basement_bathroom_auto_lights:
-    name: "Basement bathroom's automated lights"
-    initial: True # Want to reset after reboot
-    icon: "mdi:jquery"
-
 binary_sensor:
   - platform: template
     sensors:
+      basement_bathroom_door:
+        friendly_name: "Basement bathroom door"
+        device_class: "door"
+        value_template: "{{ is_state('sensor.basement_bathroom_door_sensor_access_control', '22') }}"
       basement_bathroom_motion:
         friendly_name: "Basement bathroom motion"
         device_class: "motion"
@@ -40,6 +40,11 @@ binary_sensor:
 sensor:
   - platform: template
     sensors:
+      basement_bathroom_door_sensor_battery:
+        friendly_name: "Basement bathroom door sensor battery"
+        device_class: "battery"
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('zwave.basement_bathroom_door_sensor', 'battery_level') | int('unknown') }}"
       basement_bathroom_humidity:
         friendly_name: "Basement bathroom humidity"
         device_class: "humidity"
@@ -135,15 +140,9 @@ automation:
       - platform: state
         entity_id: "binary_sensor.basement_bathroom_motion"
         to: "on"
-      - platform: state
-        entity_id: "input_boolean.basement_bathroom_auto_lights"
-        to: "on"
     condition:
       - condition: state
-        entity_id: "input_boolean.basement_bathroom_auto_lights"
-        state: "on"
-      - condition: state
-        entity_id: "binary_sensor.basement_bathroom_motion"
+        entity_id: "input_boolean.basement_bathroom_door"
         state: "on"
       - condition: state
         entity_id: "light.basement_bathroom_lights"
@@ -165,43 +164,16 @@ automation:
       - platform: state
         entity_id: "binary_sensor.basement_bathroom_motion"
         to: "off"
-        for: &basement_bathroom_no_motion_delay
+        for:
           minutes: 2
-      - platform: state
-        entity_id: "input_boolean.basement_bathroom_auto_lights"
-        to: "on"
-      - platform: time
-        at: "9:00:00"
     condition:
       - condition: state
-        entity_id: "binary_sensor.basement_bathroom_motion"
-        state: "off"
-        for: *basement_bathroom_no_motion_delay
-      - condition: state
-        entity_id: "input_boolean.basement_bathroom_auto_lights"
+        entity_id: "binary_sensor.basement_bathroom_door"
         state: "on"
-      - condition: time # Usual shower times
-        before: "7:30:00"
-        after: "8:59:59"
     action:
       - service: light.turn_off
         data:
           entity_id: "light.basement_bathroom_lights"
-
-  # Re-enable auto-lights after some time
-  - alias: "basement_bathroom_reenable_auto_lights"
-    hide_entity: True
-    initial_state: True
-    trigger:
-      - platform: state
-        entity_id: "input_boolean.basement_bathroom_auto_lights"
-        to: "off"
-        for:
-          minutes: 45
-    action:
-      - service: input_boolean.turn_on
-        data:
-          entity_id: "input_boolean.basement_bathroom_auto_lights"
 
   # Double tap fan switch will turn fan on/off
   - alias: "basement_bathroom_fan_double_up"
@@ -233,7 +205,7 @@ automation:
       data:
         entity_id: "fan.basement_bathroom"
 
-  # Double tap vanity switch will turn vanity light on/off
+  # Double tap vanity switch will turn spots on/off (spots switch on opposite side of the room)
   - alias: "basement_bathroom_vanity_double_up"
     hide_entity: True
     initial_state: True
@@ -247,7 +219,7 @@ automation:
     action:
       service: light.turn_on
       data:
-        entity_id: "light.basement_bathroom_vanity"
+        entity_id: "light.basement_bathroom"
   - alias: "basement_bathroom_vanity_double_down"
     hide_entity: True
     initial_state: True
@@ -261,9 +233,9 @@ automation:
     action:
       service: light.turn_off
       data:
-        entity_id: "light.basement_bathroom_vanity"
+        entity_id: "light.basement_bathroom"
 
-  # Double tap ceiling switch will turn spots on/off
+  # Double tap ceiling switch will turn vanity on/off (vanity switch on opposite side of the room)
   - alias: "basement_bathroom_ceiling_double_up"
     hide_entity: True
     initial_state: True
@@ -277,7 +249,7 @@ automation:
     action:
       service: light.turn_on
       data:
-        entity_id: "light.basement_bathroom"
+        entity_id: "light.basement_bathroom_vanity"
   - alias: "basement_bathroom_ceiling_double_down"
     hide_entity: True
     initial_state: True
@@ -291,27 +263,7 @@ automation:
     action:
       service: light.turn_off
       data:
-        entity_id: "light.basement_bathroom"
-
-  # Double tap any light switch will toggle motion detection
-  - alias: "basement_bathroom_lights_double_up_down"
-    hide_entity: True
-    initial_state: True
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.basement_bathroom_light_switch"
-          scene_data: 7860
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.basement_bathroom_vanity_light_dimmer"
-          scene_data: 7860
-    action:
-      service: input_boolean.toggle
-      data:
-        entity_id: "input_boolean.basement_bathroom_auto_lights"
+        entity_id: "light.basement_bathroom_vanity"
 
   # Triple tap any light switch will turn bathroom lights on/off
   - alias: "basement_bathroom_lights_triple_up"

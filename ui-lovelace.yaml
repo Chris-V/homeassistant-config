@@ -331,13 +331,6 @@ views:
             title: Bathroom
             entities: light.basement_bathroom_lights
           - type: divider
-          - type: entities
-            entities:
-              - entity: input_boolean.basement_bathroom_auto_lights
-                name: Automated lights
-                icon: mdi:motion-sensor
-                secondary_info: last-changed
-          - type: divider
           - type: horizontal-stack
             cards:
               - type: entities
@@ -360,6 +353,8 @@ views:
                     name: Temperature
                   - entity: binary_sensor.basement_bathroom_motion
                     name: Motion
+                  - entity: binary_sensor.basement_bathroom_door
+                    name: Door
       - type: custom:vertical-stack-in-card
         cards:
           - type: custom:header-card
@@ -518,6 +513,8 @@ views:
         title: Batteries
         show_header_toggle: false
         entities:
+          - entity: sensor.basement_bathroom_door_sensor_battery
+            name: Basement bathroom door sensor
           - entity: sensor.basement_bathroom_multisensor_battery
             name: Basement bathroom multisensor
           - entity: sensor.kitchen_door_sensor_battery
@@ -686,6 +683,7 @@ views:
               type: section
               label: Battery sensors
             items:
+              - entity: zwave.basement_bathroom_door_sensor
               - entity: zwave.basement_bathroom_multisensor
               - entity: zwave.guest_bedroom_window_sensor
               - entity: zwave.studio_window_sensor
