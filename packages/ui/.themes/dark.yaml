@@ -2,7 +2,7 @@
 # https://community.home-assistant.io/t/clear-theme-dark/100960
 #
 
-view-background-url: 'url("/local/backgrounds/dark.jpeg")'
+lovelace-background: 'center / cover no-repeat var("/local/backgrounds/dark.jpeg") fixed'
 
 # Colors
 text-color: '#DADADB'                                                           # Grey text

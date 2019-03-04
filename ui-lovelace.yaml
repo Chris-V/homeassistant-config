@@ -1,6 +1,7 @@
 # Icon reference: https://materialdesignicons.com/tag/home-automation
 
 title: Avatar
+background: 'var(--lovelace-background)'
 
 resources:
   - url: /customcards/github/custom-cards/tracker-card.js?track=true
@@ -16,7 +17,6 @@ resources:
   - url: /customcards/header-card.js
     type: js
 
-background: 'center / cover no-repeat var(--view-background-url) fixed'
 views:
 
   - title: Home

@@ -2,7 +2,7 @@
 # https://community.home-assistant.io/t/clear-theme/100464
 #
 
-view-background-url: 'url("/local/backgrounds/light.jpeg")'
+lovelace-background: 'center / cover no-repeat var("/local/backgrounds/light.jpeg") fixed'
 
 # Colors
 text-color: '#636B75'                                                           # Grey text
