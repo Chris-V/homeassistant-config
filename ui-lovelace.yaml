@@ -26,7 +26,6 @@ views:
       - type: custom:compact-custom-header
         main_config: True
         header: True
-        background_image: True
         menu: show
         notifications: show
         voice: hide
