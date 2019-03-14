@@ -1,16 +1,16 @@
 # Some workaround to ensure the HS-WD100+ devices status is correctly reported
 
 zwave:
-#  device_config:
-#    light.basement_bathroom_vanity:
-#      refresh_value: True
-#    light.basement_hallway:
-#      refresh_value: True
-#    light.dining_room:
-#      refresh_value: True
-#    light.lounge:
-#      refresh_value: True
-#    light.main_bathroom_spots:
-#      refresh_value: True
-#    light.office:
-#      refresh_value: True
+  device_config:
+    light.basement_bathroom_vanity:
+      refresh_value: True
+    light.basement_hallway:
+      refresh_value: True
+    light.dining_room:
+      refresh_value: True
+    light.lounge:
+      refresh_value: True
+    light.main_bathroom_spots:
+      refresh_value: True
+    light.office:
+      refresh_value: True
