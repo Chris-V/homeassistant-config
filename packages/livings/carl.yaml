@@ -1,0 +1,134 @@
+input_boolean:
+  carl_scheduled_lights:
+    name: "Scheduled Carl's lights"
+    icon: "mdi:led-on"
+
+automation:
+  - alias: carl_wake_up
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: time
+        at: "8:00:00"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.carl_scheduled_lights"
+        state: "on"
+    action:
+      - service: switch.turn_on
+        entity_id:
+          - "switch.carl_heat_bulb"
+          - "switch.carl_heater"
+          - "switch.carl_uv_light"
+
+  - alias: carl_sleep
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: time
+        at: "22:00:00"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.carl_scheduled_lights"
+        state: "on"
+    action:
+      - service: switch.turn_off
+        entity_id:
+          - "switch.carl_heat_bulb"
+          - "switch.carl_uv_light"
+      - service: switch.turn_on
+        entity_id: "switch.carl_heater"
+
+  - alias: carl_uv_burned_out
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "switch.carl_uv_light"
+        from: "off"
+        to: "on"
+        for: &on_delay
+          minutes: 1
+      - platform: numeric_state
+        entity_id: "sensor.carl_uv_light_power"
+        below: &min_power 5
+    condition:
+      - condition: state
+        entity_id: "switch.carl_uv_light"
+        state: "on"
+        for: *on_delay
+      - condition: numeric_state
+        entity_id: "sensor.carl_uv_light_power"
+        below: *min_power
+    action:
+      - service: python_script.notify
+        data:
+          audio: True
+          persistent: True
+          push_target: "household"
+          tag: "carl_uv_burned_out"
+          url: "/lovelace/livings"
+          title: "Check Carl's UV Light"
+          message: "It appears that Carl's UV light has burned out."
+
+  - alias: carl_heat_bulb_burned_out
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "switch.carl_heat_bulb"
+        from: "off"
+        to: "on"
+        for: *on_delay
+      - platform: numeric_state
+        entity_id: "sensor.carl_heat_bulb_power"
+        below: *min_power
+    condition:
+      - condition: state
+        entity_id: "switch.carl_heat_bulb"
+        state: "on"
+        for: *on_delay
+      - condition: numeric_state
+        entity_id: "sensor.carl_heat_bulb_power"
+        below: *min_power
+    action:
+      - service: python_script.notify
+        data:
+          audio: True
+          persistent: True
+          push_target: "household"
+          tag: "carl_heat_bulb_burned_out"
+          url: "/lovelace/livings"
+          title: "Check Carl's Heat Bulb"
+          message: "It appears that Carl's heat bulb has burned out."
+
+  - alias: carl_heater_burned_out
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "switch.carl_heater"
+        from: "off"
+        to: "on"
+        for: *on_delay
+      - platform: numeric_state
+        entity_id: "sensor.carl_heater_power"
+        below: *min_power
+    condition:
+      - condition: state
+        entity_id: "switch.carl_heater"
+        state: "on"
+        for: *on_delay
+      - condition: numeric_state
+        entity_id: "sensor.carl_heater_power"
+        below: *min_power
+    action:
+      - service: python_script.notify
+        data:
+          audio: True
+          persistent: True
+          push_target: "household"
+          tag: "carl_heater_burned_out"
+          url: "/lovelace/livings"
+          title: "Check Carl's Ceramic Heater"
+          message: "It appears that Carl's ceramic heater has burned out."

@@ -25,7 +25,7 @@ automation:
           persistent: True
           push_target: "household"
           tag: "plant_{{ trigger.to_state.object_id }}"
-          url: "/lovelace/plants"
+          url: "/lovelace/livings"
           title: "Check {{ trigger.to_state.name }}"
           message: >-
             {%

@@ -37,6 +37,7 @@ recorder:
       - group.all_windows
       - group.household
       - input_boolean.automatic_night_theme
+      - input_boolean.carl_scheduled_lights
       - input_boolean.guest_mode
       - input_boolean.notify_household_changes
       - input_boolean.notify_network_device_outages
@@ -75,6 +76,11 @@ recorder:
       - sensor.basement_bathroom_humidity
       - sensor.basement_bathroom_multisensor_battery
       - sensor.basement_bathroom_temperature
+      - sensor.carl_power_strip_energy
+      - sensor.carl_power_strip_power
+      - sensor.carl_uv_light_power
+      - sensor.carl_heater_power
+      - sensor.carl_heat_bulb_power
       - sensor.current_home_assistant_version
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
@@ -126,6 +132,13 @@ recorder:
       - sensor.viny_temperature
       - sensor.water_heater_leak_sensor_battery
       - switch.bookshelf_outlet
+      - switch.carl_uv_light
+      - switch.carl_heater
+      - switch.carl_heat_bulb
+      - switch.carl_outlet_4
+      - switch.carl_outlet_5
+      - switch.carl_outlet_6
+      - switch.carl_outlet_7
       - switch.living_room_tv
       - switch.network_media
       - switch.network_relay_north

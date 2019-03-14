@@ -31,7 +31,7 @@ views:
         voice: hide
         options: clock
         clock_format: 24
-        hide_tabs: 6
+        hide_tabs: 5
         exceptions:
           - conditions:
               user_agent: Mobile
@@ -434,8 +434,8 @@ views:
                 entities:
                   - entity: binary_sensor.studio_window
 
-  - title: Plants
-    path: plants
+  - title: Livings
+    path: livings
     icon: mdi:flower
     cards:
       - type: custom:compact-custom-header
@@ -445,6 +445,24 @@ views:
         entity: plant.spidy
       - type: plant-status
         entity: plant.viny
+
+      - type: entities
+        title: Carl
+        show_header_toggle: false
+        entities:
+          - entity: sensor.carl_power_strip_energy
+          - entity: sensor.carl_power_strip_power
+          - entity: sensor.carl_uv_light_power
+          - entity: sensor.carl_heater_power
+          - entity: sensor.carl_heat_bulb_power
+          - entity: input_boolean.carl_scheduled_lights
+          - entity: switch.carl_uv_light
+          - entity: switch.carl_heater
+          - entity: switch.carl_heat_bulb
+          - entity: switch.carl_outlet_4
+          - entity: switch.carl_outlet_5
+          - entity: switch.carl_outlet_6
+          - entity: switch.carl_outlet_7
 
   - title: Settings
     path: settings
@@ -674,6 +692,7 @@ views:
               - entity: zwave.basement_bathroom_vanity_light_dimmer
               - entity: zwave.basement_hallway_light_dimmer
               - entity: zwave.bookshelf_light_switch
+              - entity: zwave.carl_power_strip
               - entity: zwave.dining_room_light_dimmer
               - entity: zwave.downstairs_light_switch
               - entity: zwave.front_porch_light_switch

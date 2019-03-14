@@ -165,7 +165,8 @@ automation:
             {%- endif -%}
   - alias: "main_bathroom_auto_lights_off"
     hide_entity: True
-    initial_state: True
+    # TODO: Fix sensor positioning
+    initial_state: False
     trigger:
       - platform: state
         entity_id: "binary_sensor.main_bathroom_motion"
