@@ -32,14 +32,21 @@ views:
         options: clock
         clock_format: 24
         hide_tabs: 6
-        exception:
+        exceptions:
+          - conditions:
+              user_agent: Mobile
+              user: Chris
+            config:
+              menu: hide
+              options: hide
+              hide_tabs:
           - conditions:
               user_agent: Mobile
             config:
               menu: hide
               options: hide
           - conditions:
-              user: chris
+              user: Chris
             config:
               hide_tabs:
       - type: glance
