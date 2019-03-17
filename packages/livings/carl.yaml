@@ -1,7 +1,66 @@
+homeassistant:
+  customize:
+    switch.carl_heat_bulb:
+      icon: "mdi:spotlight-beam"
+    switch.carl_heater:
+      icon: "mdi:radiator"
+    switch.carl_uv_light:
+      icon: "mdi:weather-sunny"
+    switch.carl_outlet_4:
+      icon: "mdi:weather-fog"
+    switch.carl_outlet_5:
+      icon: "mdi:chip"
+
 input_boolean:
   carl_scheduled_lights:
-    name: "Scheduled Carl's lights"
-    icon: "mdi:led-on"
+    name: "Carl's lights scheduling"
+    icon: "mdi:home-automation"
+  carl_advanced_controls:
+    name: "Carl's advanced controls"
+    icon: "mdi:home-automation"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      carl_requires_attention:
+        friendly_name: "Carl requires attention"
+        device_class: "problem"
+        value_template: >-
+          {{    is_state('input_boolean.carl_scheduled_lights', 'off')
+             or is_state('switch.carl_heater', 'off')
+             or (is_state('switch.carl_heat_bulb', 'on') and states('sensor.carl_heat_bulb_power') | float < 1)
+             or (is_state('switch.carl_heater', 'on') and states('sensor.carl_heater_power') | float < 1)
+             or (is_state('switch.carl_uv_light', 'on') and states('sensor.carl_uv_light_power') | float < 1)
+          }}
+        icon_template: >-
+          {{ 'mdi:skull'
+             if is_state('input_boolean.carl_scheduled_lights', 'off')
+               or is_state('switch.carl_heater', 'off')
+               or (is_state('switch.carl_heat_bulb', 'on') and states('sensor.carl_heat_bulb_power') | float < 1)
+               or (is_state('switch.carl_heater', 'on') and states('sensor.carl_heater_power') | float < 1)
+               or (is_state('switch.carl_uv_light', 'on') and states('sensor.carl_uv_light_power') | float < 1)
+             else 'mdi:turtle'
+          }}
+
+# Fake sensors until everything is ready
+sensor:
+  - platform: template
+    sensors:
+      carl_basking_temperature:
+        friendly_name: "Carl's basking spot temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        value_template: "0.0"
+      carl_temperature:
+        friendly_name: "Carl's terrarium temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        value_template: "0.0"
+      carl_humidity:
+        friendly_name: "Carl's terrarium humidity"
+        device_class: "humidity"
+        unit_of_measurement: "%"
+        value_template: "0.0"
 
 automation:
   - alias: carl_wake_up

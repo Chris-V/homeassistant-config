@@ -1,4 +1,4 @@
-# Icon reference: https://materialdesignicons.com/tag/home-automation
+# Icon reference: https://petershaggynoble.github.io/MDI-Sandbox/
 
 title: Avatar
 background: 'var(--lovelace-background)'
@@ -12,8 +12,12 @@ resources:
     type: module
   - url: /customcards/github/thomasloven/card-tools.js?track=true
     type: js
+  - url: /customcards/github/thomasloven/gap-card.js?track=true
+    type: js
   - url: /customcards/github/thomasloven/fold-entity-row.js?track=true
     type: js
+  - url: /customcards/github/MizterB/secondaryinfo-entity-row.js?track=true
+    type: module
   - url: /customcards/header-card.js
     type: js
 
@@ -134,6 +138,8 @@ views:
             name: Windows
           - entity: group.all_plants
             name: Plants
+          - entity: binary_sensor.carl_requires_attention
+            name: Carl
           - entity: binary_sensor.all_leaks
             name: Leaks
           - entity: sensor.all_batteries
@@ -141,7 +147,7 @@ views:
 
   - title: Ground Floor
     path: ground
-    icon: mdi:arrow-up-thick
+    icon: mdi:home-floor-g
     cards:
       - type: custom:compact-custom-header
       - type: custom:vertical-stack-in-card
@@ -296,7 +302,7 @@ views:
 
   - title: Basement
     path: basement
-    icon: mdi:arrow-down-thick
+    icon: mdi:home-floor-b
     cards:
       - type: custom:compact-custom-header
       - type: custom:vertical-stack-in-card
@@ -436,33 +442,220 @@ views:
 
   - title: Livings
     path: livings
-    icon: mdi:flower
+    icon: mdi:leaf
     cards:
       - type: custom:compact-custom-header
+
+      - type: picture-elements
+        image: /local/frontend/carl.jpg
+        elements:
+          # Translucent footer
+          - type: custom:gap-card
+            height: 0;
+            style:
+              position: absolute
+              left: 0
+              right: 0
+              bottom: 0
+              top: 81%
+              height: auto
+              transform: none
+              background-color: rgba(0, 0, 0, 0.45)
+
+          # Hidden toggle for advanced settings
+          - type: conditional
+            conditions:
+              - entity: input_boolean.carl_advanced_controls
+                state: "on"
+              - entity: binary_sensor.carl_requires_attention
+                state: "off"
+            elements:
+              - type: icon
+                icon: mdi:arrow-collapse-all
+                title: Advanced controls
+                entity: input_boolean.carl_advanced_controls
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: none
+                style:
+                  right: -2%
+                  top: 5%
+                  color: "#E0E0E0"
+                  filter: drop-shadow(black 0 0 1px)
+          - type: conditional
+            conditions:
+              - entity: input_boolean.carl_advanced_controls
+                state: "off"
+              - entity: binary_sensor.carl_requires_attention
+                state: "off"
+            elements:
+              - type: icon
+                icon: mdi:arrow-expand-all
+                title: ' '
+                entity: input_boolean.carl_advanced_controls
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: none
+                style:
+                  right: -2%
+                  top: 5%
+                  color: transparent
+                  cursor: default
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.carl_requires_attention
+                state: "on"
+            elements:
+              - type: icon
+                icon: mdi:alert-circle
+                title: Advanced controls
+                entity: input_boolean.carl_advanced_controls
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: none
+                style:
+                  right: -2%
+                  top: 5%
+                  color: var(--google-red-500)
+                  filter: drop-shadow(black 0 0 1px)
+
+          # Switches (footer left)
+          - type: state-icon
+            entity: switch.carl_uv_light
+            title: UV light
+            tap_action:
+              action: toggle
+            style:
+              top: &carl_switch_top 90%
+              left: 5%
+              color: &carl_footer_color "#E0E0E0"
+
+          - type: state-icon
+            entity: switch.carl_heat_bulb
+            title: Heat bulb
+            tap_action:
+              action: toggle
+            style:
+              top: *carl_switch_top
+              left: 14%
+              color: *carl_footer_color
+
+          - type: state-icon
+            entity: switch.carl_outlet_4
+            title: Mister
+            tap_action:
+              action: toggle
+            style:
+              top: *carl_switch_top
+              left: 23%
+              color: *carl_footer_color
+
+          # Sensors (footer right)
+          - type: icon
+            icon: mdi:thermometer
+            entity: sensor.carl_temperature
+            title: Temperature
+            tap_action:
+              action: more-info
+            style:
+              top: &carl_sensor_icon_top 87%
+              left: 64%
+              color: *carl_footer_color
+          - type: state-label
+            entity: sensor.carl_temperature
+            title: Temperature
+            tap_action:
+              action: more-info
+            style:
+              top: &carl_sensor_label_top 96%
+              left: 64%
+              color: *carl_footer_color
+
+          - type: icon
+            icon: mdi:water-percent
+            entity: sensor.carl_humidity
+            title: Humidity
+            tap_action:
+              action: more-info
+            style:
+              top: *carl_sensor_icon_top
+              left: 78%
+              color: *carl_footer_color
+          - type: state-label
+            entity: sensor.carl_humidity
+            title: Humidity
+            tap_action:
+              action: more-info
+            style:
+              top: *carl_sensor_label_top
+              left: 78%
+              color: *carl_footer_color
+
+          - type: icon
+            icon: mdi:spotlight-beam
+            entity: sensor.carl_basking_temperature
+            title: Basking temperature
+            tap_action:
+              action: more-info
+            style:
+              top: *carl_sensor_icon_top
+              left: 92%
+              color: *carl_footer_color
+          - type: state-label
+            entity: sensor.carl_basking_temperature
+            title: Basking temperature
+            tap_action:
+              action: more-info
+            style:
+              top: *carl_sensor_label_top
+              left: 92%
+              color: *carl_footer_color
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.carl_advanced_controls
+            state: "on"
+        card:
+          type: entities
+          title: Carl (advanced)
+          show_header_toggle: false
+          entities:
+            - entity: input_boolean.carl_scheduled_lights
+              name: Scheduling
+            - type: custom:secondaryinfo-entity-row
+              entity: switch.carl_power_strip
+              name: Master
+              secondary_info: "[[ sensor.carl_power_strip_power ]] [[ sensor.carl_power_strip_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_power_strip_energy ]] [[ sensor.carl_power_strip_energy.attributes.unit_of_measurement ]]"
+            - type: custom:secondaryinfo-entity-row
+              entity: switch.carl_uv_light
+              name: UV light
+              secondary_info: "[[ sensor.carl_uv_light_power ]] [[ sensor.carl_uv_light_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_uv_light_energy ]] [[ sensor.carl_uv_light_energy.attributes.unit_of_measurement ]]"
+            - type: custom:secondaryinfo-entity-row
+              entity: switch.carl_heater
+              name: Heater
+              secondary_info: "[[ sensor.carl_heater_power ]] [[ sensor.carl_heater_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_heater_energy ]] [[ sensor.carl_heater_energy.attributes.unit_of_measurement ]]"
+            - type: custom:secondaryinfo-entity-row
+              entity: switch.carl_heat_bulb
+              name: Heat bulb
+              secondary_info: "[[ sensor.carl_heat_bulb_power ]] [[ sensor.carl_heat_bulb_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_heat_bulb_energy ]] [[ sensor.carl_heat_bulb_energy.attributes.unit_of_measurement ]]"
+            - type: custom:secondaryinfo-entity-row
+              entity: switch.carl_outlet_4
+              name: Mister
+              secondary_info: "[[ sensor.carl_outlet_4_power ]] [[ sensor.carl_outlet_4_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_outlet_4_energy ]] [[ sensor.carl_outlet_4_energy.attributes.unit_of_measurement ]]"
+            - type: custom:secondaryinfo-entity-row
+              entity: switch.carl_outlet_5
+              name: Controller
+              secondary_info: "[[ sensor.carl_outlet_5_power ]] [[ sensor.carl_outlet_5_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_outlet_5_energy ]] [[ sensor.carl_outlet_5_energy.attributes.unit_of_measurement ]]"
+
       - type: plant-status
         entity: plant.maitre_doyle
       - type: plant-status
         entity: plant.spidy
       - type: plant-status
         entity: plant.viny
-
-      - type: entities
-        title: Carl
-        show_header_toggle: false
-        entities:
-          - entity: sensor.carl_power_strip_energy
-          - entity: sensor.carl_power_strip_power
-          - entity: sensor.carl_uv_light_power
-          - entity: sensor.carl_heater_power
-          - entity: sensor.carl_heat_bulb_power
-          - entity: input_boolean.carl_scheduled_lights
-          - entity: switch.carl_uv_light
-          - entity: switch.carl_heater
-          - entity: switch.carl_heat_bulb
-          - entity: switch.carl_outlet_4
-          - entity: switch.carl_outlet_5
-          - entity: switch.carl_outlet_6
-          - entity: switch.carl_outlet_7
 
   - title: Settings
     path: settings
