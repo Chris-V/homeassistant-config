@@ -837,10 +837,10 @@ views:
           - entity: switch.network_media
             name: Status
             icon: mdi:flash-circle
-          - entity: sensor.media_cpu_load
-            name: CPU load
+          - entity: sensor.media_cpu_used
+            name: Processor use
           - entity: sensor.media_cpu_temp
-            name: CPU temperature
+            name: Processor temperature
           - entity: sensor.media_ram_used
             name: Memory use
       - type: entities
@@ -850,10 +850,10 @@ views:
           - entity: switch.network_relay_south
             name: Status
             icon: mdi:flash-circle
-          - entity: sensor.relay_south_cpu_load
-            name: CPU load
+          - entity: sensor.relay_south_cpu_used
+            name: Processor use
           - entity: sensor.relay_south_cpu_temp
-            name: CPU temperature
+            name: Processor temperature
           - entity: sensor.relay_south_ram_used
             name: Memory use
       - type: entities
@@ -863,10 +863,10 @@ views:
           - entity: switch.network_relay_north
             name: Status
             icon: mdi:flash-circle
-          - entity: sensor.relay_north_cpu_load
-            name: CPU load
+          - entity: sensor.relay_north_cpu_used
+            name: Processor use
           - entity: sensor.relay_north_cpu_temp
-            name: CPU temperature
+            name: Processor temperature
           - entity: sensor.relay_north_ram_used
             name: Memory use
       - type: entities

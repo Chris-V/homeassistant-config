@@ -9,27 +9,27 @@ homeassistant:
     switch.network_relay_north:
       friendly_name: "Relay North"
       icon: "mdi:server-network"
-    sensor.media_cpu_load:
+    sensor.media_cpu_used:
       friendly_name: "Media's CPU use"
-      icon: "mdi:memory"
+      icon: "mdi:chip"
     sensor.media_cpu_temp:
       friendly_name: "Media's CPU temperature"
       icon: "mdi:fire"
     sensor.media_ram_used:
       friendly_name: "Media's memory use"
       icon: "mdi:memory"
-    sensor.relay_south_cpu_load:
+    sensor.relay_south_cpu_used:
       friendly_name: "South relay's CPU use"
-      icon: "mdi:memory"
+      icon: "mdi:chip"
     sensor.relay_south_cpu_temp:
       friendly_name: "South relay's CPU temperature"
       icon: "mdi:fire"
     sensor.relay_south_ram_used:
       friendly_name: "South relay's memory use"
       icon: "mdi:memory"
-    sensor.relay_north_cpu_load:
+    sensor.relay_north_cpu_used:
       friendly_name: "North relay's CPU use"
-      icon: "mdi:memory"
+      icon: "mdi:chip"
     sensor.relay_north_cpu_temp:
       friendly_name: "North relay's CPU temperature"
       icon: "mdi:fire"
@@ -52,7 +52,7 @@ input_text:
 sensor:
   - platform: template
     sensors:
-      media_cpu_load:
+      media_cpu_used:
         value_template: "unavailable"
       media_cpu_temp:
         value_template: "unavailable"
@@ -65,7 +65,7 @@ sensor:
   #    name: "media"
   #    version: 3
   #    resources:
-  #      - processor_load
+  #      - cpu_use_percent
   #      - memory_use_percent
   #      - cpu_temp
 
@@ -75,7 +75,7 @@ sensor:
     name: "relay_south"
     version: 3
     resources:
-      - processor_load
+      - cpu_use_percent
       - memory_use_percent
       - cpu_temp
 
@@ -85,7 +85,7 @@ sensor:
     name: "relay_north"
     version: 3
     resources:
-      - processor_load
+      - cpu_use_percent
       - memory_use_percent
       - cpu_temp
 

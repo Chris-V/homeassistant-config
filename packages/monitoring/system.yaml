@@ -3,8 +3,12 @@ homeassistant:
     sensor.processor_temperature:
       friendly_name: "Processor temperature"
       icon: "mdi:fire"
+    sensor.processor_use:
+      friendly_name: "Processor use"
+      icon: "mdi:chip"
     sensor.memory_use_percent:
       friendly_name: "Memory use"
+      icon: "mdi:memory"
 
 sensor:
   - platform: time_date

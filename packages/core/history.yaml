@@ -98,16 +98,16 @@ recorder:
       - sensor.maitre_doyle_moisture
       - sensor.maitre_doyle_problems
       - sensor.maitre_doyle_temperature
-      - sensor.media_cpu_load
+      - sensor.media_cpu_used
       - sensor.media_cpu_temp
       - sensor.media_ram_used
       - sensor.memory_use_percent
       - sensor.processor_temperature
       - sensor.processor_use
-      - sensor.relay_north_cpu_load
+      - sensor.relay_north_cpu_used
       - sensor.relay_north_cpu_temp
       - sensor.relay_north_ram_used
-      - sensor.relay_south_cpu_load
+      - sensor.relay_south_cpu_used
       - sensor.relay_south_cpu_temp
       - sensor.relay_south_ram_used
       - sensor.spidy_battery
