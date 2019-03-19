@@ -18,6 +18,8 @@ resources:
     type: js
   - url: /customcards/github/MizterB/secondaryinfo-entity-row.js?track=true
     type: module
+  - url: /customcards/github/custom-cards/text-element.js?track=true
+    type: js
   - url: /customcards/header-card.js
     type: js
 
@@ -451,7 +453,7 @@ views:
         elements:
           # Translucent footer
           - type: custom:gap-card
-            height: 0;
+            height: 0
             style:
               position: absolute
               left: 0
@@ -650,12 +652,194 @@ views:
               name: Controller
               secondary_info: "[[ sensor.carl_outlet_5_power ]] [[ sensor.carl_outlet_5_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_outlet_5_energy ]] [[ sensor.carl_outlet_5_energy.attributes.unit_of_measurement ]]"
 
-      - type: plant-status
-        entity: plant.maitre_doyle
-      - type: plant-status
-        entity: plant.spidy
-      - type: plant-status
-        entity: plant.viny
+      - type: picture-elements
+        image: /local/frontend/avocado_hall_card.jpg
+        elements:
+          - type: custom:text-element
+            text: Maître Doyle
+            style:
+              top: 10%
+              left: 16%
+              color: "#E0E0E0"
+              filter: "drop-shadow(#3B4049 0 0 2px)"
+              font-size: 1.3em
+              font-weight: 500
+
+          - type: conditional
+            conditions:
+              - entity: sensor.maitre_doyle_problems
+                state_not: "none"
+            elements:
+              - type: icon
+                icon: mdi:alert-circle
+                title: Problems
+                entity: sensor.maitre_doyle_problems
+                tap_action:
+                  action: more-info
+                style:
+                  right: -1%
+                  top: 7%
+                  color: var(--google-red-500)
+                  filter: drop-shadow(black 0 0 1px)
+
+          - type: state-badge
+            entity: sensor.maitre_doyle_moisture
+            style:
+              top: 95%
+              left: 10%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.maitre_doyle_temperature
+            style:
+              top: 95%
+              left: 23%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.maitre_doyle_conductivity
+            style:
+              top: 95%
+              left: 36%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.maitre_doyle_brightness
+            style:
+              top: 95%
+              left: 49%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+
+      - type: picture-elements
+        image: /local/frontend/spider_plant_card.jpg
+        elements:
+          - type: custom:text-element
+            text: Spidy
+            style:
+              top: 10%
+              left: 10%
+              color: "#E0E0E0"
+              filter: "drop-shadow(#3B4049 0 0 2px)"
+              font-size: 1.3em
+              font-weight: 500
+
+          - type: conditional
+            conditions:
+              - entity: sensor.spidy_problems
+                state_not: "none"
+            elements:
+              - type: icon
+                icon: mdi:alert-circle
+                title: Problems
+                entity: sensor.spidy_problems
+                tap_action:
+                  action: more-info
+                style:
+                  right: -1%
+                  top: 7%
+                  color: var(--google-red-500)
+                  filter: drop-shadow(black 0 0 1px)
+
+          - type: state-badge
+            entity: sensor.spidy_moisture
+            style:
+              top: 93%
+              left: 51%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.spidy_temperature
+            style:
+              top: 93%
+              left: 64%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.spidy_conductivity
+            style:
+              top: 93%
+              left: 77%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.spidy_brightness
+            style:
+              top: 93%
+              left: 90%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+
+      - type: picture-elements
+        image: /local/frontend/devils_ivy_card.jpg
+        elements:
+          - type: custom:text-element
+            text: Viny
+            style:
+              top: 10%
+              left: 9%
+              color: "#3B4049"
+              filter: "drop-shadow(#E0E0E0 0px 0px 2px)"
+              font-size: 1.3em
+              font-weight: 500
+
+          - type: conditional
+            conditions:
+              - entity: sensor.viny_problems
+                state_not: "none"
+            elements:
+              - type: icon
+                icon: mdi:alert-circle
+                title: Problems
+                entity: sensor.viny_problems
+                tap_action:
+                  action: more-info
+                style:
+                  right: -1%
+                  top: 7%
+                  color: var(--google-red-500)
+                  filter: drop-shadow(black 0 0 1px)
+
+          - type: state-badge
+            entity: sensor.viny_moisture
+            style:
+              top: 93%
+              left: 51%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.viny_temperature
+            style:
+              top: 93%
+              left: 64%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.viny_conductivity
+            style:
+              top: 93%
+              left: 77%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
+          - type: state-badge
+            entity: sensor.viny_brightness
+            style:
+              top: 93%
+              left: 90%
+              color: transparent
+              --ha-label-badge-font-size: 1.2em
+              --label-badge-red: "#363941"
 
   - title: Settings
     path: settings
