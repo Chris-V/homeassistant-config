@@ -447,7 +447,7 @@ views:
       - type: custom:compact-custom-header
 
       - type: picture-elements
-        image: /local/frontend/carl.jpg
+        image: /local/frontend/carl_card.jpg
         elements:
           # Translucent footer
           - type: custom:gap-card
