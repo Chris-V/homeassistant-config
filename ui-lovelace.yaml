@@ -16,6 +16,8 @@ resources:
     type: js
   - url: /customcards/github/thomasloven/fold-entity-row.js?track=true
     type: js
+  - url: /customcards/github/thomasloven/toggle-lock-entity-row.js?track=true
+    type: js
   - url: /customcards/github/MizterB/secondaryinfo-entity-row.js?track=true
     type: module
   - url: /customcards/github/custom-cards/text-element.js?track=true
@@ -1018,7 +1020,8 @@ views:
         title: Media
         show_header_toggle: false
         entities:
-          - entity: switch.network_media
+          - type: custom:toggle-lock-entity-row
+            entity: switch.network_media
             name: Status
             icon: mdi:flash-circle
           - entity: sensor.media_cpu_used
@@ -1031,7 +1034,8 @@ views:
         title: Relay South
         show_header_toggle: false
         entities:
-          - entity: switch.network_relay_south
+          - type: custom:toggle-lock-entity-row
+            entity: switch.network_relay_south
             name: Status
             icon: mdi:flash-circle
           - entity: sensor.relay_south_cpu_used
@@ -1044,7 +1048,8 @@ views:
         title: Relay North
         show_header_toggle: false
         entities:
-          - entity: switch.network_relay_north
+          - type: custom:toggle-lock-entity-row
+            entity: switch.network_relay_north
             name: Status
             icon: mdi:flash-circle
           - entity: sensor.relay_north_cpu_used
