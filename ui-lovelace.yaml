@@ -538,13 +538,23 @@ views:
               color: &carl_footer_color "#E0E0E0"
 
           - type: state-icon
+            entity: switch.carl_heater
+            title: Heater
+            tap_action:
+              action: toggle
+            style:
+              top: *carl_switch_top
+              left: 14%
+              color: *carl_footer_color
+
+          - type: state-icon
             entity: switch.carl_heat_bulb
             title: Heat bulb
             tap_action:
               action: toggle
             style:
               top: *carl_switch_top
-              left: 14%
+              left: 23%
               color: *carl_footer_color
 
           - type: state-icon
@@ -554,7 +564,7 @@ views:
               action: toggle
             style:
               top: *carl_switch_top
-              left: 23%
+              left: 32%
               color: *carl_footer_color
 
           # Sensors (footer right)
