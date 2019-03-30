@@ -1,6 +1,4 @@
 custom_updater:
-  card_urls:
-    - https://raw.githubusercontent.com/MizterB/lovelace-secondaryinfo-entity-row/master/custom_cards.json
   track:
     - "cards"
     - "components"

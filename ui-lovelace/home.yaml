@@ -1,0 +1,97 @@
+- !include header-main.yaml
+
+- type: glance
+  show_name: false
+  columns: 2
+  entities:
+    - person.chris
+    - person.karine
+
+- type: vertical-stack
+  cards:
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: light.outdoor_lights
+          name: Outdoor
+          icon: mdi:tree
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        - type: entity-button
+          entity: light.ground_floor_lights
+          name: Main
+          icon: mdi:arrow-up-thick
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+        - type: entity-button
+          entity: light.basement_lights
+          name: Basement
+          icon: mdi:arrow-down-thick
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+
+    - type: horizontal-stack
+      cards:
+        - type: entity-button
+          entity: script.ambiance
+          name: Ambiance
+          icon: mdi:weather-night
+          tap_action:
+            action: call-service
+            service: script.turn_on
+            service_data:
+              entity_id: script.ambiance
+          hold_action:
+            action: none
+        - type: entity-button
+          entity: script.bedtime
+          name: Bedtime
+          icon: mdi:hotel
+          tap_action:
+            action: call-service
+            service: script.turn_on
+            service_data:
+              entity_id: script.bedtime
+          hold_action:
+            action: none
+        - type: entity-button
+          entity: script.everything_off
+          name: All off
+          icon: mdi:close-circle-outline
+          tap_action:
+            action: call-service
+            service: script.turn_on
+            service_data:
+              entity_id: script.everything_off
+          hold_action:
+            action: none
+
+- type: glance
+  columns: 4
+  entities:
+    - entity: binary_sensor.all_motions
+      name: Motion
+    - entity: sensor.last_motion
+      name: Last motion
+      icon: mdi:motion-sensor
+    - entity: binary_sensor.all_doors
+      name: Doors
+    - entity: binary_sensor.all_windows
+      name: Windows
+    - entity: group.all_plants
+      name: Plants
+    - entity: binary_sensor.carl_requires_attention
+      name: Carl
+    - entity: binary_sensor.all_leaks
+      name: Leaks
+    - entity: sensor.all_batteries
+      name: Batteries
+
+- type: weather-forecast
+  entity: weather.dark_sky

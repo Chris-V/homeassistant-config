@@ -1,0 +1,26 @@
+type: custom:compact-custom-header
+main_config: True
+header: True
+menu: show
+notifications: show
+voice: hide
+options: clock
+clock_format: 24
+hide_tabs: 5
+exceptions:
+  - conditions:
+      user_agent: Mobile
+      user: Chris
+    config:
+      menu: hide
+      options: hide
+      hide_tabs:
+  - conditions:
+      user_agent: Mobile
+    config:
+      menu: hide
+      options: hide
+  - conditions:
+      user: Chris
+    config:
+      hide_tabs:
