@@ -10,21 +10,28 @@ script:
   bedtime:
     alias: "Bedtime"
     sequence:
-      - service: homeassistant.turn_on
+      - service: light.turn_off
+        data:
+          entity_id: "light.master_bedroom"
+      - service: light.turn_on
         data:
           entity_id: "light.master_bedroom_bedsides"
           brightness_pct: 5
           kelvin: 2200
-      - service: homeassistant.turn_off
+      - service: tts.google_say
+        data:
+          entity_id: "media_player.master_bedroom_google_home"
+          message: "Sweet dreams!"
+      - service: light.turn_off
         data:
           entity_id: "light.kitchen_lights"
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         data:
           entity_id: "light.living_room_lights"
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         data:
           entity_id: "light.lounge_lights"
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         data:
           entity_id: "light.office_lights"
       - service: script.bedtime_maybe_basement_bathroom
@@ -32,18 +39,13 @@ script:
       - service: script.bedtime_maybe_laundry_room
       - service: script.bedtime_maybe_main_bathroom
       - service: script.bedtime_maybe_workshop
-      - service: tts.google_say
-        data:
-          entity_id:
-            - media_player.master_bedroom_google_home
-          message: "Sweet dreams!"
 
   bedtime_maybe_basement_bathroom:
     sequence:
       - condition: state
         entity_id: "binary_sensor.basement_bathroom_motion"
         state: "off"
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         data:
           entity_id: "light.basement_bathroom_lights"
   bedtime_maybe_dining_room:
@@ -60,7 +62,7 @@ script:
       - condition: state
         entity_id: "binary_sensor.laundry_room_motion"
         state: "off"
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         data:
           entity_id: "light.laundry_room_lights"
   bedtime_maybe_main_bathroom:
@@ -68,7 +70,7 @@ script:
       - condition: state
         entity_id: "binary_sensor.main_bathroom_motion"
         state: "off"
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         data:
           entity_id: "light.main_bathroom_lights"
   bedtime_maybe_workshop:
@@ -76,6 +78,6 @@ script:
       - condition: state
         entity_id: "binary_sensor.workshop_motion"
         state: "off"
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         data:
           entity_id: "light.workshop_lights"
