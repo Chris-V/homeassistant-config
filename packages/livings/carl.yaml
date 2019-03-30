@@ -107,10 +107,10 @@ automation:
         from: "off"
         to: "on"
         for: &on_delay
-          minutes: 1
+          seconds: 330 # Wattage report rate is 300 seconds / 5 minutes
       - platform: numeric_state
         entity_id: "sensor.carl_uv_light_power"
-        below: &min_power 5
+        below: &min_power 1
     condition:
       - condition: state
         entity_id: "switch.carl_uv_light"
