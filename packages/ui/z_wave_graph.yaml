@@ -3,3 +3,4 @@ panel_custom:
     sidebar_title: "Z-Wave Graph"
     sidebar_icon: "mdi:sitemap"
     url_path: zwave
+    require_admin: True
