@@ -895,6 +895,7 @@ views:
         title: Home Assistant
         show_header_toggle: false
         entities:
+          - sensor.connected_clients
           - sensor.current_home_assistant_version
           - sensor.latest_home_assistant_version
       - type: custom:tracker-card

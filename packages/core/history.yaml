@@ -132,6 +132,7 @@ recorder:
       - sensor.viny_problems
       - sensor.viny_temperature
       - sensor.water_heater_leak_sensor_battery
+      - sensor.connected_clients
       - switch.bookshelf_outlet
       - switch.carl_uv_light
       - switch.carl_heater
