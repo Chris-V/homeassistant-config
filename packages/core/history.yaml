@@ -15,6 +15,7 @@ recorder:
       - binary_sensor.all_windows
       - binary_sensor.basement_bathroom_door
       - binary_sensor.basement_bathroom_motion
+      - binary_sensor.carl_requires_attention
       - binary_sensor.guest_bedroom_window
       - binary_sensor.kitchen_door
       - binary_sensor.kitchen_sink_leak
