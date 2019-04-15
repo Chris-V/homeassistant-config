@@ -50,28 +50,19 @@ input_text:
     name: "Offline network devices (with threshold)"
 
 sensor:
-  - platform: template
-    sensors:
-      media_cpu_used:
-        value_template: "unavailable"
-      media_cpu_temp:
-        value_template: "unavailable"
-      media_ram_used:
-        value_template: "unavailable"
-  # Disabled until Media is fixed
-  #  - platform: glances
-  #    host: !secret network_media_host
-  #    port: !secret glances_port
-  #    name: "media"
-  #    version: 3
-  #    resources:
-  #      - cpu_use_percent
-  #      - memory_use_percent
-  #      - cpu_temp
+  - platform: glances
+    host: !secret media_glances_host
+    port: !secret media_glances_port
+    name: "media"
+    version: 3
+    resources:
+      - cpu_use_percent
+      - memory_use_percent
+      - cpu_temp
 
   - platform: glances
-    host: !secret network_relay_south_host
-    port: !secret glances_port
+    host: !secret relay_south_glances_host
+    port: !secret relay_south_glances_port
     name: "relay_south"
     version: 3
     resources:
@@ -80,8 +71,8 @@ sensor:
       - cpu_temp
 
   - platform: glances
-    host: !secret network_relay_north_host
-    port: !secret glances_port
+    host: !secret relay_north_glances_host
+    port: !secret relay_north_glances_port
     name: "relay_north"
     version: 3
     resources:
@@ -97,25 +88,25 @@ shell_command:
 switch:
   - platform: wake_on_lan
     name: "network_media"
-    mac_address: !secret network_media_mac
-    host: !secret network_media_host
-    broadcast_address: !secret network_wol_broadcast
+    mac_address: !secret media_mac
+    host: !secret media_ip
+    broadcast_address: !secret network_broadcast
     turn_off:
       service: "shell_command.shutdown_media"
 
   - platform: wake_on_lan
     name: "network_relay_south"
-    mac_address: !secret network_relay_south_mac
-    host: !secret network_relay_south_host
-    broadcast_address: !secret network_wol_broadcast
+    mac_address: !secret relay_south_mac
+    host: !secret relay_south_ip
+    broadcast_address: !secret network_broadcast
     turn_off:
       service: "shell_command.shutdown_relay_south"
 
   - platform: wake_on_lan
     name: "network_relay_north"
-    mac_address: !secret network_relay_north_mac
-    host: !secret network_relay_north_host
-    broadcast_address: !secret network_wol_broadcast
+    mac_address: !secret relay_north_mac
+    host: !secret relay_north_ip
+    broadcast_address: !secret network_broadcast
     turn_off:
       service: "shell_command.shutdown_relay_north"
 
