@@ -6,6 +6,7 @@ recorder:
       - media_player
       - person
       - plant
+      - remote
       - zha
       - zwave
     entities:

@@ -26,7 +26,6 @@
         - type: vertical-stack
           cards:
             - type: glance
-              show_state: False
               columns: 2
               entities:
                 - entity: media_player.lounge_chromecast
