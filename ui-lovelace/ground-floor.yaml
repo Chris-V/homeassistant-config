@@ -1,0 +1,157 @@
+- !include header-slave.yaml
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Outdoor
+      entities: light.outdoor_lights
+    - type: divider
+    - type: entities
+      entities:
+        - entity: light.side_porch
+          name: Side porch
+          icon: mdi:wall-sconce
+        - entity: light.front_porch
+          name: Front porch
+          icon: mdi:wall-sconce
+        - entity: light.shed
+          name: Shed
+          icon: mdi:wall-sconce
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Kitchen
+      entities: light.kitchen_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.kitchen
+              name: Spots
+              icon: mdi:wall-sconce-flat
+        - type: glance
+          columns: 2
+          show_name: False
+          entities:
+            - entity: binary_sensor.kitchen_sink_leak
+            - entity: binary_sensor.kitchen_door
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Dining room
+      entities: light.dining_room_lights
+    - type: divider
+    - type: entities
+      entities:
+        - entity: light.dining_room
+          name: Table
+          icon: mdi:ceiling-light
+        - entity: light.hallway
+          name: Hallway
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Living room
+      entities: light.living_room_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.bookshelf
+              name: Bookshelf
+              icon: mdi:wall-sconce-flat
+            - entity: light.living_room_ambiance
+              name: Ambiance
+              icon: mdi:floor-lamp
+            - entity: switch.bookshelf_outlet
+              name: Bookshelf outlet
+              icon: mdi:power-socket-us
+            - entity: switch.living_room_tv
+              name: TV
+              icon: mdi:television
+        - type: vertical-stack
+          cards:
+            - type: glance
+              show_state: False
+              columns: 2
+              entities:
+                - entity: media_player.living_room_chromecast
+                  name: Chromecast
+                - entity: media_player.living_room_google_home
+                  name: Google Home
+            - type: glance
+              show_name: False
+              columns: 2
+              entities:
+                - entity: binary_sensor.living_room_door
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Master Bedroom
+      entities: light.master_bedroom_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.master_bedroom
+              name: Light
+            - entity: light.bedside_chris
+              name: Chris' lamp
+              icon: mdi:lamp
+            - entity: light.bedside_karine
+              name: Karine's lamp
+              icon: mdi:lamp
+        - type: glance
+          show_name: False
+          columns: 2
+          entities:
+            - media_player.master_bedroom_google_home
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Bathroom
+      entities: light.main_bathroom_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.main_bathroom_spots
+              name: Spots
+              icon: mdi:wall-sconce-flat
+            - entity: light.main_bathroom_vanity
+              name: Vanity
+              icon: mdi:ceiling-light
+            - entity: fan.main_bathroom
+              name: Fan
+        - type: glance
+          show_name: False
+          columns: 2
+          entities:
+            - entity: sensor.main_bathroom_humidity
+              name: Humidity
+            - entity: sensor.main_bathroom_temperature
+              name: Temperature
+            - entity: binary_sensor.main_bathroom_motion
+              name: Motion
+            - entity: binary_sensor.main_bathroom_door
+              name: Door
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Office
+      entities: light.office_lights
+    - type: divider
+    - type: entities
+      entities:
+        - entity: light.office
+          name: Light

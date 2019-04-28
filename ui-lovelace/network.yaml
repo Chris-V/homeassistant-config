@@ -1,0 +1,158 @@
+- !include header-slave.yaml
+
+- type: entities
+  title: Settings
+  show_header_toggle: false
+  entities:
+    - input_boolean.power_outage_manage_devices
+
+- type: entities
+  title: Notifications
+  show_header_toggle: false
+  entities:
+    - entity: input_boolean.notify_household_changes
+      name: Household changes
+    - entity: input_boolean.notify_network_device_outages
+      name: Network device outages
+
+- type: entities
+  show_header_toggle: false
+  title: UPS
+  entities:
+    - entity: sensor.ups_status
+      name: Status
+    - entity: sensor.ups_load
+      name: Load
+    - entity: sensor.ups_battery
+      name: Battery
+    - entity: sensor.ups_input_voltage
+      name: Input voltage
+    - entity: sensor.ups_time_left
+      name: Time left
+    - entity: sensor.ups_time_on_battery
+      name: Time on battery
+
+- type: entities
+  title: Home Assistant
+  show_header_toggle: false
+  entities:
+    - sensor.connected_clients
+    - sensor.current_home_assistant_version
+    - sensor.latest_home_assistant_version
+- type: custom:tracker-card
+  title: Updates
+  trackers:
+    - sensor.custom_card_tracker
+    - sensor.custom_component_tracker
+
+- type: entities
+  title: Automate
+  show_header_toggle: false
+  entities:
+    - sensor.processor_use
+    - sensor.processor_temperature
+    - sensor.memory_use_percent
+
+- type: entities
+  title: Media
+  show_header_toggle: false
+  entities:
+    - type: custom:toggle-lock-entity-row
+      entity: switch.network_media
+      name: Status
+      icon: mdi:flash-circle
+    - entity: sensor.media_cpu_used
+      name: Processor use
+    - entity: sensor.media_cpu_temp
+      name: Processor temperature
+    - entity: sensor.media_ram_used
+      name: Memory use
+
+- type: entities
+  title: Relay South
+  show_header_toggle: false
+  entities:
+    - type: custom:toggle-lock-entity-row
+      entity: switch.network_relay_south
+      name: Status
+      icon: mdi:flash-circle
+    - entity: sensor.relay_south_cpu_used
+      name: Processor use
+    - entity: sensor.relay_south_cpu_temp
+      name: Processor temperature
+    - entity: sensor.relay_south_ram_used
+      name: Memory use
+
+- type: entities
+  title: Relay North
+  show_header_toggle: false
+  entities:
+    - type: custom:toggle-lock-entity-row
+      entity: switch.network_relay_north
+      name: Status
+      icon: mdi:flash-circle
+    - entity: sensor.relay_north_cpu_used
+      name: Processor use
+    - entity: sensor.relay_north_cpu_temp
+      name: Processor temperature
+    - entity: sensor.relay_north_ram_used
+      name: Memory use
+
+- type: entities
+  title: Z-Wave
+  show_header_toggle: false
+  entities:
+    - entity: zwave.usb_controller
+    - type: custom:fold-entity-row
+      open: False
+      head:
+        type: section
+        label: Hard-wired
+      items:
+        - entity: zwave.basement_bathroom_fan_switch
+        - entity: zwave.basement_bathroom_light_switch
+        - entity: zwave.basement_bathroom_vanity_light_dimmer
+        - entity: zwave.basement_hallway_light_dimmer
+        - entity: zwave.bookshelf_light_switch
+        - entity: zwave.carl_power_strip
+        - entity: zwave.dining_room_light_dimmer
+        - entity: zwave.downstairs_light_switch
+        - entity: zwave.front_porch_light_switch
+        - entity: zwave.guest_bedroom_light_switch
+        - entity: zwave.hallway_light_switch
+        - entity: zwave.kitchen_light_switch
+        - entity: zwave.laundry_room_light_switch
+        - entity: zwave.lounge_light_dimmer
+        - entity: zwave.master_bedroom_light_switch
+        - entity: zwave.main_bathroom_fan_switch
+        - entity: zwave.main_bathroom_light_dimmer
+        - entity: zwave.main_bathroom_vanity_light_switch
+        - entity: zwave.office_light_dimmer
+        - entity: zwave.shed_outdoor_light_switch
+        - entity: zwave.side_porch_light_switch
+        - entity: zwave.workshop_light_switch
+    - type: custom:fold-entity-row
+      open: False
+      head:
+        type: section
+        label: Hard-wired sensors
+      items:
+        - entity: zwave.laundry_motion_sensor
+        - entity: zwave.workshop_motion_sensor
+    - type: custom:fold-entity-row
+      open: False
+      head:
+        type: section
+        label: Battery sensors
+      items:
+        - entity: zwave.basement_bathroom_door_sensor
+        - entity: zwave.basement_bathroom_multisensor
+        - entity: zwave.guest_bedroom_window_sensor
+        - entity: zwave.studio_window_sensor
+        - entity: zwave.kitchen_door_sensor
+        - entity: zwave.kitchen_sink_leak_sensor
+        - entity: zwave.living_room_door_sensor
+        - entity: zwave.lounge_window_sensor
+        - entity: zwave.main_bathroom_door_sensor
+        - entity: zwave.main_bathroom_multisensor
+        - entity: zwave.water_heater_leak_sensor

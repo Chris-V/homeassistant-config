@@ -1,0 +1,141 @@
+- !include header-slave.yaml
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Lounge
+      entities: light.lounge_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.lounge
+              name: Spots
+              icon: mdi:wall-sconce-flat
+            - entity: light.lounge_ambiance
+              name: Ambiance
+              icon: mdi:floor-lamp
+            - entity: light.basement_hallway
+              name: Hallway
+            - entity: light.downstairs
+              name: Downstairs
+        - type: vertical-stack
+          cards:
+            - type: glance
+              show_name: False
+              columns: 2
+              entities:
+                - media_player.lounge_google_home
+            - type: glance
+              show_name: False
+              columns: 2
+              entities:
+                - binary_sensor.lounge_window
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Bathroom
+      entities: light.basement_bathroom_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.basement_bathroom
+              name: Spots
+              icon: mdi:wall-sconce-flat
+            - entity: light.basement_bathroom_vanity
+              name: Vanity
+              icon: mdi:ceiling-light
+            - entity: fan.basement_bathroom
+              name: Fan
+        - type: glance
+          show_name: False
+          columns: 2
+          entities:
+            - entity: sensor.basement_bathroom_humidity
+              name: Humidity
+            - entity: sensor.basement_bathroom_temperature
+              name: Temperature
+            - entity: binary_sensor.basement_bathroom_motion
+              name: Motion
+            - entity: binary_sensor.basement_bathroom_door
+              name: Door
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Laundry
+      entities: light.laundry_room_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.laundry_room
+              name: Light
+        - type: glance
+          show_name: False
+          columns: 2
+          entities:
+            - entity: binary_sensor.laundry_room_motion
+              name: Motion
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Workshop
+      entities: light.workshop_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.workshop
+              name: Light
+        - type: glance
+          show_name: False
+          columns: 2
+          entities:
+            - entity: binary_sensor.workshop_motion
+              name: Motion
+            - entity: binary_sensor.water_heater_leak
+              name: Water heater
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Guest's bedroom
+      entities: light.guest_bedroom_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.guest_bedroom
+              name: Light
+        - type: glance
+          show_name: False
+          columns: 2
+          entities:
+            - entity: binary_sensor.guest_bedroom_window
+
+- type: custom:vertical-stack-in-card
+  cards:
+    - type: custom:header-card
+      title: Studio
+      entities: light.studio_lights
+    - type: divider
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          entities:
+            - entity: light.studio
+              name: Light
+        - type: glance
+          show_name: False
+          columns: 2
+          entities:
+            - entity: binary_sensor.studio_window
