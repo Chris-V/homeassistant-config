@@ -9,12 +9,6 @@ homeassistant:
 
 google_assistant:
   entity_config:
-    switch.living_room_tv:
-      expose: True
-      room: "Living room"
-      aliases:
-        - "TV"
-        - "Living room TV"
     light.living_room_ambiance:
       expose: True
       room: "Living room"
@@ -38,7 +32,6 @@ google_assistant:
 
 cast:
   media_player:
-    - host: !secret media_player_cast_lr_host
     - host: !secret media_player_home_lr_host
 
 light:
@@ -51,28 +44,10 @@ light:
   - platform: switch
     name: living_room_ambiance
     entity_id: "switch.living_room_ambiance"
+
   - platform: switch
     name: bookshelf
     entity_id: "switch.bookshelf_light"
-
-switch:
-  - platform: broadlink
-    mac: !secret broadlink_living_room_mac
-    host: !secret broadlink_living_room_host
-    type: "rm2_pro_plus"
-    switches:
-      living_room_tv:
-        friendly_name: "Living room TV"
-        command_on: "JgBQAAABKJMTERQRFDUUERQRFBEUERQQFDYTNhQRFDUUNhM2FDYTNhQRFBEUEBQ2ExIUEBQRFBEUNRQ2EzYUERQ1FDYTNhQ2EwAFIwABKEgUAA0FAAAAAAAAAAA="
-        command_off: "JgBYAAABKZITERQRFDUXDhUQFBEUEBUQFDYTNhUQFTQUNhQ1FTUUNRQRFBEUEBQ2FRESERQRFBEUNRQ2FDUUERQ1EzcUNRQ2FAAFIgABKEkUAAxPAAEoSBQADQU="
-      living_room_ambiance:
-        friendly_name: "Ambiance outlet"
-        command_on: "svAyABMHBhMTBwYTBhMHExMHBxMTBwYTEwcHExMHBxMTBwYTBxMTBxMHBxMHExMHEwcGvwYTAAAA"
-        command_off: "ssoyAAYUEggGFBIIBhQGFAYUEggGFRIIBhQSCAYUEggGFBMHBhQGFBIIEggTCBIIBhQGFAbAAAAA"
-      bookshelf_outlet:
-        friendly_name: "Bookshelf outlet"
-        command_on: "sggyAAYUEggGFBMIBhQGFAYUEgcGFBIIBhQSCAYUEggGFBIIEwcSCAYUBhQGFAcUEggSCAa/AAAA"
-        command_off: "sgkyAAYUEgcGFBIHBhQGFAYUEgcGFBIHBhQSCAYUEggGFBIHEggSCAYUBhQSBxMHBhQGFAa/AAAA"
 
 binary_sensor:
   - platform: template

@@ -141,7 +141,7 @@ recorder:
       - switch.carl_outlet_5
       - switch.carl_outlet_6
       - switch.carl_outlet_7
-      - switch.living_room_tv
+      - switch.lounge_tv
       - switch.network_media
       - switch.network_relay_north
       - switch.network_relay_south

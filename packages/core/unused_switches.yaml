@@ -1,7 +1,7 @@
 switch:
   - platform: broadlink
-    mac: !secret broadlink_living_room_mac
-    host: !secret broadlink_living_room_host
+    mac: !secret broadlink_mac
+    host: !secret broadlink_host
     type: "rm2_pro_plus"
     switches:
       unused_rf_3:

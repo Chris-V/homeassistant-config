@@ -71,17 +71,12 @@
             - entity: switch.bookshelf_outlet
               name: Bookshelf outlet
               icon: mdi:power-socket-us
-            - entity: switch.living_room_tv
-              name: TV
-              icon: mdi:television
         - type: vertical-stack
           cards:
             - type: glance
               show_state: False
               columns: 2
               entities:
-                - entity: media_player.living_room_chromecast
-                  name: Chromecast
                 - entity: media_player.living_room_google_home
                   name: Google Home
             - type: glance

@@ -20,18 +20,24 @@
               name: Hallway
             - entity: light.downstairs
               name: Downstairs
+            - entity: switch.lounge_tv
+              name: TV
+              icon: mdi:television
         - type: vertical-stack
           cards:
             - type: glance
-              show_name: False
+              show_state: False
               columns: 2
               entities:
-                - media_player.lounge_google_home
+                - entity: media_player.lounge_chromecast
+                  name: Chromecast
+                - entity: media_player.lounge_google_home
+                  name: Google Home
             - type: glance
               show_name: False
               columns: 2
               entities:
-                - binary_sensor.lounge_window
+                - entity: binary_sensor.lounge_window
 
 - type: custom:vertical-stack-in-card
   cards:
