@@ -13,6 +13,8 @@ pyozw.sqlite
 
 panels/floorplan.html
 
+custom_components/custom_updater/
+
 www/custom_ui/floorplan/ha-floorplan.html
 www/custom_ui/floorplan/lib/
 www/github
