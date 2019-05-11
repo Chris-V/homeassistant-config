@@ -32,11 +32,8 @@
                   name: Chromecast
                 - entity: media_player.lounge_google_home
                   name: Google Home
-            - type: glance
-              show_name: False
-              columns: 2
-              entities:
                 - entity: binary_sensor.lounge_window
+                  name: Window
 
 - type: custom:vertical-stack-in-card
   cards:
