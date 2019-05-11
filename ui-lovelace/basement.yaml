@@ -87,6 +87,8 @@
           entities:
             - entity: binary_sensor.laundry_room_motion
               name: Motion
+            - entity: media_player.laundry_room_google_home
+              name: Google Home
 
 - type: custom:vertical-stack-in-card
   cards:

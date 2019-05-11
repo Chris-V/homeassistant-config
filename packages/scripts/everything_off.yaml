@@ -12,6 +12,9 @@ script:
     sequence:
       - service: homeassistant.turn_off
         data:
+          entity_id: "switch.living_room_tv_power"
+      - service: homeassistant.turn_off
+        data:
           entity_id: "light.outdoor_lights"
       - service: homeassistant.turn_off
         data:

@@ -22,6 +22,9 @@ script:
         data:
           entity_id: "media_player.master_bedroom_google_home"
           message: "Sweet dreams!"
+      - service: switch.turn_off
+        data:
+          entity_id: "switch.living_room_tv_power"
       - service: light.turn_off
         data:
           entity_id: "light.kitchen_lights"

@@ -71,7 +71,7 @@
             - entity: switch.bookshelf_outlet
               name: Bookshelf outlet
               icon: mdi:power-socket-us
-            - entity: remote.living_room_tv
+            - entity: switch.living_room_tv_power
               name: TV
               icon: mdi:television
         - type: vertical-stack

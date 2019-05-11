@@ -37,6 +37,16 @@ cast:
 roku:
   - host: !secret media_player_roku_lr_host
 
+switch:
+  - platform: command_line
+    switches:
+      living_room_tv_power:
+        friendly_name: "Living room TV"
+        command_on: '/usr/bin/curl -X POST http://tv-lr.devices.local:8060/keypress/PowerOn'
+        command_off: '/usr/bin/curl -X POST http://tv-lr.devices.local:8060/keypress/PowerOff'
+        command_state: '/usr/bin/curl -s GET http://tv-lr.devices.local:8060/query/device-info | /usr/bin/grep power-mode | /usr/bin/sed -e "s:<power-mode>DisplayOff</power-mode>:OFF:" -e "s:<power-mode>PowerOn</power-mode>:ON:"'
+        value_template: '{{ value == "ON" }}'
+
 light:
   - platform: group
     name: "Living room lights"
