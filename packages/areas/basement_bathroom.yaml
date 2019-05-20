@@ -98,7 +98,7 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: "sensor.basement_bathroom_humidity"
-        above: &basement_bathroom_fan_on_humidity 64 # Exclusive
+        above: &basement_bathroom_fan_on_humidity 64
       - platform: state
         entity_id: "fan.basement_bathroom"
         to: "off"
@@ -118,7 +118,7 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: "sensor.basement_bathroom_humidity"
-        below: &basement_bathroom_fan_off_humidity 65 # Exclusive
+        below: &basement_bathroom_fan_off_humidity 61
       - platform: state
         entity_id: "fan.basement_bathroom"
         to: "on"
