@@ -18,7 +18,7 @@ script:
           entity_id: "light.master_bedroom_bedsides"
           brightness_pct: 5
           kelvin: 2200
-      - service: tts.google_say
+      - service: tts.google_translate_say
         data:
           entity_id: "media_player.master_bedroom_google_home"
           message: "Sweet dreams!"
