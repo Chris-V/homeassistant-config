@@ -14,7 +14,7 @@ exceptions:
     config:
       menu: hide
       options: hide
-      hide_tabs:
+      hide_tabs: 9999
   - conditions:
       user_agent: Mobile
     config:
@@ -23,4 +23,4 @@ exceptions:
   - conditions:
       user: Chris
     config:
-      hide_tabs:
+      hide_tabs: 9999
