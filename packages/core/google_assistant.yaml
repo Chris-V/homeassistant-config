@@ -4,14 +4,16 @@ google_assistant:
   expose_by_default: False
   exposed_domains: []
 
-# Sync Assistant devices when Z-Wave network is ready. This should leave plenty of time for HA to be up and running.
 automation:
   - alias: "Sync Google Assistant"
     hide_entity: True
     initial_state: True
     trigger:
       - platform: event
+        # This should leave plenty of time for HA to be up and running.
         event_type: "zwave.network_ready"
+      - platform: time
+        at: "04:00:00"
     action:
       - service: google_assistant.request_sync
         data:
