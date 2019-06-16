@@ -1,0 +1,36 @@
+add:
+  description: Stored a key value pair.
+  fields:
+    object_id:
+      description: Key of the stored data
+      example: 'potato'
+    data:
+      description: Data to store
+      example: 'value=5;count=9'
+clear:
+  description: Remove all stored values.
+  fields:
+    object_id:
+      description: Key of the stored data
+      example: 'potato'
+remove:
+  description: Remove a stored value.
+  fields:
+    object_id:
+      description: Key of the stored data
+      example: 'potato'
+    id:
+      description: Key of the stored data
+      example: 'potato'
+update:
+  description: Update a stored value.
+  fields:
+    object_id:
+      description: Key of the stored data
+      example: 'potato'
+    id:
+      description: Key of the stored data
+      example: 'potato'
+    data:
+      description: Data to store / replace with
+      example: 'value=5;count=9'

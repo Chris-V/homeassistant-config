@@ -1,0 +1,8 @@
+{
+  "domain": "custom_storage",
+  "name": "Custom Storage",
+  "documentation": "https://www.home-assistant.io",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": []
+}
