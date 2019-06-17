@@ -7,10 +7,13 @@ homeassistant:
   unit_system: metric
   packages: !include_dir_named packages/
 
+discovery:
+
 logger:
   default: "warn"
 
-discovery:
+hacs: # Does not support packages
+  token: !secret hacs_github_token
 
 # TODO: Person component doesn't support merging. Move to person.yaml when it does.
 person:
