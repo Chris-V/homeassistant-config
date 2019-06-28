@@ -15,7 +15,7 @@ homeassistant:
     sensor.media_cpu_temp:
       friendly_name: "Media's CPU temperature"
       icon: "mdi:fire"
-    sensor.media_ram_used:
+    sensor.media_ram_used_percent:
       friendly_name: "Media's memory use"
       icon: "mdi:memory"
     sensor.relay_south_cpu_used:
@@ -24,7 +24,7 @@ homeassistant:
     sensor.relay_south_cpu_temp:
       friendly_name: "South relay's CPU temperature"
       icon: "mdi:fire"
-    sensor.relay_south_ram_used:
+    sensor.relay_south_ram_used_percent:
       friendly_name: "South relay's memory use"
       icon: "mdi:memory"
     sensor.relay_north_cpu_used:
@@ -33,7 +33,7 @@ homeassistant:
     sensor.relay_north_cpu_temp:
       friendly_name: "North relay's CPU temperature"
       icon: "mdi:fire"
-    sensor.relay_north_ram_used:
+    sensor.relay_north_ram_used_percent:
       friendly_name: "North relay's memory use"
       icon: "mdi:memory"
     automation.notify_new_network_device:

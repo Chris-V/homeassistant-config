@@ -60,7 +60,7 @@
       name: Processor use
     - entity: sensor.media_cpu_temp
       name: Processor temperature
-    - entity: sensor.media_ram_used
+    - entity: sensor.media_ram_used_percent
       name: Memory use
 
 - type: entities
@@ -75,7 +75,7 @@
       name: Processor use
     - entity: sensor.relay_south_cpu_temp
       name: Processor temperature
-    - entity: sensor.relay_south_ram_used
+    - entity: sensor.relay_south_ram_used_percent
       name: Memory use
 
 - type: entities
@@ -90,7 +90,7 @@
       name: Processor use
     - entity: sensor.relay_north_cpu_temp
       name: Processor temperature
-    - entity: sensor.relay_north_ram_used
+    - entity: sensor.relay_north_ram_used_percent
       name: Memory use
 
 - type: entities

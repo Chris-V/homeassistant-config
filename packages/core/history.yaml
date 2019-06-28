@@ -102,16 +102,16 @@ recorder:
       - sensor.maitre_doyle_temperature
       - sensor.media_cpu_used
       - sensor.media_cpu_temp
-      - sensor.media_ram_used
+      - sensor.media_ram_used_percent
       - sensor.memory_use_percent
       - sensor.processor_temperature
       - sensor.processor_use
       - sensor.relay_north_cpu_used
       - sensor.relay_north_cpu_temp
-      - sensor.relay_north_ram_used
+      - sensor.relay_north_ram_used_percent
       - sensor.relay_south_cpu_used
       - sensor.relay_south_cpu_temp
-      - sensor.relay_south_ram_used
+      - sensor.relay_south_ram_used_percent
       - sensor.spidy_battery
       - sensor.spidy_brightness
       - sensor.spidy_conductivity
