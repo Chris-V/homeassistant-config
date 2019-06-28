@@ -17,3 +17,4 @@ device_tracker:
     host: !secret device_tracker_router_host
     username: !secret device_tracker_ddwrt_username
     password: !secret device_tracker_ddwrt_password
+    wireless_only: false
