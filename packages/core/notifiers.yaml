@@ -76,7 +76,7 @@ automation:
               - sun
 
     action:
-      - service: tts.google_translate_say
+      - service: tts.google_cloud_say
         data_template:
           entity_id:
             - media_player.laundry_room_google_home

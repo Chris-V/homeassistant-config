@@ -1,9 +1,9 @@
 tts:
-  - platform: google_translate
-    language: "en"
-    cache: True
-    cache_dir: "/tmp/tts"
-    time_memory: 300
+  - platform: google_cloud
+    key_file: ".secrets/gcp.json"
+    voice: "en-US-Wavenet-D" # https://cloud.google.com/text-to-speech/docs/voices
+    profiles:
+      - "small-bluetooth-speaker-class-device"
 
 switch:
   - platform: broadlink
