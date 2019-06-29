@@ -1,5 +1,3 @@
-- !include header-slave.yaml
-
 - type: custom:vertical-stack-in-card
   cards:
     - type: custom:header-card

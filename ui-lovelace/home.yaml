@@ -1,5 +1,3 @@
-- !include header-main.yaml
-
 - type: glance
   show_name: false
   columns: 2

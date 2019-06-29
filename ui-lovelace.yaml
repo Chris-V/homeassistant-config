@@ -23,6 +23,35 @@ resources:
   - url: /local/header-card.js?v=1
     type: js
 
+cch:
+  header: true
+  sidebar_swipe: true
+  sidebar_closed: true
+  chevrons: false
+  clock_format: 24
+  hide_tabs: "5"
+  menu: "show"
+  notifications: "show"
+  voice: "hide"
+  options: "clock"
+  exceptions:
+    - conditions:
+        user_agent: "Mobile"
+        user: "Chris"
+      config:
+        menu: "hide"
+        options: "hide"
+        hide_tabs: "9999"
+    - conditions:
+        user_agent: "Mobile"
+      config:
+        menu: "hide"
+        options: "hide"
+    - conditions:
+        user: "Chris"
+      config:
+        hide_tabs: "9999"
+
 views:
   - title: Home
     path: home

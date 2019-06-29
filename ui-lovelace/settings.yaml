@@ -1,5 +1,3 @@
-- !include header-slave.yaml
-
 - type: entities
   title: Settings
   show_header_toggle: false

@@ -1,5 +1,3 @@
-- !include header-slave.yaml
-
 - type: picture-elements
   image: /local/frontend/carl_card.jpg
   elements:
