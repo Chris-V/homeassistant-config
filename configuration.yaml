@@ -11,6 +11,9 @@ discovery:
 
 logger:
   default: "warn"
+  logs:
+    homeassistant.components.glances.sensor: "fatal"
+    glances: "fatal"
 
 hacs: # Does not support packages
   token: !secret hacs_github_token
