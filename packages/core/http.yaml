@@ -1,5 +1,4 @@
 http:
-  server_port: !secret http_port
   base_url: !secret http_public_host
   use_x_forwarded_for: True
   trusted_proxies: !secret http_trusted_proxy_ips
