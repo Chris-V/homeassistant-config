@@ -6,6 +6,8 @@ background: 'var(--lovelace-background)'
 resources:
   - url: /community_plugin/compact-custom-header/compact-custom-header.js
     type: module
+  - url: /community_plugin/decluttering-card/decluttering-card.js
+    type: module
   - url: /community_plugin/swipe-card/swipe-card.js
     type: module
   - url: /community_plugin/button-card/button-card.js
@@ -55,6 +57,92 @@ cch:
         user: "Chris"
       config:
         hide_tabs: "9999"
+
+decluttering_templates:
+  plant:
+    default:
+      - name:
+      - name_color: "#E0E0E0"
+      - name_shadow_color: "#3B4049"
+      - image:
+      - entity_left_offset: 10%
+      - entity_problems:
+      - entity_moisture:
+      - entity_temperature:
+      - entity_conductivity:
+      - entity_brightness:
+    card:
+      type: picture-elements
+      image: '[[image]]'
+      elements:
+        - type: custom:text-element
+          text: '[[name]]'
+          style:
+            top: 1.25em
+            left: 1.5em
+            transform: none
+            color: '[[name_color]]'
+            filter: "drop-shadow([[name_shadow_color]] 0 0 2px)"
+            font-size: 1.25em
+            font-weight: 500
+
+        - type: conditional
+          conditions:
+            - entity: '[[entity_problems]]'
+              state_not: "none"
+          elements:
+            - type: icon
+              icon: mdi:alert-circle
+              title: Problems
+              entity: '[[entity_problems]]'
+              tap_action:
+                action: more-info
+              style:
+                right: -1%
+                top: 7%
+                color: var(--google-red-500)
+                filter: drop-shadow(black 0 0 1px)
+
+        - type: state-badge
+          entity: '[[entity_moisture]]'
+          title:
+          style:
+            top: 90%
+            left: '[[entity_left_offset]]'
+            white-space: nowrap
+            color: transparent
+            --ha-label-badge-font-size: 1.2em
+            --label-badge-red: "#363941"
+        - type: state-badge
+          entity: '[[entity_temperature]]'
+          title:
+          style:
+            top: 90%
+            left: calc([[entity_left_offset]] + 13%)
+            white-space: nowrap
+            color: transparent
+            --ha-label-badge-font-size: 1.2em
+            --label-badge-red: "#363941"
+        - type: state-badge
+          entity: '[[entity_conductivity]]'
+          title:
+          style:
+            top: 90%
+            left: calc([[entity_left_offset]] + 26%)
+            white-space: nowrap
+            color: transparent
+            --ha-label-badge-font-size: 1.2em
+            --label-badge-red: "#363941"
+        - type: state-badge
+          entity: '[[entity_brightness]]'
+          title:
+          style:
+            top: 90%
+            left: calc([[entity_left_offset]] + 39%)
+            white-space: nowrap
+            color: transparent
+            --ha-label-badge-font-size: 1.2em
+            --label-badge-red: "#363941"
 
 views:
   - title: Home
