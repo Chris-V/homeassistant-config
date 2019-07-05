@@ -15,9 +15,6 @@ input_boolean:
   carl_scheduled_lights:
     name: "Carl's lights scheduling"
     icon: "mdi:home-automation"
-  carl_advanced_controls:
-    name: "Carl's advanced controls"
-    icon: "mdi:home-automation"
 
 binary_sensor:
   - platform: template

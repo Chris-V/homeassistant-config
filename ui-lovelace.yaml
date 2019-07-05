@@ -4,15 +4,19 @@ title: Avatar
 background: 'var(--lovelace-background)'
 
 resources:
+  - url: /community_plugin/compact-custom-header/compact-custom-header.js
+    type: module
+  - url: /community_plugin/swipe-card/swipe-card.js
+    type: module
+  - url: /community_plugin/button-card/button-card.js
+    type: module
+  - url: /community_plugin/lovelace-card-tools/card-tools.js
+    type: js
   - url: /community_plugin/vertical-stack-in-card/vertical-stack-in-card.js
     type: js
   - url: /community_plugin/secondaryinfo-entity-row/secondaryinfo-entity-row.js
     type: js
   - url: /community_plugin/text-element/text-element.js
-    type: js
-  - url: /community_plugin/compact-custom-header/compact-custom-header.js
-    type: module
-  - url: /community_plugin/lovelace-card-tools/card-tools.js
     type: js
   - url: /community_plugin/lovelace-gap-card/gap-card.js
     type: js
@@ -20,7 +24,7 @@ resources:
     type: js
   - url: /community_plugin/lovelace-toggle-lock-entity-row/toggle-lock-entity-row.js
     type: js
-  - url: /local/header-card.js?v=1
+  - url: /local/header-card.js?v=2
     type: js
 
 cch:

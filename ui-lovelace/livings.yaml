@@ -1,216 +1,257 @@
-- type: picture-elements
-  image: /local/frontend/carl_card.jpg
-  elements:
-    # Translucent footer
-    - type: custom:gap-card
-      height: 0
-      style:
-        position: absolute
-        left: 0
-        right: 0
-        bottom: 0
-        top: 81%
-        height: auto
-        transform: none
-        background-color: rgba(0, 0, 0, 0.45)
-
-    # Hidden toggle for advanced settings
-    - type: conditional
-      conditions:
-        - entity: input_boolean.carl_advanced_controls
-          state: "on"
-        - entity: binary_sensor.carl_requires_attention
-          state: "off"
+- type: custom:swipe-card
+  parameters:
+    effect: flip
+    autoHeight: yes
+  cards:
+    - type: picture-elements
+      image: /local/frontend/carl_card.jpg
       elements:
-        - type: icon
-          icon: mdi:arrow-collapse-all
-          title: Advanced controls
-          entity: input_boolean.carl_advanced_controls
+        # Translucent footer
+        - type: custom:gap-card
+          height: 0
+          style:
+            position: absolute
+            left: 0
+            right: 0
+            bottom: 0
+            top: 81%
+            height: auto
+            transform: none
+            background-color: rgba(0, 0, 0, 0.45)
+
+        # Problem indicator
+        - type: conditional
+          conditions:
+            - entity: binary_sensor.carl_requires_attention
+              state: "on"
+          elements:
+            - type: icon
+              icon: mdi:alert-circle
+              title: Advanced controls
+              entity: binary_sensor.carl_requires_attention
+              style:
+                right: -2%
+                top: 5%
+                color: var(--google-red-500)
+                filter: drop-shadow(black 0 0 1px)
+
+        # Switches (footer left)
+        - type: state-icon
+          entity: switch.carl_uv_light
+          title: UV light
           tap_action:
             action: toggle
-          hold_action:
-            action: none
           style:
-            right: -2%
-            top: 5%
-            color: "#E0E0E0"
-            filter: drop-shadow(black 0 0 1px)
-    - type: conditional
-      conditions:
-        - entity: input_boolean.carl_advanced_controls
-          state: "off"
-        - entity: binary_sensor.carl_requires_attention
-          state: "off"
-      elements:
-        - type: icon
-          icon: mdi:arrow-expand-all
-          title: ' '
-          entity: input_boolean.carl_advanced_controls
+            top: &carl_switch_top 90%
+            left: 5%
+            color: &carl_footer_color "#E0E0E0"
+
+        - type: state-icon
+          entity: switch.carl_heater
+          title: Heater
           tap_action:
             action: toggle
-          hold_action:
-            action: none
           style:
-            right: -2%
-            top: 5%
-            color: transparent
-            cursor: default
-    - type: conditional
-      conditions:
-        - entity: binary_sensor.carl_requires_attention
-          state: "on"
-      elements:
-        - type: icon
-          icon: mdi:alert-circle
-          title: Advanced controls
-          entity: input_boolean.carl_advanced_controls
+            top: *carl_switch_top
+            left: 14%
+            color: *carl_footer_color
+
+        - type: state-icon
+          entity: switch.carl_heat_bulb
+          title: Heat bulb
           tap_action:
             action: toggle
-          hold_action:
-            action: none
           style:
-            right: -2%
-            top: 5%
-            color: var(--google-red-500)
-            filter: drop-shadow(black 0 0 1px)
+            top: *carl_switch_top
+            left: 23%
+            color: *carl_footer_color
 
-    # Switches (footer left)
-    - type: state-icon
-      entity: switch.carl_uv_light
-      title: UV light
-      tap_action:
-        action: toggle
-      style:
-        top: &carl_switch_top 90%
-        left: 5%
-        color: &carl_footer_color "#E0E0E0"
+        - type: state-icon
+          entity: switch.carl_outlet_4
+          title: Mister
+          tap_action:
+            action: toggle
+          style:
+            top: *carl_switch_top
+            left: 32%
+            color: *carl_footer_color
 
-    - type: state-icon
-      entity: switch.carl_heater
-      title: Heater
-      tap_action:
-        action: toggle
-      style:
-        top: *carl_switch_top
-        left: 14%
-        color: *carl_footer_color
+        # Sensors (footer right)
+        - type: icon
+          icon: mdi:thermometer
+          entity: sensor.carl_temperature
+          title: Temperature
+          tap_action:
+            action: more-info
+          style:
+            top: &carl_sensor_icon_top 87%
+            left: 64%
+            color: *carl_footer_color
+        - type: state-label
+          entity: sensor.carl_temperature
+          title: Temperature
+          tap_action:
+            action: more-info
+          style:
+            top: &carl_sensor_label_top 96%
+            left: 64%
+            color: *carl_footer_color
 
-    - type: state-icon
-      entity: switch.carl_heat_bulb
-      title: Heat bulb
-      tap_action:
-        action: toggle
-      style:
-        top: *carl_switch_top
-        left: 23%
-        color: *carl_footer_color
+        - type: icon
+          icon: mdi:water-percent
+          entity: sensor.carl_humidity
+          title: Humidity
+          tap_action:
+            action: more-info
+          style:
+            top: *carl_sensor_icon_top
+            left: 78%
+            color: *carl_footer_color
+        - type: state-label
+          entity: sensor.carl_humidity
+          title: Humidity
+          tap_action:
+            action: more-info
+          style:
+            top: *carl_sensor_label_top
+            left: 78%
+            color: *carl_footer_color
 
-    - type: state-icon
-      entity: switch.carl_outlet_4
-      title: Mister
-      tap_action:
-        action: toggle
-      style:
-        top: *carl_switch_top
-        left: 32%
-        color: *carl_footer_color
+        - type: icon
+          icon: mdi:spotlight-beam
+          entity: sensor.carl_basking_temperature
+          title: Basking temperature
+          tap_action:
+            action: more-info
+          style:
+            top: *carl_sensor_icon_top
+            left: 92%
+            color: *carl_footer_color
+        - type: state-label
+          entity: sensor.carl_basking_temperature
+          title: Basking temperature
+          tap_action:
+            action: more-info
+          style:
+            top: *carl_sensor_label_top
+            left: 92%
+            color: *carl_footer_color
 
-    # Sensors (footer right)
-    - type: icon
-      icon: mdi:thermometer
-      entity: sensor.carl_temperature
-      title: Temperature
-      tap_action:
-        action: more-info
-      style:
-        top: &carl_sensor_icon_top 87%
-        left: 64%
-        color: *carl_footer_color
-    - type: state-label
-      entity: sensor.carl_temperature
-      title: Temperature
-      tap_action:
-        action: more-info
-      style:
-        top: &carl_sensor_label_top 96%
-        left: 64%
-        color: *carl_footer_color
-
-    - type: icon
-      icon: mdi:water-percent
-      entity: sensor.carl_humidity
-      title: Humidity
-      tap_action:
-        action: more-info
-      style:
-        top: *carl_sensor_icon_top
-        left: 78%
-        color: *carl_footer_color
-    - type: state-label
-      entity: sensor.carl_humidity
-      title: Humidity
-      tap_action:
-        action: more-info
-      style:
-        top: *carl_sensor_label_top
-        left: 78%
-        color: *carl_footer_color
-
-    - type: icon
-      icon: mdi:spotlight-beam
-      entity: sensor.carl_basking_temperature
-      title: Basking temperature
-      tap_action:
-        action: more-info
-      style:
-        top: *carl_sensor_icon_top
-        left: 92%
-        color: *carl_footer_color
-    - type: state-label
-      entity: sensor.carl_basking_temperature
-      title: Basking temperature
-      tap_action:
-        action: more-info
-      style:
-        top: *carl_sensor_label_top
-        left: 92%
-        color: *carl_footer_color
-
-- type: conditional
-  conditions:
-    - entity: input_boolean.carl_advanced_controls
-      state: "on"
-  card:
-    type: entities
-    title: Carl (advanced)
-    show_header_toggle: false
-    entities:
-      - entity: input_boolean.carl_scheduled_lights
-        name: Scheduling
-      - type: custom:secondaryinfo-entity-row
-        entity: switch.carl_power_strip
-        name: Master
-        secondary_info: "[[ sensor.carl_power_strip_power ]] [[ sensor.carl_power_strip_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_power_strip_energy ]] [[ sensor.carl_power_strip_energy.attributes.unit_of_measurement ]]"
-      - type: custom:secondaryinfo-entity-row
-        entity: switch.carl_uv_light
-        name: UV light
-        secondary_info: "[[ sensor.carl_uv_light_power ]] [[ sensor.carl_uv_light_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_uv_light_energy ]] [[ sensor.carl_uv_light_energy.attributes.unit_of_measurement ]]"
-      - type: custom:secondaryinfo-entity-row
-        entity: switch.carl_heater
-        name: Heater
-        secondary_info: "[[ sensor.carl_heater_power ]] [[ sensor.carl_heater_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_heater_energy ]] [[ sensor.carl_heater_energy.attributes.unit_of_measurement ]]"
-      - type: custom:secondaryinfo-entity-row
-        entity: switch.carl_heat_bulb
-        name: Heat bulb
-        secondary_info: "[[ sensor.carl_heat_bulb_power ]] [[ sensor.carl_heat_bulb_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_heat_bulb_energy ]] [[ sensor.carl_heat_bulb_energy.attributes.unit_of_measurement ]]"
-      - type: custom:secondaryinfo-entity-row
-        entity: switch.carl_outlet_4
-        name: Mister
-        secondary_info: "[[ sensor.carl_outlet_4_power ]] [[ sensor.carl_outlet_4_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_outlet_4_energy ]] [[ sensor.carl_outlet_4_energy.attributes.unit_of_measurement ]]"
-      - type: custom:secondaryinfo-entity-row
-        entity: switch.carl_outlet_5
-        name: Controller
-        secondary_info: "[[ sensor.carl_outlet_5_power ]] [[ sensor.carl_outlet_5_power.attributes.unit_of_measurement ]] ⁓ [[ sensor.carl_outlet_5_energy ]] [[ sensor.carl_outlet_5_energy.attributes.unit_of_measurement ]]"
+    - type: vertical-stack
+      cards:
+        - type: custom:header-card
+          title: Carl
+          show_frame: yes
+        - type: horizontal-stack
+          cards:
+            - type: custom:button-card
+              name: Scheduling
+              entity: input_boolean.carl_scheduled_lights
+              hold_action: more-info
+              lock: yes
+              aspect_ratio: 1.7/1
+              styles: &carl_button_styles
+                name:
+                  - font-size: 14px
+                  - padding: 0px 5px
+                label:
+                  - color: "#80828A"
+                  - font-size: 12px
+                  - padding: 0px 5px
+            - type: custom:button-card
+              name: Master
+              entity: switch.carl_power_strip
+              hold_action: more-info
+              lock: yes
+              aspect_ratio: 1.7/1
+              styles: *carl_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.carl_power_strip_power'].state)
+                    + ' '
+                    + states['sensor.carl_power_strip_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_power_strip_energy'].state)
+                    + ' '
+                    + states['sensor.carl_power_strip_energy'].attributes['unit_of_measurement']
+            - type: custom:button-card
+              name: Controller
+              entity: switch.carl_outlet_5
+              hold_action: more-info
+              lock: yes
+              aspect_ratio: 1.7/1
+              styles: *carl_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.carl_outlet_5_power'].state)
+                    + ' '
+                    + states['sensor.carl_outlet_5_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_outlet_5_energy'].state)
+                    + ' '
+                    + states['sensor.carl_outlet_5_energy'].attributes['unit_of_measurement']
+        - type: horizontal-stack
+          cards:
+            - type: custom:button-card
+              name: UV light
+              entity: switch.carl_uv_light
+              hold_action: more-info
+              aspect_ratio: 1.2/1
+              styles: *carl_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.carl_uv_light_power'].state)
+                    + ' '
+                    + states['sensor.carl_uv_light_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_uv_light_energy'].state)
+                    + ' '
+                    + states['sensor.carl_uv_light_energy'].attributes['unit_of_measurement']
+            - type: custom:button-card
+              name: Heater
+              entity: switch.carl_heater
+              hold_action: more-info
+              aspect_ratio: 1.2/1
+              styles: *carl_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.carl_heater_power'].state)
+                    + ' '
+                    + states['sensor.carl_heater_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_heater_energy'].state)
+                    + ' '
+                    + states['sensor.carl_heater_energy'].attributes['unit_of_measurement']
+            - type: custom:button-card
+              name: Heat bulb
+              entity: switch.carl_heat_bulb
+              hold_action: more-info
+              aspect_ratio: 1.2/1
+              styles: *carl_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.carl_heat_bulb_power'].state)
+                    + ' '
+                    + states['sensor.carl_heat_bulb_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_heat_bulb_energy'].state)
+                    + ' '
+                    + states['sensor.carl_heat_bulb_energy'].attributes['unit_of_measurement']
+            - type: custom:button-card
+              name: Mister
+              entity: switch.carl_outlet_4
+              hold_action: more-info
+              aspect_ratio: 1.2/1
+              styles: *carl_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.carl_outlet_4_power'].state)
+                    + ' '
+                    + states['sensor.carl_outlet_4_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_outlet_4_energy'].state)
+                    + ' '
+                    + states['sensor.carl_outlet_4_energy'].attributes['unit_of_measurement']
 
 - type: picture-elements
   image: /local/frontend/avocado_hall_card.jpg

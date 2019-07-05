@@ -3,7 +3,7 @@ class HeaderCard extends HTMLElement {
 
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
     }
 
     set hass(hass) {
@@ -13,7 +13,7 @@ class HeaderCard extends HTMLElement {
             this.maybeRender();
         }
         if (this.hasRendered()) {
-            this._children.forEach(c => c.hass = hass)
+            this._children.forEach(c => c.hass = hass);
         }
     }
 
@@ -34,21 +34,8 @@ class HeaderCard extends HTMLElement {
 
         this.clearShadowRoot();
 
-        const header = document.createElement("div");
-        header.className = "header";
-        header.style = `
-            font-family: var(--paper-font-headline_-_font-family);
-            -webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);
-            font-size: var(--paper-font-headline_-_font-size);
-            font-weight: var(--paper-font-headline_-_font-weight);
-            letter-spacing: var(--paper-font-headline_-_letter-spacing);
-            line-height: var(--paper-font-headline_-_line-height);
-            text-rendering: var(--paper-font-common-expensive-kerning_-_text-rendering);
-            color: var(--primary-text-color);
-            padding: 24px 16px 12px 16px;
-            display: flex;
-            justify-content: space-between;  
-        `;
+        const header = document.createElement('div');
+        header.className = 'card-header';
         header.innerHTML = `<div class="name">${this._config.title}</div>`;
 
         if (this._config.entities) {
@@ -60,7 +47,28 @@ class HeaderCard extends HTMLElement {
             this._children.push(toggle);
         }
 
-        this.shadowRoot.appendChild(header);
+        if (this._config.show_frame) {
+            const card = document.createElement('ha-card');
+            card.append(header);
+
+            this.shadowRoot.appendChild(card);
+        } else {
+            header.style = `
+            font-family: var(--paper-font-headline_-_font-family);
+            -webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);
+            font-size: var(--paper-font-headline_-_font-size);
+            font-weight: var(--paper-font-headline_-_font-weight);
+            letter-spacing: var(--paper-font-headline_-_letter-spacing);
+            line-height: var(--paper-font-headline_-_line-height);
+            text-rendering: var(--paper-font-common-expensive-kerning_-_text-rendering);
+            color: var(--primary-text-color);
+            padding: 24px 16px 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            `;
+
+            this.shadowRoot.appendChild(header);
+        }
     }
 
     clearShadowRoot() {
