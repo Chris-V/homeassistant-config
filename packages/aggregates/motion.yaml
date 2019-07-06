@@ -30,7 +30,7 @@ sensor:
         friendly_name: "Last motion"
         entity_id: *motion_entities
         icon_template: >-
-          mdi:{% if is_state('binary_sensor.all_motions', 'on') %}run{% else %}walk{% endif %}
+          mdi:{% if is_state('binary_sensor.all_motions', 'on') %}motion-sensor{% else %}walk{% endif %}
         value_template: >-
           {{
              (states
