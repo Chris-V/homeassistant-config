@@ -25,6 +25,7 @@ recorder:
       - binary_sensor.lounge_window
       - binary_sensor.main_bathroom_door
       - binary_sensor.main_bathroom_motion
+      - binary_sensor.slinky_requires_attention
       - binary_sensor.studio_window
       - binary_sensor.ups_online_status
       - binary_sensor.water_heater_leak
@@ -45,6 +46,7 @@ recorder:
       - input_boolean.notify_network_device_outages
       - input_boolean.notify_power_outages
       - input_boolean.power_outage_manage_devices
+      - input_boolean.slinky_scheduled_lights
       - input_select.default_theme
       - light.basement_bathroom
       - light.basement_bathroom_vanity
@@ -112,6 +114,11 @@ recorder:
       - sensor.relay_south_cpu_used
       - sensor.relay_south_cpu_temp
       - sensor.relay_south_ram_used_percent
+      - sensor.slinky_power_strip_energy
+      - sensor.slinky_power_strip_power
+      - sensor.slinky_uv_light_power
+      - sensor.slinky_heater_power
+      - sensor.slinky_heat_bulb_power
       - sensor.spidy_battery
       - sensor.spidy_brightness
       - sensor.spidy_conductivity
@@ -147,6 +154,13 @@ recorder:
       - switch.network_media
       - switch.network_relay_north
       - switch.network_relay_south
+      - switch.slinky_uv_light
+      - switch.slinky_heater
+      - switch.slinky_heat_bulb
+      - switch.slinky_outlet_4
+      - switch.slinky_outlet_5
+      - switch.slinky_outlet_6
+      - switch.slinky_outlet_7
       - switch.unused_rf_3
       - switch.unused_rf_4
 

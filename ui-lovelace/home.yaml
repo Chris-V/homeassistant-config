@@ -71,25 +71,27 @@
             action: none
 
 - type: glance
-  columns: 4
+  columns: 3
   entities:
     - entity: binary_sensor.all_motions
       name: Motion
     - entity: sensor.last_motion
       name: Last motion
       icon: mdi:motion-sensor
+    - entity: binary_sensor.all_leaks
+      name: Leaks
     - entity: binary_sensor.all_doors
       name: Doors
     - entity: binary_sensor.all_windows
       name: Windows
-    - entity: group.all_plants
-      name: Plants
-    - entity: binary_sensor.carl_requires_attention
-      name: Carl
-    - entity: binary_sensor.all_leaks
-      name: Leaks
     - entity: sensor.all_batteries
       name: Batteries
+    - entity: binary_sensor.carl_requires_attention
+      name: Carl
+    - entity: binary_sensor.carl_requires_attention
+      name: Slinky
+    - entity: group.all_plants
+      name: Plants
 
 - type: weather-forecast
   entity: weather.dark_sky

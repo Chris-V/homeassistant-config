@@ -252,6 +252,251 @@
                     + ' '
                     + states['sensor.carl_outlet_4_energy'].attributes['unit_of_measurement']
 
+- type: custom:swipe-card
+  parameters:
+    effect: flip
+    autoHeight: yes
+  cards:
+    - type: picture-elements
+      image: /local/frontend/slinky_card.jpg
+      elements:
+        # Translucent footer
+        - type: custom:gap-card
+          height: 0
+          style:
+            position: absolute
+            left: 0
+            right: 0
+            bottom: 0
+            top: 81%
+            height: auto
+            transform: none
+            background-color: rgba(0, 0, 0, 0.45)
+
+        # Problem indicator
+        - type: conditional
+          conditions:
+            - entity: binary_sensor.slinky_requires_attention
+              state: "on"
+          elements:
+            - type: icon
+              icon: mdi:alert-circle
+              entity: binary_sensor.slinky_requires_attention
+              style:
+                right: -2%
+                top: 5%
+                color: var(--google-red-500)
+                filter: drop-shadow(black 0 0 1px)
+
+        # Switches (footer left)
+        - type: state-icon
+          entity: switch.slinky_uv_light
+          title: UV light
+          tap_action:
+            action: toggle
+          style:
+            top: &slinky_switch_top 90%
+            left: 5%
+            color: &slinky_footer_color "#E0E0E0"
+
+        - type: state-icon
+          entity: switch.slinky_heater
+          title: Heater
+          tap_action:
+            action: toggle
+          style:
+            top: *slinky_switch_top
+            left: 14%
+            color: *slinky_footer_color
+
+        - type: state-icon
+          entity: switch.slinky_heat_bulb
+          title: Heat bulb
+          tap_action:
+            action: toggle
+          style:
+            top: *slinky_switch_top
+            left: 23%
+            color: *slinky_footer_color
+
+        # Sensors (footer right)
+        - type: icon
+          icon: mdi:thermometer
+          entity: sensor.slinky_temperature
+          title: Temperature
+          tap_action:
+            action: more-info
+          style:
+            top: &slinky_sensor_icon_top 87%
+            left: 64%
+            color: *slinky_footer_color
+        - type: state-label
+          entity: sensor.slinky_temperature
+          title: Temperature
+          tap_action:
+            action: more-info
+          style:
+            top: &slinky_sensor_label_top 96%
+            left: 64%
+            color: *slinky_footer_color
+
+        - type: icon
+          icon: mdi:water-percent
+          entity: sensor.slinky_humidity
+          title: Humidity
+          tap_action:
+            action: more-info
+          style:
+            top: *slinky_sensor_icon_top
+            left: 78%
+            color: *slinky_footer_color
+        - type: state-label
+          entity: sensor.slinky_humidity
+          title: Humidity
+          tap_action:
+            action: more-info
+          style:
+            top: *slinky_sensor_label_top
+            left: 78%
+            color: *slinky_footer_color
+
+        - type: icon
+          icon: mdi:spotlight-beam
+          entity: sensor.slinky_basking_temperature
+          title: Basking temperature
+          tap_action:
+            action: more-info
+          style:
+            top: *slinky_sensor_icon_top
+            left: 92%
+            color: *slinky_footer_color
+        - type: state-label
+          entity: sensor.slinky_basking_temperature
+          title: Basking temperature
+          tap_action:
+            action: more-info
+          style:
+            top: *slinky_sensor_label_top
+            left: 92%
+            color: *slinky_footer_color
+
+    - type: vertical-stack
+      cards:
+        - type: custom:header-card
+          title: Slinky
+          show_frame: yes
+        - type: horizontal-stack
+          cards:
+            - type: custom:button-card
+              name: Scheduling
+              entity: input_boolean.slinky_scheduled_lights
+              hold_action: more-info
+              lock: yes
+              aspect_ratio: 1.7/1
+              styles: &slinky_button_styles
+                name:
+                  - font-size: 14px
+                  - padding: 0px 5px
+                label:
+                  - color: "#80828A"
+                  - font-size: 12px
+                  - padding: 0px 5px
+            - type: custom:button-card
+              name: Master
+              entity: switch.slinky_power_strip
+              hold_action: more-info
+              lock: yes
+              aspect_ratio: 1.7/1
+              styles: *slinky_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.slinky_power_strip_power'].state)
+                    + ' '
+                    + states['sensor.slinky_power_strip_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.slinky_power_strip_energy'].state)
+                    + ' '
+                    + states['sensor.slinky_power_strip_energy'].attributes['unit_of_measurement']
+            - type: custom:button-card
+              name: Controller
+              entity: switch.slinky_outlet_5
+              hold_action: more-info
+              lock: yes
+              aspect_ratio: 1.7/1
+              styles: *slinky_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.slinky_outlet_5_power'].state)
+                    + ' '
+                    + states['sensor.slinky_outlet_5_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.slinky_outlet_5_energy'].state)
+                    + ' '
+                    + states['sensor.slinky_outlet_5_energy'].attributes['unit_of_measurement']
+        - type: horizontal-stack
+          cards:
+            - type: custom:button-card
+              name: UV light
+              entity: switch.slinky_uv_light
+              hold_action: more-info
+              aspect_ratio: 1.2/1
+              styles: *slinky_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.slinky_uv_light_power'].state)
+                    + ' '
+                    + states['sensor.slinky_uv_light_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.slinky_uv_light_energy'].state)
+                    + ' '
+                    + states['sensor.slinky_uv_light_energy'].attributes['unit_of_measurement']
+            - type: custom:button-card
+              name: Heater
+              entity: switch.slinky_heater
+              hold_action: more-info
+              aspect_ratio: 1.2/1
+              styles: *slinky_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.slinky_heater_power'].state)
+                    + ' '
+                    + states['sensor.slinky_heater_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.slinky_heater_energy'].state)
+                    + ' '
+                    + states['sensor.slinky_heater_energy'].attributes['unit_of_measurement']
+            - type: custom:button-card
+              name: Heat bulb
+              entity: switch.slinky_heat_bulb
+              hold_action: more-info
+              aspect_ratio: 1.2/1
+              styles: *slinky_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.slinky_heat_bulb_power'].state)
+                    + ' '
+                    + states['sensor.slinky_heat_bulb_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.slinky_heat_bulb_energy'].state)
+                    + ' '
+                    + states['sensor.slinky_heat_bulb_energy'].attributes['unit_of_measurement']
+            - type: custom:button-card
+              name: Outlet 4
+              entity: switch.slinky_outlet_4
+              hold_action: more-info
+              aspect_ratio: 1.2/1
+              styles: *slinky_button_styles
+              show_label: yes
+              label_template: >
+                return Math.round(states['sensor.slinky_outlet_4_power'].state)
+                    + ' '
+                    + states['sensor.slinky_outlet_4_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.slinky_outlet_4_energy'].state)
+                    + ' '
+                    + states['sensor.slinky_outlet_4_energy'].attributes['unit_of_measurement']
+
+
 - type: custom:decluttering-card
   template: plant
   variables:

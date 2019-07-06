@@ -123,6 +123,7 @@
         - entity: zwave.office_light_dimmer
         - entity: zwave.shed_outdoor_light_switch
         - entity: zwave.side_porch_light_switch
+        - entity: zwave.slinky_power_strip
         - entity: zwave.workshop_light_switch
     - type: custom:fold-entity-row
       open: False

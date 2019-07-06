@@ -1,0 +1,190 @@
+homeassistant:
+  customize:
+    switch.slinky_heat_bulb:
+      icon: "mdi:spotlight-beam"
+    switch.slinky_heater:
+      icon: "mdi:radiator"
+    switch.slinky_uv_light:
+      icon: "mdi:weather-sunny"
+    switch.slinky_outlet_4:
+      icon: "mdi:power-socket-us"
+    switch.slinky_outlet_5:
+      icon: "mdi:chip"
+
+input_boolean:
+  slinky_scheduled_lights:
+    name: "Slinky's lights scheduling"
+    icon: "mdi:home-automation"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      slinky_requires_attention:
+        friendly_name: "Slinky requires attention"
+        device_class: "problem"
+        value_template: >-
+          {{    is_state('input_boolean.slinky_scheduled_lights', 'off')
+             or is_state('switch.slinky_heater', 'off')
+             or (is_state('switch.slinky_heat_bulb', 'on') and states('sensor.slinky_heat_bulb_power') | float < 1)
+             or (is_state('switch.slinky_heater', 'on') and states('sensor.slinky_heater_power') | float < 1)
+             or (is_state('switch.slinky_uv_light', 'on') and states('sensor.slinky_uv_light_power') | float < 1)
+          }}
+        icon_template: >-
+          {{ 'mdi:skull'
+             if is_state('input_boolean.slinky_scheduled_lights', 'off')
+               or is_state('switch.slinky_heater', 'off')
+               or (is_state('switch.slinky_heat_bulb', 'on') and states('sensor.slinky_heat_bulb_power') | float < 1)
+               or (is_state('switch.slinky_heater', 'on') and states('sensor.slinky_heater_power') | float < 1)
+               or (is_state('switch.slinky_uv_light', 'on') and states('sensor.slinky_uv_light_power') | float < 1)
+             else 'mdi:tortoise'
+          }}
+
+# Fake sensors until everything is ready
+sensor:
+  - platform: template
+    sensors:
+      slinky_basking_temperature:
+        friendly_name: "Slinky's basking spot temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        value_template: "0.0"
+      slinky_temperature:
+        friendly_name: "Slinky's terrarium temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        value_template: "0.0"
+      slinky_humidity:
+        friendly_name: "Slinky's terrarium humidity"
+        device_class: "humidity"
+        unit_of_measurement: "%"
+        value_template: "0.0"
+
+automation:
+  - alias: slinky_wake_up
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: time
+        at: "9:00:00"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.slinky_scheduled_lights"
+        state: "on"
+    action:
+      - service: switch.turn_on
+        entity_id:
+          - "switch.slinky_heat_bulb"
+          - "switch.slinky_heater"
+          - "switch.slinky_uv_light"
+
+  - alias: slinky_sleep
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: time
+        at: "23:00:00"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.slinky_scheduled_lights"
+        state: "on"
+    action:
+      - service: switch.turn_off
+        entity_id:
+          - "switch.slinky_heat_bulb"
+          - "switch.slinky_uv_light"
+      - service: switch.turn_on
+        entity_id: "switch.slinky_heater"
+
+  - alias: slinky_uv_burned_out
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "switch.slinky_uv_light"
+        from: "off"
+        to: "on"
+        for: &on_delay
+          seconds: 330 # Wattage report rate is 300 seconds / 5 minutes
+      - platform: numeric_state
+        entity_id: "sensor.slinky_uv_light_power"
+        below: &min_power 1
+    condition:
+      - condition: state
+        entity_id: "switch.slinky_uv_light"
+        state: "on"
+        for: *on_delay
+      - condition: numeric_state
+        entity_id: "sensor.slinky_uv_light_power"
+        below: *min_power
+    action:
+      - service: python_script.notify
+        data:
+          audio: True
+          persistent: True
+          push_target: "household"
+          tag: "slinky_uv_burned_out"
+          url: "/lovelace/livings"
+          title: "Check Slinky's UV Light"
+          message: "It appears that Slinky's UV light has burned out."
+
+  - alias: slinky_heat_bulb_burned_out
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "switch.slinky_heat_bulb"
+        from: "off"
+        to: "on"
+        for: *on_delay
+      - platform: numeric_state
+        entity_id: "sensor.slinky_heat_bulb_power"
+        below: *min_power
+    condition:
+      - condition: state
+        entity_id: "switch.slinky_heat_bulb"
+        state: "on"
+        for: *on_delay
+      - condition: numeric_state
+        entity_id: "sensor.slinky_heat_bulb_power"
+        below: *min_power
+    action:
+      - service: python_script.notify
+        data:
+          audio: True
+          persistent: True
+          push_target: "household"
+          tag: "slinky_heat_bulb_burned_out"
+          url: "/lovelace/livings"
+          title: "Check Slinky's Heat Bulb"
+          message: "It appears that Slinky's heat bulb has burned out."
+
+  - alias: slinky_heater_burned_out
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "switch.slinky_heater"
+        from: "off"
+        to: "on"
+        for: *on_delay
+      - platform: numeric_state
+        entity_id: "sensor.slinky_heater_power"
+        below: *min_power
+    condition:
+      - condition: state
+        entity_id: "switch.slinky_heater"
+        state: "on"
+        for: *on_delay
+      - condition: numeric_state
+        entity_id: "sensor.slinky_heater_power"
+        below: *min_power
+    action:
+      - service: python_script.notify
+        data:
+          audio: True
+          persistent: True
+          push_target: "household"
+          tag: "slinky_heater_burned_out"
+          url: "/lovelace/livings"
+          title: "Check Slinky's Ceramic Heater"
+          message: "It appears that Slinky's ceramic heater has burned out."
