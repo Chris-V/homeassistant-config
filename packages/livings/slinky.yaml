@@ -22,21 +22,12 @@ binary_sensor:
       slinky_requires_attention:
         friendly_name: "Slinky requires attention"
         device_class: "problem"
+        icon_template: "mdi:tortoise"
         value_template: >-
           {{    is_state('input_boolean.slinky_scheduled_lights', 'off')
-             or is_state('switch.slinky_heater', 'off')
              or (is_state('switch.slinky_heat_bulb', 'on') and states('sensor.slinky_heat_bulb_power') | float < 1)
              or (is_state('switch.slinky_heater', 'on') and states('sensor.slinky_heater_power') | float < 1)
              or (is_state('switch.slinky_uv_light', 'on') and states('sensor.slinky_uv_light_power') | float < 1)
-          }}
-        icon_template: >-
-          {{ 'mdi:skull'
-             if is_state('input_boolean.slinky_scheduled_lights', 'off')
-               or is_state('switch.slinky_heater', 'off')
-               or (is_state('switch.slinky_heat_bulb', 'on') and states('sensor.slinky_heat_bulb_power') | float < 1)
-               or (is_state('switch.slinky_heater', 'on') and states('sensor.slinky_heater_power') | float < 1)
-               or (is_state('switch.slinky_uv_light', 'on') and states('sensor.slinky_uv_light_power') | float < 1)
-             else 'mdi:tortoise'
           }}
 
 # Fake sensors until everything is ready
@@ -73,7 +64,6 @@ automation:
     action:
       - service: switch.turn_on
         entity_id:
-          - "switch.slinky_heat_bulb"
           - "switch.slinky_heater"
           - "switch.slinky_uv_light"
 
