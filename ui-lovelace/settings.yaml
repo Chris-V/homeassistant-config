@@ -82,8 +82,12 @@
       group_config:
         secondary_info: last-changed
       items:
+        - entity: sensor.dollorama_battery
+          name: Dollorama
         - entity: sensor.maitre_doyle_battery
           name: Maître Doyle
+        - entity: sensor.rubber_ducky_battery
+          name: Rubber Ducky
         - entity: sensor.spidy_battery
           name: Spidy
         - entity: sensor.viny_battery

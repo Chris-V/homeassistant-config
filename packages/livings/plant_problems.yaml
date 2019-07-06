@@ -12,7 +12,9 @@ automation:
     trigger:
       - platform: state
         entity_id:
+          - "sensor.dollorama_problems"
           - "sensor.maitre_doyle_problems"
+          - "sensor.rubber_ducky_problems"
           - "sensor.spidy_problems"
           - "sensor.viny_problems"
     condition:

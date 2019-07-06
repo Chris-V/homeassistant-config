@@ -17,11 +17,11 @@ homeassistant:
 plant:
   viny:
     sensors:
-      battery: sensor.viny_battery
-      brightness: sensor.viny_brightness
-      conductivity: sensor.viny_conductivity
-      moisture: sensor.viny_moisture
-      temperature: sensor.viny_temperature
+      battery: "sensor.viny_battery"
+      brightness: "sensor.viny_brightness"
+      conductivity: "sensor.viny_conductivity"
+      moisture: "sensor.viny_moisture"
+      temperature: "sensor.viny_temperature"
     min_battery: 15
     min_moisture: 10
     min_temperature: 16

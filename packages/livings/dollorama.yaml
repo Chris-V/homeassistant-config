@@ -1,0 +1,83 @@
+homeassistant:
+  customize:
+    plant.dollorama:
+      friendly_name: "Dollorama"
+    sensor.dollorama_battery:
+      friendly_name: "Dollorama's battery"
+      battery_type: "CR2032 3V"
+    sensor.dollorama_brightness:
+      friendly_name: "Dollorama's brightness"
+    sensor.dollorama_conductivity:
+      friendly_name: "Dollorama's conductivity"
+    sensor.dollorama_moisture:
+      friendly_name: "Dollorama's moisture"
+    sensor.dollorama_temperature:
+      friendly_name: "Dollorama's temperature"
+
+plant:
+  dollorama:
+    sensors:
+      battery: "sensor.dollorama_battery"
+      brightness: "sensor.dollorama_brightness"
+      conductivity: "sensor.dollorama_conductivity"
+      moisture: "sensor.dollorama_moisture"
+      temperature: "sensor.dollorama_temperature"
+    min_battery: 15
+    min_moisture: 15
+    max_moisture: 60
+    min_temperature: 10
+    max_temperature: 32
+    min_conductivity: 35
+
+sensor:
+  - platform: template
+    sensors:
+      dollorama_problems:
+        friendly_name: "Dollorama"
+        value_template: "{{ state_attr('plant.dollorama', 'problem') or 'none' }}"
+
+  - platform: mqtt
+    name: "dollorama_battery"
+    force_update: True
+    device_class: "battery"
+    unit_of_measurement: "%"
+    state_topic: &dollorama_topic "plants/dollorama"
+    value_template: "{{ value_json.battery | int('unknown') }}"
+    json_attributes_topic: *dollorama_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
+  - platform: mqtt
+    name: "dollorama_brightness"
+    force_update: True
+    device_class: "illuminance"
+    unit_of_measurement: "lx"
+    state_topic: *dollorama_topic
+    value_template: "{{ value_json.brightness | int('unknown') }}"
+    json_attributes_topic: *dollorama_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
+  - platform: mqtt
+    name: "dollorama_conductivity"
+    force_update: True
+    unit_of_measurement: "µS/cm"
+    icon: "mdi:poop"
+    state_topic: *dollorama_topic
+    value_template: "{{ value_json.conductivity | int('unknown') }}"
+    json_attributes_topic: *dollorama_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
+  - platform: mqtt
+    name: "dollorama_moisture"
+    force_update: True
+    device_class: "humidity"
+    unit_of_measurement: "%"
+    state_topic: *dollorama_topic
+    value_template: "{{ value_json.moisture | int('unknown') }}"
+    json_attributes_topic: *dollorama_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
+  - platform: mqtt
+    name: "dollorama_temperature"
+    force_update: True
+    device_class: "temperature"
+    unit_of_measurement: "°C"
+    state_topic: *dollorama_topic
+    value_template: "{{ value_json.temperature | float('unknown') }}"
+    json_attributes_topic: *dollorama_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"

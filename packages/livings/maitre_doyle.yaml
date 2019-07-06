@@ -17,11 +17,11 @@ homeassistant:
 plant:
   maitre_doyle:
     sensors:
-      battery: sensor.maitre_doyle_battery
-      brightness: sensor.maitre_doyle_brightness
-      conductivity: sensor.maitre_doyle_conductivity
-      moisture: sensor.maitre_doyle_moisture
-      temperature: sensor.maitre_doyle_temperature
+      battery: "sensor.maitre_doyle_battery"
+      brightness: "sensor.maitre_doyle_brightness"
+      conductivity: "sensor.maitre_doyle_conductivity"
+      moisture: "sensor.maitre_doyle_moisture"
+      temperature: "sensor.maitre_doyle_temperature"
     min_battery: 15
     min_moisture: 15
     min_temperature: 16

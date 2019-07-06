@@ -86,6 +86,12 @@ recorder:
       - sensor.carl_heater_power
       - sensor.carl_heat_bulb_power
       - sensor.current_home_assistant_version
+      - sensor.dollorama_battery
+      - sensor.dollorama_brightness
+      - sensor.dollorama_conductivity
+      - sensor.dollorama_moisture
+      - sensor.dollorama_problems
+      - sensor.dollorama_temperature
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
       - sensor.guest_bedroom_window_sensor_battery
@@ -114,6 +120,12 @@ recorder:
       - sensor.relay_south_cpu_used
       - sensor.relay_south_cpu_temp
       - sensor.relay_south_ram_used_percent
+      - sensor.rubber_ducky_battery
+      - sensor.rubber_ducky_brightness
+      - sensor.rubber_ducky_conductivity
+      - sensor.rubber_ducky_moisture
+      - sensor.rubber_ducky_problems
+      - sensor.rubber_ducky_temperature
       - sensor.slinky_power_strip_energy
       - sensor.slinky_power_strip_power
       - sensor.slinky_uv_light_power

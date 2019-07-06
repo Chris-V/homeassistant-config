@@ -17,11 +17,11 @@ homeassistant:
 plant:
   spidy:
     sensors:
-      battery: sensor.spidy_battery
-      brightness: sensor.spidy_brightness
-      conductivity: sensor.spidy_conductivity
-      moisture: sensor.spidy_moisture
-      temperature: sensor.spidy_temperature
+      battery: "sensor.spidy_battery"
+      brightness: "sensor.spidy_brightness"
+      conductivity: "sensor.spidy_conductivity"
+      moisture: "sensor.spidy_moisture"
+      temperature: "sensor.spidy_temperature"
     min_battery: 15
     min_moisture: 10
     min_temperature: 16

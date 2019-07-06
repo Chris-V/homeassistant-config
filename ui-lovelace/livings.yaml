@@ -500,6 +500,17 @@
 - type: custom:decluttering-card
   template: plant
   variables:
+    - image: /local/frontend/money_tree_card.jpg
+    - name: Dollorama
+    - entity_left_offset: 51%
+    - entity_problems: sensor.dollorama_problems
+    - entity_moisture: sensor.dollorama_moisture
+    - entity_temperature: sensor.dollorama_temperature
+    - entity_conductivity: sensor.dollorama_conductivity
+    - entity_brightness: sensor.dollorama_brightness
+- type: custom:decluttering-card
+  template: plant
+  variables:
     - image: /local/frontend/avocado_hall_card.jpg
     - name: Maître Doyle
     - entity_problems: sensor.maitre_doyle_problems
@@ -507,6 +518,16 @@
     - entity_temperature: sensor.maitre_doyle_temperature
     - entity_conductivity: sensor.maitre_doyle_conductivity
     - entity_brightness: sensor.maitre_doyle_brightness
+- type: custom:decluttering-card
+  template: plant
+  variables:
+    - image: /local/frontend/jade_plant_card.jpg
+    - name: Rubber Ducky
+    - entity_problems: sensor.rubber_ducky_problems
+    - entity_moisture: sensor.rubber_ducky_moisture
+    - entity_temperature: sensor.rubber_ducky_temperature
+    - entity_conductivity: sensor.rubber_ducky_conductivity
+    - entity_brightness: sensor.rubber_ducky_brightness
 - type: custom:decluttering-card
   template: plant
   variables:
