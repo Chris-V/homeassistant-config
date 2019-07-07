@@ -7,6 +7,7 @@ recorder:
       - person
       - plant
       - remote
+      - weather
       - zha
       - zwave
     entities:
@@ -175,6 +176,11 @@ recorder:
       - switch.slinky_outlet_7
       - switch.unused_rf_3
       - switch.unused_rf_4
+
+      # Weather sensors
+      - sensor.dark_sky_humidity
+      - sensor.dark_sky_summary
+      - sensor.dark_sky_temperature
 
 history:
   include: *recorder_inclusion
