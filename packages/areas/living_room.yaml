@@ -42,15 +42,14 @@ switch:
     switches:
       living_room_tv_power:
         friendly_name: "Living room TV"
-        # Roku blocks requests when the HOst header != local IP. Can't use secrets inline so... more hackz
         command_on: |
-          curl -X POST http://$(getent hosts tv-lr.devices.local | awk '{ print $1 ; exit }'):8060/keypress/PowerOn
+          curl -sSX POST http://$(getent hosts tv-lr.devices.local | awk '{ print $1 ; exit }'):8060/keypress/PowerOn
         command_off: |
-          curl -X POST http://$(getent hosts tv-lr.devices.local | awk '{ print $1 ; exit }'):8060/keypress/PowerOff
+          curl -sSX POST http://$(getent hosts tv-lr.devices.local | awk '{ print $1 ; exit }'):8060/keypress/PowerOff
         command_state: |
-          curl -s GET http://$(getent hosts tv-lr.devices.local | awk '{ print $1 ; exit }'):8060/query/device-info \
+          curl -sSX GET http://$(getent hosts tv-lr.devices.local | awk '{ print $1 ; exit }'):8060/query/device-info \
             | grep power-mode \
-            | sed -e "s:\\s*<power-mode>DisplayOff</power-mode>:OFF:" -e "s:\\s*<power-mode>PowerOn</power-mode>:ON:"
+            | sed -e "s:\\s*<power-mode>PowerOn</power-mode>:ON:"
         value_template: '{{ value == "ON" }}'
 
 light:
