@@ -31,14 +31,13 @@ resources:
 
 cch:
   header: true
-  sidebar_swipe: true
-  sidebar_closed: true
   chevrons: false
   clock_format: 24
+  hide_config: true
+  hide_unused: true
   hide_tabs: "5"
   menu: "show"
-  notifications: "show"
-  voice: "hide"
+  voice: "show"
   options: "clock"
   exceptions:
     - conditions:
