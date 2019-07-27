@@ -165,14 +165,16 @@
               aspect_ratio: 1.7/1
               styles: *carl_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.carl_power_strip_power'].state)
-                    + ' '
-                    + states['sensor.carl_power_strip_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.carl_power_strip_energy'].state)
-                    + ' '
-                    + states['sensor.carl_power_strip_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.carl_power_strip_power'].state)
+                      + ' '
+                      + states['sensor.carl_power_strip_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.carl_power_strip_energy'].state)
+                      + ' '
+                      + states['sensor.carl_power_strip_energy'].attributes['unit_of_measurement']
+                ]]]
             - type: custom:button-card
               name: Controller
               entity: switch.carl_outlet_5
@@ -181,14 +183,16 @@
               aspect_ratio: 1.7/1
               styles: *carl_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.carl_outlet_5_power'].state)
-                    + ' '
-                    + states['sensor.carl_outlet_5_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.carl_outlet_5_energy'].state)
-                    + ' '
-                    + states['sensor.carl_outlet_5_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.carl_outlet_5_power'].state)
+                      + ' '
+                      + states['sensor.carl_outlet_5_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.carl_outlet_5_energy'].state)
+                      + ' '
+                      + states['sensor.carl_outlet_5_energy'].attributes['unit_of_measurement']
+                ]]]
         - type: horizontal-stack
           cards:
             - type: custom:button-card
@@ -198,14 +202,16 @@
               aspect_ratio: 1.2/1
               styles: *carl_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.carl_uv_light_power'].state)
-                    + ' '
-                    + states['sensor.carl_uv_light_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.carl_uv_light_energy'].state)
-                    + ' '
-                    + states['sensor.carl_uv_light_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.carl_uv_light_power'].state)
+                      + ' '
+                      + states['sensor.carl_uv_light_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.carl_uv_light_energy'].state)
+                      + ' '
+                      + states['sensor.carl_uv_light_energy'].attributes['unit_of_measurement']
+                ]]]
             - type: custom:button-card
               name: Heater
               entity: switch.carl_heater
@@ -213,14 +219,16 @@
               aspect_ratio: 1.2/1
               styles: *carl_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.carl_heater_power'].state)
-                    + ' '
-                    + states['sensor.carl_heater_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.carl_heater_energy'].state)
-                    + ' '
-                    + states['sensor.carl_heater_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.carl_heater_power'].state)
+                      + ' '
+                      + states['sensor.carl_heater_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.carl_heater_energy'].state)
+                      + ' '
+                      + states['sensor.carl_heater_energy'].attributes['unit_of_measurement']
+                ]]]
             - type: custom:button-card
               name: Heat bulb
               entity: switch.carl_heat_bulb
@@ -228,14 +236,16 @@
               aspect_ratio: 1.2/1
               styles: *carl_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.carl_heat_bulb_power'].state)
-                    + ' '
-                    + states['sensor.carl_heat_bulb_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.carl_heat_bulb_energy'].state)
-                    + ' '
-                    + states['sensor.carl_heat_bulb_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.carl_heat_bulb_power'].state)
+                      + ' '
+                      + states['sensor.carl_heat_bulb_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.carl_heat_bulb_energy'].state)
+                      + ' '
+                      + states['sensor.carl_heat_bulb_energy'].attributes['unit_of_measurement']
+                ]]]
             - type: custom:button-card
               name: Mister
               entity: switch.carl_outlet_4
@@ -243,14 +253,16 @@
               aspect_ratio: 1.2/1
               styles: *carl_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.carl_outlet_4_power'].state)
-                    + ' '
-                    + states['sensor.carl_outlet_4_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.carl_outlet_4_energy'].state)
-                    + ' '
-                    + states['sensor.carl_outlet_4_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.carl_outlet_4_power'].state)
+                      + ' '
+                      + states['sensor.carl_outlet_4_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.carl_outlet_4_energy'].state)
+                      + ' '
+                      + states['sensor.carl_outlet_4_energy'].attributes['unit_of_measurement']
+                ]]]
 
 - type: custom:swipe-card
   parameters:
@@ -409,14 +421,16 @@
               aspect_ratio: 1.7/1
               styles: *slinky_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.slinky_power_strip_power'].state)
-                    + ' '
-                    + states['sensor.slinky_power_strip_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.slinky_power_strip_energy'].state)
-                    + ' '
-                    + states['sensor.slinky_power_strip_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.slinky_power_strip_power'].state)
+                      + ' '
+                      + states['sensor.slinky_power_strip_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.slinky_power_strip_energy'].state)
+                      + ' '
+                      + states['sensor.slinky_power_strip_energy'].attributes['unit_of_measurement']
+                ]]]
             - type: custom:button-card
               name: Controller
               entity: switch.slinky_outlet_5
@@ -425,14 +439,16 @@
               aspect_ratio: 1.7/1
               styles: *slinky_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.slinky_outlet_5_power'].state)
-                    + ' '
-                    + states['sensor.slinky_outlet_5_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.slinky_outlet_5_energy'].state)
-                    + ' '
-                    + states['sensor.slinky_outlet_5_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.slinky_outlet_5_power'].state)
+                      + ' '
+                      + states['sensor.slinky_outlet_5_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.slinky_outlet_5_energy'].state)
+                      + ' '
+                      + states['sensor.slinky_outlet_5_energy'].attributes['unit_of_measurement']
+                ]]]
         - type: horizontal-stack
           cards:
             - type: custom:button-card
@@ -442,14 +458,16 @@
               aspect_ratio: 1.2/1
               styles: *slinky_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.slinky_uv_light_power'].state)
-                    + ' '
-                    + states['sensor.slinky_uv_light_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.slinky_uv_light_energy'].state)
-                    + ' '
-                    + states['sensor.slinky_uv_light_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.slinky_uv_light_power'].state)
+                      + ' '
+                      + states['sensor.slinky_uv_light_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.slinky_uv_light_energy'].state)
+                      + ' '
+                      + states['sensor.slinky_uv_light_energy'].attributes['unit_of_measurement']
+                ]]]
             - type: custom:button-card
               name: Heater
               entity: switch.slinky_heater
@@ -457,14 +475,16 @@
               aspect_ratio: 1.2/1
               styles: *slinky_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.slinky_heater_power'].state)
-                    + ' '
-                    + states['sensor.slinky_heater_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.slinky_heater_energy'].state)
-                    + ' '
-                    + states['sensor.slinky_heater_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.slinky_heater_power'].state)
+                      + ' '
+                      + states['sensor.slinky_heater_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.slinky_heater_energy'].state)
+                      + ' '
+                      + states['sensor.slinky_heater_energy'].attributes['unit_of_measurement']
+                ]]]
             - type: custom:button-card
               name: Heat bulb
               entity: switch.slinky_heat_bulb
@@ -472,14 +492,16 @@
               aspect_ratio: 1.2/1
               styles: *slinky_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.slinky_heat_bulb_power'].state)
-                    + ' '
-                    + states['sensor.slinky_heat_bulb_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.slinky_heat_bulb_energy'].state)
-                    + ' '
-                    + states['sensor.slinky_heat_bulb_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.slinky_heat_bulb_power'].state)
+                      + ' '
+                      + states['sensor.slinky_heat_bulb_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.slinky_heat_bulb_energy'].state)
+                      + ' '
+                      + states['sensor.slinky_heat_bulb_energy'].attributes['unit_of_measurement']
+                ]]]
             - type: custom:button-card
               name: Outlet 4
               entity: switch.slinky_outlet_4
@@ -487,14 +509,16 @@
               aspect_ratio: 1.2/1
               styles: *slinky_button_styles
               show_label: yes
-              label_template: >
-                return Math.round(states['sensor.slinky_outlet_4_power'].state)
-                    + ' '
-                    + states['sensor.slinky_outlet_4_power'].attributes['unit_of_measurement']
-                    + ' ⁓ '
-                    + Math.round(states['sensor.slinky_outlet_4_energy'].state)
-                    + ' '
-                    + states['sensor.slinky_outlet_4_energy'].attributes['unit_of_measurement']
+              label: >
+                [[[
+                  return Math.round(states['sensor.slinky_outlet_4_power'].state)
+                      + ' '
+                      + states['sensor.slinky_outlet_4_power'].attributes['unit_of_measurement']
+                      + ' ⁓ '
+                      + Math.round(states['sensor.slinky_outlet_4_energy'].state)
+                      + ' '
+                      + states['sensor.slinky_outlet_4_energy'].attributes['unit_of_measurement']
+                ]]]
 
 
 - type: custom:decluttering-card
