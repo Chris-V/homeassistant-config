@@ -147,7 +147,8 @@
               name: Scheduling
               entity: input_boolean.carl_scheduled_lights
               hold_action: more-info
-              lock: yes
+              lock:
+                enabled: true
               aspect_ratio: 1.7/1
               styles: &carl_button_styles
                 name:
@@ -161,7 +162,8 @@
               name: Master
               entity: switch.carl_power_strip
               hold_action: more-info
-              lock: yes
+              lock:
+                enabled: true
               aspect_ratio: 1.7/1
               styles: *carl_button_styles
               show_label: yes
@@ -179,7 +181,8 @@
               name: Controller
               entity: switch.carl_outlet_5
               hold_action: more-info
-              lock: yes
+              lock:
+                enabled: true
               aspect_ratio: 1.7/1
               styles: *carl_button_styles
               show_label: yes
@@ -403,7 +406,8 @@
               name: Scheduling
               entity: input_boolean.slinky_scheduled_lights
               hold_action: more-info
-              lock: yes
+              lock:
+                enabled: true
               aspect_ratio: 1.7/1
               styles: &slinky_button_styles
                 name:
@@ -417,7 +421,8 @@
               name: Master
               entity: switch.slinky_power_strip
               hold_action: more-info
-              lock: yes
+              lock:
+                enabled: true
               aspect_ratio: 1.7/1
               styles: *slinky_button_styles
               show_label: yes
@@ -435,7 +440,8 @@
               name: Controller
               entity: switch.slinky_outlet_5
               hold_action: more-info
-              lock: yes
+              lock:
+                enabled: true
               aspect_ratio: 1.7/1
               styles: *slinky_button_styles
               show_label: yes
