@@ -3,4 +3,5 @@ automation: !include ../automations.yaml
 homeassistant:
   customize: !include ../customize.yaml
 group: !include ../groups.yaml
+scenes: !include ../scenes.yaml
 script: !include ../scripts.yaml
