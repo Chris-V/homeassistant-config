@@ -20,6 +20,7 @@ group:
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
       - sensor.living_room_door_sensor_battery
+      - sensor.laundry_motion_sensor_battery
       - sensor.lounge_window_sensor_battery
       - sensor.main_bathroom_door_sensor_battery
       - sensor.main_bathroom_multisensor_battery
@@ -30,6 +31,7 @@ group:
       - sensor.ups_battery_status
       - sensor.viny_battery
       - sensor.water_heater_leak_sensor_battery
+      - sensor.workshop_motion_sensor_battery
 
 sensor:
   - platform: min_max

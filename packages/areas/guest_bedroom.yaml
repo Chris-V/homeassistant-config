@@ -31,12 +31,3 @@ binary_sensor:
         friendly_name: "Guest bedroom window"
         device_class: "window"
         value_template: "{{ is_state('sensor.guest_bedroom_window_sensor_access_control', '22') }}"
-
-sensor:
-  - platform: template
-    sensors:
-      guest_bedroom_window_sensor_battery:
-        friendly_name: "Guest bedroom window sensor battery"
-        device_class: "battery"
-        unit_of_measurement: "%"
-        value_template: "{{ state_attr('zwave.guest_bedroom_window_sensor', 'battery_level') | int('unknown') }}"

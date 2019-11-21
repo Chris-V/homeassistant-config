@@ -86,6 +86,7 @@ recorder:
       - sensor.carl_uv_light_power
       - sensor.carl_heater_power
       - sensor.carl_heat_bulb_power
+      - sensor.connected_clients
       - sensor.current_home_assistant_version
       - sensor.dollorama_battery
       - sensor.dollorama_brightness
@@ -98,6 +99,7 @@ recorder:
       - sensor.guest_bedroom_window_sensor_battery
       - sensor.last_motion
       - sensor.latest_home_assistant_version
+      - sensor.laundry_motion_sensor_battery
       - sensor.living_room_door_sensor_battery
       - sensor.main_bathroom_door_sensor_battery
       - sensor.main_bathroom_humidity
@@ -153,7 +155,7 @@ recorder:
       - sensor.viny_problems
       - sensor.viny_temperature
       - sensor.water_heater_leak_sensor_battery
-      - sensor.connected_clients
+      - sensor.workshop_motion_sensor_battery
       - switch.bookshelf_outlet
       - switch.carl_uv_light
       - switch.carl_heater

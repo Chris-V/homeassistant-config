@@ -111,6 +111,8 @@
           name: Guest's bedroom window
         - entity: sensor.studio_window_sensor_battery
           name: Studio window
+        - entity: sensor.laundry_motion_sensor_battery
+          name: Laundry room motion
         - entity: sensor.living_room_door_sensor_battery
           name: Living room door
         - entity: sensor.main_bathroom_door_sensor_battery
@@ -123,3 +125,5 @@
           name: UPS
         - entity: sensor.water_heater_leak_sensor_battery
           name: Water heater leak
+        - entity: sensor.workshop_motion_sensor_battery
+          name: Workshop motion

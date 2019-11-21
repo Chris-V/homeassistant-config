@@ -63,15 +63,6 @@ binary_sensor:
         device_class: "window"
         value_template: "{{ is_state('sensor.lounge_window_sensor_access_control', '22') }}"
 
-sensor:
-  - platform: template
-    sensors:
-      lounge_window_sensor_battery:
-        friendly_name: "Lounge window sensor battery"
-        device_class: "battery"
-        unit_of_measurement: "%"
-        value_template: "{{ state_attr('zwave.lounge_window_sensor', 'battery_level') | int('unknown') }}"
-
 automation:
   - alias: "double_up_lounge"
     hide_entity: True
