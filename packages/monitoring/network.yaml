@@ -54,28 +54,14 @@ glances:
     port: !secret media_glances_port
     name: "media"
     version: 3
-    resources:
-      - cpu_use_percent
-      - memory_use_percent
-      - cpu_temp
-
   - host: !secret relay_south_glances_host
     port: !secret relay_south_glances_port
     name: "relay_south"
     version: 3
-    resources:
-      - cpu_use_percent
-      - memory_use_percent
-      - cpu_temp
-
   - host: !secret relay_north_glances_host
     port: !secret relay_north_glances_port
     name: "relay_north"
     version: 3
-    resources:
-      - cpu_use_percent
-      - memory_use_percent
-      - cpu_temp
 
 shell_command:
   shutdown_media: "/home/homeassistant/.homeassistant/bin/shutdown_media.sh"
