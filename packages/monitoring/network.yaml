@@ -49,9 +49,8 @@ input_text:
   offline_network_devices:
     name: "Offline network devices (with threshold)"
 
-sensor:
-  - platform: glances
-    host: !secret media_glances_host
+glances:
+  - host: !secret media_glances_host
     port: !secret media_glances_port
     name: "media"
     version: 3
@@ -60,8 +59,7 @@ sensor:
       - memory_use_percent
       - cpu_temp
 
-  - platform: glances
-    host: !secret relay_south_glances_host
+  - host: !secret relay_south_glances_host
     port: !secret relay_south_glances_port
     name: "relay_south"
     version: 3
@@ -70,8 +68,7 @@ sensor:
       - memory_use_percent
       - cpu_temp
 
-  - platform: glances
-    host: !secret relay_north_glances_host
+  - host: !secret relay_north_glances_host
     port: !secret relay_north_glances_port
     name: "relay_north"
     version: 3
