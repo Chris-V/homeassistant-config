@@ -7,6 +7,7 @@ homeassistant:
   unit_system: metric
   packages: !include_dir_named packages/
 
+cloud:
 discovery:
 
 logger:

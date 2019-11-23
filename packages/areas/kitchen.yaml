@@ -7,14 +7,17 @@ homeassistant:
     light.kitchen:
       friendly_name: "Kitchen light"
 
-google_assistant:
-  entity_config:
-    light.kitchen:
-      expose: True
-      room: "Kitchen"
-      name: "Kitchen light"
-      aliases:
-        - "Kitchen"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.kitchen"
+    entity_config:
+      light.kitchen:
+        room: "Kitchen"
+        name: "Kitchen light"
+        aliases:
+          - "Kitchen"
 
 light:
   - platform: group
