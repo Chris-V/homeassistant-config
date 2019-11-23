@@ -7,27 +7,33 @@ homeassistant:
     light.shed:
       friendly_name: "Shed door light"
 
-google_assistant:
-  entity_config:
-    light.side_porch:
-      expose: True
-      room: "Outdoor"
-      aliases:
-        - "Side porch"
-        - "Porch"
-        - "Side"
-    light.front_porch:
-      expose: True
-      room: "Outdoor"
-      aliases:
-        - "Front porch"
-        - "Front"
-    light.shed:
-      expose: True
-      room: "Outdoor"
-      aliases:
-        - "Shed"
-        - "Garage"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.side_porch"
+        - "light.front_porch"
+        - "light.shed"
+    entity_config:
+      light.side_porch:
+        room: "Outdoor"
+        name: "Side porch light"
+        aliases:
+          - "Side porch"
+          - "Porch"
+          - "Side"
+      light.front_porch:
+        room: "Outdoor"
+        name: "Front porch light"
+        aliases:
+          - "Front porch"
+          - "Front"
+      light.shed:
+        room: "Outdoor"
+        name: "Shed light"
+        aliases:
+          - "Shed"
+          - "Garage"
 
 light:
   - platform: group

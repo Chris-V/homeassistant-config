@@ -1,10 +1,14 @@
-google_assistant:
-  entity_config:
-    script.everything_off:
-      expose: True
-      aliases:
-        - "Everything"
-        - "All lights"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "script.everything_off"
+    entity_config:
+      script.everything_off:
+        name: "Everything off"
+        aliases:
+          - "Everything"
+          - "All lights"
 
 script:
   everything_off:

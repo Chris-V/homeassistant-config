@@ -5,14 +5,17 @@ homeassistant:
     sensor.guest_bedroom_window_sensor_battery:
       battery_type: "Sensative Strip"
 
-google_assistant:
-  entity_config:
-    light.guest_bedroom:
-      expose: True
-      room: "Guest's bedroom"
-      name: "Guest's bedroom light"
-      aliases:
-        - "Guest's bedroom"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.guest_bedroom"
+    entity_config:
+      light.guest_bedroom:
+        room: "Guest's bedroom"
+        name: "Guest's bedroom light"
+        aliases:
+          - "Guest's bedroom"
 
 light:
   - platform: group

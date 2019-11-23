@@ -7,29 +7,32 @@ homeassistant:
     light.main_bathroom_vanity:
       friendly_name: "Main bathroom vanity light"
 
-google_assistant:
-  entity_config:
-    light.main_bathroom_spots:
-      expose: True
-      room: "Main bathroom spots"
-      aliases:
-        - "Bathroom spots"
-        - "Bathroom light"
-        - "Main bathroom light"
-    light.main_bathroom_vanity:
-      expose: True
-      room: "Main bathroom"
-      aliases:
-        - "Vanity light"
-        - "Vanity"
-        - "Bathroom vanity light"
-        - "Main bathroom vanity light"
-    fan.main_bathroom:
-      expose: True
-      room: "Main bathroom"
-      name: "Bathroom fan"
-      aliases:
-        - "Main bathroom fan"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.main_bathroom_spots"
+        - "light.main_bathroom_vanity"
+        - "fan.main_bathroom"
+    entity_config:
+      light.main_bathroom_spots:
+        room: "Main bathroom spots"
+        name: "Bathroom spots"
+        aliases:
+          - "Bathroom light"
+          - "Main bathroom light"
+      light.main_bathroom_vanity:
+        room: "Main bathroom"
+        name: "Vanity light"
+        aliases:
+          - "Vanity"
+          - "Bathroom vanity light"
+          - "Main bathroom vanity light"
+      fan.main_bathroom:
+        room: "Main bathroom"
+        name: "Bathroom fan"
+        aliases:
+          - "Main bathroom fan"
 
 binary_sensor:
   - platform: template

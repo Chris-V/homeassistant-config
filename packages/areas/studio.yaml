@@ -5,14 +5,17 @@ homeassistant:
     sensor.studio_window_sensor_battery:
       battery_type: "Sensative Strip"
 
-google_assistant:
-  entity_config:
-    light.studio:
-      expose: True
-      room: "Studio"
-      name: "Studio light"
-      aliases:
-        - "Studio"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.studio"
+    entity_config:
+      light.studio:
+        room: "Studio"
+        name: "Studio light"
+        aliases:
+          - "Studio"
 
 light:
   - platform: group

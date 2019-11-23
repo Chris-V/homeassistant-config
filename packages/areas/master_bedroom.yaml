@@ -5,32 +5,35 @@ homeassistant:
     light.master_bedroom:
       friendly_name: "Master bedroom light"
 
-google_assistant:
-  entity_config:
-    light.master_bedroom:
-      expose: True
-      room: "Master bedroom"
-      name: "Master bedroom light"
-      aliases:
-        - "Bedroom light"
-    light.master_bedroom_bedsides:
-      expose: True
-      room: "Master bedroom"
-      name: "Master bedroom's bedside lamps"
-      aliases:
-        - "Bedside lamps"
-    light.bedside_chris:
-      expose: True
-      room: "Master bedroom"
-      name: "Chris' bedside lamp"
-      aliases:
-        - "Chris' bedside"
-    light.bedside_karine:
-      expose: True
-      room: "Master bedroom"
-      name: "Karine's bedside lamp"
-      aliases:
-        - "Karine's bedside"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.master_bedroom"
+        - "light.master_bedroom_bedsides"
+        - "light.bedside_chris"
+        - "light.bedside_karine"
+    entity_config:
+      light.master_bedroom:
+        room: "Master bedroom"
+        name: "Master bedroom light"
+        aliases:
+          - "Bedroom light"
+      light.master_bedroom_bedsides:
+        room: "Master bedroom"
+        name: "Master bedroom's bedside lamps"
+        aliases:
+          - "Bedside lamps"
+      light.bedside_chris:
+        room: "Master bedroom"
+        name: "Chris' bedside lamp"
+        aliases:
+          - "Chris' bedside"
+      light.bedside_karine:
+        room: "Master bedroom"
+        name: "Karine's bedside lamp"
+        aliases:
+          - "Karine's bedside"
 
 cast:
   media_player:

@@ -1,11 +1,14 @@
-google_assistant:
-  entity_config:
-    script.ambiance:
-      expose: True
-      aliases:
-        - "Ambiance mood"
-        - "Night ambiance"
-        - "Ambiance"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "script.ambiance"
+    entity_config:
+      script.ambiance:
+        name: "Ambiance mood"
+        aliases:
+          - "Night ambiance"
+          - "Ambiance"
 
 script:
   ambiance:

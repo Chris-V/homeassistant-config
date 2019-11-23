@@ -7,28 +7,31 @@ homeassistant:
     light.bookshelf:
       friendly_name: "Bookshelf light"
 
-google_assistant:
-  entity_config:
-    light.living_room_ambiance:
-      expose: True
-      room: "Living room"
-      name: "Ambiance"
-      aliases:
-        - "Living room light"
-        - "Living room"
-    light.bookshelf:
-      expose: True
-      room: "Living room"
-      aliases:
-        - "Bookshelf light"
-        - "Bookshelf"
-    switch.bookshelf_outlet:
-      expose: True
-      room: "Living room"
-      aliases:
-        - "Bookshelf outlet"
-        - "Christmas tree"
-        - "Xmas tree"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.living_room_ambiance"
+        - "light.bookshelf"
+        - "switch.bookshelf_outlet"
+    entity_config:
+      light.living_room_ambiance:
+        room: "Living room"
+        name: "Ambiance"
+        aliases:
+          - "Living room light"
+          - "Living room"
+      light.bookshelf:
+        room: "Living room"
+        name: "Bookshelf light"
+        aliases:
+          - "Bookshelf"
+      switch.bookshelf_outlet:
+        room: "Living room"
+        name: "Bookshelf outlet"
+        aliases:
+          - "Christmas tree"
+          - "Xmas tree"
 
 cast:
   media_player:

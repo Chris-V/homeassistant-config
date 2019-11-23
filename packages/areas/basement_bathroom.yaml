@@ -7,23 +7,25 @@ homeassistant:
     light.basement_bathroom:
       friendly_name: "Basement bathroom light"
 
-google_assistant:
-  entity_config:
-    light.basement_bathroom:
-      expose: True
-      room: "Basement bathroom"
-      aliases:
-        - "Basement bathroom light"
-    light.basement_bathroom_vanity:
-      expose: True
-      room: "Basement bathroom"
-      aliases:
-        - "Basement bathroom vanity light"
-        - "Basement bathroom vanity"
-    fan.basement_bathroom:
-      expose: True
-      room: "Basement bathroom"
-      name: "Basement bathroom fan"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.basement_bathroom"
+        - "light.basement_bathroom_vanity"
+        - "fan.basement_bathroom"
+    entity_config:
+      light.basement_bathroom:
+        room: "Basement bathroom"
+        name: "Basement bathroom light"
+      light.basement_bathroom_vanity:
+        room: "Basement bathroom"
+        name: "Basement bathroom vanity light"
+        aliases:
+          - "Basement bathroom vanity"
+      fan.basement_bathroom:
+        room: "Basement bathroom"
+        name: "Basement bathroom fan"
 
 binary_sensor:
   - platform: template

@@ -1,10 +1,13 @@
-google_assistant:
-  entity_config:
-    script.bedtime:
-      expose: True
-      name: "Bedtime"
-      aliases:
-        - Prepare to sleep
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "script.bedtime"
+    entity_config:
+      script.bedtime:
+        name: "Bedtime"
+        aliases:
+          - Prepare to sleep
 
 script:
   bedtime:

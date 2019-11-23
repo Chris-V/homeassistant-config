@@ -3,22 +3,25 @@ homeassistant:
     light.hallway:
       friendly_name: "Hallway light"
 
-google_assistant:
-  entity_config:
-    light.dining_room:
-      expose: True
-      room: "Dining room"
-      aliases:
-        - "Dining room light"
-        - "Dining room"
-        - "Table light"
-        - "Table"
-    light.hallway:
-      expose: True
-      room: "Dining room"
-      name: "Hallway light"
-      aliases:
-        - "Hallway"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.dining_room"
+        - "light.hallway"
+    entity_config:
+      light.dining_room:
+        room: "Dining room"
+        name: "Dining room light"
+        aliases:
+          - "Dining room"
+          - "Table light"
+          - "Table"
+      light.hallway:
+        room: "Dining room"
+        name: "Hallway light"
+        aliases:
+          - "Hallway"
 
 light:
   - platform: group

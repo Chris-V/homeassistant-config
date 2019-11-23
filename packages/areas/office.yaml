@@ -1,11 +1,14 @@
-google_assistant:
-  entity_config:
-    light.office:
-      expose: True
-      room: "Office"
-      aliases:
-        - "Office light"
-        - "Office"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "light.office"
+    entity_config:
+      light.office:
+        room: "Office"
+        name: "Office light"
+        aliases:
+          - "Office"
 
 light:
   - platform: group

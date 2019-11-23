@@ -5,37 +5,40 @@ homeassistant:
     light.downstairs:
       friendly_name: "Downstairs light"
 
-google_assistant:
-  entity_config:
-    switch.lounge_tv:
-      expose: True
-      room: "Lounge"
-      name: "Lounge TV"
-    light.lounge:
-      expose: True
-      room: "Lounge"
-      name: "Lounge spots"
-      aliases:
-        - "Lounge light"
-        - "Lounge"
-    light.lounge_ambiance:
-      expose: True
-      room: "Lounge"
-      name: "Lounge ambiance"
-      aliases:
-        - "Lounge ambiance light"
-    light.basement_hallway:
-      expose: True
-      room: "Lounge"
-      name: "Basement hallway"
-      aliases:
-        - "Basement hallway light"
-    light.downstairs:
-      expose: True
-      room: "Lounge"
-      name: "Downstairs"
-      aliases:
-        - "Downstairs light"
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "switch.lounge_tv"
+        - "light.lounge"
+        - "light.lounge_ambiance"
+        - "light.basement_hallway"
+        - "light.downstairs"
+    entity_config:
+      switch.lounge_tv:
+        room: "Lounge"
+        name: "Lounge TV"
+      light.lounge:
+        room: "Lounge"
+        name: "Lounge spots"
+        aliases:
+          - "Lounge light"
+          - "Lounge"
+      light.lounge_ambiance:
+        room: "Lounge"
+        name: "Lounge ambiance"
+        aliases:
+          - "Lounge ambiance light"
+      light.basement_hallway:
+        room: "Lounge"
+        name: "Basement hallway"
+        aliases:
+          - "Basement hallway light"
+      light.downstairs:
+        room: "Lounge"
+        name: "Downstairs"
+        aliases:
+          - "Downstairs light"
 
 cast:
   media_player:
