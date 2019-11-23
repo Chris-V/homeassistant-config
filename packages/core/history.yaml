@@ -86,6 +86,7 @@ recorder:
       - sensor.carl_uv_light_power
       - sensor.carl_heater_power
       - sensor.carl_heat_bulb_power
+      - sensor.chris_bedside_remote_battery
       - sensor.connected_clients
       - sensor.current_home_assistant_version
       - sensor.dollorama_battery

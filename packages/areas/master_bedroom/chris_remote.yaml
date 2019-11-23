@@ -1,0 +1,262 @@
+homeassistant:
+  customize:
+    sensor.chris_bedside_remote_battery:
+      battery_type: "CR2032"
+
+input_select:
+  chris_remote_entity:
+    name: "Entity controlled by Chris' remote"
+    initial: "light.bedside_chris"
+    options:
+      - "light.bedside_chris"
+      - "light.bedside_karine"
+      - "light.master_bedroom_bedsides"
+  chris_remote_color:
+    name: "Color applied by Chris' remote"
+    initial: "[255, 186, 82]"
+    options:
+      - "[255, 186, 82]"
+      - "[255, 206, 166]"
+      - "[243, 242, 255]"
+      - "[210, 223, 255]"
+      - "[0, 0, 255]"
+      - "[255, 0, 0]"
+      - "[255, 105, 180]"
+      - "[0, 255, 0]"
+
+script:
+  flash_chris_remote_entity:
+    alias: "Flash entity selected by Chris' remote"
+    sequence:
+      - service: light.toggle
+        data_template:
+          entity_id: "{{ states('input_select.chris_remote_entity') }}"
+          transition: 0
+      - delay: 00:00:01
+      - service: light.toggle
+        data_template:
+          entity_id: "{{ states('input_select.chris_remote_entity') }}"
+          transition: 0
+
+automation:
+  # Quirks: https://github.com/dmulcahey/zha-device-handlers/blob/dev/zhaquirks/ikea/fivebtnremote.py#L126
+  - alias: chris_remote_restore_initial_option
+    description: "Restore entity selected by Chris' remote after some time"
+    trigger:
+      - platform: template
+        value_template: "{{ states('input_select.chris_remote_entity') != state_attr('input_select.chris_remote_entity', 'options')[0] }}"
+        for: "00:05:00"
+    action:
+      - service: "input_select.select_option"
+        data_template:
+          entity_id: "input_select.chris_remote_entity"
+          option: "{{ state_attr('input_select.chris_remote_entity', 'options')[0] }}"
+
+  - alias: chris_remote_apply_color_change
+    description: "Turn on and change the color on Chris' remote entity"
+    trigger:
+      - platform: state
+        entity_id: input_select.chris_remote_color
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: "{{ states('input_select.chris_remote_entity') }}"
+          rgb_color:
+            - "{{ (trigger.to_state.state | from_json)[0] | int }}"
+            - "{{ (trigger.to_state.state | from_json)[1] | int }}"
+            - "{{ (trigger.to_state.state | from_json)[2] | int }}"
+
+  - alias: chris_remote_tap_power
+    description: Toggle selected light
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: &chris_remote_ieee "00:0d:6f:ff:fe:61:69:25"
+          cluster_id: 6
+          endpoint_id: 1
+          command: "toggle"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [] }}"
+    action:
+      - service: light.toggle
+        data_template:
+          entity_id: "{{ states('input_select.chris_remote_entity') }}"
+  - alias: chris_remote_hold_power
+    description: Toggle bedroom light
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 5
+          endpoint_id: 1
+          command: "release"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [609] }}"
+    action:
+      - service: light.toggle
+        data:
+          entity_id: light.master_bedroom
+
+  - alias: chris_remote_tap_dim_up
+    description: Increase dim level
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 8
+          endpoint_id: 1
+          command: "step_with_on_off"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [0, 43, 5] }}"
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: "{{ states('input_select.chris_remote_entity') }}"
+          brightness: "{{ (state_attr('light.bedside_chris', 'brightness') | int + 32)| max(12) | min(255) }}"
+  - alias: chris_remote_tap_dim_down
+    description: Increase dim level
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 8
+          endpoint_id: 1
+          command: "step"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [1, 43, 5] }}"
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: "{{ states('input_select.chris_remote_entity') }}"
+          brightness: "{{ (state_attr('light.bedside_chris', 'brightness') | int - 32)| max(12) | min(255) }}"
+
+  - alias: chris_remote_hold_dim_up
+    description: Select next color
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 8
+          endpoint_id: 1
+          command: "move_with_on_off"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [0, 83] }}"
+    action:
+      - service: input_select.select_next
+        data:
+          entity_id: input_select.chris_remote_color
+  - alias: chris_remote_hold_dim_down
+    description: Select previous color
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 8
+          endpoint_id: 1
+          command: "move"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [1, 83] }}"
+    action:
+      - service: input_select.select_previous
+        data:
+          entity_id: input_select.chris_remote_color
+
+  - alias: chris_remote_tap_left
+    description: Previous bedroom light
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 5
+          endpoint_id: 1
+          command: "press"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [1, 1, 13, 0] }}"
+    action:
+      - service: input_select.select_previous
+        data:
+          entity_id: input_select.chris_remote_entity
+      - service: script.flash_chris_remote_entity
+  - alias: chris_remote_tap_right
+    description: Next bedroom light
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 5
+          endpoint_id: 1
+          command: "press"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [0, 1, 13, 0] }}"
+    action:
+      - service: input_select.select_next
+        data:
+          entity_id: input_select.chris_remote_entity
+      - service: script.flash_chris_remote_entity
+
+  - alias: chris_remote_hold_left
+    description: Activate bedtime
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 5
+          endpoint_id: 1
+          command: "hold"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [1, 13, 0] }}"
+    action:
+      - service: script.bedtime
+  - alias: chris_remote_hold_right
+    description: Turn everything off
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data:
+          device_ieee: *chris_remote_ieee
+          cluster_id: 5
+          endpoint_id: 1
+          command: "hold"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.args == [0, 13, 0] }}"
+    action:
+      - service: script.everything_off
