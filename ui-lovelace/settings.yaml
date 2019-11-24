@@ -105,6 +105,8 @@
           name: Basement bathroom multisensor
         - entity: sensor.chris_bedside_remote_battery
           name: Chris' bedside remote
+        - entity: sensor.karine_bedside_remote_battery
+          name: Karine's bedside remote
         - entity: sensor.kitchen_door_sensor_battery
           name: Kitchen door
         - entity: sensor.kitchen_sink_leak_sensor_battery

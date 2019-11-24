@@ -18,6 +18,7 @@ group:
       - sensor.chris_bedside_remote_battery
       - sensor.dollorama_battery
       - sensor.guest_bedroom_window_sensor_battery
+      - sensor.karine_bedside_remote_battery
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
       - sensor.living_room_door_sensor_battery

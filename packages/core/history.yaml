@@ -95,6 +95,7 @@ recorder:
       - sensor.dollorama_moisture
       - sensor.dollorama_problems
       - sensor.dollorama_temperature
+      - sensor.karine_bedside_remote_battery
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
       - sensor.guest_bedroom_window_sensor_battery
