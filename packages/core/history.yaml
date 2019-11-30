@@ -3,6 +3,7 @@ recorder:
   purge_keep_days: 14
   include: &recorder_inclusion
     domains:
+      - device_tracker
       - media_player
       - person
       - plant

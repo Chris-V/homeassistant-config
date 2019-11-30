@@ -53,7 +53,6 @@
     - type: custom:toggle-lock-entity-row
       entity: switch.network_media
       name: Status
-      icon: mdi:flash-circle
     - entity: sensor.media_cpu_used
       name: Processor use
     - entity: sensor.media_cpu_temp
@@ -68,7 +67,6 @@
     - type: custom:toggle-lock-entity-row
       entity: switch.network_relay_south
       name: Status
-      icon: mdi:flash-circle
     - entity: sensor.relay_south_cpu_used
       name: Processor use
     - entity: sensor.relay_south_cpu_temp
@@ -83,7 +81,6 @@
     - type: custom:toggle-lock-entity-row
       entity: switch.network_relay_north
       name: Status
-      icon: mdi:flash-circle
     - entity: sensor.relay_north_cpu_used
       name: Processor use
     - entity: sensor.relay_north_cpu_temp

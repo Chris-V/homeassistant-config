@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-ssh relay_north sudo halt
+ssh -F /config/.secrets/ssh_config relay_north sudo halt

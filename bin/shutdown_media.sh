@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-ssh media sudo poweroff
+ssh -F /config/.secrets/ssh_config media sudo poweroff
