@@ -5,6 +5,8 @@ secrets.yaml
 .storage/
 .custom_storage/
 .secrets/
+.cloud/
+tts/
 
 zwcfg_*.xml
 zwscene.xml
