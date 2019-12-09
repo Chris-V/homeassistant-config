@@ -25,7 +25,8 @@ plant:
     min_battery: 15
     min_moisture: 15
     min_temperature: 16
-    min_conductivity: 30
+    # Broken sensor? It's always reporting 0
+    # min_conductivity: 30
 
 sensor:
   - platform: template
