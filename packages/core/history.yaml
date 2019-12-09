@@ -3,12 +3,22 @@ recorder:
   purge_keep_days: 14
   include: &recorder_inclusion
     domains:
+      - climate
       - device_tracker
+      - fan
+      - group
+      - input_boolean
+      - input_datetime
+      - input_number
+      - input_select
+      - input_text
+      - light
       - media_player
       - person
       - plant
       - remote
-      - weather
+      - switch
+      - +
       - zha
       - zwave
     entities:
@@ -32,56 +42,12 @@ recorder:
       - binary_sensor.ups_online_status
       - binary_sensor.water_heater_leak
       - binary_sensor.workshop_motion
-      - fan.basement_bathroom
-      - fan.main_bathroom
-      - group.all_batteries
-      - group.all_doors
-      - group.all_leaks
-      - group.all_motions
-      - group.all_plants
-      - group.all_windows
-      - group.household
-      - input_boolean.automatic_night_theme
-      - input_boolean.carl_scheduled_lights
-      - input_boolean.guest_mode
-      - input_boolean.notify_household_changes
-      - input_boolean.notify_network_device_outages
-      - input_boolean.notify_power_outages
-      - input_boolean.power_outage_manage_devices
-      - input_boolean.slinky_scheduled_lights
-      - input_select.default_theme
-      - light.basement_bathroom
-      - light.basement_bathroom_vanity
-      - light.basement_hallway
-      - light.bedside_chris
-      - light.bedside_karine
-      - light.bookshelf
-      - light.dining_room
-      - light.downstairs
-      - light.front_porch
-      - light.guest_bedroom
-      - light.hallway
-      - light.kitchen
-      - light.kitchen_lights
-      - light.laundry_room
-      - light.living_room_ambiance
-      - light.lounge
-      - light.lounge_ambiance
-      - light.lounge_lights
-      - light.main_bathroom_spots
-      - light.main_bathroom_vanity
-      - light.master_bedroom
-      - light.master_bedroom_bedsides
-      - light.office
-      - light.shed
-      - light.side_porch
-      - light.studio
-      - light.workshop
       - sensor.all_batteries
       - sensor.basement_bathroom_door_sensor_battery
       - sensor.basement_bathroom_humidity
       - sensor.basement_bathroom_multisensor_battery
       - sensor.basement_bathroom_temperature
+      - sensor.basement_bathroom_thermostat_temperature
       - sensor.carl_power_strip_energy
       - sensor.carl_power_strip_power
       - sensor.carl_uv_light_power
@@ -90,6 +56,8 @@ recorder:
       - sensor.chris_bedside_remote_battery
       - sensor.connected_clients
       - sensor.current_home_assistant_version
+      - sensor.dining_room_temperature
+      - sensor.dining_room_thermostat_temperature
       - sensor.dollorama_battery
       - sensor.dollorama_brightness
       - sensor.dollorama_conductivity
@@ -100,14 +68,24 @@ recorder:
       - sensor.kitchen_door_sensor_battery
       - sensor.kitchen_sink_leak_sensor_battery
       - sensor.guest_bedroom_window_sensor_battery
+      - sensor.guest_bedroom_temperature
+      - sensor.guest_bedroom_thermostat_temperature
+      - sensor.kitchen_temperature
       - sensor.last_motion
       - sensor.latest_home_assistant_version
       - sensor.laundry_motion_sensor_battery
+      - sensor.laundry_room_temperature
       - sensor.living_room_door_sensor_battery
+      - sensor.living_room_temperature
+      - sensor.living_room_thermostat_temperature
+      - sensor.lounge_temperature
+      - sensor.lounge_thermostat_temperature
       - sensor.main_bathroom_door_sensor_battery
       - sensor.main_bathroom_humidity
       - sensor.main_bathroom_multisensor_battery
       - sensor.main_bathroom_temperature
+      - sensor.master_bedroom_temperature
+      - sensor.master_bedroom_thermosat_temperature
       - sensor.maitre_doyle_battery
       - sensor.maitre_doyle_brightness
       - sensor.maitre_doyle_conductivity
@@ -118,6 +96,8 @@ recorder:
       - sensor.media_cpu_temp
       - sensor.media_ram_used_percent
       - sensor.memory_use_percent
+      - sensor.office_temperature
+      - sensor.office_thermostat_temperature
       - sensor.processor_temperature
       - sensor.processor_use
       - sensor.relay_north_cpu_used
@@ -144,6 +124,8 @@ recorder:
       - sensor.spidy_problems
       - sensor.spidy_temperature
       - sensor.studio_window_sensor_battery
+      - sensor.studio_temperature
+      - sensor.studio_thermostat_temperature
       - sensor.ups_battery
       - sensor.ups_battery_status
       - sensor.ups_input_voltage
@@ -159,28 +141,6 @@ recorder:
       - sensor.viny_temperature
       - sensor.water_heater_leak_sensor_battery
       - sensor.workshop_motion_sensor_battery
-      - switch.bookshelf_outlet
-      - switch.carl_uv_light
-      - switch.carl_heater
-      - switch.carl_heat_bulb
-      - switch.carl_outlet_4
-      - switch.carl_outlet_5
-      - switch.carl_outlet_6
-      - switch.carl_outlet_7
-      - switch.living_room_tv_power
-      - switch.lounge_tv
-      - switch.network_media
-      - switch.network_relay_north
-      - switch.network_relay_south
-      - switch.slinky_uv_light
-      - switch.slinky_heater
-      - switch.slinky_heat_bulb
-      - switch.slinky_outlet_4
-      - switch.slinky_outlet_5
-      - switch.slinky_outlet_6
-      - switch.slinky_outlet_7
-      - switch.unused_rf_3
-      - switch.unused_rf_4
 
       # Weather sensors
       - sensor.dark_sky_humidity
