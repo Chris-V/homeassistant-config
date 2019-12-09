@@ -1,137 +1,203 @@
-- type: custom:vertical-stack-in-card
-  cards:
+- type: entities
+  show_header_toggle: False
+  style: &wrapper_style |
+    ha-card > .card-header { display: none; }
+    ha-card > .card-content { padding: 0; }
+  entities:
     - type: custom:header-card
       title: Outdoor
       entities: light.outdoor_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:hui-horizontal-stack-card
       cards:
         - type: entities
+          style: &wrapped_style |
+            ha-card {
+              box-shadow: none;
+              --ha-card-background: 'rgba(0, 0, 0, 0)';
+            }
           entities:
             - entity: light.side_porch
               name: Side porch
-              icon: mdi:wall-sconce
+              icon: mdi:outdoor-lamp
             - entity: light.front_porch
               name: Front porch
-              icon: mdi:wall-sconce
+              icon: mdi:outdoor-lamp
             - entity: light.shed
               name: Shed
-              icon: mdi:wall-sconce
+              icon: mdi:outdoor-lamp
+
         - type: glance
-          columns: 1
+          columns: 2
           show_name: False
+          style: *wrapped_style
           entities:
             - entity: sensor.dark_sky_temperature
 
-- type: custom:vertical-stack-in-card
-  cards:
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Kitchen
       entities: light.kitchen_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: &room_swipe_parameters
+        effect: slide
+        autoHeight: True
+        cssMode: True
       cards:
-        - type: entities
-          entities:
-            - entity: light.kitchen
-              name: Spots
-              icon: mdi:wall-sconce-flat
-        - type: glance
-          columns: 3
-          show_name: False
-          entities:
-            - entity: sensor.kitchen_temperature
-            - entity: binary_sensor.kitchen_sink_leak
-            - entity: binary_sensor.kitchen_door
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.kitchen
+                  name: Spots
+                  icon: mdi:wall-sconce-flat
 
-- type: custom:vertical-stack-in-card
-  cards:
+            - type: glance
+              columns: 3
+              show_name: False
+              style: *wrapped_style
+              entities:
+                - entity: sensor.kitchen_temperature
+                - entity: binary_sensor.kitchen_sink_leak
+                - entity: binary_sensor.kitchen_door
+
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.living_room_thermostat
+
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Dining room
       entities: light.dining_room_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: *room_swipe_parameters
       cards:
-        - type: entities
-          entities:
-            - entity: light.dining_room
-              name: Table
-              icon: mdi:ceiling-light
-            - entity: light.hallway
-              name: Hallway
-        - type: glance
-          show_name: False
-          columns: 2
-          entities:
-            - entity: sensor.dining_room_temperature
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.dining_room
+                  name: Table
+                  icon: mdi:ceiling-light
+                - entity: light.hallway
+                  name: Hallway
 
-- type: custom:vertical-stack-in-card
-  cards:
+            - type: glance
+              style: *wrapped_style
+              show_name: False
+              columns: 2
+              entities:
+                - entity: sensor.dining_room_temperature
+
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.dining_room_thermostat
+
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Living room
       entities: light.living_room_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: *room_swipe_parameters
       cards:
-        - type: entities
-          entities:
-            - entity: light.bookshelf
-              name: Bookshelf
-              icon: mdi:wall-sconce-flat
-            - entity: light.living_room_ambiance
-              name: Ambiance
-              icon: mdi:floor-lamp
-            - entity: switch.bookshelf_outlet
-              name: Bookshelf outlet
-              icon: mdi:power-socket-us
-            - entity: switch.living_room_tv_power
-              name: TV
-              icon: mdi:television
-        - type: vertical-stack
+        - type: horizontal-stack
           cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.bookshelf
+                  name: Bookshelf
+                  icon: mdi:wall-sconce-flat
+                - entity: light.living_room_ambiance
+                  name: Ambiance
+                  icon: mdi:floor-lamp
+                - entity: switch.bookshelf_outlet
+                  name: Bookshelf outlet
+                  icon: mdi:power-socket-us
+                - entity: switch.living_room_tv_power
+                  name: TV
+                  icon: mdi:television
             - type: glance
               show_name: False
               columns: 2
+              style: *wrapped_style
               entities:
                 - entity: media_player.living_room_tv
                 - entity: media_player.living_room_google_home
                 - entity: sensor.living_room_temperature
                 - entity: binary_sensor.living_room_door
 
-- type: custom:vertical-stack-in-card
-  cards:
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.living_room_thermostat
+
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Master Bedroom
       entities: light.master_bedroom_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: *room_swipe_parameters
       cards:
-        - type: entities
-          entities:
-            - entity: light.master_bedroom
-              name: Light
-            - entity: light.bedside_chris
-              name: Chris' lamp
-              icon: mdi:lamp
-            - entity: light.bedside_karine
-              name: Karine's lamp
-              icon: mdi:lamp
-        - type: glance
-          show_name: False
-          columns: 2
-          entities:
-            - media_player.master_bedroom_google_home
-            - sensor.master_bedroom_temperature
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.master_bedroom
+                  name: Light
+                - entity: light.bedside_chris
+                  name: Chris' lamp
+                  icon: mdi:lamp
+                - entity: light.bedside_karine
+                  name: Karine's lamp
+                  icon: mdi:lamp
 
-- type: custom:vertical-stack-in-card
-  cards:
+            - type: glance
+              show_name: False
+              columns: 2
+              style: *wrapped_style
+              entities:
+                - media_player.master_bedroom_google_home
+                - sensor.master_bedroom_temperature
+
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.master_bedroom_thermosat
+
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Bathroom
       entities: light.main_bathroom_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:hui-horizontal-stack-card
       cards:
         - type: entities
+          style: *wrapped_style
           entities:
             - entity: light.main_bathroom_spots
               name: Spots
@@ -141,29 +207,44 @@
               icon: mdi:ceiling-light
             - entity: fan.main_bathroom
               name: Fan
+
         - type: glance
           show_name: False
           columns: 2
+          style: *wrapped_style
           entities:
             - entity: sensor.main_bathroom_temperature
             - entity: sensor.main_bathroom_humidity
             - entity: binary_sensor.main_bathroom_motion
             - entity: binary_sensor.main_bathroom_door
 
-- type: custom:vertical-stack-in-card
-  cards:
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Office
       entities: light.office_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: *room_swipe_parameters
       cards:
-        - type: entities
-          entities:
-            - entity: light.office
-              name: Light
-        - type: glance
-          show_name: False
-          columns: 2
-          entities:
-            - entity: sensor.office_temperature
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.office
+                  name: Light
+
+            - type: glance
+              show_name: False
+              columns: 2
+              style: *wrapped_style
+              entities:
+                - entity: sensor.office_temperature
+
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.office_thermostat

@@ -1,139 +1,210 @@
-- type: custom:vertical-stack-in-card
-  cards:
+- type: entities
+  show_header_toggle: False
+  style: &wrapper_style |
+    ha-card > .card-header { display: none; }
+    ha-card > .card-content { padding: 0; }
+  entities:
     - type: custom:header-card
       title: Lounge
       entities: light.lounge_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: &room_swipe_parameters
+        effect: slide
+        autoHeight: True
+        cssMode: True
       cards:
-        - type: entities
-          entities:
-            - entity: light.lounge
-              name: Spots
-              icon: mdi:wall-sconce-flat
-            - entity: light.lounge_ambiance
-              name: Ambiance
-              icon: mdi:floor-lamp
-            - entity: light.basement_hallway
-              name: Hallway
-            - entity: light.downstairs
-              name: Downstairs
-            - entity: switch.lounge_tv
-              name: TV
-              icon: mdi:television
-        - type: vertical-stack
+        - type: horizontal-stack
           cards:
-            - type: glance
-              show_name: False
-              columns: 2
+            - type: entities
+              style: &wrapped_style |
+                ha-card {
+                  box-shadow: none;
+                  --ha-card-background: 'rgba(0, 0, 0, 0)';
+                }
               entities:
-                - entity: media_player.lounge_chromecast
+                - entity: light.lounge
+                  name: Spots
+                  icon: mdi:wall-sconce-flat
+                - entity: light.lounge_ambiance
+                  name: Ambiance
+                  icon: mdi:floor-lamp
+                - entity: light.basement_hallway
+                  name: Hallway
+                - entity: light.downstairs
+                  name: Downstairs
+                - entity: switch.lounge_tv
+                  name: TV
                   icon: mdi:television
-                - entity: media_player.lounge_google_home
-                - entity: sensor.lounge_temperature
-                - entity: binary_sensor.lounge_window
 
-- type: custom:vertical-stack-in-card
-  cards:
+            - type: vertical-stack
+              cards:
+                - type: glance
+                  show_name: False
+                  columns: 2
+                  style: *wrapped_style
+                  entities:
+                    - entity: media_player.lounge_chromecast
+                      icon: mdi:television
+                    - entity: media_player.lounge_google_home
+                    - entity: sensor.lounge_temperature
+                    - entity: binary_sensor.lounge_window
+
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.living_room_thermostat
+
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Bathroom
       entities: light.basement_bathroom_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: *room_swipe_parameters
       cards:
-        - type: entities
-          entities:
-            - entity: light.basement_bathroom
-              name: Spots
-              icon: mdi:wall-sconce-flat
-            - entity: light.basement_bathroom_vanity
-              name: Vanity
-              icon: mdi:ceiling-light
-            - entity: fan.basement_bathroom
-              name: Fan
-        - type: glance
-          show_name: False
-          columns: 2
-          entities:
-            - entity: sensor.basement_bathroom_temperature
-              icon: mdi:thermometer
-            - entity: sensor.basement_bathroom_humidity
-            - entity: binary_sensor.basement_bathroom_motion
-            - entity: binary_sensor.basement_bathroom_door
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.basement_bathroom
+                  name: Spots
+                  icon: mdi:wall-sconce-flat
+                - entity: light.basement_bathroom_vanity
+                  name: Vanity
+                  icon: mdi:ceiling-light
+                - entity: fan.basement_bathroom
+                  name: Fan
 
-- type: custom:vertical-stack-in-card
-  cards:
+            - type: glance
+              show_name: False
+              columns: 2
+              style: *wrapped_style
+              entities:
+                - entity: sensor.basement_bathroom_temperature
+                  icon: mdi:thermometer
+                - entity: sensor.basement_bathroom_humidity
+                - entity: binary_sensor.basement_bathroom_motion
+                - entity: binary_sensor.basement_bathroom_door
+
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.basement_bathroom_thermostat
+
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Laundry
       entities: light.laundry_room_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:hui-horizontal-stack-card
       cards:
         - type: entities
+          style: *wrapped_style
           entities:
             - entity: light.laundry_room
               name: Light
+
         - type: glance
           show_name: False
           columns: 3
+          style: *wrapped_style
           entities:
             - entity: media_player.laundry_room_google_home
             - entity: sensor.laundry_room_temperature
             - entity: binary_sensor.laundry_room_motion
 
-- type: custom:vertical-stack-in-card
-  cards:
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Workshop
       entities: light.workshop_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:hui-horizontal-stack-card
       cards:
         - type: entities
+          style: *wrapped_style
           entities:
             - entity: light.workshop
               name: Light
+
         - type: glance
           show_name: False
           columns: 2
+          style: *wrapped_style
           entities:
             - entity: binary_sensor.workshop_motion
             - entity: binary_sensor.water_heater_leak
 
-- type: custom:vertical-stack-in-card
-  cards:
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Guest's bedroom
       entities: light.guest_bedroom_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: *room_swipe_parameters
       cards:
-        - type: entities
-          entities:
-            - entity: light.guest_bedroom
-              name: Light
-        - type: glance
-          show_name: False
-          columns: 2
-          entities:
-            - entity: sensor.guest_bedroom_temperature
-            - entity: binary_sensor.guest_bedroom_window
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.guest_bedroom
+                  name: Light
 
-- type: custom:vertical-stack-in-card
-  cards:
+            - type: glance
+              show_name: False
+              columns: 2
+              style: *wrapped_style
+              entities:
+                - entity: sensor.guest_bedroom_temperature
+                - entity: binary_sensor.guest_bedroom_window
+
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.guest_bedroom_thermostat
+
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
     - type: custom:header-card
       title: Studio
       entities: light.studio_lights
     - type: divider
-    - type: horizontal-stack
+    - type: custom:swipe-card
+      parameters: *room_swipe_parameters
       cards:
-        - type: entities
-          entities:
-            - entity: light.studio
-              name: Light
-        - type: glance
-          show_name: False
-          columns: 2
-          entities:
-            - entity: sensor.studio_temperature
-            - entity: binary_sensor.studio_window
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.studio
+                  name: Light
+
+            - type: glance
+              show_name: False
+              columns: 2
+              style: *wrapped_style
+              entities:
+                - entity: sensor.studio_temperature
+                - entity: binary_sensor.studio_window
+
+        - type: custom:decluttering-card
+          template: wrapped_thermostat
+          variables:
+            - entity: climate.studio_thermostat

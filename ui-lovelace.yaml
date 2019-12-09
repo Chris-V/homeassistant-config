@@ -6,15 +6,17 @@ background: 'var(--lovelace-background)'
 resources:
   - url: /community_plugin/compact-custom-header/compact-custom-header.js
     type: module
+  - url: /community_plugin/lovelace-card-mod/card-mod.js
+    type: module
   - url: /community_plugin/decluttering-card/decluttering-card.js
     type: module
   - url: /community_plugin/swipe-card/swipe-card.js
     type: module
   - url: /community_plugin/button-card/button-card.js
     type: module
+  - url: /community_plugin/simple-thermostat/simple-thermostat.js
+    type: module
   - url: /community_plugin/lovelace-card-tools/card-tools.js
-    type: js
-  - url: /community_plugin/vertical-stack-in-card/vertical-stack-in-card.js
     type: js
   - url: /community_plugin/secondaryinfo-entity-row/secondaryinfo-entity-row.js
     type: js
@@ -58,6 +60,24 @@ cch:
         hide_tabs: "9999"
 
 decluttering_templates:
+  wrapped_thermostat:
+    default:
+      - entity:
+    card:
+        type: custom:simple-thermostat
+        entity: '[[entity]]'
+        name: False
+        step_size: 0.5
+        style: |
+          ha-card {
+            box-shadow: none;
+            --ha-card-background: 'rgba(0, 0, 0, 0)';
+          }
+        control:
+          preset:
+            none: {name: "Heat"}
+            "Heat Econ": {name: "Eco"}
+
   plant:
     default:
       - name:
