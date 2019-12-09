@@ -15,3 +15,12 @@ light:
     name: "Office lights"
     entities:
       - light.office
+
+sensor:
+  - platform: template
+    sensors:
+      office_temperature:
+        friendly_name: "Office temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        value_template: "{{ states('sensor.office_thermostat_temperature') | round(1) }}"

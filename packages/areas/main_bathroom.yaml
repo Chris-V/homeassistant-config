@@ -54,11 +54,12 @@ sensor:
         device_class: "humidity"
         unit_of_measurement: "%"
         value_template: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | round }}"
+
       main_bathroom_temperature:
         friendly_name: "Main bathroom temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
-        value_template: "{{ states('sensor.main_bathroom_multisensor_temperature') | round }}"
+        value_template: "{{ states('sensor.main_bathroom_multisensor_temperature') | round(1) }}"
 
 fan:
   - platform: template
