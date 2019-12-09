@@ -24,14 +24,14 @@
         - type: vertical-stack
           cards:
             - type: glance
+              show_name: False
               columns: 2
               entities:
                 - entity: media_player.lounge_chromecast
-                  name: Chromecast
+                  icon: mdi:television
                 - entity: media_player.lounge_google_home
-                  name: Google Home
+                - entity: sensor.lounge_temperature
                 - entity: binary_sensor.lounge_window
-                  name: Window
 
 - type: custom:vertical-stack-in-card
   cards:
@@ -55,14 +55,11 @@
           show_name: False
           columns: 2
           entities:
-            - entity: sensor.basement_bathroom_humidity
-              name: Humidity
             - entity: sensor.basement_bathroom_temperature
-              name: Temperature
+              icon: mdi:thermometer
+            - entity: sensor.basement_bathroom_humidity
             - entity: binary_sensor.basement_bathroom_motion
-              name: Motion
             - entity: binary_sensor.basement_bathroom_door
-              name: Door
 
 - type: custom:vertical-stack-in-card
   cards:
@@ -78,12 +75,11 @@
               name: Light
         - type: glance
           show_name: False
-          columns: 2
+          columns: 3
           entities:
-            - entity: binary_sensor.laundry_room_motion
-              name: Motion
             - entity: media_player.laundry_room_google_home
-              name: Google Home
+            - entity: sensor.laundry_room_temperature
+            - entity: binary_sensor.laundry_room_motion
 
 - type: custom:vertical-stack-in-card
   cards:
@@ -102,9 +98,7 @@
           columns: 2
           entities:
             - entity: binary_sensor.workshop_motion
-              name: Motion
             - entity: binary_sensor.water_heater_leak
-              name: Water heater
 
 - type: custom:vertical-stack-in-card
   cards:
@@ -122,6 +116,7 @@
           show_name: False
           columns: 2
           entities:
+            - entity: sensor.guest_bedroom_temperature
             - entity: binary_sensor.guest_bedroom_window
 
 - type: custom:vertical-stack-in-card
@@ -140,4 +135,5 @@
           show_name: False
           columns: 2
           entities:
+            - entity: sensor.studio_temperature
             - entity: binary_sensor.studio_window
