@@ -1,7 +1,5 @@
 homeassistant:
   customize:
-    sensor.lounge_window_sensor_battery:
-      battery_type: "Sensative Strip"
     light.downstairs:
       friendly_name: "Downstairs light"
 
@@ -9,26 +7,9 @@ cloud:
   google_actions:
     filter:
       include_entities:
-        - "switch.lounge_tv"
-        - "light.lounge"
-        - "light.lounge_ambiance"
         - "light.basement_hallway"
         - "light.downstairs"
     entity_config:
-      switch.lounge_tv:
-        room: "Lounge"
-        name: "Lounge TV"
-      light.lounge:
-        room: "Lounge"
-        name: "Lounge spots"
-        aliases:
-          - "Lounge light"
-          - "Lounge"
-      light.lounge_ambiance:
-        room: "Lounge"
-        name: "Lounge ambiance"
-        aliases:
-          - "Lounge ambiance light"
       light.basement_hallway:
         room: "Lounge"
         name: "Basement hallway"
@@ -40,22 +21,17 @@ cloud:
         aliases:
           - "Downstairs light"
 
-cast:
-  media_player:
-    - host: !secret media_player_cast_lounge_host
-    - host: !secret media_player_home_lounge_host
-
 input_number:
-  lounge_thermostat_eco_setpoint:
-    name: "Lounge thermostat eco setpoint"
+  basement_hallway_thermostat_eco_setpoint:
+    name: "Basement hallway thermostat eco setpoint"
     unit_of_measurement: "°C"
     icon: "mdi:thermometer-lines"
     mode: "box"
     min: 8
     max: 18
     step: 0.5
-  lounge_thermostat_comfort_setpoint:
-    name: "Lounge thermostat comfort setpoint"
+  basement_hallway_thermostat_comfort_setpoint:
+    name: "Basement hallway thermostat comfort setpoint"
     unit_of_measurement: "°C"
     icon: "mdi:thermometer-lines"
     mode: "box"
@@ -64,17 +40,15 @@ input_number:
     step: 0.5
 
 input_select:
-  lounge_thermostat_mode:
-    name: "Lounge thermostat mode"
+  basement_hallway_thermostat_mode:
+    name: "Basement hallway thermostat mode"
     icon: mdi:home-thermometer-outline
     options: ["Comfort", "Eco", "Manual"]
 
 light:
   - platform: group
-    name: "Lounge lights"
+    name: "General basement lights"
     entities:
-      - light.lounge
-      - light.lounge_ambiance
       - light.basement_hallway
       - light.downstairs
 
@@ -82,53 +56,16 @@ light:
     name: downstairs
     entity_id: "switch.downstairs_light"
 
-binary_sensor:
-  - platform: template
-    sensors:
-      lounge_window:
-        friendly_name: "Lounge window"
-        device_class: "window"
-        value_template: "{{ is_state('sensor.lounge_window_sensor_access_control', '22') }}"
-
 sensor:
   - platform: template
     sensors:
-      lounge_temperature:
-        friendly_name: "Lounge temperature"
+      basement_hallway_temperature:
+        friendly_name: "Basement hallway temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
-        value_template: "{{ states('sensor.lounge_thermostat_temperature') | round(1) }}"
+        value_template: "{{ states('sensor.basement_hallway_thermostat_temperature') | round(1) }}"
 
 automation:
-  - alias: "double_up_lounge"
-    hide_entity: True
-    initial_state: True
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.lounge_light_dimmer"
-          scene_id: 1
-          scene_data: 7860
-    action:
-      service: light.turn_on
-      data:
-        entity_id: "light.lounge_ambiance"
-  - alias: "double_down_lounge"
-    hide_entity: True
-    initial_state: True
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.lounge_light_dimmer"
-          scene_id: 2
-          scene_data: 7860
-    action:
-      service: light.turn_off
-      data:
-        entity_id: "light.lounge_ambiance"
-
   - alias: "triple_up_downstairs_lights"
     hide_entity: True
     initial_state: True

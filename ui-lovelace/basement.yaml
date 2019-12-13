@@ -51,9 +51,44 @@
                     - entity: binary_sensor.lounge_window
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.living_room_thermostat
+            - area: lounge
+
+- type: entities
+  show_header_toggle: False
+  style: *wrapper_style
+  entities:
+    - type: custom:header-card
+      title: Common
+      entities: light.general_basement_lights
+    - type: divider
+    - type: custom:swipe-card
+      parameters: *room_swipe_parameters
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              style: *wrapped_style
+              entities:
+                - entity: light.basement_hallway
+                  name: Hallway
+                - entity: light.downstairs
+                  name: Downstairs
+
+            - type: vertical-stack
+              cards:
+                - type: glance
+                  show_name: False
+                  columns: 2
+                  style: *wrapped_style
+                  entities:
+                    - entity: sensor.basement_hallway_temperature
+
+        - type: custom:decluttering-card
+          template: thermostat_card
+          variables:
+            - area: basement_hallway
 
 - type: entities
   show_header_toggle: False
@@ -92,9 +127,9 @@
                 - entity: binary_sensor.basement_bathroom_door
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.basement_bathroom_thermostat
+            - area: basement_bathroom
 
 - type: entities
   show_header_toggle: False
@@ -173,9 +208,9 @@
                 - entity: binary_sensor.guest_bedroom_window
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.guest_bedroom_thermostat
+            - area: guest_bedroom
 
 - type: entities
   show_header_toggle: False
@@ -205,6 +240,6 @@
                 - entity: binary_sensor.studio_window
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.studio_thermostat
+            - area: studio

@@ -23,6 +23,30 @@ cloud:
         aliases:
           - "Hallway"
 
+input_number:
+  dining_room_thermostat_eco_setpoint:
+    name: "Dining room thermostat eco setpoint"
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer-lines"
+    mode: "box"
+    min: 8
+    max: 18
+    step: 0.5
+  dining_room_thermostat_comfort_setpoint:
+    name: "Dining room thermostat comfort setpoint"
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer-lines"
+    mode: "box"
+    min: 15
+    max: 25
+    step: 0.5
+
+input_select:
+  dining_room_thermostat_mode:
+    name: "Dining room thermostat mode"
+    icon: mdi:home-thermometer-outline
+    options: ["Comfort", "Eco", "Manual"]
+
 light:
   - platform: group
     name: "Dining room lights"

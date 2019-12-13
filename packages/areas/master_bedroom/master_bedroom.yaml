@@ -39,6 +39,30 @@ cast:
   media_player:
     - host: !secret media_player_home_mbr_host
 
+input_number:
+  master_bedroom_thermostat_eco_setpoint:
+    name: "Master bedroom thermostat eco setpoint"
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer-lines"
+    mode: "box"
+    min: 8
+    max: 18
+    step: 0.5
+  master_bedroom_thermostat_comfort_setpoint:
+    name: "Master bedroom thermostat comfort setpoint"
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer-lines"
+    mode: "box"
+    min: 15
+    max: 25
+    step: 0.5
+
+input_select:
+  master_bedroom_thermostat_mode:
+    name: "Master bedroom thermostat mode"
+    icon: mdi:home-thermometer-outline
+    options: ["Comfort", "Eco", "Manual"]
+
 light:
   - platform: group
     name: "Master bedroom lights"

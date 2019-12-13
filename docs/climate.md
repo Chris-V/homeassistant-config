@@ -13,7 +13,7 @@ Lounge         | 16 °C   | 20 °C
 Guest bedroom  | 16 °C   | 20 °C
 Studio         | 16 °C   | 20 °C
 
-##  Climate Presets (scripts / scenes)
+## Climate Presets (scripts / scenes)
 
 * Away
   * Everywhere: Economy
@@ -52,6 +52,3 @@ Triggers                             | Conditions                            | P
 1. Built-in eco setpoint is controlled physically only
   * We will not use built-in preset
   * Updating the preset form HA automatically selects the default hardware preset
-
-## TODOs
-1. Manual preset per thermostat, preventing presets from modifying the climate entity setpoint

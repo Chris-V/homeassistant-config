@@ -17,6 +17,30 @@ cloud:
         aliases:
           - "Guest's bedroom"
 
+input_number:
+  guest_bedroom_thermostat_eco_setpoint:
+    name: "Guest bedroom thermostat eco setpoint"
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer-lines"
+    mode: "box"
+    min: 8
+    max: 18
+    step: 0.5
+  guest_bedroom_thermostat_comfort_setpoint:
+    name: "Guest bedroom thermostat comfort setpoint"
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer-lines"
+    mode: "box"
+    min: 15
+    max: 25
+    step: 0.5
+
+input_select:
+  guest_bedroom_thermostat_mode:
+    name: "Guest bedroom thermostat mode"
+    icon: mdi:home-thermometer-outline
+    options: ["Comfort", "Eco", "Manual"]
+
 light:
   - platform: group
     name: "Guest bedroom lights"

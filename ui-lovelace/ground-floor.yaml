@@ -67,9 +67,9 @@
                 - entity: binary_sensor.kitchen_door
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.living_room_thermostat
+            - area: living_room
 
 - type: entities
   show_header_toggle: False
@@ -101,9 +101,9 @@
                 - entity: sensor.dining_room_temperature
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.dining_room_thermostat
+            - area: dining_room
 
 - type: entities
   show_header_toggle: False
@@ -144,9 +144,9 @@
                 - entity: binary_sensor.living_room_door
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.living_room_thermostat
+            - area: living_room
 
 - type: entities
   show_header_toggle: False
@@ -182,9 +182,9 @@
                 - sensor.master_bedroom_temperature
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.master_bedroom_thermosat
+            - area: master_bedroom
 
 - type: entities
   show_header_toggle: False
@@ -245,6 +245,7 @@
                 - entity: sensor.office_temperature
 
         - type: custom:decluttering-card
-          template: wrapped_thermostat
+          template: thermostat_card
           variables:
-            - entity: climate.office_thermostat
+            - area: office
+

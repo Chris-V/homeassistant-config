@@ -60,23 +60,45 @@ cch:
         hide_tabs: "9999"
 
 decluttering_templates:
-  wrapped_thermostat:
+  thermostat_card:
     default:
-      - entity:
+      - area:
     card:
-        type: custom:simple-thermostat
-        entity: '[[entity]]'
-        name: False
-        step_size: 0.5
-        style: |
-          ha-card {
-            box-shadow: none;
-            --ha-card-background: 'rgba(0, 0, 0, 0)';
-          }
-        control:
-          preset:
-            none: {name: "Heat"}
-            "Heat Econ": {name: "Eco"}
+      type: horizontal-stack
+      cards:
+        - type: entities
+          show_header_toggle: False
+          style: |
+            ha-card {
+              box-shadow: none;
+              --ha-card-background: 'rgba(0, 0, 0, 0)';
+            }
+          entities:
+            - entity: "input_select.[[area]]_thermostat_mode"
+              name: Mode
+            - entity: "input_number.[[area]]_thermostat_comfort_setpoint"
+              name: Comfort
+            - entity: "input_number.[[area]]_thermostat_eco_setpoint"
+              name: Eco
+            - entity: "sensor.[[area]]_temperature"
+              name: Temperature
+
+        - type: custom:simple-thermostat
+          entity: "climate.[[area]]_thermostat"
+          name: False
+          hide:
+            temperature: true
+            state: true
+          step_size: 0.5
+          style: |
+            ha-card {
+              box-shadow: none;
+              --ha-card-background: 'rgba(0, 0, 0, 0)';
+            }
+          control:
+            preset:
+              none: {name: "Heat"}
+              "Heat Econ": {name: "Eco"}
 
   plant:
     default:
