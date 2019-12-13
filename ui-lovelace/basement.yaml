@@ -29,10 +29,6 @@
                 - entity: light.lounge_ambiance
                   name: Ambiance
                   icon: mdi:floor-lamp
-                - entity: light.basement_hallway
-                  name: Hallway
-                - entity: light.downstairs
-                  name: Downstairs
                 - entity: switch.lounge_tv
                   name: TV
                   icon: mdi:television

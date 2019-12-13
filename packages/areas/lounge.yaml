@@ -2,8 +2,6 @@ homeassistant:
   customize:
     sensor.lounge_window_sensor_battery:
       battery_type: "Sensative Strip"
-    light.downstairs:
-      friendly_name: "Downstairs light"
 
 cloud:
   google_actions:
@@ -12,8 +10,6 @@ cloud:
         - "switch.lounge_tv"
         - "light.lounge"
         - "light.lounge_ambiance"
-        - "light.basement_hallway"
-        - "light.downstairs"
     entity_config:
       switch.lounge_tv:
         room: "Lounge"
@@ -29,16 +25,6 @@ cloud:
         name: "Lounge ambiance"
         aliases:
           - "Lounge ambiance light"
-      light.basement_hallway:
-        room: "Lounge"
-        name: "Basement hallway"
-        aliases:
-          - "Basement hallway light"
-      light.downstairs:
-        room: "Lounge"
-        name: "Downstairs"
-        aliases:
-          - "Downstairs light"
 
 cast:
   media_player:
@@ -75,12 +61,6 @@ light:
     entities:
       - light.lounge
       - light.lounge_ambiance
-      - light.basement_hallway
-      - light.downstairs
-
-  - platform: switch
-    name: downstairs
-    entity_id: "switch.downstairs_light"
 
 binary_sensor:
   - platform: template
@@ -128,57 +108,3 @@ automation:
       service: light.turn_off
       data:
         entity_id: "light.lounge_ambiance"
-
-  - alias: "triple_up_downstairs_lights"
-    hide_entity: True
-    initial_state: True
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.basement_hallway_light_dimmer"
-          scene_id: 1
-          scene_data: 7920
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.downstairs_light_switch"
-          scene_id: 1
-          scene_data: 7920
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.lounge_light_dimmer"
-          scene_id: 1
-          scene_data: 7920
-    action:
-      service: light.turn_on
-      data:
-        entity_id: "light.basement_lights"
-  - alias: "triple_down_downstairs_lights"
-    hide_entity: True
-    initial_state: True
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.basement_hallway_light_dimmer"
-          scene_id: 2
-          scene_data: 7920
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.downstairs_light_switch"
-          scene_id: 2
-          scene_data: 7920
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.lounge_light_dimmer"
-          scene_id: 2
-          scene_data: 7920
-    action:
-      service: light.turn_off
-      data:
-        entity_id: "light.basement_lights"
-
