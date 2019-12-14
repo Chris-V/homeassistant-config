@@ -1,7 +1,6 @@
 # Icon reference: https://petershaggynoble.github.io/MDI-Sandbox/
 
 title: Avatar
-background: 'var(--lovelace-background)'
 
 resources:
   - url: /community_plugin/compact-custom-header/compact-custom-header.js
