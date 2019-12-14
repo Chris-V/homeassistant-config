@@ -101,26 +101,35 @@
       items:
         - entity: zwave.basement_bathroom_fan_switch
         - entity: zwave.basement_bathroom_light_switch
+        - entity: zwave.basement_bathroom_thermostat
         - entity: zwave.basement_bathroom_vanity_light_dimmer
         - entity: zwave.basement_hallway_light_dimmer
+        - entity: zwave.basement_hallway_thermostat
         - entity: zwave.bookshelf_light_switch
         - entity: zwave.carl_power_strip
         - entity: zwave.dining_room_light_dimmer
+        - entity: zwave.dining_room_thermostat
         - entity: zwave.downstairs_light_switch
         - entity: zwave.front_porch_light_switch
         - entity: zwave.guest_bedroom_light_switch
+        - entity: zwave.guest_bedroom_thermostat
         - entity: zwave.hallway_light_switch
         - entity: zwave.kitchen_light_switch
         - entity: zwave.laundry_room_light_switch
+        - entity: zwave.living_room_thermostat
         - entity: zwave.lounge_light_dimmer
+        - entity: zwave.lounge_thermostat
         - entity: zwave.master_bedroom_light_switch
+        - entity: zwave.master_bedroom_thermostat
         - entity: zwave.main_bathroom_fan_switch
         - entity: zwave.main_bathroom_light_dimmer
         - entity: zwave.main_bathroom_vanity_light_switch
         - entity: zwave.office_light_dimmer
+        - entity: zwave.office_thermostat
         - entity: zwave.shed_outdoor_light_switch
         - entity: zwave.side_porch_light_switch
         - entity: zwave.slinky_power_strip
+        - entity: zwave.studio_thermostat
         - entity: zwave.workshop_light_switch
     - type: custom:fold-entity-row
       open: False

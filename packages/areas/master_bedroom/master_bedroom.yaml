@@ -87,7 +87,7 @@ sensor:
         friendly_name: "Master bedroom temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
-        value_template: "{{ states('sensor.master_bedroom_thermosat_temperature') | round(1) }}"
+        value_template: "{{ states('sensor.master_bedroom_thermostat_temperature') | round(1) }}"
 
 automation:
   - alias: "master_bedroom_double_up"
