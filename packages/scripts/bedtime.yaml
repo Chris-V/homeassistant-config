@@ -13,21 +13,18 @@ script:
   bedtime:
     alias: "Bedtime"
     sequence:
-      - service: light.turn_off
+      - service: tts.google_cloud_say
         data:
-          entity_id: "light.master_bedroom"
+          entity_id: "media_player.master_bedroom_google_home"
+          message: "Sweet dreams!"
       - service: light.turn_on
         data:
           entity_id: "light.master_bedroom_bedsides"
           brightness_pct: 5
           kelvin: 2200
-      - service: tts.google_cloud_say
+      - service: light.turn_off
         data:
-          entity_id: "media_player.master_bedroom_google_home"
-          message: "Sweet dreams!"
-      - service: switch.turn_off
-        data:
-          entity_id: "switch.living_room_tv_power"
+          entity_id: "light.master_bedroom"
       - service: light.turn_off
         data:
           entity_id: "light.kitchen_lights"
@@ -43,6 +40,7 @@ script:
       - service: script.bedtime_maybe_basement_bathroom
       - service: script.bedtime_maybe_dining_room
       - service: script.bedtime_maybe_laundry_room
+      - service: script.bedtime_maybe_living_room_tv
       - service: script.bedtime_maybe_main_bathroom
       - service: script.bedtime_maybe_workshop
 
@@ -71,6 +69,13 @@ script:
       - service: light.turn_off
         data:
           entity_id: "light.laundry_room_lights"
+  bedtime_maybe_living_room_tv:
+    sequence:
+      - condition: template
+        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}"
+      - service: switch.turn_off
+        data:
+          entity_id: "switch.living_room_tv_power"
   bedtime_maybe_main_bathroom:
     sequence:
       - condition: state

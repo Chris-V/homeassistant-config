@@ -1,13 +1,16 @@
 automation:
   - alias: household_leaves
+    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
         entity_id: "group.household"
-        from: "home"
+        to: "not_home"
+        for: "00:00:30"
     condition:
       - condition: state
         entity_id: "input_boolean.guest_mode"
         state: "off"
     action:
       - service: script.everything_off
+      - service: scene.away_climate_preset

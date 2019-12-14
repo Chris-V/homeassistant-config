@@ -46,9 +46,8 @@ Triggers                             | Conditions                            | P
 <li>Househould away                  | <li>Guest mode off                    | Away
 <li>Household home <li>Every 15m     | <li>Household home                    | Schedule
 <li>Bedtime script                   | <li>Guest mode off <li>Household home | Bedtime
-<li>Climate preset changed to "None" |                                       | Restore setpoint
 
 ## Gotchas
 1. Built-in eco setpoint is controlled physically only
-  * We will not use built-in preset
-  * Updating the preset form HA automatically selects the default hardware preset
+  * We will not use built-in eco mode
+  * Updating the setpoint from HA selects the default hardware mode

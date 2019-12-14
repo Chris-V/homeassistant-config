@@ -73,19 +73,28 @@
 - type: entities
   show_header_toggle: false
   title: Climate
-  icon: mdi:home-thermometer-outline
   entities:
     - type: custom:hui-horizontal-stack-card
       cards:
         - type: entity-button
-          entity: scene.active_climate_preset
-          name: Active
-          icon: mdi:radiator
+          entity: script.scheduled_climate_preset
+          name: Schedule
+          icon: mdi:calendar-clock
           style: &climate_button_style |
             ha-card {
               box-shadow: none;
               --ha-card-background: 'rgba(0, 0, 0, 0)';
             }
+          tap_action:
+            action: call-service
+            service: script.turn_on
+            service_data:
+              entity_id: script.scheduled_climate_preset
+        - type: entity-button
+          entity: scene.active_climate_preset
+          name: Active
+          icon: mdi:radiator
+          style: *climate_button_style
           tap_action:
             action: call-service
             service: scene.turn_on
@@ -104,7 +113,7 @@
         - type: entity-button
           entity: scene.bedtime_climate_preset
           name: Bedtime
-          icon: mdi:hotel
+          icon: mdi:weather-night
           style: *climate_button_style
           tap_action:
             action: call-service

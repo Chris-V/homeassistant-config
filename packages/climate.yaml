@@ -46,3 +46,62 @@ scene:
       input_select.master_bedroom_thermostat_mode: "Eco"
       input_select.office_thermostat_mode: "Eco"
       input_select.studio_thermostat_mode: "Eco"
+
+sensor:
+  - platform: template
+    sensors:
+      climate_scheduled_preset:
+        friendly_name: "Scheduled climate preset"
+        icon_template: "mdi:calendar-clock"
+        entity_id: sensor.time
+        value_template: |
+          {% set schedule = [
+            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+          ] %}
+
+          {% set day_index = now().weekday() %}
+          {% set time_index = states("sensor.time") | replace(":", "") | int %}
+          {% set days = (range(day_index + 1, 7) | list + range(0, day_index) | list) | reverse | list %}
+
+          {% set match = namespace(
+            day = day_index,
+            preset = schedule[day_index] | rejectattr("time", ">", time_index) | map(attribute = "preset") | list | last
+          ) %}
+
+          {% for day in days if match.preset is not defined %}
+          {% set match.day = day %}
+          {% set match.preset = schedule[day] | map(attribute = "preset") | list | last %}
+          {% endfor %}
+
+          {{ match.preset | default('Away') }}
+
+script:
+  scheduled_climate_preset:
+    alias: "Apply scheduled climate preset"
+    sequence:
+      - service: scene.turn_on
+        data_template:
+          entity_id: "scene.{{ states('sensor.climate_scheduled_preset') | lower }}_climate_preset"
+
+automation:
+  - alias: apply_scheduled_climate_preset
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "group.household"
+        to: "home"
+      - platform: time_pattern
+        minutes: "/15"
+    condition:
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+    action:
+      - service: script.scheduled_climate_preset
