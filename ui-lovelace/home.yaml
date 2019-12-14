@@ -137,5 +137,5 @@
     - entity: binary_sensor.slinky_requires_attention
     - entity: group.all_plants
 
-- type: weather-forecast
+- type: custom:weather-card
   entity: weather.dark_sky
