@@ -1,0 +1,48 @@
+scene:
+  - name: "Active climate preset"
+    entities:
+      input_select.basement_bathroom_thermostat_mode: "Comfort"
+      input_select.basement_hallway_thermostat_mode: "Comfort"
+      input_select.dining_room_thermostat_mode: "Comfort"
+      input_select.guest_bedroom_thermostat_mode: "Comfort"
+      input_select.living_room_thermostat_mode: "Comfort"
+      input_select.lounge_thermostat_mode: "Comfort"
+      input_select.master_bedroom_thermostat_mode: "Comfort"
+      input_select.office_thermostat_mode: "Comfort"
+      input_select.studio_thermostat_mode: "Comfort"
+
+  - name: "Away climate preset"
+    entities:
+      input_select.basement_bathroom_thermostat_mode: "Eco"
+      input_select.basement_hallway_thermostat_mode: "Eco"
+      input_select.dining_room_thermostat_mode: "Eco"
+      input_select.guest_bedroom_thermostat_mode: "Eco"
+      input_select.living_room_thermostat_mode: "Eco"
+      input_select.lounge_thermostat_mode: "Eco"
+      input_select.master_bedroom_thermostat_mode: "Eco"
+      input_select.office_thermostat_mode: "Eco"
+      input_select.studio_thermostat_mode: "Eco"
+
+  - name: "Bedtime climate preset"
+    entities:
+      input_select.basement_bathroom_thermostat_mode: "Eco"
+      input_select.basement_hallway_thermostat_mode: "Eco"
+      input_select.dining_room_thermostat_mode: "Eco"
+      input_select.guest_bedroom_thermostat_mode: "Eco"
+      input_select.living_room_thermostat_mode: "Eco"
+      input_select.lounge_thermostat_mode: "Eco"
+      input_select.master_bedroom_thermostat_mode: "Comfort"
+      input_select.office_thermostat_mode: "Eco"
+      input_select.studio_thermostat_mode: "Eco"
+
+  - name: "Sleep climate preset"
+    entities:
+      input_select.basement_bathroom_thermostat_mode: "Eco"
+      input_select.basement_hallway_thermostat_mode: "Eco"
+      input_select.dining_room_thermostat_mode: "Eco"
+      input_select.guest_bedroom_thermostat_mode: "Eco"
+      input_select.living_room_thermostat_mode: "Eco"
+      input_select.lounge_thermostat_mode: "Eco"
+      input_select.master_bedroom_thermostat_mode: "Eco"
+      input_select.office_thermostat_mode: "Eco"
+      input_select.studio_thermostat_mode: "Eco"

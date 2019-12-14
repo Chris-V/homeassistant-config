@@ -39,7 +39,7 @@
         - type: entity-button
           entity: script.ambiance
           name: Ambiance
-          icon: mdi:weather-night
+          icon: mdi:lamp
           tap_action:
             action: call-service
             service: script.turn_on
@@ -50,7 +50,7 @@
         - type: entity-button
           entity: script.bedtime
           name: Bedtime
-          icon: mdi:hotel
+          icon: mdi:weather-night
           tap_action:
             action: call-service
             service: script.turn_on
@@ -69,6 +69,58 @@
               entity_id: script.everything_off
           hold_action:
             action: none
+
+- type: entities
+  show_header_toggle: false
+  title: Climate
+  icon: mdi:home-thermometer-outline
+  entities:
+    - type: custom:hui-horizontal-stack-card
+      cards:
+        - type: entity-button
+          entity: scene.active_climate_preset
+          name: Active
+          icon: mdi:radiator
+          style: &climate_button_style |
+            ha-card {
+              box-shadow: none;
+              --ha-card-background: 'rgba(0, 0, 0, 0)';
+            }
+          tap_action:
+            action: call-service
+            service: scene.turn_on
+            service_data:
+              entity_id: scene.active_climate_preset
+        - type: entity-button
+          entity: scene.away_climate_preset
+          name: Away
+          icon: mdi:radiator-disabled
+          style: *climate_button_style
+          tap_action:
+            action: call-service
+            service: scene.turn_on
+            service_data:
+              entity_id: scene.away_climate_preset
+        - type: entity-button
+          entity: scene.bedtime_climate_preset
+          name: Bedtime
+          icon: mdi:hotel
+          style: *climate_button_style
+          tap_action:
+            action: call-service
+            service: scene.turn_on
+            service_data:
+              entity_id: scene.bedtime_climate_preset
+        - type: entity-button
+          entity: scene.sleep_climate_preset
+          name: Sleep
+          icon: mdi:sleep
+          style: *climate_button_style
+          tap_action:
+            action: call-service
+            service: scene.turn_on
+            service_data:
+              entity_id: scene.sleep_climate_preset
 
 - type: glance
   columns: 3
