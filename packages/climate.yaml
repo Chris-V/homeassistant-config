@@ -1,51 +1,74 @@
-scene:
-  - name: "Active climate preset"
-    entities:
-      input_select.basement_bathroom_thermostat_mode: "Comfort"
-      input_select.basement_hallway_thermostat_mode: "Comfort"
-      input_select.dining_room_thermostat_mode: "Comfort"
-      input_select.guest_bedroom_thermostat_mode: "Comfort"
-      input_select.living_room_thermostat_mode: "Comfort"
-      input_select.lounge_thermostat_mode: "Comfort"
-      input_select.master_bedroom_thermostat_mode: "Comfort"
-      input_select.office_thermostat_mode: "Comfort"
-      input_select.studio_thermostat_mode: "Comfort"
+script:
+  active_climate_preset:
+    alias: "Active climate preset"
+    sequence:
+      - service: scene.apply
+        data_template:
+          entities:
+            input_select.basement_bathroom_thermostat_mode: "{% if is_state('input_select.basement_bathroom_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.basement_hallway_thermostat_mode: "{% if is_state('input_select.basement_hallway_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.dining_room_thermostat_mode: "{% if is_state('input_select.dining_room_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.guest_bedroom_thermostat_mode: "{% if is_state('input_select.guest_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.living_room_thermostat_mode: "{% if is_state('input_select.living_room_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.lounge_thermostat_mode: "{% if is_state('input_select.lounge_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.master_bedroom_thermostat_mode: "{% if is_state('input_select.master_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.office_thermostat_mode: "{% if is_state('input_select.office_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.studio_thermostat_mode: "{% if is_state('input_select.studio_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
 
-  - name: "Away climate preset"
-    entities:
-      input_select.basement_bathroom_thermostat_mode: "Eco"
-      input_select.basement_hallway_thermostat_mode: "Eco"
-      input_select.dining_room_thermostat_mode: "Eco"
-      input_select.guest_bedroom_thermostat_mode: "Eco"
-      input_select.living_room_thermostat_mode: "Eco"
-      input_select.lounge_thermostat_mode: "Eco"
-      input_select.master_bedroom_thermostat_mode: "Eco"
-      input_select.office_thermostat_mode: "Eco"
-      input_select.studio_thermostat_mode: "Eco"
+  away_climate_preset:
+    alias: "Away climate preset"
+    sequence:
+      - service: scene.apply
+        data_template:
+          entities:
+            input_select.basement_bathroom_thermostat_mode: "{% if is_state('input_select.basement_bathroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.basement_hallway_thermostat_mode: "{% if is_state('input_select.basement_hallway_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.dining_room_thermostat_mode: "{% if is_state('input_select.dining_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.guest_bedroom_thermostat_mode: "{% if is_state('input_select.guest_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.living_room_thermostat_mode: "{% if is_state('input_select.living_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.lounge_thermostat_mode: "{% if is_state('input_select.lounge_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.master_bedroom_thermostat_mode: "{% if is_state('input_select.master_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.office_thermostat_mode: "{% if is_state('input_select.office_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.studio_thermostat_mode: "{% if is_state('input_select.studio_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
 
-  - name: "Bedtime climate preset"
-    entities:
-      input_select.basement_bathroom_thermostat_mode: "Eco"
-      input_select.basement_hallway_thermostat_mode: "Eco"
-      input_select.dining_room_thermostat_mode: "Eco"
-      input_select.guest_bedroom_thermostat_mode: "Eco"
-      input_select.living_room_thermostat_mode: "Eco"
-      input_select.lounge_thermostat_mode: "Eco"
-      input_select.master_bedroom_thermostat_mode: "Comfort"
-      input_select.office_thermostat_mode: "Eco"
-      input_select.studio_thermostat_mode: "Eco"
+  bedtime_climate_preset:
+    alias: "Bedtime climate preset"
+    sequence:
+      - service: scene.apply
+        data_template:
+          entities:
+            input_select.basement_bathroom_thermostat_mode: "{% if is_state('input_select.basement_bathroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.basement_hallway_thermostat_mode: "{% if is_state('input_select.basement_hallway_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.dining_room_thermostat_mode: "{% if is_state('input_select.dining_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.guest_bedroom_thermostat_mode: "{% if is_state('input_select.guest_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.living_room_thermostat_mode: "{% if is_state('input_select.living_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.lounge_thermostat_mode: "{% if is_state('input_select.lounge_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.master_bedroom_thermostat_mode: "{% if is_state('input_select.master_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.office_thermostat_mode: "{% if is_state('input_select.office_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.studio_thermostat_mode: "{% if is_state('input_select.studio_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
 
-  - name: "Sleep climate preset"
-    entities:
-      input_select.basement_bathroom_thermostat_mode: "Eco"
-      input_select.basement_hallway_thermostat_mode: "Eco"
-      input_select.dining_room_thermostat_mode: "Eco"
-      input_select.guest_bedroom_thermostat_mode: "Eco"
-      input_select.living_room_thermostat_mode: "Eco"
-      input_select.lounge_thermostat_mode: "Eco"
-      input_select.master_bedroom_thermostat_mode: "Eco"
-      input_select.office_thermostat_mode: "Eco"
-      input_select.studio_thermostat_mode: "Eco"
+  sleep_climate_preset:
+    alias: "Sleep climate preset"
+    sequence:
+      - service: scene.apply
+        data_template:
+          entities:
+            input_select.basement_bathroom_thermostat_mode: "{% if is_state('input_select.basement_bathroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.basement_hallway_thermostat_mode: "{% if is_state('input_select.basement_hallway_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.dining_room_thermostat_mode: "{% if is_state('input_select.dining_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.guest_bedroom_thermostat_mode: "{% if is_state('input_select.guest_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.living_room_thermostat_mode: "{% if is_state('input_select.living_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.lounge_thermostat_mode: "{% if is_state('input_select.lounge_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.master_bedroom_thermostat_mode: "{% if is_state('input_select.master_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.office_thermostat_mode: "{% if is_state('input_select.office_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.studio_thermostat_mode: "{% if is_state('input_select.studio_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+
+  scheduled_climate_preset:
+    alias: "Scheduled climate preset"
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: "script.{{ states('sensor.climate_scheduled_preset') | lower }}_climate_preset"
 
 sensor:
   - platform: template
@@ -80,14 +103,6 @@ sensor:
           {% endfor %}
 
           {{ match.preset | default('Away') }}
-
-script:
-  scheduled_climate_preset:
-    alias: "Apply scheduled climate preset"
-    sequence:
-      - service: scene.turn_on
-        data_template:
-          entity_id: "scene.{{ states('sensor.climate_scheduled_preset') | lower }}_climate_preset"
 
 automation:
   - alias: apply_scheduled_climate_preset

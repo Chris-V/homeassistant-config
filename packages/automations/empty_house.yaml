@@ -13,4 +13,4 @@ automation:
         state: "off"
     action:
       - service: script.everything_off
-      - service: scene.away_climate_preset
+      - service: script.away_climate_preset
