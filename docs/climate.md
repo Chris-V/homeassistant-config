@@ -41,11 +41,13 @@ Sun |        | Active | Bedtime | Sleep
 
 ## Automations
 
-Triggers                             | Conditions                            | Preset
--------------------------------------|---------------------------------------|-----------------
-<li>Househould away                  | <li>Guest mode off                    | Away
-<li>Household home <li>Every 15m     | <li>Household home                    | Schedule
-<li>Bedtime script                   | <li>Guest mode off <li>Household home | Bedtime
+Triggers                         | Conditions                            | Preset
+---------------------------------|---------------------------------------|---------
+<li>Househould away              | <li>Guest mode off                    | Away
+<li>Household home <li>Every 15m | <li>Household home                    | Schedule
+<li>~~Bedtime script~~ (1)       | <li>Guest mode off <li>Household home | Bedtime
+
+(1) Scheduling would override the preset if this is set during the active timespan.
 
 ## Gotchas
 1. Built-in eco setpoint is controlled physically only

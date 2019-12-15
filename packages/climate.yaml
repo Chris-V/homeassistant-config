@@ -105,3 +105,26 @@ automation:
         state: "home"
     action:
       - service: script.scheduled_climate_preset
+
+  - alias: "cleanup_manual_thermostat_mode"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.basement_bathroom_thermostat_mode
+          - input_select.basement_hallway_thermostat_mode
+          - input_select.dining_room_thermostat_mode
+          - input_select.guest_bedroom_thermostat_mode
+          - input_select.living_room_thermostat_mode
+          - input_select.lounge_thermostat_mode
+          - input_select.master_bedroom_thermostat_mode
+          - input_select.office_thermostat_mode
+          - input_select.studio_thermostat_mode
+        to: "Manual"
+        for: "02:00:00"
+    action:
+      - service: input_select.select_option
+        data_template:
+          entity_id: "{{ trigger.to_state.entity_id }}"
+          option: "Eco"
