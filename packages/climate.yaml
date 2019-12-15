@@ -5,15 +5,15 @@ script:
       - service: scene.apply
         data_template:
           entities:
-            input_select.basement_bathroom_thermostat_mode: "{% if is_state('input_select.basement_bathroom_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.basement_hallway_thermostat_mode: "{% if is_state('input_select.basement_hallway_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.dining_room_thermostat_mode: "{% if is_state('input_select.dining_room_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.guest_bedroom_thermostat_mode: "{% if is_state('input_select.guest_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.living_room_thermostat_mode: "{% if is_state('input_select.living_room_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.lounge_thermostat_mode: "{% if is_state('input_select.lounge_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.master_bedroom_thermostat_mode: "{% if is_state('input_select.master_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.office_thermostat_mode: "{% if is_state('input_select.office_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.studio_thermostat_mode: "{% if is_state('input_select.studio_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
+            input_select.basement_bathroom_thermostat_auto_mode: "Comfort"
+            input_select.basement_hallway_thermostat_auto_mode: "Comfort"
+            input_select.dining_room_thermostat_auto_mode: "Comfort"
+            input_select.guest_bedroom_thermostat_auto_mode: "Comfort"
+            input_select.living_room_thermostat_auto_mode: "Comfort"
+            input_select.lounge_thermostat_auto_mode: "Comfort"
+            input_select.master_bedroom_thermostat_auto_mode: "Comfort"
+            input_select.office_thermostat_auto_mode: "Comfort"
+            input_select.studio_thermostat_auto_mode: "Comfort"
 
   away_climate_preset:
     alias: "Away climate preset"
@@ -21,15 +21,15 @@ script:
       - service: scene.apply
         data_template:
           entities:
-            input_select.basement_bathroom_thermostat_mode: "{% if is_state('input_select.basement_bathroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.basement_hallway_thermostat_mode: "{% if is_state('input_select.basement_hallway_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.dining_room_thermostat_mode: "{% if is_state('input_select.dining_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.guest_bedroom_thermostat_mode: "{% if is_state('input_select.guest_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.living_room_thermostat_mode: "{% if is_state('input_select.living_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.lounge_thermostat_mode: "{% if is_state('input_select.lounge_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.master_bedroom_thermostat_mode: "{% if is_state('input_select.master_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.office_thermostat_mode: "{% if is_state('input_select.office_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.studio_thermostat_mode: "{% if is_state('input_select.studio_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.basement_bathroom_thermostat_auto_mode: "Eco"
+            input_select.basement_hallway_thermostat_auto_mode: "Eco"
+            input_select.dining_room_thermostat_auto_mode: "Eco"
+            input_select.guest_bedroom_thermostat_auto_mode: "Eco"
+            input_select.living_room_thermostat_auto_mode: "Eco"
+            input_select.lounge_thermostat_auto_mode: "Eco"
+            input_select.master_bedroom_thermostat_auto_mode: "Eco"
+            input_select.office_thermostat_auto_mode: "Eco"
+            input_select.studio_thermostat_auto_mode: "Eco"
 
   bedtime_climate_preset:
     alias: "Bedtime climate preset"
@@ -37,15 +37,15 @@ script:
       - service: scene.apply
         data_template:
           entities:
-            input_select.basement_bathroom_thermostat_mode: "{% if is_state('input_select.basement_bathroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.basement_hallway_thermostat_mode: "{% if is_state('input_select.basement_hallway_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.dining_room_thermostat_mode: "{% if is_state('input_select.dining_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.guest_bedroom_thermostat_mode: "{% if is_state('input_select.guest_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.living_room_thermostat_mode: "{% if is_state('input_select.living_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.lounge_thermostat_mode: "{% if is_state('input_select.lounge_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.master_bedroom_thermostat_mode: "{% if is_state('input_select.master_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Comfort{% endif %}"
-            input_select.office_thermostat_mode: "{% if is_state('input_select.office_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.studio_thermostat_mode: "{% if is_state('input_select.studio_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.basement_bathroom_thermostat_auto_mode: "Eco"
+            input_select.basement_hallway_thermostat_auto_mode: "Eco"
+            input_select.dining_room_thermostat_auto_mode: "Eco"
+            input_select.guest_bedroom_thermostat_auto_mode: "Eco"
+            input_select.living_room_thermostat_auto_mode: "Eco"
+            input_select.lounge_thermostat_auto_mode: "Eco"
+            input_select.master_bedroom_thermostat_auto_mode: "Comfort"
+            input_select.office_thermostat_auto_mode: "Eco"
+            input_select.studio_thermostat_auto_mode: "Eco"
 
   sleep_climate_preset:
     alias: "Sleep climate preset"
@@ -53,56 +53,60 @@ script:
       - service: scene.apply
         data_template:
           entities:
-            input_select.basement_bathroom_thermostat_mode: "{% if is_state('input_select.basement_bathroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.basement_hallway_thermostat_mode: "{% if is_state('input_select.basement_hallway_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.dining_room_thermostat_mode: "{% if is_state('input_select.dining_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.guest_bedroom_thermostat_mode: "{% if is_state('input_select.guest_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.living_room_thermostat_mode: "{% if is_state('input_select.living_room_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.lounge_thermostat_mode: "{% if is_state('input_select.lounge_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.master_bedroom_thermostat_mode: "{% if is_state('input_select.master_bedroom_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.office_thermostat_mode: "{% if is_state('input_select.office_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
-            input_select.studio_thermostat_mode: "{% if is_state('input_select.studio_thermostat_mode', 'Manual') %}Manual{% else %}Eco{% endif %}"
+            input_select.basement_bathroom_thermostat_auto_mode: "Eco"
+            input_select.basement_hallway_thermostat_auto_mode: "Eco"
+            input_select.dining_room_thermostat_auto_mode: "Eco"
+            input_select.guest_bedroom_thermostat_auto_mode: "Eco"
+            input_select.living_room_thermostat_auto_mode: "Eco"
+            input_select.lounge_thermostat_auto_mode: "Eco"
+            input_select.master_bedroom_thermostat_auto_mode: "Eco"
+            input_select.office_thermostat_auto_mode: "Eco"
+            input_select.studio_thermostat_auto_mode: "Eco"
 
   scheduled_climate_preset:
     alias: "Scheduled climate preset"
     sequence:
-      - service: script.turn_on
-        data_template:
-          entity_id: "script.{{ states('sensor.climate_scheduled_preset') | lower }}_climate_preset"
+      - service_template: "script.{{ states('sensor.climate_preset') | lower }}_climate_preset"
 
 sensor:
   - platform: template
     sensors:
-      climate_scheduled_preset:
+      climate_preset:
         friendly_name: "Scheduled climate preset"
         icon_template: "mdi:calendar-clock"
-        entity_id: "sensor.time"
+        entity_id: 
+          - sensor.time
+          - group.household
         value_template: |
-          {% set schedule = [
-            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-            [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-            [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-          ] %}
+          {% if is_state('group.household', 'home') -%}
+            {% set schedule = [
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2330, "preset": "Bedtime"}],
+              [{"time": 100, "preset": "Sleep"}, {"time": 830, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            ] %}
 
-          {% set day_index = now().weekday() %}
-          {% set time_index = states("sensor.time") | replace(":", "") | int %}
-          {% set days = (range(day_index + 1, 7) | list + range(0, day_index) | list) | reverse | list %}
+            {% set day_index = now().weekday() %}
+            {% set time_index = states("sensor.time") | replace(":", "") | int %}
+            {% set days = (range(day_index + 1, 7) | list + range(0, day_index) | list) | reverse | list %}
 
-          {% set match = namespace(
-            day = day_index,
-            preset = schedule[day_index] | rejectattr("time", ">", time_index) | map(attribute = "preset") | list | last
-          ) %}
+            {% set match = namespace(
+              day = day_index,
+              preset = schedule[day_index] | rejectattr("time", ">", time_index) | map(attribute = "preset") | list | last
+            ) %}
 
-          {% for day in days if match.preset is not defined %}
-          {% set match.day = day %}
-          {% set match.preset = schedule[day] | map(attribute = "preset") | list | last %}
-          {% endfor %}
+            {% for day in days if match.preset is not defined %}
+            {% set match.day = day %}
+            {% set match.preset = schedule[day] | map(attribute = "preset") | list | last %}
+            {% endfor %}
 
-          {{ match.preset | default('Away') }}
+            {{ match.preset | default('Away') }}
+          {%- else -%}
+            Away
+          {%- endif %}
 
 automation:
   - alias: apply_scheduled_climate_preset
@@ -110,13 +114,16 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: "sensor.climate_scheduled_preset"
+        entity_id: "sensor.climate_preset"
+    action:
+      - service: script.scheduled_climate_preset
+
+  - alias: "revert_manual_thermostat_mode"
+    hide_entity: True
+    initial_state: True
+    trigger:
       - platform: state
-        entity_id: "group.household"
-        to: "home"
-      - platform: state
-        from: "Manual"
-        entity_id: &all_thermostat_modes
+        entity_id: &thermostat_modes
           - input_select.basement_bathroom_thermostat_mode
           - input_select.basement_hallway_thermostat_mode
           - input_select.dining_room_thermostat_mode
@@ -126,47 +133,86 @@ automation:
           - input_select.master_bedroom_thermostat_mode
           - input_select.office_thermostat_mode
           - input_select.studio_thermostat_mode
-    condition:
-      - condition: state
-        entity_id: "group.household"
-        state: "home"
-    action:
-      - service: script.scheduled_climate_preset
-
-  - alias: "cleanup_manual_thermostat_mode"
-    hide_entity: True
-    initial_state: True
-    trigger:
-      - platform: state
-        entity_id: *all_thermostat_modes
         to: "Manual"
-        for: "02:00:00"
+        for: "01:00:00"
     action:
       - service: input_select.select_option
         data_template:
           entity_id: "{{ trigger.to_state.entity_id }}"
-          option: "Eco"
+          option: "Auto"
 
   - alias: "update_thermostat_setpoint"
     hide_entity: True
     initial_state: True
     trigger:
       - platform: state
-        entity_id: *all_thermostat_modes
+        entity_id: *thermostat_modes
+        to: "Auto"
+      - platform: state
+        entity_id:
+          - input_select.basement_bathroom_thermostat_auto_mode
+          - input_select.basement_hallway_thermostat_auto_mode
+          - input_select.dining_room_thermostat_auto_mode
+          - input_select.guest_bedroom_thermostat_auto_mode
+          - input_select.living_room_thermostat_auto_mode
+          - input_select.lounge_thermostat_auto_mode
+          - input_select.master_bedroom_thermostat_auto_mode
+          - input_select.office_thermostat_auto_mode
+          - input_select.studio_thermostat_auto_mode
+      - platform: state
+        entity_id:
+          - input_number.basement_bathroom_thermostat_comfort_setpoint
+          - input_number.basement_hallway_thermostat_comfort_setpoint
+          - input_number.dining_room_thermostat_comfort_setpoint
+          - input_number.guest_bedroom_thermostat_comfort_setpoint
+          - input_number.living_room_thermostat_comfort_setpoint
+          - input_number.lounge_thermostat_comfort_setpoint
+          - input_number.master_bedroom_thermostat_comfort_setpoint
+          - input_number.office_thermostat_comfort_setpoint
+          - input_number.studio_thermostat_comfort_setpoint
+      - platform: state
+        entity_id:
+          - input_number.basement_bathroom_thermostat_eco_setpoint
+          - input_number.basement_hallway_thermostat_eco_setpoint
+          - input_number.dining_room_thermostat_eco_setpoint
+          - input_number.guest_bedroom_thermostat_eco_setpoint
+          - input_number.living_room_thermostat_eco_setpoint
+          - input_number.lounge_thermostat_eco_setpoint
+          - input_number.master_bedroom_thermostat_eco_setpoint
+          - input_number.office_thermostat_eco_setpoint
+          - input_number.studio_thermostat_eco_setpoint
     condition:
       - condition: template
         value_template: |
-          {{ (trigger.from_state is none or trigger.from_state.state != trigger.to_state.state)
-            and trigger.to_state.state != 'Manual' }}
+          {% set area_prefix = trigger.to_state.object_id
+              | replace('_thermostat_mode', '')
+              | replace('_thermostat_auto_mode', '')
+              | replace('_thermostat_eco_setpoint', '')
+              | replace('_thermostat_comfort_setpoint', '') %}
+          {% set mode = states('input_select.' ~ area_prefix ~ '_thermostat_auto_mode') | default('eco') | lower %}
+          {% set planned_setpoint = states('input_number.' ~ area_prefix ~ '_' ~ mode ~ '_setpoint') | float %}
+          {{ is_state('input_select.' ~ area_prefix ~ '_thermostat_mode', 'Auto')
+              and planned_setpoint != state_attr('climate.' ~ area_prefix ~ '_thermostat', 'temperature') | float }}
     action:
       - service: "climate.set_temperature"
         data_template:
-          entity_id: "climate.{{ trigger.to_state.object_id | replace('_thermostat_mode', '') }}_thermostat"
+          entity_id: |
+            {% set area_prefix = trigger.to_state.object_id
+                | replace('_thermostat_mode', '')
+                | replace('_thermostat_auto_mode', '')
+                | replace('_thermostat_eco_setpoint', '')
+                | replace('_thermostat_comfort_setpoint', '') %}
+            climate.{{ area_prefix }}_thermostat
           temperature: |
-            {% set area_prefix = trigger.to_state.object_id | replace('_thermostat_mode', '') %}
-            {{ states('input_number.' ~ area_prefix ~ '_thermostat_' ~ (trigger.to_state.state | lower) ~ '_setpoint') }}
+            {% set area_prefix = trigger.to_state.object_id
+                | replace('_thermostat_mode', '')
+                | replace('_thermostat_auto_mode', '')
+                | replace('_thermostat_eco_setpoint', '')
+                | replace('_thermostat_comfort_setpoint', '') %}
+            {% set mode = states('input_select.' ~ area_prefix ~ '_thermostat_auto_mode') | default('eco') | lower %}
+            {{ states('input_number.' ~ area_prefix ~ '_thermostat_' ~ mode ~ '_setpoint') }}
 
-  - alias: "update_thermostat_mode"
+  - alias: "select_manual_thermostat_mode"
     hide_entity: True
     initial_state: True
     trigger:
@@ -184,18 +230,13 @@ automation:
     condition:
       - condition: template
         value_template: |
-          {{ (trigger.from_state is none or trigger.from_state.attributes.temperature != trigger.to_state.attributes.temperature)
-            and trigger.to_state.attributes.preset_mode == 'none'
-            and not is_state('input_select.' ~ trigger.to_state.object_id ~ '_mode', 'Manual') }}
+          {% set prefix = trigger.to_state.object_id %}
+          {% set mode = states('input_select.' ~ prefix ~ '_auto_mode') | default('eco') | lower %}
+          {% set planned_setpoint = states('input_number.' ~ prefix ~ '_' ~ mode ~ '_setpoint') | float %}
+          {{ trigger.to_state.attributes.preset_mode != 'none'
+              or planned_setpoint != trigger.to_state.attributes.temperature | float }}
     action:
       - service: "input_select.select_option"
         data_template:
           entity_id: "input_select.{{ trigger.to_state.object_id }}_mode"
-          option: |
-            {% set prefix = trigger.to_state.object_id -%}
-            {% set mode = states('input_select.' ~ prefix ~ '_mode') %}
-            {% if trigger.to_state.attributes.temperature | float == states('input_number.' ~ prefix ~ '_' ~ (mode | lower) ~ '_setpoint') | float -%}
-            {{ mode }}
-            {%- else -%}
-            Manual
-            {%- endif %}
+          option: "Manual"

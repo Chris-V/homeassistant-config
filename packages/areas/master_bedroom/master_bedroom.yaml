@@ -58,10 +58,14 @@ input_number:
     step: 0.5
 
 input_select:
+  master_bedroom_thermostat_auto_mode:
+    name: "Master bedroom thermostat auto mode"
+    icon: mdi:home-thermometer-outline
+    options: ["Comfort", "Eco"]
   master_bedroom_thermostat_mode:
     name: "Master bedroom thermostat mode"
     icon: mdi:home-thermometer-outline
-    options: ["Comfort", "Eco", "Manual"]
+    options: ["Auto", "Manual"]
 
 light:
   - platform: group

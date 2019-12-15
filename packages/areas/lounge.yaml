@@ -50,10 +50,14 @@ input_number:
     step: 0.5
 
 input_select:
+  lounge_thermostat_auto_mode:
+    name: "Lounge thermostat auto mode"
+    icon: mdi:home-thermometer-outline
+    options: ["Comfort", "Eco"]
   lounge_thermostat_mode:
     name: "Lounge thermostat mode"
     icon: mdi:home-thermometer-outline
-    options: ["Comfort", "Eco", "Manual"]
+    options: ["Auto", "Manual"]
 
 light:
   - platform: group

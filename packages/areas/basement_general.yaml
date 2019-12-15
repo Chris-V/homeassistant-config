@@ -40,10 +40,14 @@ input_number:
     step: 0.5
 
 input_select:
+  basement_hallway_thermostat_auto_mode:
+    name: "Basement hallway thermostat auto mode"
+    icon: mdi:home-thermometer-outline
+    options: ["Comfort", "Eco"]
   basement_hallway_thermostat_mode:
     name: "Basement hallway thermostat mode"
     icon: mdi:home-thermometer-outline
-    options: ["Comfort", "Eco", "Manual"]
+    options: ["Auto", "Manual"]
 
 light:
   - platform: group

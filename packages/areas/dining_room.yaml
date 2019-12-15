@@ -42,10 +42,14 @@ input_number:
     step: 0.5
 
 input_select:
+  dining_room_thermostat_auto_mode:
+    name: "Dining room thermostat auto mode"
+    icon: mdi:home-thermometer-outline
+    options: ["Comfort", "Eco"]
   dining_room_thermostat_mode:
     name: "Dining room thermostat mode"
     icon: mdi:home-thermometer-outline
-    options: ["Comfort", "Eco", "Manual"]
+    options: ["Auto", "Manual"]
 
 light:
   - platform: group
