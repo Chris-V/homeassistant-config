@@ -76,7 +76,7 @@ sensor:
       climate_scheduled_preset:
         friendly_name: "Scheduled climate preset"
         icon_template: "mdi:calendar-clock"
-        entity_id: sensor.time
+        entity_id: "sensor.time"
         value_template: |
           {% set schedule = [
             [{"time": 0, "preset": "Sleep"}, {"time": 630, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
@@ -110,10 +110,22 @@ automation:
     initial_state: True
     trigger:
       - platform: state
+        entity_id: "sensor.climate_scheduled_preset"
+      - platform: state
         entity_id: "group.household"
         to: "home"
-      - platform: time_pattern
-        minutes: "/15"
+      - platform: state
+        from: "Manual"
+        entity_id: &all_thermostat_modes
+          - input_select.basement_bathroom_thermostat_mode
+          - input_select.basement_hallway_thermostat_mode
+          - input_select.dining_room_thermostat_mode
+          - input_select.guest_bedroom_thermostat_mode
+          - input_select.living_room_thermostat_mode
+          - input_select.lounge_thermostat_mode
+          - input_select.master_bedroom_thermostat_mode
+          - input_select.office_thermostat_mode
+          - input_select.studio_thermostat_mode
     condition:
       - condition: state
         entity_id: "group.household"
@@ -126,16 +138,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id:
-          - input_select.basement_bathroom_thermostat_mode
-          - input_select.basement_hallway_thermostat_mode
-          - input_select.dining_room_thermostat_mode
-          - input_select.guest_bedroom_thermostat_mode
-          - input_select.living_room_thermostat_mode
-          - input_select.lounge_thermostat_mode
-          - input_select.master_bedroom_thermostat_mode
-          - input_select.office_thermostat_mode
-          - input_select.studio_thermostat_mode
+        entity_id: *all_thermostat_modes
         to: "Manual"
         for: "02:00:00"
     action:
@@ -143,3 +146,56 @@ automation:
         data_template:
           entity_id: "{{ trigger.to_state.entity_id }}"
           option: "Eco"
+
+  - alias: "update_thermostat_setpoint"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: *all_thermostat_modes
+    condition:
+      - condition: template
+        value_template: |
+          {{ (trigger.from_state is none or trigger.from_state.state != trigger.to_state.state)
+            and trigger.to_state.state != 'Manual' }}
+    action:
+      - service: "climate.set_temperature"
+        data_template:
+          entity_id: "climate.{{ trigger.to_state.object_id | replace('_thermostat_mode', '') }}_thermostat"
+          temperature: |
+            {% set area_prefix = trigger.to_state.object_id | replace('_thermostat_mode', '') %}
+            {{ states('input_number.' ~ area_prefix ~ '_thermostat_' ~ (trigger.to_state.state | lower) ~ '_setpoint') }}
+
+  - alias: "update_thermostat_mode"
+    hide_entity: True
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id:
+          - climate.basement_bathroom_thermostat
+          - climate.basement_hallway_thermostat
+          - climate.dining_room_thermostat
+          - climate.guest_bedroom_thermostat
+          - climate.living_room_thermostat
+          - climate.lounge_thermostat
+          - climate.master_bedroom_thermostat
+          - climate.office_thermostat
+          - climate.studio_thermostat
+    condition:
+      - condition: template
+        value_template: |
+          {{ (trigger.from_state is none or trigger.from_state.attributes.temperature != trigger.to_state.attributes.temperature)
+            and trigger.to_state.attributes.preset_mode == 'none'
+            and not is_state('input_select.' ~ trigger.to_state.object_id ~ '_mode', 'Manual') }}
+    action:
+      - service: "input_select.select_option"
+        data_template:
+          entity_id: "input_select.{{ trigger.to_state.object_id }}_mode"
+          option: |
+            {% set prefix = trigger.to_state.object_id -%}
+            {% set mode = states('input_select.' ~ prefix ~ '_mode') %}
+            {% if trigger.to_state.attributes.temperature | float == states('input_number.' ~ prefix ~ '_' ~ (mode | lower) ~ '_setpoint') | float -%}
+            {{ mode }}
+            {%- else -%}
+            Manual
+            {%- endif %}
