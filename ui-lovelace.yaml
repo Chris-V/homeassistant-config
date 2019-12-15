@@ -4,7 +4,7 @@ title: Avatar
 
 resources:
   - { type: "module", url: "/community_plugin/button-card/button-card.js" }
-  - { type: "module", url: "/community_plugin/compact-custom-header/compact-custom-header.js" }
+  - { type: "module", url: "/community_plugin/custom-header/custom-header.js" }
   - { type: "module", url: "/community_plugin/decluttering-card/decluttering-card.js" }
   - { type: "module", url: "/community_plugin/lovelace-card-mod/card-mod.js" }
   - { type: "module", url: "/community_plugin/simple-thermostat/simple-thermostat.js" }
@@ -18,21 +18,21 @@ resources:
   - { type: "js", url: "/community_plugin/text-element/text-element.js" }
   - { type: "js", url: "/local/header-card.js?v=2" }
 
-cch:
-  header: true
+custom_header:
+  compact_mode: true
   chevrons: false
-  clock_format: 24
-  hide_config: true
+  hide_help: true
   hide_unused: true
-  menu: "show"
-  voice: "show"
-  options: "clock"
+  hide_config: true
+  hide_raw: true
+  button_text:
+    options: "{{ hours24LZ }}:{{ minutesLZ }}"
   exceptions:
     - conditions:
         user_agent: "Mobile"
       config:
-        menu: "hide"
-        options: "hide"
+        menu_hide: true
+        options_hide: true
 
 decluttering_templates:
   thermostat_card:
