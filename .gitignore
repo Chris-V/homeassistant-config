@@ -7,6 +7,7 @@ secrets.yaml
 .secrets/
 .cloud/
 tts/
+themes/
 
 zwcfg_*.xml
 zwscene.xml
