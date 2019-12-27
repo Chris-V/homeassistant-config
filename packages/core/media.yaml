@@ -1,6 +1,7 @@
 tts:
   - platform: google_cloud
     key_file: ".secrets/gcp.json"
+    service_name: google_cloud_say
     voice: "en-US-Wavenet-D" # https://cloud.google.com/text-to-speech/docs/voices
     profiles:
       - "small-bluetooth-speaker-class-device"
