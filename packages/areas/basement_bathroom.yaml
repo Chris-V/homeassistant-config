@@ -166,7 +166,7 @@ automation:
         to: "on"
     condition:
       - condition: state
-        entity_id: "input_boolean.basement_bathroom_door"
+        entity_id: "binary_sensor.basement_bathroom_door"
         state: "on"
       - condition: state
         entity_id: "light.basement_bathroom_lights"
