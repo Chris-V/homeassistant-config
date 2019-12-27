@@ -8,12 +8,12 @@ homeassistant:
   packages: !include_dir_named packages/
 
 cloud:
-discovery:
 
 logger:
   default: "warn"
   logs:
-    homeassistant.components.glances.sensor: "fatal"
+    homeassistant.components.glances: "fatal"
+    homeassistant.components.device_tracker: error
     glances: "fatal"
 
 hacs: # Does not support packages
