@@ -24,8 +24,7 @@ plant:
       temperature: "sensor.maitre_doyle_temperature"
     min_battery: 15
     min_moisture: 15
-    min_temperature: 16
-    # Broken sensor? It's always reporting 0
+    min_temperature: 15
     # min_conductivity: 30
 
 sensor:

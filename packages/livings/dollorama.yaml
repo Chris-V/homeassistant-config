@@ -23,11 +23,11 @@ plant:
       moisture: "sensor.dollorama_moisture"
       temperature: "sensor.dollorama_temperature"
     min_battery: 15
-    min_moisture: 15
+    min_moisture: 10
     max_moisture: 60
     min_temperature: 10
-    max_temperature: 32
-    min_conductivity: 35
+    # max_temperature: 32
+    # min_conductivity: 35
 
 sensor:
   - platform: template

@@ -24,10 +24,10 @@ plant:
       temperature: "sensor.rubber_ducky_temperature"
     min_battery: 15
     min_moisture: 7
-    max_moisture: 50
+    max_moisture: 40
     min_temperature: 8
-    max_temperature: 35
-    min_conductivity: 50
+    # max_temperature: 35
+    # min_conductivity: 50
 
 sensor:
   - platform: template
