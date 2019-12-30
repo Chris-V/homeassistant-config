@@ -248,4 +248,3 @@
           template: thermostat_card
           variables:
             - area: office
-

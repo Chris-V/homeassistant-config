@@ -1,0 +1,210 @@
+type: picture-elements
+image: /local/frontend/living_room_card.webp
+elements:
+  - type: custom:group-element
+    visible: true
+    no_toggle_hide: true
+    elements_pos:
+      top: 0
+      right: 0
+      left: 0
+      bottom: 0
+      transform: none
+      display: flex
+      flex-direction: column
+      "--secondary-text-color": "#DADADB"
+      "--primary-text-color": "#DADADB"
+      "--paper-item-icon-color": "#DADADB"
+      "--iron-icon-width": 40px
+      "--iron-icon-height": 40px
+      "--ha-card-background": rgba(0, 0, 0, 0)
+      "--ha-card-box-shadow": none
+    elements:
+      - type: custom:group-element # Header
+        visible: true
+        no_toggle_hide: true
+        style: &element_style
+          position: relative
+          transform: none
+        elements_pos: &room_banner_style
+          <<: *element_style
+          height: 2.25em
+          overflow: hidden
+          display: flex
+          order: 1
+          flex-grow: 0
+          flex-shrink: 0
+          align-items: center
+          padding: 0 10px
+          background-color: rgba(200, 30, 30, 0.9)
+          color: &room_banner_color "#D3D3D3"
+          font-size: 2em
+          font-weight: 500
+        elements:
+          - type: conditional # Room icon
+            conditions:
+              - entity: binary_sensor.living_room_door
+                state: "off"
+            style:
+              transform: &room_banner_icon_transform scale(0.8)
+              margin-right: 10px
+            elements:
+              - type: icon
+                icon: mdi:sofa
+                style: &room_title_icon_style
+                  <<: *element_style
+                  cursor: default
+
+          - type: conditional # Problem icon
+            conditions:
+              - entity: binary_sensor.living_room_door
+                state: "on"
+            style:
+              transform: *room_banner_icon_transform
+              margin-right: 10px
+            elements:
+              - type: icon
+                icon: mdi:alert-circle
+                style:
+                  <<: *room_title_icon_style
+                  color: "#FF0"
+
+          - type: custom:text-element # Title
+            text: Living room
+            style: *element_style
+
+          - type: custom:group-element # Sensors
+            visible: true
+            no_toggle_hide: true
+            elements_pos:
+              <<: *element_style
+              height: 100%
+              display: flex
+              align-items: center
+              justify-content: flex-end
+              flex-grow: 1
+              font-size: 0.55em
+            elements:
+              - type: state-icon # Door
+                entity: binary_sensor.living_room_door
+                title: Door
+                tap_action:
+                  action: more-info
+                style:
+                  <<: *element_style
+                  margin-left: 10px
+                  transform: *room_banner_icon_transform
+                  transform-origin: center right
+
+              - type: custom:group-element # Temperature
+                visible: true
+                no_toggle_hide: true
+                elements_pos:
+                  <<: *element_style
+                  height: 100%
+                  margin-left: 10px
+                  display: flex
+                  flex-direction: column
+                  align-items: center
+                  justify-content: flex-end
+                elements:
+                  - type: state-icon
+                    entity: sensor.living_room_temperature
+                    title: Temperature
+                    tap_action:
+                      action: more-info
+                    style:
+                      <<: *element_style
+                      transform: scale(0.7)
+                      transform-origin: center 60%
+                  - type: state-label
+                    entity: sensor.living_room_temperature
+                    title: Temperature
+                    tap_action:
+                      action: more-info
+                    style:
+                      <<: *element_style
+                      margin: -8px
+
+      - type: custom:swipe-card # Content
+        style:
+          <<: *element_style
+          order: 2
+          flex-grow: 1
+          flex-shrink: 1
+          overflow: hidden
+          "--iron-icon-width": 24px
+          "--iron-icon-height": 24px
+        parameters:
+          effect: slide
+          cssMode: true
+          touchStartPreventDefault: False
+          noSwipingSelector: input
+        cards:
+          - type: custom:gap-card # Initial
+            height: 0
+            style:
+              height: 100%
+          - type: custom:mod-card # Thermostat
+            style: |
+              ha-card {
+                background-color: rgba(0, 0, 0, 0.55);
+              }
+            card:
+              type: custom:decluttering-card
+              template: thermostat_card
+              variables:
+                - area: living_room
+
+      - type: custom:group-element # Footer
+        visible: true
+        no_toggle_hide: true
+        style:
+          <<: *room_banner_style
+          order: 3
+          flex-grow: 0
+          flex-shrink: 0
+          background-color: rgba(0, 0, 0, 0.55)
+          height: 1.75em
+          justify-content: center
+        elements:
+          - type: state-icon
+            entity: light.bookshelf
+            title: Bookshelf outlet
+            icon: mdi:wall-sconce-flat
+            style: &room_footer_icon_style
+              <<: *element_style
+              transform: *room_banner_icon_transform
+              transform-origin: center right
+              margin: 0 15px
+            tap_action:
+              action: toggle
+          - type: state-icon
+            entity: light.living_room_ambiance
+            title: Ambiance
+            icon: mdi:floor-lamp-dual
+            style: *room_footer_icon_style
+            tap_action:
+              action: toggle
+          - type: state-icon
+            entity: media_player.living_room_tv
+            title: TV
+            icon: mdi:television
+            style: *room_footer_icon_style
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.living_room_tv_power
+          - type: state-icon
+            entity: media_player.living_room_google_home
+            title: Google Home
+            icon: mdi:speaker
+            style: *room_footer_icon_style
+          - type: state-icon
+            entity: switch.bookshelf_outlet
+            title: Bookshelf outlet
+            icon: mdi:power-socket-us
+            style: *room_footer_icon_style
+            tap_action:
+              action: toggle

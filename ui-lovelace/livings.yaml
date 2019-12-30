@@ -526,7 +526,6 @@
                       + states['sensor.slinky_outlet_4_energy'].attributes['unit_of_measurement']
                 ]]]
 
-
 - type: custom:decluttering-card
   template: plant
   variables:
@@ -569,7 +568,6 @@
     - entity_temperature: sensor.spidy_temperature
     - entity_conductivity: sensor.spidy_conductivity
     - entity_brightness: sensor.spidy_brightness
-
 - type: custom:decluttering-card
   template: plant
   variables:
