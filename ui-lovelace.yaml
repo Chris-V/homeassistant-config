@@ -157,6 +157,7 @@ views:
     icon: mdi:home-floor-g
     cards:
       - !include ui-lovelace/areas/living-room.yaml
+      - !include ui-lovelace/areas/main-bathroom.yaml
 
   - title: Ground Floor
     path: ground

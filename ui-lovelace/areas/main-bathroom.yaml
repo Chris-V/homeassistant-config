@@ -36,41 +36,21 @@ elements:
           flex-shrink: 0
           align-items: center
           padding: 0 10px
-          background-color: rgba(160, 0, 0, 0.9)
+          background-color: rgba(0, 34, 123, 0.9)
           color: &room_banner_color "#D3D3D3"
           font-size: 1.6em
           font-weight: 500
         elements:
-          - type: conditional # Room icon
-            conditions:
-              - entity: binary_sensor.living_room_door
-                state: "off"
-            style:
+          - type: icon # Room icon
+            icon: mdi:shower
+            style: &room_title_icon_style
+              <<: *element_style
+              cursor: default
               transform: &room_banner_icon_transform scale(0.8)
               margin-right: 10px
-            elements:
-              - type: icon
-                icon: mdi:sofa
-                style: &room_title_icon_style
-                  <<: *element_style
-                  cursor: default
-
-          - type: conditional # Alert icon
-            conditions:
-              - entity: binary_sensor.living_room_door
-                state: "on"
-            style:
-              transform: *room_banner_icon_transform
-              margin-right: 10px
-            elements:
-              - type: icon
-                icon: mdi:home-alert
-                style:
-                  <<: *room_title_icon_style
-                  color: "#FF0"
 
           - type: custom:text-element # Title
-            text: Living room
+            text: Main bathroom
             style: *element_style
 
           - type: custom:group-element # Sensors
@@ -85,20 +65,27 @@ elements:
               flex-grow: 1
               font-size: 0.55em
             elements:
-              - type: state-icon # Door
-                entity: binary_sensor.living_room_door
-                title: Door
+              - type: state-icon # Motion
+                entity: binary_sensor.main_bathroom_motion
+                title: Motion
                 tap_action:
                   action: more-info
-                style:
+                style: &room_banner_binary_sensor_style
                   <<: *element_style
                   transform: &room_sensor_icon_transform scale(0.7)
                   transform-origin: center right
 
-              - type: custom:group-element # Temperature
+              - type: state-icon # Door
+                entity: binary_sensor.main_bathroom_door
+                title: Door
+                tap_action:
+                  action: more-info
+                style: *room_banner_binary_sensor_style
+
+              - type: custom:group-element # Humidity
                 visible: true
                 no_toggle_hide: true
-                elements_pos:
+                elements_pos: &room_banner_sensor_group_style
                   <<: *element_style
                   height: 100%
                   margin-left: 10px
@@ -108,52 +95,49 @@ elements:
                   justify-content: flex-end
                 elements:
                   - type: state-icon
-                    entity: sensor.living_room_temperature
-                    title: Temperature
+                    entity: sensor.main_bathroom_humidity
+                    title: Humidity
                     tap_action:
                       action: more-info
-                    style:
+                    style: &room_banner_sensor_icon_style
                       <<: *element_style
                       transform: *room_sensor_icon_transform
                       transform-origin: center 60%
                   - type: state-label
-                    entity: sensor.living_room_temperature
-                    title: Temperature
+                    entity: sensor.main_bathroom_humidity
+                    title: Humidity
                     tap_action:
                       action: more-info
-                    style:
+                    style: &room_banner_sensor_label_style
                       <<: *element_style
                       margin: -8px
 
-      - type: custom:swipe-card # Content
+              - type: custom:group-element # Temperature
+                visible: true
+                no_toggle_hide: true
+                elements_pos: *room_banner_sensor_group_style
+                elements:
+                  - type: state-icon
+                    entity: sensor.main_bathroom_temperature
+                    title: Temperature
+                    tap_action:
+                      action: more-info
+                    style: *room_banner_sensor_icon_style
+                  - type: state-label
+                    entity: sensor.main_bathroom_temperature
+                    title: Temperature
+                    tap_action:
+                      action: more-info
+                    style: *room_banner_sensor_label_style
+
+      - type: custom:gap-card # Content
+        height: 0
         style:
           <<: *element_style
           order: 2
           flex-grow: 1
           flex-shrink: 1
           overflow: hidden
-          "--iron-icon-width": 24px
-          "--iron-icon-height": 24px
-        parameters:
-          effect: slide
-          cssMode: true
-          touchStartPreventDefault: False
-          noSwipingSelector: input
-        cards:
-          - type: custom:gap-card # Initial
-            height: 0
-            style:
-              height: 100%
-          - type: custom:mod-card # Thermostat
-            style: |
-              ha-card {
-                background-color: rgba(0, 0, 0, 0.55);
-              }
-            card:
-              type: custom:decluttering-card
-              template: thermostat_card
-              variables:
-                - area: living_room
 
       - type: custom:group-element # Footer
         visible: true
@@ -168,8 +152,8 @@ elements:
           justify-content: center
         elements:
           - type: state-icon
-            entity: light.bookshelf
-            title: Bookshelf outlet
+            entity: light.main_bathroom_spots
+            title: Spots
             icon: mdi:wall-sconce-flat
             style: &room_footer_icon_style
               <<: *element_style
@@ -179,31 +163,15 @@ elements:
             tap_action:
               action: toggle
           - type: state-icon
-            entity: light.living_room_ambiance
-            title: Ambiance
-            icon: mdi:floor-lamp-dual
+            entity: light.main_bathroom_vanity
+            title: Vanity
+            icon: mdi:ceiling-light
             style: *room_footer_icon_style
             tap_action:
               action: toggle
           - type: state-icon
-            entity: switch.bookshelf_outlet
-            title: Bookshelf outlet
-            icon: mdi:power-socket-us
+            entity: fan.main_bathroom
+            title: Fan
             style: *room_footer_icon_style
             tap_action:
               action: toggle
-          - type: state-icon
-            entity: media_player.living_room_tv
-            title: TV
-            icon: mdi:television
-            style: *room_footer_icon_style
-            tap_action:
-              action: call-service
-              service: switch.toggle
-              service_data:
-                entity_id: switch.living_room_tv_power
-          - type: state-icon
-            entity: media_player.living_room_google_home
-            title: Google Home
-            icon: mdi:speaker
-            style: *room_footer_icon_style

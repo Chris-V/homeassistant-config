@@ -110,49 +110,6 @@
   style: *wrapper_style
   entities:
     - type: custom:header-card
-      title: Living room
-      entities: light.living_room_lights
-    - type: divider
-    - type: custom:swipe-card
-      parameters: *room_swipe_parameters
-      cards:
-        - type: horizontal-stack
-          cards:
-            - type: entities
-              style: *wrapped_style
-              entities:
-                - entity: light.bookshelf
-                  name: Bookshelf
-                  icon: mdi:wall-sconce-flat
-                - entity: light.living_room_ambiance
-                  name: Ambiance
-                  icon: mdi:floor-lamp
-                - entity: switch.bookshelf_outlet
-                  name: Bookshelf outlet
-                  icon: mdi:power-socket-us
-                - entity: switch.living_room_tv_power
-                  name: TV
-                  icon: mdi:television
-            - type: glance
-              show_name: False
-              columns: 2
-              style: *wrapped_style
-              entities:
-                - entity: media_player.living_room_tv
-                - entity: media_player.living_room_google_home
-                - entity: sensor.living_room_temperature
-                - entity: binary_sensor.living_room_door
-
-        - type: custom:decluttering-card
-          template: thermostat_card
-          variables:
-            - area: living_room
-
-- type: entities
-  show_header_toggle: False
-  style: *wrapper_style
-  entities:
-    - type: custom:header-card
       title: Master Bedroom
       entities: light.master_bedroom_lights
     - type: divider
@@ -185,38 +142,6 @@
           template: thermostat_card
           variables:
             - area: master_bedroom
-
-- type: entities
-  show_header_toggle: False
-  style: *wrapper_style
-  entities:
-    - type: custom:header-card
-      title: Bathroom
-      entities: light.main_bathroom_lights
-    - type: divider
-    - type: custom:hui-horizontal-stack-card
-      cards:
-        - type: entities
-          style: *wrapped_style
-          entities:
-            - entity: light.main_bathroom_spots
-              name: Spots
-              icon: mdi:wall-sconce-flat
-            - entity: light.main_bathroom_vanity
-              name: Vanity
-              icon: mdi:ceiling-light
-            - entity: fan.main_bathroom
-              name: Fan
-
-        - type: glance
-          show_name: False
-          columns: 2
-          style: *wrapped_style
-          entities:
-            - entity: sensor.main_bathroom_temperature
-            - entity: sensor.main_bathroom_humidity
-            - entity: binary_sensor.main_bathroom_motion
-            - entity: binary_sensor.main_bathroom_door
 
 - type: entities
   show_header_toggle: False
