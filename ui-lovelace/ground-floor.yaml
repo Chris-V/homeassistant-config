@@ -39,48 +39,14 @@
   style: *wrapper_style
   entities:
     - type: custom:header-card
-      title: Dining room
-      entities: light.dining_room_lights
+      title: Office
+      entities: light.office_lights
     - type: divider
     - type: custom:swipe-card
       parameters: &room_swipe_parameters
         effect: slide
         autoHeight: True
         cssMode: True
-      cards:
-        - type: horizontal-stack
-          cards:
-            - type: entities
-              style: *wrapped_style
-              entities:
-                - entity: light.dining_room
-                  name: Table
-                  icon: mdi:ceiling-light
-                - entity: light.hallway
-                  name: Hallway
-
-            - type: glance
-              style: *wrapped_style
-              show_name: False
-              columns: 2
-              entities:
-                - entity: sensor.dining_room_temperature
-
-        - type: custom:decluttering-card
-          template: thermostat_card
-          variables:
-            - area: dining_room
-
-- type: entities
-  show_header_toggle: False
-  style: *wrapper_style
-  entities:
-    - type: custom:header-card
-      title: Office
-      entities: light.office_lights
-    - type: divider
-    - type: custom:swipe-card
-      parameters: *room_swipe_parameters
       cards:
         - type: horizontal-stack
           cards:
