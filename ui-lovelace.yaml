@@ -153,21 +153,17 @@ views:
     icon: mdi:home
     cards: !include ui-lovelace/home.yaml
 
-  - title: Ground Floor (v2)
-    path: ground-v2
+  - title: Ground Floor
+    path: ground
     icon: mdi:home-floor-g
     cards:
+      - !include ui-lovelace/areas/outdoor.yaml
       - !include ui-lovelace/areas/living-room.yaml
       - !include ui-lovelace/areas/kitchen.yaml
       - !include ui-lovelace/areas/dining-room.yaml
       - !include ui-lovelace/areas/main-bathroom.yaml
       - !include ui-lovelace/areas/master-bedroom.yaml
       - !include ui-lovelace/areas/office.yaml
-
-  - title: Ground Floor
-    path: ground
-    icon: mdi:home-floor-g
-    cards: !include ui-lovelace/ground-floor.yaml
 
   - title: Basement
     path: basement
