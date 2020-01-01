@@ -157,6 +157,7 @@ views:
     path: ground-v2
     icon: mdi:home-floor-g
     cards:
+      - !include ui-lovelace/areas/kitchen.yaml
       - !include ui-lovelace/areas/living-room.yaml
       - !include ui-lovelace/areas/main-bathroom.yaml
       - !include ui-lovelace/areas/master-bedroom.yaml

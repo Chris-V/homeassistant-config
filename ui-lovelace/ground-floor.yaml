@@ -39,48 +39,14 @@
   style: *wrapper_style
   entities:
     - type: custom:header-card
-      title: Kitchen
-      entities: light.kitchen_lights
+      title: Dining room
+      entities: light.dining_room_lights
     - type: divider
     - type: custom:swipe-card
       parameters: &room_swipe_parameters
         effect: slide
         autoHeight: True
         cssMode: True
-      cards:
-        - type: horizontal-stack
-          cards:
-            - type: entities
-              style: *wrapped_style
-              entities:
-                - entity: light.kitchen
-                  name: Spots
-                  icon: mdi:wall-sconce-flat
-
-            - type: glance
-              columns: 3
-              show_name: False
-              style: *wrapped_style
-              entities:
-                - entity: sensor.kitchen_temperature
-                - entity: binary_sensor.kitchen_sink_leak
-                - entity: binary_sensor.kitchen_door
-
-        - type: custom:decluttering-card
-          template: thermostat_card
-          variables:
-            - area: living_room
-
-- type: entities
-  show_header_toggle: False
-  style: *wrapper_style
-  entities:
-    - type: custom:header-card
-      title: Dining room
-      entities: light.dining_room_lights
-    - type: divider
-    - type: custom:swipe-card
-      parameters: *room_swipe_parameters
       cards:
         - type: horizontal-stack
           cards:
