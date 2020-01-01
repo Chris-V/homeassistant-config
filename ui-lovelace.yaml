@@ -162,6 +162,7 @@ views:
       - !include ui-lovelace/areas/dining-room.yaml
       - !include ui-lovelace/areas/main-bathroom.yaml
       - !include ui-lovelace/areas/master-bedroom.yaml
+      - !include ui-lovelace/areas/office.yaml
 
   - title: Ground Floor
     path: ground
