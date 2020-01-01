@@ -36,13 +36,13 @@ elements:
           flex-shrink: 0
           align-items: center
           padding: 0 10px
-          background-color: rgba(0, 34, 123, 0.9)
+          background-color: rgba(0, 96, 15, 0.9)
           color: &room_banner_color "#D3D3D3"
           font-size: 1.6em
           font-weight: 500
         elements:
           - type: icon # Room icon
-            icon: mdi:shower
+            icon: mdi:bed-king
             style: &room_title_icon_style
               <<: *element_style
               cursor: default
@@ -50,7 +50,7 @@ elements:
               margin-right: 10px
 
           - type: custom:text-element # Title
-            text: Bathroom
+            text: Bedroom
             style: *element_style
 
           - type: custom:group-element # Sensors
@@ -65,24 +65,7 @@ elements:
               flex-grow: 1
               font-size: 0.55em
             elements:
-              - type: state-icon # Motion
-                entity: binary_sensor.main_bathroom_motion
-                title: Motion
-                tap_action:
-                  action: more-info
-                style: &room_banner_binary_sensor_style
-                  <<: *element_style
-                  transform: &room_sensor_icon_transform scale(0.7)
-                  transform-origin: center right
-
-              - type: state-icon # Door
-                entity: binary_sensor.main_bathroom_door
-                title: Door
-                tap_action:
-                  action: more-info
-                style: *room_banner_binary_sensor_style
-
-              - type: custom:group-element # Humidity
+              - type: custom:group-element # Temperature
                 visible: true
                 no_toggle_hide: true
                 elements_pos: &room_banner_sensor_group_style
@@ -95,49 +78,52 @@ elements:
                   justify-content: flex-end
                 elements:
                   - type: state-icon
-                    entity: sensor.main_bathroom_humidity
-                    title: Humidity
+                    entity: sensor.master_bedroom_temperature
+                    title: Temperature
                     tap_action:
                       action: more-info
                     style: &room_banner_sensor_icon_style
                       <<: *element_style
-                      transform: *room_sensor_icon_transform
+                      transform: &room_sensor_icon_transform scale(0.7)
                       transform-origin: center 60%
                   - type: state-label
-                    entity: sensor.main_bathroom_humidity
-                    title: Humidity
+                    entity: sensor.master_bedroom_temperature
+                    title: Temperature
                     tap_action:
                       action: more-info
                     style: &room_banner_sensor_label_style
                       <<: *element_style
                       margin: -8px
 
-              - type: custom:group-element # Temperature
-                visible: true
-                no_toggle_hide: true
-                elements_pos: *room_banner_sensor_group_style
-                elements:
-                  - type: state-icon
-                    entity: sensor.main_bathroom_temperature
-                    title: Temperature
-                    tap_action:
-                      action: more-info
-                    style: *room_banner_sensor_icon_style
-                  - type: state-label
-                    entity: sensor.main_bathroom_temperature
-                    title: Temperature
-                    tap_action:
-                      action: more-info
-                    style: *room_banner_sensor_label_style
-
-      - type: custom:gap-card # Content
-        height: 0
+      - type: custom:swipe-card # Content
         style:
           <<: *element_style
           order: 2
           flex-grow: 1
           flex-shrink: 1
           overflow: hidden
+          "--iron-icon-width": 24px
+          "--iron-icon-height": 24px
+        parameters:
+          effect: slide
+          cssMode: true
+          touchStartPreventDefault: False
+          noSwipingSelector: input
+        cards:
+          - type: custom:gap-card # Initial
+            height: 0
+            style:
+              height: 100%
+          - type: custom:mod-card # Thermostat
+            style: |
+              ha-card {
+                background-color: rgba(0, 0, 0, 0.55);
+              }
+            card:
+              type: custom:decluttering-card
+              template: thermostat_card
+              variables:
+                - area: master_bedroom
 
       - type: custom:group-element # Footer
         visible: true
@@ -152,9 +138,9 @@ elements:
           justify-content: center
         elements:
           - type: state-icon
-            entity: light.main_bathroom_spots
-            title: Spots
-            icon: mdi:wall-sconce-flat
+            entity: light.master_bedroom
+            title: Light
+            icon: mdi:wall-sconce
             style: &room_footer_icon_style
               <<: *element_style
               transform: *room_banner_icon_transform
@@ -163,15 +149,16 @@ elements:
             tap_action:
               action: toggle
           - type: state-icon
-            entity: light.main_bathroom_vanity
-            title: Vanity
-            icon: mdi:vanity-light
+            entity: light.bedside_chris
+            title: Chris' lamp
+            icon: mdi:lamp
             style: *room_footer_icon_style
             tap_action:
               action: toggle
           - type: state-icon
-            entity: fan.main_bathroom
-            title: Fan
+            entity: light.bedside_karine
+            title: Karine's lamp
+            icon: mdi:lava-lamp
             style: *room_footer_icon_style
             tap_action:
               action: toggle

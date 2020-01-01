@@ -1,4 +1,5 @@
-# Icon reference: https://petershaggynoble.github.io/MDI-Sandbox/
+# Icons: https://petershaggynoble.github.io/MDI-Sandbox/
+# Color tool: https://material.io/resources/color/
 
 title: Avatar
 
@@ -158,6 +159,7 @@ views:
     cards:
       - !include ui-lovelace/areas/living-room.yaml
       - !include ui-lovelace/areas/main-bathroom.yaml
+      - !include ui-lovelace/areas/master-bedroom.yaml
 
   - title: Ground Floor
     path: ground
