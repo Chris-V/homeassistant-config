@@ -1,5 +1,8 @@
 homeassistant:
   customize:
+    binary_Sensor.studio_window:
+      friendly_name: "Studio window"
+      device_class: "window"
     light.studio:
       friendly_name: "Studio light"
     sensor.studio_window_sensor_battery:
@@ -54,14 +57,6 @@ light:
   - platform: switch
     name: "studio"
     entity_id: "switch.studio_light"
-
-binary_sensor:
-  - platform: template
-    sensors:
-      studio_window:
-        friendly_name: "Studio window"
-        device_class: "window"
-        value_template: "{{ is_state('sensor.studio_window_sensor_access_control', '22') }}"
 
 sensor:
   - platform: template

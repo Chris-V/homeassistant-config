@@ -1,5 +1,8 @@
 homeassistant:
   customize:
+    binary_sensor.living_room_door:
+      friendly_name: "Living room door"
+      device_class: "door"
     sensor.living_room_door_sensor_battery:
       battery_type: "Sensative Strip"
     light.living_room_ambiance:
@@ -97,14 +100,6 @@ light:
   - platform: switch
     name: bookshelf
     entity_id: "switch.bookshelf_light"
-
-binary_sensor:
-  - platform: template
-    sensors:
-      living_room_door:
-        friendly_name: "Living room door"
-        device_class: "door"
-        value_template: "{{ is_state('sensor.living_room_door_sensor_access_control', '22') }}"
 
 sensor:
   - platform: template

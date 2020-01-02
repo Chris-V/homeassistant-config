@@ -1,5 +1,8 @@
 homeassistant:
   customize:
+    binary_sensor.lounge_window:
+      friendly_name: "Lounge window"
+      device_class: "window"
     sensor.lounge_window_sensor_battery:
       battery_type: "Sensative Strip"
 
@@ -65,14 +68,6 @@ light:
     entities:
       - light.lounge
       - light.lounge_ambiance
-
-binary_sensor:
-  - platform: template
-    sensors:
-      lounge_window:
-        friendly_name: "Lounge window"
-        device_class: "window"
-        value_template: "{{ is_state('sensor.lounge_window_sensor_access_control', '22') }}"
 
 sensor:
   - platform: template

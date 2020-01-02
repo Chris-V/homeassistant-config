@@ -1,5 +1,8 @@
 homeassistant:
   customize:
+    binary_sensor.basement_bathroom_door:
+      friendly_name: "Basement bathroom door"
+      device_class: "door"
     sensor.basement_bathroom_door_sensor_battery:
       battery_type: "Sensative Strip"
     sensor.basement_bathroom_multisensor_battery:
@@ -32,10 +35,6 @@ cloud:
 binary_sensor:
   - platform: template
     sensors:
-      basement_bathroom_door:
-        friendly_name: "Basement bathroom door"
-        device_class: "door"
-        value_template: "{{ is_state('sensor.basement_bathroom_door_sensor_access_control', '22') }}"
       basement_bathroom_motion:
         friendly_name: "Basement bathroom motion"
         device_class: "motion"

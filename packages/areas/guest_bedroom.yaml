@@ -1,5 +1,8 @@
 homeassistant:
   customize:
+    binary_sensor.guest_bedroom_window:
+      friendly_name: "Guest bedroom window"
+      device_class: "window"
     light.guest_bedroom:
       friendly_name: "Guest's bedroom light"
     sensor.guest_bedroom_window_sensor_battery:
@@ -54,14 +57,6 @@ light:
   - platform: switch
     name: "guest_bedroom"
     entity_id: "switch.guest_bedroom_light"
-
-binary_sensor:
-  - platform: template
-    sensors:
-      guest_bedroom_window:
-        friendly_name: "Guest bedroom window"
-        device_class: "window"
-        value_template: "{{ is_state('sensor.guest_bedroom_window_sensor_access_control', '22') }}"
 
 sensor:
   - platform: template
