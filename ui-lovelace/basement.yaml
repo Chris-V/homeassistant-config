@@ -5,8 +5,8 @@
     ha-card > .card-content { padding: 0; }
   entities:
     - type: custom:header-card
-      title: Lounge
-      entities: light.lounge_lights
+      title: Common
+      entities: light.general_basement_lights
     - type: divider
     - type: custom:swipe-card
       parameters: &room_swipe_parameters
@@ -22,50 +22,6 @@
                   box-shadow: none;
                   --ha-card-background: 'rgba(0, 0, 0, 0)';
                 }
-              entities:
-                - entity: light.lounge
-                  name: Spots
-                  icon: mdi:wall-sconce-flat
-                - entity: light.lounge_ambiance
-                  name: Ambiance
-                  icon: mdi:floor-lamp
-                - entity: switch.lounge_tv
-                  name: TV
-                  icon: mdi:television
-
-            - type: vertical-stack
-              cards:
-                - type: glance
-                  show_name: False
-                  columns: 2
-                  style: *wrapped_style
-                  entities:
-                    - entity: media_player.lounge_chromecast
-                      icon: mdi:television
-                    - entity: media_player.lounge_google_home
-                    - entity: sensor.lounge_temperature
-                    - entity: binary_sensor.lounge_window
-
-        - type: custom:decluttering-card
-          template: thermostat_card
-          variables:
-            - area: lounge
-
-- type: entities
-  show_header_toggle: False
-  style: *wrapper_style
-  entities:
-    - type: custom:header-card
-      title: Common
-      entities: light.general_basement_lights
-    - type: divider
-    - type: custom:swipe-card
-      parameters: *room_swipe_parameters
-      cards:
-        - type: horizontal-stack
-          cards:
-            - type: entities
-              style: *wrapped_style
               entities:
                 - entity: light.basement_hallway
                   name: Hallway

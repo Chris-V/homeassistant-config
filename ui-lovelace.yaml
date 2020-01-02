@@ -166,6 +166,12 @@ views:
       - !include ui-lovelace/areas/office.yaml
 
   - title: Basement
+    path: basement-v2
+    icon: mdi:home-floor-b
+    cards:
+      - !include ui-lovelace/areas/lounge.yaml
+
+  - title: Basement
     path: basement
     icon: mdi:home-floor-b
     cards: !include ui-lovelace/basement.yaml

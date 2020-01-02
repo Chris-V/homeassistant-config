@@ -41,36 +41,16 @@ elements:
           font-size: 1.6em
           font-weight: 500
         elements:
-          - type: conditional # Room icon
-            conditions:
-              - entity: binary_sensor.living_room_door
-                state: "off"
-            style:
+          - type: icon
+            icon: mdi:sofa
+            style: &room_title_icon_style
+              <<: *element_style
               transform: &room_banner_icon_transform scale(0.8)
               margin-right: 10px
-            elements:
-              - type: icon
-                icon: mdi:sofa
-                style: &room_title_icon_style
-                  <<: *element_style
-                  cursor: default
-
-          - type: conditional # Alert icon
-            conditions:
-              - entity: binary_sensor.living_room_door
-                state: "on"
-            style:
-              transform: *room_banner_icon_transform
-              margin-right: 10px
-            elements:
-              - type: icon
-                icon: mdi:home-alert
-                style:
-                  <<: *room_title_icon_style
-                  color: "#FF0"
+              cursor: default
 
           - type: custom:text-element # Title
-            text: Living room
+            text: Lounge
             style: *element_style
 
           - type: custom:group-element # Sensors
@@ -85,8 +65,8 @@ elements:
               flex-grow: 1
               font-size: 0.55em
             elements:
-              - type: state-icon # Door
-                entity: binary_sensor.living_room_door
+              - type: state-icon # Window
+                entity: binary_sensor.lounge_window
                 title: Door
                 tap_action:
                   action: more-info
@@ -108,7 +88,7 @@ elements:
                   justify-content: flex-end
                 elements:
                   - type: state-icon
-                    entity: sensor.living_room_temperature
+                    entity: sensor.lounge_temperature
                     title: Temperature
                     tap_action:
                       action: more-info
@@ -117,7 +97,7 @@ elements:
                       transform: *room_sensor_icon_transform
                       transform-origin: center 60%
                   - type: state-label
-                    entity: sensor.living_room_temperature
+                    entity: sensor.lounge_temperature
                     title: Temperature
                     tap_action:
                       action: more-info
@@ -153,7 +133,7 @@ elements:
               type: custom:decluttering-card
               template: thermostat_card
               variables:
-                - area: living_room
+                - area: lounge
 
       - type: custom:group-element # Footer
         visible: true
@@ -161,15 +141,13 @@ elements:
         style:
           <<: *room_banner_style
           order: 3
-          flex-grow: 0
-          flex-shrink: 0
           background-color: rgba(0, 0, 0, 0.55)
           height: 1.75em
           justify-content: center
         elements:
           - type: state-icon
             entity: light.bookshelf
-            title: Bookshelf
+            title: Spots
             icon: mdi:wall-sconce-flat
             style: &room_footer_icon_style
               <<: *element_style
@@ -179,31 +157,26 @@ elements:
             tap_action:
               action: toggle
           - type: state-icon
-            entity: light.living_room_ambiance
+            entity: light.lounge_ambiance
             title: Ambiance
-            icon: mdi:floor-lamp-dual
+            icon: mdi:floor-lamp
             style: *room_footer_icon_style
             tap_action:
               action: toggle
           - type: state-icon
-            entity: switch.bookshelf_outlet
-            title: Bookshelf outlet
-            icon: mdi:power-socket-us
-            style: *room_footer_icon_style
-            tap_action:
-              action: toggle
-          - type: state-icon
-            entity: media_player.living_room_tv
+            entity: switch.lounge_tv
             title: TV
             icon: mdi:television
             style: *room_footer_icon_style
             tap_action:
-              action: call-service
-              service: switch.toggle
-              service_data:
-                entity_id: switch.living_room_tv_power
+              action: toggle
           - type: state-icon
-            entity: media_player.living_room_google_home
+            entity: media_player.lounge_chromecast
+            title: Chromecast
+            icon: mdi:television-play
+            style: *room_footer_icon_style
+          - type: state-icon
+            entity: media_player.lounge_google_home
             title: Google Home
             icon: mdi:speaker
             style: *room_footer_icon_style
