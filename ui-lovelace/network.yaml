@@ -35,6 +35,8 @@
   show_header_toggle: false
   entities:
     - sensor.connected_clients
+    - entity: sensor.hacs
+      name: HACS
     - sensor.current_home_assistant_version
     - sensor.latest_home_assistant_version
 
