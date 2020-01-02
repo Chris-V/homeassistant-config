@@ -170,6 +170,7 @@ views:
     icon: mdi:home-floor-b
     cards:
       - !include ui-lovelace/areas/lounge.yaml
+      - !include ui-lovelace/areas/studio.yaml
 
   - title: Basement
     path: basement
