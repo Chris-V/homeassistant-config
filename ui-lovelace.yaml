@@ -170,6 +170,7 @@ views:
     icon: mdi:home-floor-b
     cards:
       - !include ui-lovelace/areas/lounge.yaml
+      - !include ui-lovelace/areas/basement-bathroom.yaml
       - !include ui-lovelace/areas/guest-bedroom.yaml
       - !include ui-lovelace/areas/studio.yaml
       - !include ui-lovelace/areas/laundry-room.yaml
