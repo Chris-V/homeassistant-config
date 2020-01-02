@@ -172,6 +172,7 @@ views:
       - !include ui-lovelace/areas/lounge.yaml
       - !include ui-lovelace/areas/guest-bedroom.yaml
       - !include ui-lovelace/areas/studio.yaml
+      - !include ui-lovelace/areas/laundry-room.yaml
       - !include ui-lovelace/areas/workshop.yaml
 
   - title: Basement

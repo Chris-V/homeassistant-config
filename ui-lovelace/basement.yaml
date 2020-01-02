@@ -82,28 +82,3 @@
           template: thermostat_card
           variables:
             - area: basement_bathroom
-
-- type: entities
-  show_header_toggle: False
-  style: *wrapper_style
-  entities:
-    - type: custom:header-card
-      title: Laundry
-      entities: light.laundry_room_lights
-    - type: divider
-    - type: custom:hui-horizontal-stack-card
-      cards:
-        - type: entities
-          style: *wrapped_style
-          entities:
-            - entity: light.laundry_room
-              name: Light
-
-        - type: glance
-          show_name: False
-          columns: 3
-          style: *wrapped_style
-          entities:
-            - entity: media_player.laundry_room_google_home
-            - entity: sensor.laundry_room_temperature
-            - entity: binary_sensor.laundry_room_motion
