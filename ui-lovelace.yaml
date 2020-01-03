@@ -37,31 +37,6 @@ custom_header:
         options_hide: true
 
 decluttering_templates:
-  thermostat_card:
-    default:
-      - area:
-    card:
-      type: horizontal-stack
-      cards:
-        - type: entities
-          show_header_toggle: False
-          entities:
-            - entity: "input_select.[[area]]_thermostat_mode"
-              name: Mode
-            - entity: "input_number.[[area]]_thermostat_comfort_setpoint"
-              name: Comfort
-            - entity: "input_number.[[area]]_thermostat_eco_setpoint"
-              name: Eco
-
-        - type: custom:simple-thermostat
-          entity: "climate.[[area]]_thermostat"
-          name: False
-          hide:
-            temperature: true
-            state: true
-          step_size: 0.5
-          control: []
-
   plant:
     default:
       - name:

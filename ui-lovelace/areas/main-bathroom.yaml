@@ -154,7 +154,8 @@ elements:
           align-items: flex-end
           justify-content: center
           background-color: rgba(0, 0, 0, 0.55)
-          height: 1.75em
+          height: unset
+          min-height: 1.75em
         elements:
           - type: state-icon
             entity: light.main_bathroom_spots

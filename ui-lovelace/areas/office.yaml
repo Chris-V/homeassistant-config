@@ -126,15 +126,29 @@ elements:
               height: 100%
               flex-shrink: 0
               scroll-snap-align: start
-          - type: custom:mod-card # Thermostat
+          - type: custom:hui-horizontal-stack-card # Thermostat
             style:
               <<: *room_card_content_slide_style
               background-color: rgba(0, 0, 0, 0.55)
-            card:
-              type: custom:decluttering-card
-              template: thermostat_card
-              variables:
-                - area: office
+            cards:
+              - type: entities
+                show_header_toggle: False
+                entities:
+                  - entity: "input_select.office_thermostat_mode"
+                    name: Mode
+                  - entity: "input_number.office_thermostat_comfort_setpoint"
+                    name: Comfort
+                  - entity: "input_number.office_thermostat_eco_setpoint"
+                    name: Eco
+
+              - type: custom:simple-thermostat
+                entity: "climate.office_thermostat"
+                name: False
+                hide:
+                  temperature: true
+                  state: true
+                step_size: 0.5
+                control: []
 
       - type: custom:group-element # Footer
         visible: true
@@ -145,7 +159,8 @@ elements:
           align-items: flex-end
           justify-content: center
           background-color: rgba(0, 0, 0, 0.55)
-          height: 1.75em
+          height: unset
+          min-height: 1.75em
         elements:
           - type: state-icon
             entity: light.office
