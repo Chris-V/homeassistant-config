@@ -162,6 +162,8 @@ elements:
             cards:
               - type: entities
                 show_header_toggle: False
+                style: |
+                  ha-card .card-content { padding: 0; }
                 entities:
                   - entity: "input_select.living_room_thermostat_mode"
                     name: Mode
