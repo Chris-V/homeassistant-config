@@ -147,3 +147,8 @@ elements:
               margin: 0 15px
             tap_action:
               action: toggle
+          - type: state-icon
+            entity: media_player.office_sonos
+            title: Sonos
+            icon: mdi:speaker
+            style: *room_footer_icon_style
