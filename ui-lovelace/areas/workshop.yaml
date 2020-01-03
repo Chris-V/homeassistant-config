@@ -1,15 +1,33 @@
 type: picture-elements
 image: /local/frontend/living_room_card.webp
+style: |
+  .element[class~=element] {
+    position: relative;
+    transform: none;
+  }
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.55);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(95, 67, 57, 0.55);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(95, 67, 57, 1);
+  }
 elements:
   - type: custom:group-element
     visible: true
     no_toggle_hide: true
     elements_pos:
+      position: absolute
       top: 0
       right: 0
       left: 0
       bottom: 0
-      transform: none
       display: flex
       flex-direction: column
       "--secondary-text-color": "#DADADB"
@@ -23,11 +41,7 @@ elements:
       - type: custom:group-element # Header
         visible: true
         no_toggle_hide: true
-        style: &element_style
-          position: relative
-          transform: none
         elements_pos: &room_banner_style
-          <<: *element_style
           height: 2.25em
           overflow: hidden
           display: flex
@@ -52,7 +66,6 @@ elements:
               - type: icon
                 icon: mdi:hammer
                 style: &room_title_icon_style
-                  <<: *element_style
                   cursor: default
 
           - type: conditional # Alert icon
@@ -71,13 +84,11 @@ elements:
 
           - type: custom:text-element # Title
             text: Workshop
-            style: *element_style
 
           - type: custom:group-element # Sensors
             visible: true
             no_toggle_hide: true
             elements_pos:
-              <<: *element_style
               height: 100%
               display: flex
               align-items: center
@@ -91,7 +102,6 @@ elements:
                 tap_action:
                   action: more-info
                 style: &room_banner_binary_sensor_style
-                  <<: *element_style
                   transform: &room_sensor_icon_transform scale(0.7)
                   transform-origin: center right
               - type: state-icon # Motion
@@ -104,7 +114,6 @@ elements:
       - type: custom:gap-card # Content
         height: 0
         style:
-          <<: *element_style
           order: 2
           flex-grow: 1
           flex-shrink: 1
@@ -113,18 +122,18 @@ elements:
       - type: custom:group-element # Footer
         visible: true
         no_toggle_hide: true
-        style:
+        elements_pos:
           <<: *room_banner_style
           order: 3
+          align-items: flex-end
+          justify-content: center
           background-color: rgba(0, 0, 0, 0.55)
           height: 1.75em
-          justify-content: center
         elements:
           - type: state-icon
             entity: light.workshop
             title: Light
             style: &room_footer_icon_style
-              <<: *element_style
               transform: *room_banner_icon_transform
               transform-origin: center right
               margin: 0 15px
