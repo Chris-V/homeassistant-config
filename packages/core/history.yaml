@@ -1,9 +1,6 @@
 recorder:
   purge_interval: 2
   purge_keep_days: 14
-  exclude: &recorder_exclusion
-    entities:
-      - input_select.default_theme
   include: &recorder_inclusion
     domains:
       - climate
@@ -150,9 +147,7 @@ recorder:
       - sensor.dark_sky_temperature
 
 history:
-  exclude: *recorder_exclusion
   include: *recorder_inclusion
 
 logbook:
-  exclude: *recorder_exclusion
   include: *recorder_inclusion

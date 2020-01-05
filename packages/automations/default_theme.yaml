@@ -19,10 +19,12 @@ automation:
     trigger:
       - platform: state
         entity_id: "input_select.default_theme"
+      - platform: homeassistant
+        event: "start"
     action:
       - service: frontend.set_theme
         data_template:
-          name: "{{trigger.to_state.state}}"
+          name: "{{ states('input_select.default_theme') | default('default') }}"
 
   - alias: sunrise_theme
     initial_state: True
