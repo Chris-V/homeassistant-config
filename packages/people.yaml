@@ -19,6 +19,7 @@ person:
     user_id: "221fad543e1a4c05af8aaac8c68e985e"
     device_trackers:
       - device_tracker.chris_pixel
+      - device_tracker.chris_mobile_app_pixel
   - id: "karine"
     name: "Karine"
     user_id: "ef6743938a1646d2a1e8706e1bc00e34"
