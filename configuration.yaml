@@ -5,6 +5,11 @@ homeassistant:
   elevation: !secret zone_home_elevation
   time_zone: !secret zone_home_tz
   unit_system: metric
+  auth_providers:
+    - type: "homeassistant"
+  auth_mfa_modules:
+    - type: "totp"
+      name: "Authenticator app"
   packages: !include_dir_named packages/
 
 cloud:
