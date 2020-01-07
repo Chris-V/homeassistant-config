@@ -41,19 +41,20 @@ elements:
       - type: custom:group-element # Header
         visible: true
         no_toggle_hide: true
-        elements_pos: &room_banner_style
+        elements_pos:
+          <<: &room_banner_style
+            overflow: hidden
+            display: flex
+            flex-grow: 0
+            flex-shrink: 0
+            padding: 0 10px
+            color: "#D3D3D3"
+            font-size: 1.6em
+            font-weight: 500
           height: 2.25em
-          overflow: hidden
-          display: flex
           order: 1
-          flex-grow: 0
-          flex-shrink: 0
           align-items: center
-          padding: 0 10px
           background-color: rgba(187, 77, 0, 0.9)
-          color: &room_banner_color "#D3D3D3"
-          font-size: 1.6em
-          font-weight: 500
         elements:
           - type: conditional # Room icon
             conditions:
