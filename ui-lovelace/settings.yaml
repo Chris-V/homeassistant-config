@@ -15,58 +15,57 @@
     - entity: input_boolean.notify_power_outages
       name: Power outages
 
-- type: entities
-  title: Doors
-  show_header_toggle: false
-  entities:
-    - entity: binary_sensor.kitchen_door
-      name: Kitchen
-      secondary_info: last-changed
-    - entity: binary_sensor.living_room_door
-      name: Living room
-      secondary_info: last-changed
+- type: custom:auto-entities
+  sort:
+    method: last_changed
+  filter:
+    include:
+      - group: group.all_doors
+        options:
+          secondary_info: last-changed
+  card:
+    type: entities
+    title: Doors
+    show_header_toggle: false
 
-- type: entities
-  title: Windows
-  show_header_toggle: false
-  entities:
-    - entity: binary_sensor.lounge_window
-      name: Lounge
-      secondary_info: last-changed
-    - entity: binary_sensor.guest_bedroom_window
-      name: Guest's bedroom
-      secondary_info: last-changed
-    - entity: binary_sensor.studio_window
-      name: Studio
-      secondary_info: last-changed
+- type: custom:auto-entities
+  sort:
+    method: last_changed
+  filter:
+    include:
+      - group: group.all_windows
+        options:
+          secondary_info: last-changed
+  card:
+    type: entities
+    title: Windows
+    show_header_toggle: false
 
-- type: entities
-  title: Leaks
-  show_header_toggle: false
-  entities:
-    - entity: binary_sensor.kitchen_sink_leak
-      name: Kitchen sink
-      secondary_info: last-changed
-    - entity: binary_sensor.water_heater_leak
-      name: Water heater
-      secondary_info: last-changed
+- type: custom:auto-entities
+  sort:
+    method: last_changed
+  filter:
+    include:
+      - group: group.all_leaks
+        options:
+          secondary_info: last-changed
+  card:
+    type: entities
+    title: Leaks
+    show_header_toggle: false
 
-- type: entities
-  title: Motion
-  show_header_toggle: false
-  entities:
-    - entity: binary_sensor.basement_bathroom_motion
-      name: Basement bathroom
-      secondary_info: last-changed
-    - entity: binary_sensor.main_bathroom_motion
-      name: Main bathroom
-      secondary_info: last-changed
-    - entity: binary_sensor.laundry_room_motion
-      name: Laundry
-      secondary_info: last-changed
-    - entity: binary_sensor.workshop_motion
-      name: Workshop
-      secondary_info: last-changed
+- type: custom:auto-entities
+  sort:
+    method: last_changed
+  filter:
+    include:
+      - group: group.all_motions
+        options:
+          secondary_info: last-changed
+  card:
+    type: entities
+    title: Motion
+    show_header_toggle: false
 
 - type: entities
   title: Batteries
@@ -75,59 +74,18 @@
     - entity: sensor.all_batteries
       name: Lowest
       secondary_info: last-changed
-    - type: custom:fold-entity-row
-      head:
-        type: section
-        label: Plants
-      group_config:
-        secondary_info: last-changed
-      items:
-        - entity: sensor.dollorama_battery
-          name: Dollorama
-        - entity: sensor.maitre_doyle_battery
-          name: Maître Doyle
-        - entity: sensor.rubber_ducky_battery
-          name: Rubber Ducky
-        - entity: sensor.spidy_battery
-          name: Spidy
-        - entity: sensor.viny_battery
-          name: Viny
-    - type: custom:fold-entity-row
-      head:
-        type: section
-        label: Sensors
-      group_config:
-        secondary_info: last-changed
-      items:
-        - entity: sensor.basement_bathroom_door_sensor_battery
-          name: Basement bathroom door sensor
-        - entity: sensor.basement_bathroom_multisensor_battery
-          name: Basement bathroom multisensor
-        - entity: sensor.chris_bedside_remote_battery
-          name: Chris' bedside remote
-        - entity: sensor.karine_bedside_remote_battery
-          name: Karine's bedside remote
-        - entity: sensor.kitchen_door_sensor_battery
-          name: Kitchen door
-        - entity: sensor.kitchen_sink_leak_sensor_battery
-          name: Kitchen sink leak
-        - entity: sensor.guest_bedroom_window_sensor_battery
-          name: Guest's bedroom window
-        - entity: sensor.studio_window_sensor_battery
-          name: Studio window
-        - entity: sensor.laundry_motion_sensor_battery
-          name: Laundry room motion
-        - entity: sensor.living_room_door_sensor_battery
-          name: Living room door
-        - entity: sensor.main_bathroom_door_sensor_battery
-          name: Main bathroom door sensor
-        - entity: sensor.main_bathroom_multisensor_battery
-          name: Main bathroom multisensor
-        - entity: sensor.lounge_window_sensor_battery
-          name: Lounge window
-        - entity: sensor.ups_battery_status
-          name: UPS
-        - entity: sensor.water_heater_leak_sensor_battery
-          name: Water heater leak
-        - entity: sensor.workshop_motion_sensor_battery
-          name: Workshop motion
+
+    - type: custom:auto-entities
+      sort:
+        method: state
+        numeric: true
+      filter:
+        include:
+          - group: group.all_batteries
+      card:
+        type: custom:fold-entity-row
+        head:
+          type: section
+          label: Details
+        group_config:
+          secondary_info: last-changed

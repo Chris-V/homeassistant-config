@@ -4,6 +4,7 @@
 title: Avatar
 
 resources:
+  - { type: "module", url: "/community_plugin/lovelace-auto-entities/auto-entities.js" }
   - { type: "module", url: "/community_plugin/button-card/button-card.js" }
   - { type: "module", url: "/community_plugin/custom-header/custom-header.js" }
   - { type: "module", url: "/community_plugin/decluttering-card/decluttering-card.js" }
