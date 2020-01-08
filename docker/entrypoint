@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+log(){ echo "$*" >&2; }
+
+set -- /config/docker/run "$@"
+
+if [ "$(id -u)" = "0" ]; then
+  log "Installing extra packages"
+  apk add --quiet --no-progress --no-cache su-exec iputils
+
+  ID="${GUID:-1000}:${GGID:-1000}"
+  log "Dropping privileges to $ID"
+  set -- su-exec "$ID" "$@"
+else
+  log "Not running as root. Extra packages won't be installed."
+fi
+
+# replace the current pid 1 with original command
+exec "$@"
