@@ -18,7 +18,6 @@ logger:
   default: "warn"
   logs:
     homeassistant.components.glances: "fatal"
-    homeassistant.components.device_tracker: error
     glances: "fatal"
 
 hacs: # Does not support packages

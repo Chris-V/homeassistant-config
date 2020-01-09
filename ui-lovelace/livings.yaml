@@ -1,4 +1,4 @@
-- type: custom:swipe-card
+- type: custom:swipe-card # Carl
   parameters:
     effect: flip
     autoHeight: yes
@@ -267,7 +267,7 @@
                       + states['sensor.carl_outlet_4_energy'].attributes['unit_of_measurement']
                 ]]]
 
-- type: custom:swipe-card
+- type: custom:swipe-card # Slinky
   parameters:
     effect: flip
     autoHeight: yes
@@ -531,7 +531,7 @@
   variables:
     - image: /local/frontend/money_tree_card.jpg
     - name: Dollorama
-    - entity_left_offset: 51%
+    - badges_position: "end"
     - entity_problems: sensor.dollorama_problems
     - entity_moisture: sensor.dollorama_moisture
     - entity_temperature: sensor.dollorama_temperature
@@ -562,7 +562,7 @@
   variables:
     - image: /local/frontend/spider_plant_card.jpg
     - name: Spidy
-    - entity_left_offset: 51%
+    - badges_position: "end"
     - entity_problems: sensor.spidy_problems
     - entity_moisture: sensor.spidy_moisture
     - entity_temperature: sensor.spidy_temperature
@@ -575,7 +575,7 @@
     - name: Viny
     - name_color: "#3B4049"
     - name_shadow_color: "#E0E0E0"
-    - entity_left_offset: 51%
+    - badges_position: "end"
     - entity_problems: sensor.viny_problems
     - entity_moisture: sensor.viny_moisture
     - entity_temperature: sensor.viny_temperature
