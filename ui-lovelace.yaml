@@ -19,7 +19,6 @@ resources:
   - { type: "js", url: "/community_plugin/lovelace-toggle-lock-entity-row/toggle-lock-entity-row.js" }
   - { type: "js", url: "/community_plugin/secondaryinfo-entity-row/secondaryinfo-entity-row.js" }
   - { type: "js", url: "/community_plugin/text-element/text-element.js" }
-  - { type: "js", url: "/local/header-card.js?v=2" }
 
 custom_header:
   compact_mode: true

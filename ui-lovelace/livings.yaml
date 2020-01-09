@@ -3,7 +3,7 @@
     effect: flip
     autoHeight: yes
   cards:
-    - type: picture-elements
+    - type: picture-elements # Front face
       image: /local/frontend/carl_card.jpg
       elements:
         # Translucent footer
@@ -136,11 +136,15 @@
             left: 92%
             color: *carl_footer_color
 
-    - type: vertical-stack
+    - type: vertical-stack # Back face
       cards:
-        - type: custom:header-card
+        - type: markdown
           title: Carl
-          show_frame: yes
+          content: " "
+          style: |
+            ha-markdown.markdown {
+              display: none;
+            }
         - type: horizontal-stack
           cards:
             - type: custom:button-card
@@ -272,7 +276,7 @@
     effect: flip
     autoHeight: yes
   cards:
-    - type: picture-elements
+    - type: picture-elements # Front face
       image: /local/frontend/slinky_card.jpg
       elements:
         # Translucent footer
@@ -395,11 +399,15 @@
             left: 92%
             color: *slinky_footer_color
 
-    - type: vertical-stack
+    - type: vertical-stack # Back face
       cards:
-        - type: custom:header-card
+        - type: markdown
           title: Slinky
-          show_frame: yes
+          content: " "
+          style: |
+            ha-markdown.markdown {
+              display: none;
+            }
         - type: horizontal-stack
           cards:
             - type: custom:button-card
