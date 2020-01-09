@@ -1,0 +1,304 @@
+type: custom:swipe-card
+parameters:
+  effect: flip
+  autoHeight: yes
+cards:
+  - type: picture-elements # Front face
+    image: /local/frontend/carl_card.jpg
+    style: |
+      .element[class~=element] {
+        position: relative;
+        transform: none;
+      }
+    elements:
+      - type: custom:group-element
+        visible: true
+        no_toggle_hide: true
+        elements_pos:
+          position: absolute
+          top: 0
+          right: 0
+          left: 0
+          bottom: 0
+          display: flex
+          flex-direction: column
+          "--secondary-text-color": "#DADADB"
+          "--primary-text-color": "#DADADB"
+          "--paper-item-icon-color": "#DADADB"
+          "--iron-icon-width": 40px
+          "--iron-icon-height": 40px
+          "--ha-card-background": rgba(0, 0, 0, 0)
+          "--ha-card-box-shadow": none
+        elements:
+          - type: custom:group-element # Content
+            visible: true
+            no_toggle_hide: true
+            elements_pos:
+              order: 2
+              flex-grow: 1
+              flex-shrink: 1
+              display: flex
+              overflow: auto hidden
+              "--iron-icon-width": 24px
+              "--iron-icon-height": 24px
+            elements:
+              - type: custom:gap-card # Initial
+                height: 0
+                style:
+                  display: block
+                  width: 100%
+                  height: 100%
+                  flex-shrink: 0
+              - type: conditional # Problem indicator
+                conditions:
+                  - entity: binary_sensor.carl_requires_attention
+                    state: "on"
+                elements:
+                  - type: icon
+                    icon: mdi:alert-circle
+                    entity: binary_sensor.carl_requires_attention
+                    style:
+                      position: absolute
+                      right: 1em
+                      top: 1.25em
+                      color: var(--google-red-500)
+                      filter: drop-shadow(black 0 0 1px)
+
+          - type: custom:group-element # Footer
+            visible: true
+            no_toggle_hide: true
+            elements_pos:
+              overflow: hidden
+              display: flex
+              order: 2
+              flex-grow: 0
+              flex-shrink: 0
+              align-items: center
+              padding: 0 5px
+              background-color: rgba(0, 0, 0, 0.45)
+              color: "#D3D3D3"
+            elements:
+              - type: state-icon # UV Light
+                entity: switch.carl_uv_light
+                title: UV light
+                tap_action:
+                  action: toggle
+                style: &state_icon_style
+                  transform: scale(0.7)
+                  margin: 0 15px 0 0
+
+              - type: state-icon # Heater
+                entity: switch.carl_heater
+                title: Heater
+                tap_action:
+                  action: toggle
+                style: *state_icon_style
+
+              - type: state-icon # Heat bulb
+                entity: switch.carl_heat_bulb
+                title: Heat bulb
+                tap_action:
+                  action: toggle
+                style: *state_icon_style
+
+              - type: state-icon # Mister
+                entity: switch.carl_outlet_4
+                title: Mister
+                tap_action:
+                  action: toggle
+                style:
+                  <<: *state_icon_style
+                  margin-right: auto
+
+              - type: custom:group-element # Temperature
+                visible: true
+                no_toggle_hide: true
+                elements_pos: &sensor_group_style
+                  margin-left: 20px
+                  display: flex
+                  flex-direction: column
+                  align-items: center
+                  justify-content: flex-end
+                elements:
+                  - type: state-icon
+                    entity: sensor.carl_temperature
+                    title: Temperature
+                    tap_action:
+                      action: more-info
+                    style: &sensor_icon_style
+                      transform: scale(0.6)
+                  - type: state-label
+                    entity: sensor.carl_temperature
+                    title: Temperature
+                    tap_action:
+                      action: more-info
+                    style: &sensor_label_style
+                      margin: -8px
+
+              - type: custom:group-element # Basking temperature
+                visible: true
+                no_toggle_hide: true
+                elements_pos: *sensor_group_style
+                elements:
+                  - type: state-icon
+                    entity: sensor.carl_basking_temperature
+                    title: Basking temperature
+                    icon: mdi:spotlight-beam
+                    tap_action:
+                      action: more-info
+                    style: *sensor_icon_style
+                  - type: state-label
+                    entity: sensor.carl_basking_temperature
+                    title: Basking temperature
+                    tap_action:
+                      action: more-info
+                    style: *sensor_label_style
+
+              - type: custom:group-element # Humidity
+                visible: true
+                no_toggle_hide: true
+                elements_pos: *sensor_group_style
+                elements:
+                  - type: state-icon
+                    entity: sensor.carl_humidity
+                    title: Humidity
+                    tap_action:
+                      action: more-info
+                    style: *sensor_icon_style
+                  - type: state-label
+                    entity: sensor.carl_humidity
+                    title: Humidity
+                    tap_action:
+                      action: more-info
+                    style: *sensor_label_style
+
+  - type: vertical-stack # Back face
+    cards:
+      - type: custom:button-card
+        color_type: label-card
+        name: Carl
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            name: Scheduling
+            entity: input_boolean.carl_scheduled_lights
+            hold_action: more-info
+            lock:
+              enabled: true
+            aspect_ratio: 1.7/1
+            styles: &carl_button_styles
+              name:
+                - font-size: 14px
+                - padding: 0px 5px
+              label:
+                - color: "#80828A"
+                - font-size: 12px
+                - padding: 0px 5px
+          - type: custom:button-card
+            name: Master
+            entity: switch.carl_power_strip
+            hold_action: more-info
+            lock:
+              enabled: true
+            aspect_ratio: 1.7/1
+            styles: *carl_button_styles
+            show_label: yes
+            label: >
+              [[[
+                return Math.round(states['sensor.carl_power_strip_power'].state)
+                    + ' '
+                    + states['sensor.carl_power_strip_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_power_strip_energy'].state)
+                    + ' '
+                    + states['sensor.carl_power_strip_energy'].attributes['unit_of_measurement']
+              ]]]
+          - type: custom:button-card
+            name: Controller
+            entity: switch.carl_outlet_5
+            hold_action: more-info
+            lock:
+              enabled: true
+            aspect_ratio: 1.7/1
+            styles: *carl_button_styles
+            show_label: yes
+            label: >
+              [[[
+                return Math.round(states['sensor.carl_outlet_5_power'].state)
+                    + ' '
+                    + states['sensor.carl_outlet_5_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_outlet_5_energy'].state)
+                    + ' '
+                    + states['sensor.carl_outlet_5_energy'].attributes['unit_of_measurement']
+              ]]]
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            name: UV light
+            entity: switch.carl_uv_light
+            hold_action: more-info
+            aspect_ratio: 1.2/1
+            styles: *carl_button_styles
+            show_label: yes
+            label: >
+              [[[
+                return Math.round(states['sensor.carl_uv_light_power'].state)
+                    + ' '
+                    + states['sensor.carl_uv_light_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_uv_light_energy'].state)
+                    + ' '
+                    + states['sensor.carl_uv_light_energy'].attributes['unit_of_measurement']
+              ]]]
+          - type: custom:button-card
+            name: Heater
+            entity: switch.carl_heater
+            hold_action: more-info
+            aspect_ratio: 1.2/1
+            styles: *carl_button_styles
+            show_label: yes
+            label: >
+              [[[
+                return Math.round(states['sensor.carl_heater_power'].state)
+                    + ' '
+                    + states['sensor.carl_heater_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_heater_energy'].state)
+                    + ' '
+                    + states['sensor.carl_heater_energy'].attributes['unit_of_measurement']
+              ]]]
+          - type: custom:button-card
+            name: Heat bulb
+            entity: switch.carl_heat_bulb
+            hold_action: more-info
+            aspect_ratio: 1.2/1
+            styles: *carl_button_styles
+            show_label: yes
+            label: >
+              [[[
+                return Math.round(states['sensor.carl_heat_bulb_power'].state)
+                    + ' '
+                    + states['sensor.carl_heat_bulb_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_heat_bulb_energy'].state)
+                    + ' '
+                    + states['sensor.carl_heat_bulb_energy'].attributes['unit_of_measurement']
+              ]]]
+          - type: custom:button-card
+            name: Mister
+            entity: switch.carl_outlet_4
+            hold_action: more-info
+            aspect_ratio: 1.2/1
+            styles: *carl_button_styles
+            show_label: yes
+            label: >
+              [[[
+                return Math.round(states['sensor.carl_outlet_4_power'].state)
+                    + ' '
+                    + states['sensor.carl_outlet_4_power'].attributes['unit_of_measurement']
+                    + ' ⁓ '
+                    + Math.round(states['sensor.carl_outlet_4_energy'].state)
+                    + ' '
+                    + states['sensor.carl_outlet_4_energy'].attributes['unit_of_measurement']
+              ]]]

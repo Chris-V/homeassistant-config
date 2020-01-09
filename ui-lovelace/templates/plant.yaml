@@ -1,0 +1,81 @@
+default:
+  - name:
+  - name_color: "#E0E0E0"
+  - name_shadow_color: "#3B4049"
+  - image:
+  - badges_position: "start"
+  - entity_problems:
+  - entity_moisture:
+  - entity_temperature:
+  - entity_conductivity:
+  - entity_brightness:
+card:
+  type: picture-elements
+  image: "[[image]]"
+  style: |
+    .element[class~=element] {
+      transform: none;
+    }
+    .element hui-state-badge-element {
+      position: relative;
+      --ha-label-badge-title-font-size: 0;
+      --ha-label-badge-font-size: 1.2em;
+      --label-badge-red: #363941;
+    }
+    .element hui-state-badge-element + hui-state-badge-element {
+        margin-left: 1em;
+    }
+  elements:
+    - type: custom:text-element
+      text: "[[name]]"
+      style:
+        top: 1.25em
+        left: 1.5em
+        color: "[[name_color]]"
+        filter: "drop-shadow([[name_shadow_color]] 0 0 2px)"
+        font-size: 1.25em
+        font-weight: 500
+
+    - type: conditional
+      conditions:
+        - entity: "[[entity_problems]]"
+          state_not: "none"
+      elements:
+        - type: icon
+          icon: mdi:alert-circle
+          title: Problems
+          entity: "[[entity_problems]]"
+          tap_action:
+            action: more-info
+          style:
+            right: 1em
+            top: 1.25em
+            color: var(--google-red-500)
+            filter: drop-shadow(black 0 0 1px)
+
+    - type: custom:group-element
+      visible: true
+      no_toggle_hide: true
+      elements_pos:
+        position: absolute
+        bottom: 0
+        width: 100%
+        padding: 1em
+        box-sizing: border-box
+        transform: none
+        display: flex
+        flex-direction: row
+        justify-content: "flex-[[badges_position]]"
+      elements:
+        - type: state-badge
+          entity: "[[entity_moisture]]"
+          title:
+        - type: state-badge
+          entity: "[[entity_temperature]]"
+          title:
+        - type: state-badge
+          entity: "[[entity_conductivity]]"
+          title:
+        - type: state-badge
+          entity: "[[entity_brightness]]"
+          title:
