@@ -87,7 +87,8 @@ elements:
                   - type: custom:button-card
                     name: Scheduling
                     entity: input_boolean.slinky_scheduled_lights
-                    hold_action: more-info
+                    hold_action:
+                      action: more-info
                     lock:
                       enabled: true
                     aspect_ratio: 1.7/1
@@ -102,7 +103,9 @@ elements:
                   - type: custom:button-card
                     name: Master
                     entity: switch.slinky_power_strip
-                    hold_action: more-info
+                    hold_action:
+                      action: more-info
+                      entity: sensor.slinky_power_strip_power
                     lock:
                       enabled: true
                     aspect_ratio: 1.7/1
@@ -121,7 +124,9 @@ elements:
                   - type: custom:button-card
                     name: Controller
                     entity: switch.slinky_outlet_5
-                    hold_action: more-info
+                    hold_action:
+                      action: more-info
+                      entity: sensor.slinky_outlet_5_power
                     lock:
                       enabled: true
                     aspect_ratio: 1.7/1
@@ -142,7 +147,9 @@ elements:
                   - type: custom:button-card
                     name: UV light
                     entity: switch.slinky_uv_light
-                    hold_action: more-info
+                    hold_action:
+                      action: more-info
+                      entity: sensor.slinky_uv_light_power
                     aspect_ratio: 1.2/1
                     styles: *content_button_styles
                     show_label: yes
@@ -159,7 +166,9 @@ elements:
                   - type: custom:button-card
                     name: Heater
                     entity: switch.slinky_heater
-                    hold_action: more-info
+                    hold_action:
+                      action: more-info
+                      entity: sensor.slinky_heater_power
                     aspect_ratio: 1.2/1
                     styles: *content_button_styles
                     show_label: yes
@@ -176,7 +185,9 @@ elements:
                   - type: custom:button-card
                     name: Heat bulb
                     entity: switch.slinky_heat_bulb
-                    hold_action: more-info
+                    hold_action:
+                      action: more-info
+                      entity: sensor.slinky_heat_bulb_power
                     aspect_ratio: 1.2/1
                     styles: *content_button_styles
                     show_label: yes
@@ -193,7 +204,9 @@ elements:
                   - type: custom:button-card
                     name: Outlet 4
                     entity: switch.slinky_outlet_4
-                    hold_action: more-info
+                    hold_action:
+                      action: more-info
+                      entity: sensor.slinky_outlet_4_power
                     aspect_ratio: 1.2/1
                     styles: *content_button_styles
                     show_label: yes
