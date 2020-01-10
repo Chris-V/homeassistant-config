@@ -16,13 +16,13 @@ card:
     .element[class~=element] {
       transform: none;
     }
-    .element hui-state-badge-element {
+    .element button-card {
       position: relative;
       --ha-label-badge-title-font-size: 0;
-      --ha-label-badge-font-size: 1.2em;
+      --ha-label-badge-font-size: 1.2rem;
       --label-badge-red: #363941;
     }
-    .element hui-state-badge-element + hui-state-badge-element {
+    .element button-card + button-card {
         margin-left: 1em;
     }
   elements:
@@ -67,15 +67,27 @@ card:
         flex-direction: row
         justify-content: "flex-[[badges_position]]"
       elements:
-        - type: state-badge
-          entity: "[[entity_moisture]]"
-          title:
-        - type: state-badge
-          entity: "[[entity_temperature]]"
-          title:
-        - type: state-badge
-          entity: "[[entity_conductivity]]"
-          title:
-        - type: state-badge
-          entity: "[[entity_brightness]]"
-          title:
+        - type: custom:button-card
+          template: plant_badge
+          variables:
+            sensor_type: moisture
+            sensor_entity: "[[entity_moisture]]"
+            problems_entity: "[[entity_problems]]"
+        - type: custom:button-card
+          template: plant_badge
+          variables:
+            sensor_type: temperature
+            sensor_entity: "[[entity_temperature]]"
+            problems_entity: "[[entity_problems]]"
+        - type: custom:button-card
+          template: plant_badge
+          variables:
+            sensor_type: conductivity
+            sensor_entity: "[[entity_conductivity]]"
+            problems_entity: "[[entity_problems]]"
+        - type: custom:button-card
+          template: plant_badge
+          variables:
+            sensor_type: brightness
+            sensor_entity: "[[entity_brightness]]"
+            problems_entity: "[[entity_problems]]"
