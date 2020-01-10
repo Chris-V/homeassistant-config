@@ -60,11 +60,15 @@ elements:
             elements:
               - type: icon
                 icon: mdi:alert-circle
+                title: Problems
                 entity: binary_sensor.carl_requires_attention
+                tap_action:
+                  action: more-info
                 style:
                   position: absolute
                   right: 1em
                   top: 1.25em
+                  z-index: 1
                   color: var(--google-red-500)
                   filter: drop-shadow(black 0 0 1px)
 
@@ -158,36 +162,44 @@ elements:
           background-color: rgba(0, 0, 0, 0.45)
           color: "#D3D3D3"
         elements:
-          - type: state-icon # UV Light
+          - type: custom:button-card # UV light
+            template: terra_footer_switch
+            name: UV Light
             entity: switch.carl_uv_light
-            title: UV light
-            tap_action:
-              action: toggle
+            variables:
+              power_entity: sensor.carl_uv_light_power
+              problems_entity: binary_sensor.carl_requires_attention
+              problems_attribute: uv_light
             style: &state_icon_style
-              transform: scale(0.7)
-              margin: 0 15px 0 0
-
-          - type: state-icon # Heater
+              margin-right: 15px
+          - type: custom:button-card # Heater
+            template: terra_footer_switch
+            name: Heater
             entity: switch.carl_heater
-            title: Heater
-            tap_action:
-              action: toggle
+            variables:
+              power_entity: sensor.carl_heater_power
+              problems_entity: binary_sensor.carl_requires_attention
+              problems_attribute: heater
             style: *state_icon_style
-
-          - type: state-icon # Heat bulb
+          - type: custom:button-card # Heat bulb
+            template: terra_footer_switch
+            name: Heat bulb
             entity: switch.carl_heat_bulb
-            title: Heat bulb
-            tap_action:
-              action: toggle
+            variables:
+              power_entity: sensor.carl_heat_bulb_power
+              problems_entity: binary_sensor.carl_requires_attention
+              problems_attribute: heat_bulb
             style: *state_icon_style
-
-          - type: state-icon # Mister
+            style: *state_icon_style
+          - type: custom:button-card # Mister
+            template: terra_footer_switch
+            name: Mister
             entity: switch.carl_outlet_4
-            title: Mister
-            tap_action:
-              action: toggle
+            variables:
+              power_entity: sensor.carl_outlet_4_power
+              problems_entity: binary_sensor.carl_requires_attention
+              problems_attribute: mister
             style:
-              <<: *state_icon_style
               margin-right: auto
 
           - type: custom:group-element # Temperature

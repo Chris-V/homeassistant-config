@@ -23,6 +23,11 @@ binary_sensor:
         friendly_name: "Slinky requires attention"
         device_class: "problem"
         icon_template: "mdi:tortoise"
+        attribute_templates:
+          scheduling: "{{ is_state('input_boolean.slinky_scheduled_lights', 'on') }}"
+          heat_bulb: "{{ is_state('switch.slinky_heat_bulb', 'off') or states('sensor.slinky_heat_bulb_power') | float > 1 }}"
+          heater: "{{ is_state('switch.slinky_heater', 'off') or states('sensor.slinky_heater_power') | float > 1 }}"
+          uv_light: "{{ is_state('switch.slinky_uv_light', 'off') or states('sensor.slinky_uv_light_power') | float > 1 }}"
         value_template: >-
           {{    is_state('input_boolean.slinky_scheduled_lights', 'off')
              or (is_state('switch.slinky_heat_bulb', 'on') and states('sensor.slinky_heat_bulb_power') | float < 1)
