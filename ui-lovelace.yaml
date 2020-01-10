@@ -40,6 +40,7 @@ decluttering_templates:
 
 button_card_templates:
   plant_badge: !include ui-lovelace/templates/plant-badge.yaml
+  terra_detailed_switch: !include ui-lovelace/templates/terra-detailed-switch.yaml
 
 views:
   - title: Home

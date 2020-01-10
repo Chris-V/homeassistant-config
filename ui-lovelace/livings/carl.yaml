@@ -85,141 +85,64 @@ elements:
               - type: horizontal-stack
                 cards:
                   - type: custom:button-card
+                    template: terra_detailed_switch
                     name: Scheduling
                     entity: input_boolean.carl_scheduled_lights
+                    aspect_ratio: 1.7/1
+                    show_label: false
                     hold_action:
                       action: more-info
+                      entity: input_boolean.carl_scheduled_lights
                     lock:
                       enabled: true
-                    aspect_ratio: 1.7/1
-                    styles: &content_button_styles
-                      name:
-                        - font-size: 14px
-                        - padding: 0px 5px
-                      label:
-                        - color: "#9b9b9b"
-                        - font-size: 12px
-                        - padding: 0px 5px
                   - type: custom:button-card
-                    name: Master
+                    template: terra_detailed_switch
+                    variables:
+                      prefix: carl_power_strip
                     entity: switch.carl_power_strip
-                    hold_action:
-                      action: more-info
-                      entity: sensor.carl_power_strip_power
+                    name: Master
+                    aspect_ratio: 1.7/1
                     lock:
                       enabled: true
-                    aspect_ratio: 1.7/1
-                    styles: *content_button_styles
-                    show_label: yes
-                    label: >
-                      [[[
-                        return Math.round(states['sensor.carl_power_strip_power'].state)
-                            + ' '
-                            + states['sensor.carl_power_strip_power'].attributes['unit_of_measurement']
-                            + ' ⁓ '
-                            + Math.round(states['sensor.carl_power_strip_energy'].state)
-                            + ' '
-                            + states['sensor.carl_power_strip_energy'].attributes['unit_of_measurement']
-                      ]]]
                   - type: custom:button-card
-                    name: Controller
+                    template: terra_detailed_switch
+                    variables:
+                      prefix: carl_outlet_5
                     entity: switch.carl_outlet_5
-                    hold_action:
-                      action: more-info
-                      entity: sensor.carl_outlet_5_power
+                    name: Controller
+                    aspect_ratio: 1.7/1
                     lock:
                       enabled: true
-                    aspect_ratio: 1.7/1
-                    styles: *content_button_styles
-                    show_label: yes
-                    label: >
-                      [[[
-                        return Math.round(states['sensor.carl_outlet_5_power'].state)
-                            + ' '
-                            + states['sensor.carl_outlet_5_power'].attributes['unit_of_measurement']
-                            + ' ⁓ '
-                            + Math.round(states['sensor.carl_outlet_5_energy'].state)
-                            + ' '
-                            + states['sensor.carl_outlet_5_energy'].attributes['unit_of_measurement']
-                      ]]]
               - type: horizontal-stack
                 cards:
                   - type: custom:button-card
-                    name: UV light
+                    template: terra_detailed_switch
+                    variables:
+                      prefix: carl_uv_light
                     entity: switch.carl_uv_light
-                    hold_action:
-                      action: more-info
-                      entity: sensor.carl_uv_light_power
+                    name: UV light
                     aspect_ratio: 1.2/1
-                    styles: *content_button_styles
-                    show_label: yes
-                    label: >
-                      [[[
-                        return Math.round(states['sensor.carl_uv_light_power'].state)
-                            + ' '
-                            + states['sensor.carl_uv_light_power'].attributes['unit_of_measurement']
-                            + ' ⁓ '
-                            + Math.round(states['sensor.carl_uv_light_energy'].state)
-                            + ' '
-                            + states['sensor.carl_uv_light_energy'].attributes['unit_of_measurement']
-                      ]]]
                   - type: custom:button-card
-                    name: Heater
+                    template: terra_detailed_switch
+                    variables:
+                      prefix: carl_heater
                     entity: switch.carl_heater
-                    hold_action:
-                      action: more-info
-                      entity: sensor.carl_heater_power
+                    name: Heater
                     aspect_ratio: 1.2/1
-                    styles: *content_button_styles
-                    show_label: yes
-                    label: >
-                      [[[
-                        return Math.round(states['sensor.carl_heater_power'].state)
-                            + ' '
-                            + states['sensor.carl_heater_power'].attributes['unit_of_measurement']
-                            + ' ⁓ '
-                            + Math.round(states['sensor.carl_heater_energy'].state)
-                            + ' '
-                            + states['sensor.carl_heater_energy'].attributes['unit_of_measurement']
-                      ]]]
                   - type: custom:button-card
-                    name: Heat bulb
+                    template: terra_detailed_switch
+                    variables:
+                      prefix: carl_heat_bulb
                     entity: switch.carl_heat_bulb
-                    hold_action:
-                      action: more-info
-                      entity: sensor.carl_heat_bulb_power
+                    name: Heat bulb
                     aspect_ratio: 1.2/1
-                    styles: *content_button_styles
-                    show_label: yes
-                    label: >
-                      [[[
-                        return Math.round(states['sensor.carl_heat_bulb_power'].state)
-                            + ' '
-                            + states['sensor.carl_heat_bulb_power'].attributes['unit_of_measurement']
-                            + ' ⁓ '
-                            + Math.round(states['sensor.carl_heat_bulb_energy'].state)
-                            + ' '
-                            + states['sensor.carl_heat_bulb_energy'].attributes['unit_of_measurement']
-                      ]]]
                   - type: custom:button-card
-                    name: Mister
+                    template: terra_detailed_switch
+                    variables:
+                      prefix: carl_outlet_4
                     entity: switch.carl_outlet_4
-                    hold_action:
-                      action: more-info
-                      entity: sensor.carl_outlet_4_power
+                    name: Mister
                     aspect_ratio: 1.2/1
-                    styles: *content_button_styles
-                    show_label: yes
-                    label: >
-                      [[[
-                        return Math.round(states['sensor.carl_outlet_4_power'].state)
-                            + ' '
-                            + states['sensor.carl_outlet_4_power'].attributes['unit_of_measurement']
-                            + ' ⁓ '
-                            + Math.round(states['sensor.carl_outlet_4_energy'].state)
-                            + ' '
-                            + states['sensor.carl_outlet_4_energy'].attributes['unit_of_measurement']
-                      ]]]
 
       - type: custom:group-element # Footer
         visible: true
