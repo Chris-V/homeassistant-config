@@ -5,8 +5,8 @@
   template: plant
   variables:
     - image: /local/frontend/money_tree_card.jpg
-    - name: Dollorama
     - badges_position: "end"
+    - plant_entity: plant.dollorama
     - entity_problems: sensor.dollorama_problems
     - entity_moisture: sensor.dollorama_moisture
     - entity_temperature: sensor.dollorama_temperature
@@ -16,7 +16,7 @@
   template: plant
   variables:
     - image: /local/frontend/avocado_hall_card.jpg
-    - name: Maître Doyle
+    - plant_entity: plant.maitre_doyle
     - entity_problems: sensor.maitre_doyle_problems
     - entity_moisture: sensor.maitre_doyle_moisture
     - entity_temperature: sensor.maitre_doyle_temperature
@@ -26,7 +26,7 @@
   template: plant
   variables:
     - image: /local/frontend/jade_plant_card.jpg
-    - name: Rubber Ducky
+    - plant_entity: plant.rubber_ducky
     - entity_problems: sensor.rubber_ducky_problems
     - entity_moisture: sensor.rubber_ducky_moisture
     - entity_temperature: sensor.rubber_ducky_temperature
@@ -36,8 +36,8 @@
   template: plant
   variables:
     - image: /local/frontend/spider_plant_card.jpg
-    - name: Spidy
     - badges_position: "end"
+    - plant_entity: plant.spidy
     - entity_problems: sensor.spidy_problems
     - entity_moisture: sensor.spidy_moisture
     - entity_temperature: sensor.spidy_temperature
@@ -47,10 +47,10 @@
   template: plant
   variables:
     - image: /local/frontend/devils_ivy_card.jpg
-    - name: Viny
     - name_color: "#3B4049"
     - name_shadow_color: "#E0E0E0"
     - badges_position: "end"
+    - plant_entity: plant.viny
     - entity_problems: sensor.viny_problems
     - entity_moisture: sensor.viny_moisture
     - entity_temperature: sensor.viny_temperature

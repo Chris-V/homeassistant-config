@@ -1,9 +1,9 @@
 default:
-  - name:
   - name_color: "#E0E0E0"
   - name_shadow_color: "#3B4049"
   - image:
   - badges_position: "start"
+  - plant_entity:
   - entity_problems:
   - entity_moisture:
   - entity_temperature:
@@ -26,15 +26,23 @@ card:
         margin-left: 1em;
     }
   elements:
-    - type: custom:text-element
-      text: "[[name]]"
+    - type: custom:button-card
+      color_type: label-card
+      entity: "[[plant_entity]]"
+      show_icon: false
+      tap_action:
+        action: more-info
       style:
         top: 1.25em
         left: 1.5em
-        color: "[[name_color]]"
-        filter: "drop-shadow([[name_shadow_color]] 0 0 2px)"
-        font-size: 1.25em
-        font-weight: 500
+      styles:
+        card:
+          - background-color: transparent
+          - box-shadow: none
+          - color: "[[name_color]]"
+          - filter: "drop-shadow([[name_shadow_color]] 0 0 2px)"
+          - font-size: 1.25rem
+          - font-weight: 500
 
     - type: conditional
       conditions:
