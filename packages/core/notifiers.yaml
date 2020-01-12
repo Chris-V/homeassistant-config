@@ -15,7 +15,7 @@ notify:
     services:
       - service: html5
         data:
-          target: ["chris aero chrome arch", "chris pixel chrome"]
+          target: ["chris_aero_arch_chrome", "chris_pixel_chrome"]
 
   - platform: group
     name: "household"
