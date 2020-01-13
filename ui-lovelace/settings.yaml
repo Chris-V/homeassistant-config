@@ -22,7 +22,12 @@
     include:
       - group: group.all_doors
         options:
-          secondary_info: last-changed
+          <<: &aggregate_row_options
+            type: custom:template-entity-row
+            active: "{{ is_state('this.entity_id', 'on') }}"
+            secondary: "{{ relative_time(states['this.entity_id'].last_changed) }} ago"
+          name: "{{ states['this.entity_id'].name | replace(' door', '') }}"
+          state: "_(state.binary_sensor.door.{{ states('this.entity_id') }})"
   card:
     type: entities
     title: Doors
@@ -35,7 +40,9 @@
     include:
       - group: group.all_windows
         options:
-          secondary_info: last-changed
+          <<: *aggregate_row_options
+          name: "{{ states['this.entity_id'].name | replace(' window', '') }}"
+          state: "_(state.binary_sensor.window.{{ states('this.entity_id') }})"
   card:
     type: entities
     title: Windows
@@ -48,7 +55,9 @@
     include:
       - group: group.all_leaks
         options:
-          secondary_info: last-changed
+          <<: *aggregate_row_options
+          name: "{{ states['this.entity_id'].name | replace(' leak', '') }}"
+          state: "_(state.binary_sensor.moisture.{{ states('this.entity_id') }})"
   card:
     type: entities
     title: Leaks
@@ -61,7 +70,9 @@
     include:
       - group: group.all_motions
         options:
-          secondary_info: last-changed
+          <<: *aggregate_row_options
+          name: "{{ states['this.entity_id'].name | replace(' motion', '') }}"
+          state: "_(state.binary_sensor.motion.{{ states('this.entity_id') }})"
   card:
     type: entities
     title: Motion
@@ -79,13 +90,18 @@
       sort:
         method: state
         numeric: true
+      options:
       filter:
         include:
           - group: group.all_batteries
+            options:
+              type: custom:template-entity-row
+              state: "{{ states['this.entity_id'].state_with_unit }}"
+              secondary: "{{ relative_time(states['this.entity_id'].last_changed) }} ago"
+              name: >-
+                {{ states['this.entity_id'].name | replace("'s battery", '') | replace(' battery', '') }}
       card:
         type: custom:fold-entity-row
         head:
           type: section
           label: Details
-        group_config:
-          secondary_info: last-changed

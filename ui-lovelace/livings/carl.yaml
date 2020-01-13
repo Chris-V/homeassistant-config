@@ -190,7 +190,6 @@ elements:
               problems_entity: binary_sensor.carl_requires_attention
               problems_attribute: heat_bulb
             style: *state_icon_style
-            style: *state_icon_style
           - type: custom:button-card # Mister
             template: terra_footer_switch
             name: Mister
