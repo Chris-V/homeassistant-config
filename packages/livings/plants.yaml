@@ -3,8 +3,18 @@ homeassistant:
     automation.notify_plant_problems:
       friendly_name: "Notify plant problems"
       icon: "mdi:message-settings-variant"
-    group.all_plants:
-      icon: "mdi:flower"
+
+group:
+  all_plants:
+    name: "All plants"
+    icon: "mdi:flower"
+    control: "hidden"
+    entities:
+      - "plant.dollorama"
+      - "plant.maitre_doyle"
+      - "plant.rubber_ducky"
+      - "plant.spidy"
+      - "plant.viny"
 
 automation:
   - alias: notify_plant_problems
