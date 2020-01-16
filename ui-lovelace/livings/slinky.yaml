@@ -1,5 +1,5 @@
 type: picture-elements
-image: /local/frontend/slinky_card.jpg
+image: /local/animals/slinky_card.jpg
 style: |
   .element[class~=element] {
     position: relative;

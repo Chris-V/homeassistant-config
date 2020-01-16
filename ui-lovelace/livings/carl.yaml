@@ -1,5 +1,5 @@
 type: picture-elements
-image: /local/frontend/carl_card.jpg
+image: /local/animals/carl_card.jpg
 style: |
   .element[class~=element] {
     position: relative;

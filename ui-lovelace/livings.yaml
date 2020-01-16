@@ -4,7 +4,7 @@
 - type: custom:decluttering-card
   template: plant
   variables:
-    - image: /local/frontend/money_tree_card.jpg
+    - image: /local/plants/money_tree_card.jpg
     - badges_position: "end"
     - plant_entity: plant.dollorama
     - entity_problems: sensor.dollorama_problems
@@ -15,7 +15,7 @@
 - type: custom:decluttering-card
   template: plant
   variables:
-    - image: /local/frontend/avocado_hall_card.jpg
+    - image: /local/plants/avocado_hall_card.jpg
     - plant_entity: plant.maitre_doyle
     - entity_problems: sensor.maitre_doyle_problems
     - entity_moisture: sensor.maitre_doyle_moisture
@@ -25,7 +25,7 @@
 - type: custom:decluttering-card
   template: plant
   variables:
-    - image: /local/frontend/jade_plant_card.jpg
+    - image: /local/plants/jade_plant_card.jpg
     - plant_entity: plant.rubber_ducky
     - entity_problems: sensor.rubber_ducky_problems
     - entity_moisture: sensor.rubber_ducky_moisture
@@ -35,7 +35,7 @@
 - type: custom:decluttering-card
   template: plant
   variables:
-    - image: /local/frontend/spider_plant_card.jpg
+    - image: /local/plants/spider_plant_card.jpg
     - badges_position: "end"
     - plant_entity: plant.spidy
     - entity_problems: sensor.spidy_problems
@@ -46,7 +46,7 @@
 - type: custom:decluttering-card
   template: plant
   variables:
-    - image: /local/frontend/devils_ivy_card.jpg
+    - image: /local/plants/devils_ivy_card.jpg
     - name_color: "#3B4049"
     - name_shadow_color: "#E0E0E0"
     - badges_position: "end"

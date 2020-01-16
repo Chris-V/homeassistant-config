@@ -22,7 +22,7 @@ binary_sensor:
       slinky_requires_attention:
         friendly_name: "Slinky requires attention"
         device_class: "problem"
-        icon_template: "mdi:tortoise"
+        entity_picture_template: "/local/animals/slinky_avatar.jpg"
         attribute_templates:
           scheduling: "{{ is_state('input_boolean.slinky_scheduled_lights', 'on') }}"
           heat_bulb: "{{ is_state('switch.slinky_heat_bulb', 'off') or states('sensor.slinky_heat_bulb_power') | float > 1 }}"

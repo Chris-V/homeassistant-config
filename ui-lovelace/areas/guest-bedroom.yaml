@@ -1,5 +1,5 @@
 type: picture-elements
-image: /local/frontend/living_room_card.webp
+image: /local/rooms/placeholder.webp
 style: |
   .element[class~=element] {
     position: relative;
