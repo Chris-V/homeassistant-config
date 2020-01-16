@@ -9,6 +9,8 @@ input_select:
     name: 'Default theme'
     options:
       - 'default'
+      - 'Google Light Theme'
+      - 'Google Dark Theme'
       - &day_theme 'clear'
       - &night_theme 'clear-dark'
     icon: 'mdi:palette'
