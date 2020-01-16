@@ -26,8 +26,14 @@
             type: custom:template-entity-row
             active: "{{ is_state('this.entity_id', 'on') }}"
             secondary: "{{ relative_time(states['this.entity_id'].last_changed) }} ago"
+            state: >-
+              {% set state = states['this.entity_id'] %}
+              {% if state.state in ['unknown', 'unavailable'] -%}
+                _(state.default.{{ state.state }})
+              {%- else -%}
+                _(state.binary_sensor.{{ state.attributes.device_class }}.{{ state.state }})
+              {%- endif %}
           name: "{{ states['this.entity_id'].name | replace(' door', '') }}"
-          state: "_(state.binary_sensor.door.{{ states('this.entity_id') }})"
   card:
     type: entities
     title: Doors
@@ -42,7 +48,6 @@
         options:
           <<: *aggregate_row_options
           name: "{{ states['this.entity_id'].name | replace(' window', '') }}"
-          state: "_(state.binary_sensor.window.{{ states('this.entity_id') }})"
   card:
     type: entities
     title: Windows
@@ -57,7 +62,6 @@
         options:
           <<: *aggregate_row_options
           name: "{{ states['this.entity_id'].name | replace(' leak', '') }}"
-          state: "_(state.binary_sensor.moisture.{{ states('this.entity_id') }})"
   card:
     type: entities
     title: Leaks
@@ -72,7 +76,6 @@
         options:
           <<: *aggregate_row_options
           name: "{{ states['this.entity_id'].name | replace(' motion', '') }}"
-          state: "_(state.binary_sensor.motion.{{ states('this.entity_id') }})"
   card:
     type: entities
     title: Motion
@@ -81,6 +84,10 @@
 - type: entities
   title: Batteries
   show_header_toggle: false
+  style: |
+    :host {
+      --paper-item-icon-active-color: var(--google-red-500)
+    }
   entities:
     - entity: sensor.all_batteries
       name: Lowest
@@ -96,10 +103,16 @@
           - group: group.all_batteries
             options:
               type: custom:template-entity-row
-              state: "{{ states['this.entity_id'].state_with_unit }}"
-              secondary: "{{ relative_time(states['this.entity_id'].last_changed) }} ago"
               name: >-
                 {{ states['this.entity_id'].name | replace("'s battery", '') | replace(' battery', '') }}
+              state: >-
+                {% if states['this.entity_id'].state in ['unknown', 'unavailable'] -%}
+                  _(state.default.{{ states['this.entity_id'].state }})
+                {%- else -%}
+                  {{ states['this.entity_id'].state_with_unit }}
+                {%- endif %}
+              secondary: "{{ states['this.entity_id'].attributes.battery_type }}"
+              active: "{{ (states['this.entity_id'].state | int - states['this.entity_id'].attributes.battery_warning_level | default(25) | int) <= 0 }}"
       card:
         type: custom:fold-entity-row
         head:

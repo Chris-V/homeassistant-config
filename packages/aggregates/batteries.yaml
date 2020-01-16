@@ -49,7 +49,7 @@ automation:
     trigger:
       - platform: numeric_state
         value_template: >-
-          {% if state.state == 'unavailable' -%}
+          {% if state.state in ['unknown', 'unavailable'] -%}
             100
           {%- else -%}
             {{ state.state | int - state.attributes.battery_warning_level | default(25) | int }}
