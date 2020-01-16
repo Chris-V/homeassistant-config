@@ -5,8 +5,10 @@ homeassistant:
       device_class: "door"
     sensor.basement_bathroom_door_sensor_battery:
       battery_type: "Sensative Strip"
+      battery_warning_level: 20
     sensor.basement_bathroom_multisensor_battery:
       battery_type: "CR123A"
+      battery_warning_level: 40
     sensor.basement_bathroom_temperature:
       friendly_name: "Basement bathroom temperature"
     light.basement_bathroom:

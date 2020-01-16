@@ -5,6 +5,7 @@ homeassistant:
       device_class: "window"
     sensor.lounge_window_sensor_battery:
       battery_type: "Sensative Strip"
+      battery_warning_level: 20
 
 cloud:
   google_actions:

@@ -5,6 +5,7 @@ homeassistant:
     sensor.maitre_doyle_battery:
       friendly_name: "Maître Doyle's battery"
       battery_type: "CR2032 3V"
+      battery_warning_level: 15
     sensor.maitre_doyle_brightness:
       friendly_name: "Maître Doyle's brightness"
     sensor.maitre_doyle_conductivity:

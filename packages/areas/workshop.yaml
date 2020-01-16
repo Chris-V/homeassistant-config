@@ -4,6 +4,7 @@ homeassistant:
       battery_type: "ER14250 3.6V"
     light.workshop:
       friendly_name: "Workshop light"
+      battery_warning_level: 25
 
 cloud:
   google_actions:

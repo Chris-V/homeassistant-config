@@ -2,6 +2,7 @@ homeassistant:
   customize:
     sensor.ups_battery_status:
       battery_type: "APC BR1500G RS 1500 12V"
+      battery_warning_level: 0
 
 apcupsd:
   host: !secret ups_host

@@ -2,6 +2,7 @@ homeassistant:
   customize:
     sensor.karine_bedside_remote_battery:
       battery_type: "CR2032"
+      battery_warning_level: 25
 
 input_select:
   karine_remote_entity:

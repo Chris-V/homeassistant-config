@@ -5,8 +5,10 @@ homeassistant:
       device_class: "door"
     sensor.main_bathroom_door_sensor_battery:
       battery_type: "Sensative Strip"
+      battery_warning_level: 20
     sensor.main_bathroom_multisensor_battery:
       battery_type: "CR123A"
+      battery_warning_level: 40
     light.main_bathroom_vanity:
       friendly_name: "Main bathroom vanity light"
 

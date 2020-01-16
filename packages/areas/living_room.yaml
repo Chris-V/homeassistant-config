@@ -5,6 +5,7 @@ homeassistant:
       device_class: "door"
     sensor.living_room_door_sensor_battery:
       battery_type: "Sensative Strip"
+      battery_warning_level: 20
     light.living_room_ambiance:
       friendly_name: "Living room ambiance"
     light.bookshelf:

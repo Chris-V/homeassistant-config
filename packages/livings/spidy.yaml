@@ -5,6 +5,7 @@ homeassistant:
     sensor.spidy_battery:
       friendly_name: "Spidy's battery"
       battery_type: "CR2032 3V"
+      battery_warning_level: 15
     sensor.spidy_brightness:
       friendly_name: "Spidy's brightness"
     sensor.spidy_conductivity:

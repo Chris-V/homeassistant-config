@@ -2,6 +2,7 @@ homeassistant:
   customize:
     sensor.chris_bedside_remote_battery:
       battery_type: "CR2032"
+      battery_warning_level: 25
 
 input_select:
   chris_remote_entity:

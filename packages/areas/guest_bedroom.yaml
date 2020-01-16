@@ -7,6 +7,7 @@ homeassistant:
       friendly_name: "Guest's bedroom light"
     sensor.guest_bedroom_window_sensor_battery:
       battery_type: "Sensative Strip"
+      battery_warning_level: 20
 
 cloud:
   google_actions:
