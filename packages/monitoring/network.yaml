@@ -55,9 +55,10 @@ glances:
     version: 3
 
 shell_command:
-  shutdown_media: "/home/homeassistant/.homeassistant/bin/shutdown_media.sh"
-  shutdown_relay_south: "/home/homeassistant/.homeassistant/bin/shutdown_relay_south.sh"
-  shutdown_relay_north: "/home/homeassistant/.homeassistant/bin/shutdown_relay_north.sh"
+  turn_off_server: >-
+    /usr/bin/ssh -F /config/.secrets/ssh_config {{ server_key }} "sudo poweroff"
+  wake_on_lan: >-
+    /usr/bin/ssh -F /config/.secrets/ssh_config router "/usr/sbin/wol -p 9 -i '{{ broadcast }}' '{{ mac }}'"
 
 switch:
   - platform: template
@@ -67,38 +68,42 @@ switch:
         value_template: "{{ is_state('device_tracker.avatar_media', 'home') }}"
         icon_template: "mdi:server-network{% if not is_state('device_tracker.avatar_media', 'home') %}-off{% endif %}"
         turn_on:
-          service: "wake_on_lan.send_magic_packet"
-          data_template:
+          service: "shell_command.wake_on_lan"
+          data:
+            broadcast: !secret network_broadcast
             mac: !secret media_mac
-            broadcast_address: !secret network_broadcast
         turn_off:
-          service: "shell_command.shutdown_media"
+          service: "shell_command.turn_off_server"
+          data:
+            server_key: "media"
 
       network_relay_north:
         friendly_name: "Relay North"
         value_template: "{{ is_state('device_tracker.avatar_relay_north', 'home') }}"
         icon_template: "mdi:server-network{% if not is_state('device_tracker.avatar_relay_north', 'home') %}-off{% endif %}"
         turn_on:
-          service: "wake_on_lan.send_magic_packet"
-          data_template:
+          service: "shell_command.wake_on_lan"
+          data:
+            broadcast: !secret network_broadcast
             mac: !secret relay_north_mac
-            broadcast_address: !secret network_broadcast
         turn_off:
-          service: "shell_command.shutdown_relay_north"
+          service: "shell_command.turn_off_server"
+          data:
+            server_key: "relay_north"
 
       network_relay_south:
         friendly_name: "Relay South"
         value_template: "{{ is_state('device_tracker.avatar_relay_south', 'home') }}"
         icon_template: "mdi:server-network{% if not is_state('device_tracker.avatar_relay_south', 'home') %}-off{% endif %}"
         turn_on:
-          service: "wake_on_lan.send_magic_packet"
-          data_template:
+          service: "shell_command.wake_on_lan"
+          data:
+            broadcast: !secret network_broadcast
             mac: !secret relay_south_mac
-            broadcast_address: !secret network_broadcast
         turn_off:
-          service: "shell_command.shutdown_relay_south"
-
-wake_on_lan:
+          service: "shell_command.turn_off_server"
+          data:
+            server_key: "relay_south"
 
 automation:
   - alias: notify_new_network_device
