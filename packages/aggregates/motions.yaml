@@ -15,13 +15,7 @@ binary_sensor:
       all_motions:
         friendly_name: "All motions"
         device_class: "motion"
-        entity_id: *motion_entities
-        value_template: >
-          {%- set ns = namespace(state = False) %}
-          {%- for entity_id in state_attr('group.all_motions', 'entity_id') %}
-            {%- set ns.state = ns.state or is_state(entity_id, 'on') %}
-          {%- endfor -%}
-          {{ ns.state }}
+        value_template: "{{ is_state('group.all_motions', 'on') }}"
 
 sensor:
   - platform: template
@@ -30,11 +24,12 @@ sensor:
         friendly_name: "Last motion"
         entity_id: *motion_entities
         icon_template: >-
-          mdi:{% if is_state('binary_sensor.all_motions', 'on') %}motion-sensor{% else %}walk{% endif %}
+          mdi:{% if is_state('group.all_motions', 'on') %}motion-sensor{% else %}walk{% endif %}
         value_template: >-
           {{
-             (states
-             | selectattr('entity_id', 'in', state_attr('group.all_motions', 'entity_id'))
-             | sort(attribute='last_changed')
-             | last).name  | replace(' motion', '')
+            expand('group.all_motions')
+              | sort(attribute='last_changed', reverse=True)
+              | map(attribute='name')
+              | first
+              | replace(' motion', '')
           }}

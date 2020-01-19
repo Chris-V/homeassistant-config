@@ -78,12 +78,23 @@
     - entity: sensor.last_motion
       icon: mdi:motion-sensor
     - entity: binary_sensor.all_leaks
+
     - entity: binary_sensor.all_doors
     - entity: binary_sensor.all_windows
     - entity: sensor.all_batteries
+
     - entity: binary_sensor.carl_requires_attention
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/livings
     - entity: binary_sensor.slinky_requires_attention
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/livings
     - entity: group.all_plants
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/livings
 
 - type: custom:weather-card
   entity: weather.dark_sky
