@@ -208,10 +208,17 @@ elements:
           - type: state-icon
             entity: light.kitchen
             title: Spots
-            icon: mdi:wall-sconce-flat
+            icon: mdi:track-light
             style: &room_footer_icon_style
               transform: *room_banner_icon_transform
               transform-origin: center right
               margin: 0 15px
+            tap_action:
+              action: toggle
+          - type: state-icon
+            entity: light.kitchen_sink
+            title: Sink
+            icon: mdi:wall-sconce-flat
+            style: *room_footer_icon_style
             tap_action:
               action: toggle

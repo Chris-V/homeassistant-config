@@ -11,6 +11,8 @@ homeassistant:
       battery_warning_level: 25
     light.kitchen:
       friendly_name: "Kitchen light"
+    light.kitchen_sink:
+      friendly_name: "Kitchen sink light"
 
 cloud:
   google_actions:
@@ -23,15 +25,24 @@ cloud:
         name: "Kitchen light"
         aliases:
           - "Kitchen"
+      light.kitchen_sink:
+        room: "Kitchen"
+        name: "Kitchen sink light"
+        aliases:
+          - "Kitchen sink"
 
 light:
   - platform: group
     name: "Kitchen lights"
     entities:
       - light.kitchen
+      - light.kitchen_sink
   - platform: switch
     name: kitchen
     entity_id: "switch.kitchen_light"
+  - platform: switch
+    name: kitchen_sink
+    entity_id: "switch.kitchen_sink_light"
 
 binary_sensor:
   - platform: template
@@ -50,3 +61,110 @@ sensor:
         unit_of_measurement: "°C"
         # Living room and Kitchen thermostat are the same
         value_template: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
+
+automation:
+  - alias: "kitchen_double_up"
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.kitchen_light_switch"
+          scene_id: 1
+          scene_data: 7860
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.kitchen_sink"
+  - alias: "kitchen_triple_up"
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.kitchen_light_switch"
+          scene_id: 1
+          scene_data: 7920
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.kitchen_lights"
+  - alias: "kitchen_double_down"
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.kitchen_light_switch"
+          scene_id: 2
+          scene_data: 7860
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.kitchen_sink"
+  - alias: "kitchen_triple_down"
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.kitchen_light_switch"
+          scene_id: 2
+          scene_data: 7920
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.kitchen_lights"
+
+  - alias: "kitchen_sink_double_up"
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.kitchen_sink_light_switch"
+          scene_id: 2
+          scene_data: 3
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.kitchen"
+  - alias: "kitchen_sink_triple_up"
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.kitchen_sink_light_switch"
+          scene_id: 2
+          scene_data: 4
+    action:
+      service: light.turn_on
+      data:
+        entity_id: "light.kitchen_lights"
+  - alias: "kitchen_sink_double_down"
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.kitchen_sink_light_switch"
+          scene_id: 1
+          scene_data: 3
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.kitchen"
+  - alias: "kitchen_sink_triple_down"
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.kitchen_sink_light_switch"
+          scene_id: 1
+          scene_data: 4
+    action:
+      service: light.turn_off
+      data:
+        entity_id: "light.kitchen_lights"
