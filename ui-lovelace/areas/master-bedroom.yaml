@@ -189,3 +189,8 @@ elements:
             style: *room_footer_icon_style
             tap_action:
               action: toggle
+          - type: state-icon
+            entity: media_player.master_bedroom_google_home
+            title: Sonos
+            icon: mdi:speaker
+            style: *room_footer_icon_style
