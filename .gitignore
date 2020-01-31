@@ -6,16 +6,17 @@
 /scripts.yaml
 
 # Secrets and generated files
-known_devices.yaml
-secrets.yaml
-.HA_VERSION
-.uuid
-.storage/
-.custom_storage/
-.secrets/
-.cloud/
-tts/
-themes/
+/known_devices.yaml
+/secrets.yaml
+/.HA_VERSION
+/.uuid
+/.storage
+/.custom_storage
+/.secrets
+/.cloud
+/tts
+/themes/*
+!/themes/blank.yaml
 
 zwcfg_*.xml
 zwscene.xml

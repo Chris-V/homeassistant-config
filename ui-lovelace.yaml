@@ -37,6 +37,7 @@ custom_header:
 
 decluttering_templates:
   plant: !include ui-lovelace/templates/plant.yaml
+  person: !include ui-lovelace/templates/person.yaml
 
 button_card_templates:
   plant_badge: !include ui-lovelace/templates/plant-badge.yaml

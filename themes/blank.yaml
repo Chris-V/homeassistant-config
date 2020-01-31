@@ -1,0 +1,4 @@
+blank:
+  ha-card-background: "none"
+  ha-card-box-shadow: "none"
+  ha-card-border-radius: 0

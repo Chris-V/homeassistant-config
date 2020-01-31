@@ -1,9 +1,17 @@
-- type: glance
-  show_name: false
-  columns: 2
-  entities:
-    - person.chris
-    - person.karine
+- type: horizontal-stack
+  cards:
+    - type: custom:decluttering-card
+      template: person
+      variables:
+        - image: /local/secrets/chris.webp
+        - person_entity: person.chris
+        - mobile_app_entity: device_tracker.chris_mobile_app_pixel_1
+    - type: custom:decluttering-card
+      template: person
+      variables:
+        - image: /local/secrets/karine.webp
+        - person_entity: person.karine
+        - mobile_app_entity: device_tracker.karine_mobile_app_pixel_1
 
 - type: vertical-stack
   cards:
