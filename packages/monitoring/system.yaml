@@ -27,3 +27,46 @@ sensor:
     value_template: "{{ value|multiply(0.001)|round(1) }}"
     unit_of_measurement: "°C"
 
+automation:
+  - alias: Notify HA startup
+    trigger:
+      - event: start
+        platform: homeassistant
+    action:
+      - service: notify.admin
+        data:
+          message: Home-Assistant has restarted.
+          data:
+            tag: hass-status
+  - alias: Notify HA shutdown
+    trigger:
+      - event: shutdown
+        platform: homeassistant
+    action:
+      - service: notify.admin
+        data:
+          message: Home-Assistant is shutting down.
+          data:
+            tag: hass-status
+
+  - alias: Notify Z-Wave network ready
+    trigger:
+      - event_type: zwave.network_ready
+        platform: event
+    action:
+      - service: notify.admin
+        data:
+          message: Z-Wave network is ready.
+          data:
+            tag: zwave-status
+  - alias: Notify Z-Wave network complete
+    trigger:
+      - event_type: zwave.network_complete
+        platform: event
+    action:
+      - service: notify.admin
+        data:
+          message: Z-Wave network is complete.
+          data:
+            tag: zwave-status
+        
