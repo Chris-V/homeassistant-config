@@ -15,3 +15,25 @@ zwave:
       refresh_value: True
     light.office:
       refresh_value: True
+
+automation:
+  - alias: Notify Z-Wave network ready
+    trigger:
+      - event_type: zwave.network_ready
+        platform: event
+    action:
+      - service: notify.admin
+        data:
+          message: Z-Wave network is ready.
+          data:
+            tag: zwave-status
+  - alias: Notify Z-Wave network complete
+    trigger:
+      - event_type: zwave.network_complete
+        platform: event
+    action:
+      - service: notify.admin
+        data:
+          message: Z-Wave network is complete.
+          data:
+            tag: zwave-status

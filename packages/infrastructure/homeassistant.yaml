@@ -43,3 +43,42 @@ automation:
           url: "https://github.com/home-assistant/home-assistant/releases/tag/{{ trigger.to_state.state }}"
           title: "Home Assistant Update"
           message: "Home Assistant {{ trigger.to_state.state }} is available."
+
+  - alias: notify_failed_login_attempt
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: "call_service"
+        event_data:
+          domain: "persistent_notification"
+          service: "create"
+    condition:
+      - condition: template
+        value_template: "{{ trigger.event.data.service_data.notification_id == 'http-login' }}"
+    action:
+      - service: python_script.notify
+        data_template:
+          push_target: "admin"
+          title: "{{ trigger.event.data.service_data.title }}"
+          message: "{{ trigger.event.data.service_data.message }}"
+
+  - alias: Notify HA startup
+    trigger:
+      - event: start
+        platform: homeassistant
+    action:
+      - service: notify.admin
+        data:
+          message: Home-Assistant has restarted.
+          data:
+            tag: hass-status
+  - alias: Notify HA shutdown
+    trigger:
+      - event: shutdown
+        platform: homeassistant
+    action:
+      - service: notify.admin
+        data:
+          message: Home-Assistant is shutting down.
+          data:
+            tag: hass-status

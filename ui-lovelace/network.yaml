@@ -10,7 +10,7 @@
   entities:
     - entity: input_boolean.notify_household_changes
       name: Household changes
-    - entity: input_boolean.notify_network_device_outages
+    - entity: input_boolean.notify_server_outages
       name: Server outages
 
 - type: entities
