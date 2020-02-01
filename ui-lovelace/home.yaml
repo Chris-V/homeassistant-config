@@ -20,8 +20,7 @@
   filter:
     include:
       - group: group.guests
-        not:
-          state: home
+        state: home
   card:
     type: glance
     show_state: false

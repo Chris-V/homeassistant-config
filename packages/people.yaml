@@ -5,14 +5,6 @@ homeassistant:
     person.karine:
       entity_picture: /local/secrets/karine.webp
 
-group:
-  household:
-    name: "Household"
-    icon: "mdi:account-multiple"
-    entities:
-      - person.chris
-      - person.karine
-
 person:
   - id: "chris"
     name: "Chris"
@@ -27,12 +19,37 @@ person:
       - device_tracker.karine_router_pixel_1
       - device_tracker.karine_mobile_app_pixel_1
 
+group:
+  household:
+    name: "Household"
+    icon: "mdi:account-multiple"
+    entities:
+      - person.chris
+      - person.karine
+
 input_boolean:
+  guest_mode:
+    name: "Guest mode"
+    icon: "mdi:human-greeting"
   notify_household_changes:
     name: "Notify household changes"
     icon: "mdi:message-settings-variant"
 
 automation:
+  - alias: notify_guest_arrives
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: "group.guests"
+      to: "home"
+    action:
+      - service: python_script.notify
+        data_template:
+          persistent: True
+          push_target: "household"
+          title: "Guest arrival"
+          message: "A new guest has just arrived at home."
+
   - alias: notify_household_person_arrives
     initial_state: True
     trigger:
