@@ -13,6 +13,19 @@
         - person_entity: person.karine
         - mobile_app_entity: device_tracker.karine_mobile_app_pixel_1
 
+- type: custom:auto-entities
+  show_empty: false
+  sort:
+    method: name
+  filter:
+    include:
+      - group: group.guests
+        not:
+          state: home
+  card:
+    type: glance
+    show_state: false
+
 - type: vertical-stack
   cards:
     - type: horizontal-stack
