@@ -53,6 +53,7 @@ recorder:
       - sensor.carl_heater_power
       - sensor.carl_heat_bulb_power
       - sensor.chris_bedside_remote_battery
+      - sensor.climate_preset
       - sensor.connected_clients
       - sensor.current_home_assistant_version
       - sensor.dining_room_temperature
@@ -91,6 +92,7 @@ recorder:
       - sensor.maitre_doyle_moisture
       - sensor.maitre_doyle_problems
       - sensor.maitre_doyle_temperature
+      - sensor.manual_thermostats_count
       - sensor.media_cpu_used
       - sensor.media_cpu_temp
       - sensor.media_ram_used_percent

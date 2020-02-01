@@ -1,3 +1,79 @@
+group:
+  all_thermostat_modes:
+    name: "Thermostat modes"
+    icon: "mdi:home-temperature"
+    entities: &thermostat_modes
+      - input_select.basement_bathroom_thermostat_mode
+      - input_select.basement_hallway_thermostat_mode
+      - input_select.dining_room_thermostat_mode
+      - input_select.guest_bedroom_thermostat_mode
+      - input_select.living_room_thermostat_mode
+      - input_select.lounge_thermostat_mode
+      - input_select.master_bedroom_thermostat_mode
+      - input_select.office_thermostat_mode
+      - input_select.studio_thermostat_mode
+
+sensor:
+  - platform: template
+    sensors:
+      climate_preset:
+        friendly_name: "Scheduled climate preset"
+        icon_template: "mdi:thermometer-lines"
+        entity_id:
+          - sensor.time
+          - group.household
+        value_template: |
+          {% if is_state('group.household', 'home') -%}
+            {% set schedule = [
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2330, "preset": "Bedtime"}],
+              [{"time": 100, "preset": "Sleep"}, {"time": 830, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            ] %}
+
+            {% set day_index = now().weekday() %}
+            {% set time_index = states("sensor.time") | replace(":", "") | int %}
+            {% set days = (range(day_index + 1, 7) | list + range(0, day_index) | list) | reverse | list %}
+
+            {% set match = namespace(
+              day = day_index,
+              preset = schedule[day_index] | rejectattr("time", ">", time_index) | map(attribute = "preset") | list | last
+            ) %}
+
+            {% for day in days if match.preset is not defined %}
+            {% set match.day = day %}
+            {% set match.preset = schedule[day] | map(attribute = "preset") | list | last %}
+            {% endfor %}
+
+            {{ match.preset | default('Away') }}
+          {%- else -%}
+            Away
+          {%- endif %}
+
+      manual_thermostats_count:
+        friendly_name: "Thermostats in manual mode"
+        icon_template: "mdi:thermometer-alert"
+        entity_id: *thermostat_modes
+        value_template: |
+          {{
+            expand('group.all_thermostat_modes')
+              | selectattr('state', 'eq', 'Manual')
+              | list
+              | count
+          }}
+        attribute_templates:
+          entities: |
+            {{
+              expand('group.all_thermostat_modes')
+                | selectattr('state', 'eq', 'Manual')
+                | list
+                | join(', ')
+                | default('None', True)
+            }}
+
 script:
   active_climate_preset:
     alias: "Active climate preset"
@@ -68,45 +144,13 @@ script:
     sequence:
       - service_template: "script.{{ states('sensor.climate_preset') | lower }}_climate_preset"
 
-sensor:
-  - platform: template
-    sensors:
-      climate_preset:
-        friendly_name: "Scheduled climate preset"
-        icon_template: "mdi:calendar-clock"
-        entity_id: 
-          - sensor.time
-          - group.household
-        value_template: |
-          {% if is_state('group.household', 'home') -%}
-            {% set schedule = [
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2330, "preset": "Bedtime"}],
-              [{"time": 100, "preset": "Sleep"}, {"time": 830, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-            ] %}
-
-            {% set day_index = now().weekday() %}
-            {% set time_index = states("sensor.time") | replace(":", "") | int %}
-            {% set days = (range(day_index + 1, 7) | list + range(0, day_index) | list) | reverse | list %}
-
-            {% set match = namespace(
-              day = day_index,
-              preset = schedule[day_index] | rejectattr("time", ">", time_index) | map(attribute = "preset") | list | last
-            ) %}
-
-            {% for day in days if match.preset is not defined %}
-            {% set match.day = day %}
-            {% set match.preset = schedule[day] | map(attribute = "preset") | list | last %}
-            {% endfor %}
-
-            {{ match.preset | default('Away') }}
-          {%- else -%}
-            Away
-          {%- endif %}
+  restore_climate_auto_mode:
+    alias: "Restore auto mode on all thermostats"
+    sequence:
+      - service: input_select.select_option
+        data_template:
+          entity_id: *thermostat_modes
+          option: "Auto"
 
 automation:
   - alias: apply_scheduled_climate_preset
@@ -123,16 +167,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: &thermostat_modes
-          - input_select.basement_bathroom_thermostat_mode
-          - input_select.basement_hallway_thermostat_mode
-          - input_select.dining_room_thermostat_mode
-          - input_select.guest_bedroom_thermostat_mode
-          - input_select.living_room_thermostat_mode
-          - input_select.lounge_thermostat_mode
-          - input_select.master_bedroom_thermostat_mode
-          - input_select.office_thermostat_mode
-          - input_select.studio_thermostat_mode
+        entity_id: *thermostat_modes
         to: "Manual"
         for: "01:00:00"
     action:
