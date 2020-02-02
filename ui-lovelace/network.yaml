@@ -52,9 +52,18 @@
   title: Media
   show_header_toggle: false
   entities:
-    - type: custom:toggle-lock-entity-row
-      entity: switch.network_media
-      name: Status
+    - type: custom:restriction-card
+      row: true
+      restrictions: &server_toggle_restrictions
+        block:
+          exemptions:
+            - user: 221fad543e1a4c05af8aaac8c68e985e
+      condition:
+        entity: switch.network_media
+        value: "on" 
+      card:
+        entity: switch.network_media
+        name: Status    
     - entity: sensor.media_cpu_used
       name: Processor use
     - entity: sensor.media_cpu_temp
@@ -66,9 +75,15 @@
   title: Relay South
   show_header_toggle: false
   entities:
-    - type: custom:toggle-lock-entity-row
-      entity: switch.network_relay_south
-      name: Status
+    - type: custom:restriction-card
+      row: true
+      restrictions: *server_toggle_restrictions
+      condition:
+        entity: switch.network_relay_south
+        value: "on" 
+      card:
+        entity: switch.network_relay_south
+        name: Status
     - entity: sensor.relay_south_cpu_used
       name: Processor use
     - entity: sensor.relay_south_cpu_temp
@@ -80,9 +95,15 @@
   title: Relay North
   show_header_toggle: false
   entities:
-    - type: custom:toggle-lock-entity-row
-      entity: switch.network_relay_north
-      name: Status
+    - type: custom:restriction-card
+      row: true
+      restrictions: *server_toggle_restrictions
+      condition:
+        entity: switch.network_relay_north
+        value: "on" 
+      card:
+        entity: switch.network_relay_north
+        name: Status
     - entity: sensor.relay_north_cpu_used
       name: Processor use
     - entity: sensor.relay_north_cpu_temp
