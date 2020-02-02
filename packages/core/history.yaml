@@ -29,6 +29,7 @@ recorder:
       - binary_sensor.basement_bathroom_motion
       - binary_sensor.carl_requires_attention
       - binary_sensor.guest_bedroom_window
+      - binary_sensor.guest_mode
       - binary_sensor.kitchen_door
       - binary_sensor.kitchen_sink_leak
       - binary_sensor.laundry_room_motion
@@ -70,6 +71,7 @@ recorder:
       - sensor.guest_bedroom_window_sensor_battery
       - sensor.guest_bedroom_temperature
       - sensor.guest_bedroom_thermostat_temperature
+      - sensor.guests_home
       - sensor.kitchen_temperature
       - sensor.last_motion
       - sensor.latest_home_assistant_version

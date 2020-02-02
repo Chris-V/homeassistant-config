@@ -9,7 +9,7 @@ automation:
         for: "00:00:30"
     condition:
       - condition: state
-        entity_id: "input_boolean.guest_mode"
+        entity_id: "binary_sensor.guest_mode"
         state: "off"
     action:
       - service: script.everything_off

@@ -2,7 +2,7 @@
   title: Settings
   show_header_toggle: false
   entities:
-    - input_boolean.guest_mode
+    - input_boolean.force_guest_mode
     - input_boolean.automatic_night_theme
     - input_select.default_theme
 
@@ -10,6 +10,8 @@
   title: Notifications
   show_header_toggle: false
   entities:
+    - entity: input_boolean.notify_individual_guest_arrivals
+      name: Individual guest arrivals, or only first
     - entity: automation.notify_plant_problems
       name: Plant problems
     - entity: input_boolean.notify_power_outages

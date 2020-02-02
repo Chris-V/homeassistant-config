@@ -13,7 +13,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: "input_boolean.guest_mode"
+          entity_id: "binary_sensor.guest_mode"
           state: "off"
         - condition: state
           entity_id: "light.outdoor_lights"

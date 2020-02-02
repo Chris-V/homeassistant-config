@@ -23,40 +23,94 @@ group:
   household:
     name: "Household"
     icon: "mdi:account-multiple"
-    entities:
+    entities: &household_entities
       - person.chris
       - person.karine
+  guests:
+    name: "Guests"
+    icon: "mdi:account-group"
+    entities: &guest_entities
+      - person.guest_cava
+      - person.guest_gipa
+      - person.guest_laboro
+      - person.guest_stfr
+      - person.guest_syvi
 
 input_boolean:
-  guest_mode:
-    name: "Guest mode"
+  force_guest_mode:
+    name: "Force guest mode"
     icon: "mdi:human-greeting"
   notify_household_changes:
     name: "Notify household changes"
     icon: "mdi:message-settings-variant"
+  notify_individual_guest_arrivals:
+    name: "Notify individual guest arrivals"
+    icon: "mdi:message-settings-variant"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      guest_mode:
+        friendly_name: "Guest mode"
+        icon_template: "mdi:human-greeting"
+        value_template: >-
+          {{
+            is_state('input_boolean.force_guest_mode', 'on')
+              or state_attr('sensor.guests_home', 'count') | int | default(0) > 0
+          }}
+
+sensor:
+  - platform: template
+    sensors:
+      guests_home:
+        friendly_name: "Guests at home"
+        icon_template: "mdi:account-star"
+        entity_id: *guest_entities
+        value_template: >-
+          {{
+            expand('group.guests')
+             | selectattr('state', 'eq', 'home')
+             | map('attr', 'name')
+             | sort
+             | join(', ')
+             | default('None', true)
+          }}
+        attribute_templates:
+          count: >-
+            {{
+              expand('group.guests')
+              | selectattr('state', 'eq', 'home')
+              | list
+              | count
+            }}
 
 automation:
   - alias: notify_guest_arrives
     initial_state: True
     trigger:
       platform: state
-      entity_id: "group.guests"
+      entity_id: *guest_entities
       to: "home"
+    condition:
+      condition: template
+      value_template: >-
+        {{
+          is_state('input_boolean.notify_individual_guest_arrivals', 'on')
+            or is_state_attr('sensor.guests_home', 'count', '1')
+        }}
     action:
       - service: python_script.notify
         data_template:
           persistent: True
           push_target: "household"
-          title: "Guest arrival"
-          message: "A new guest has just arrived at home."
+          title: "Guests are home"
+          message: "{{ trigger.to_state.name }} just arrived home."
 
   - alias: notify_household_person_arrives
     initial_state: True
     trigger:
       platform: state
-      entity_id:
-        - person.chris
-        - person.karine
+      entity_id: *household_entities
       to: "home"
     condition:
       condition: state
@@ -74,9 +128,7 @@ automation:
     initial_state: True
     trigger:
       platform: state
-      entity_id:
-        - person.chris
-        - person.karine
+      entity_id: *household_entities
       from: "home"
     condition:
       condition: state
