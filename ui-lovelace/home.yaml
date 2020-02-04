@@ -117,7 +117,7 @@
       background-position: center center;
       background-repeat: no-repeat;
       background-size: contain;
-      background-blend-mode: soft-light;
+      background-blend-mode: exclusion;
     }
   entities:
     - type: custom:button-card
