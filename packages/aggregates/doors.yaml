@@ -2,7 +2,6 @@ group:
   all_doors:
     name: "All doors"
     icon: "mdi:door"
-    control: "hidden"
     entities: &door_entities
       - binary_sensor.kitchen_door
       - binary_sensor.living_room_door

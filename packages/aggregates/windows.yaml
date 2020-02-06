@@ -2,7 +2,6 @@ group:
   all_windows:
     name: "All windows"
     icon: "mdi:window-closed"
-    control: "hidden"
     entities: &window_entities
       - binary_sensor.guest_bedroom_window
       - binary_sensor.studio_window

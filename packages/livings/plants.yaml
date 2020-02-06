@@ -8,7 +8,6 @@ group:
   all_plants:
     name: "All plants"
     icon: "mdi:flower"
-    control: "hidden"
     entities:
       - "plant.dollorama"
       - "plant.maitre_doyle"

@@ -2,7 +2,6 @@ group:
   all_motions:
     name: "All motions"
     icon: "mdi:run"
-    control: "hidden"
     entities: &motion_entities
       - binary_sensor.basement_bathroom_motion
       - binary_sensor.laundry_room_motion

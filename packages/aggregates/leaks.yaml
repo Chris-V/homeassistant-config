@@ -2,7 +2,6 @@ group:
   all_leaks:
     name: "All leaks"
     icon: "mdi:pipe-leak"
-    control: "hidden"
     entities: &leak_entities
       - binary_sensor.kitchen_sink_leak
       - binary_sensor.water_heater_leak

@@ -11,7 +11,6 @@ group:
   all_batteries:
     name: "Batteries"
     icon: "mdi:battery-70"
-    control: "hidden"
     entities: &battery_entities
       - sensor.basement_bathroom_door_sensor_battery
       - sensor.basement_bathroom_multisensor_battery
