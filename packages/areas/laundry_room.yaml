@@ -49,7 +49,6 @@ light:
 automation:
   # Automated light management
   - alias: "laundry_room_auto_lights_on"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
@@ -60,7 +59,6 @@ automation:
         data:
           entity_id: "light.laundry_room"
   - alias: "laundry_room_auto_lights_off"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
@@ -75,7 +73,6 @@ automation:
 
   # Multi taps will turn light on/off
   - alias: "laundry_room_multi_up"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -95,7 +92,6 @@ automation:
       data:
         entity_id: "light.laundry_room"
   - alias: "laundry_room_multi_down"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event

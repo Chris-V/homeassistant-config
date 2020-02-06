@@ -18,7 +18,6 @@ binary_sensor:
 
 automation:
   - alias: "Notify water leaks"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state

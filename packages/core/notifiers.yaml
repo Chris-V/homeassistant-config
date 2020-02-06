@@ -31,7 +31,6 @@ custom_storage:
 
 automation:
   - alias: speak_stored_audio_notifications
-    hide_entity: True
     initial_state: True
 
     trigger:

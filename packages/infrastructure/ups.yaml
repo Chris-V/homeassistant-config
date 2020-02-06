@@ -89,7 +89,6 @@ automation:
 
   - alias: notification_action_enable_device_management
     initial_state: True
-    hide_entity: True
     trigger:
       platform: event
       event_type: "html5_notification.clicked"
@@ -102,7 +101,6 @@ automation:
 
   - alias: notification_action_disable_device_management
     initial_state: True
-    hide_entity: True
     trigger:
       platform: event
       event_type: "html5_notification.clicked"
@@ -115,7 +113,6 @@ automation:
 
   - alias: ups_power_off_devices
     initial_state: True
-    hide_entity: True
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"
@@ -133,7 +130,6 @@ automation:
 
   - alias: ups_power_on_devices
     initial_state: True
-    hide_entity: True
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"

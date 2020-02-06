@@ -44,7 +44,6 @@ sensor:
 
 automation:
   - alias: "Notify low batteries"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: numeric_state

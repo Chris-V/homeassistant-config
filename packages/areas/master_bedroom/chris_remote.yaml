@@ -69,7 +69,6 @@ automation:
 
   - alias: chris_remote_tap_power
     description: Toggle selected light
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -88,7 +87,6 @@ automation:
           entity_id: "{{ states('input_select.chris_remote_entity') }}"
   - alias: chris_remote_hold_power
     description: Toggle bedroom light
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -108,7 +106,6 @@ automation:
 
   - alias: chris_remote_tap_dim_up
     description: Increase dim level
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -128,7 +125,6 @@ automation:
           brightness: "{{ (state_attr('light.bedside_chris', 'brightness') | int + 32)| max(12) | min(255) }}"
   - alias: chris_remote_tap_dim_down
     description: Decrease dim level
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -149,7 +145,6 @@ automation:
 
   - alias: chris_remote_hold_dim_up
     description: Select next color
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -168,7 +163,6 @@ automation:
           entity_id: input_select.chris_remote_color
   - alias: chris_remote_hold_dim_down
     description: Select previous color
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -188,7 +182,6 @@ automation:
 
   - alias: chris_remote_tap_left
     description: Previous bedroom light
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -208,7 +201,6 @@ automation:
       - service: script.flash_chris_remote_entity
   - alias: chris_remote_tap_right
     description: Next bedroom light
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -229,7 +221,6 @@ automation:
 
   - alias: chris_remote_hold_left
     description: Activate bedtime
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -246,7 +237,6 @@ automation:
       - service: script.bedtime
   - alias: chris_remote_hold_right
     description: Turn everything off
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event

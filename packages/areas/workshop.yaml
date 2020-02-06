@@ -44,7 +44,6 @@ binary_sensor:
 automation:
   # Automated light management
   - alias: "workshop_auto_lights_on"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
@@ -55,7 +54,6 @@ automation:
         data:
           entity_id: "light.workshop"
   - alias: "workshop_auto_lights_off"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state

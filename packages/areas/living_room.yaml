@@ -113,7 +113,6 @@ sensor:
 
 automation:
   - alias: "double_up_bookshelf"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -127,7 +126,6 @@ automation:
       data:
         entity_id: "light.living_room_ambiance"
   - alias: "double_down_bookshelf"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event

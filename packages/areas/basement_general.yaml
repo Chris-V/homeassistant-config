@@ -71,7 +71,6 @@ sensor:
 
 automation:
   - alias: "triple_up_downstairs_lights"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -97,7 +96,6 @@ automation:
       data:
         entity_id: "light.basement_lights"
   - alias: "triple_down_downstairs_lights"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event

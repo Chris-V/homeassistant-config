@@ -72,7 +72,6 @@ sensor:
 
 automation:
   - alias: "hallway_light_double_up"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -86,7 +85,6 @@ automation:
       data:
         entity_id: "light.dining_room"
   - alias: "hallway_light_double_down"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event

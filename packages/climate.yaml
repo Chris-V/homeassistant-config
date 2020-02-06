@@ -154,7 +154,6 @@ script:
 
 automation:
   - alias: apply_scheduled_climate_preset
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
@@ -163,7 +162,6 @@ automation:
       - service: script.scheduled_climate_preset
 
   - alias: "revert_manual_thermostat_mode"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
@@ -177,7 +175,6 @@ automation:
           option: "Auto"
 
   - alias: "update_thermostat_setpoint"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
@@ -248,7 +245,6 @@ automation:
             {{ states('input_number.' ~ area_prefix ~ '_thermostat_' ~ mode ~ '_setpoint') }}
 
   - alias: "select_manual_thermostat_mode"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state

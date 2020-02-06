@@ -20,7 +20,6 @@ sensor:
 
 automation:
   - alias: notify_update_available
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state

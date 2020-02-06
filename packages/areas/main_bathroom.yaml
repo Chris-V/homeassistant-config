@@ -95,7 +95,6 @@ light:
 automation:
   # Automated fan management
   - alias: "main_bathroom_auto_fan_on"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: numeric_state
@@ -115,7 +114,6 @@ automation:
         data:
           entity_id: "fan.main_bathroom"
   - alias: "main_bathroom_auto_fan_off"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: numeric_state
@@ -136,7 +134,6 @@ automation:
 
   # Automated light management
   - alias: "main_bathroom_auto_lights_on"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: state
@@ -160,7 +157,6 @@ automation:
             {%- else -%} 50
             {%- endif -%}
   - alias: "main_bathroom_auto_lights_off"
-    hide_entity: True
     initial_state: False
     trigger:
       - platform: state
@@ -179,7 +175,6 @@ automation:
 
   # Double tap fan switch will turn fan on/off
   - alias: "main_bathroom_fan_double_up"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -193,7 +188,6 @@ automation:
       data:
         entity_id: "fan.main_bathroom"
   - alias: "main_bathroom_fan_double_down"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -209,7 +203,6 @@ automation:
 
   # Double tap vanity switch will turn vanity light on/off
   - alias: "main_bathroom_vanity_double_up"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -223,7 +216,6 @@ automation:
       data:
         entity_id: "light.main_bathroom_vanity"
   - alias: "main_bathroom_vanity_double_down"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -239,7 +231,6 @@ automation:
 
   # Double tap spots switch will turn spots on/off
   - alias: "main_bathroom_spots_double_up"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -253,7 +244,6 @@ automation:
       data:
         entity_id: "light.main_bathroom_spots"
   - alias: "main_bathroom_spots_double_down"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -269,7 +259,6 @@ automation:
 
   # Triple tap any light switch will turn bathroom lights on/off
   - alias: "main_bathroom_lights_triple_up"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -289,7 +278,6 @@ automation:
       data:
         entity_id: "light.main_bathroom_lights"
   - alias: "main_bathroom_lights_triple_down"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event

@@ -81,7 +81,6 @@ sensor:
 
 automation:
   - alias: "double_up_lounge"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -95,7 +94,6 @@ automation:
       data:
         entity_id: "light.lounge_ambiance"
   - alias: "double_down_lounge"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event

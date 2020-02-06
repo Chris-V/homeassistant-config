@@ -95,7 +95,6 @@ sensor:
 
 automation:
   - alias: "master_bedroom_double_up"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -109,7 +108,6 @@ automation:
       data:
         entity_id: "light.master_bedroom_bedsides"
   - alias: "master_bedroom_double_down"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -124,7 +122,6 @@ automation:
         entity_id: "light.master_bedroom_bedsides"
 
   - alias: "master_bedroom_quad_tap"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
@@ -143,7 +140,6 @@ automation:
       service: script.bedtime
 
   - alias: "master_bedroom_quint_tap"
-    hide_entity: True
     initial_state: True
     trigger:
       - platform: event
