@@ -69,7 +69,7 @@ sensor:
             {{
               expand('group.all_thermostat_modes')
                 | selectattr('state', 'eq', 'Manual')
-                | list
+                | map('attr', 'entity_id')
                 | join(', ')
                 | default('None', True)
             }}
