@@ -57,8 +57,7 @@ elements:
           background-color: rgba(73, 73, 73, 0.9)
         elements:
           - type: state-icon # Icon
-            entity: weather.dark_sky
-            title: null
+            entity: sensor.dark_sky_summary
             tap_action:
               action: more-info
             style: &room_title_icon_style
