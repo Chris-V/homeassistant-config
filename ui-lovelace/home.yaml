@@ -119,31 +119,32 @@
       background-size: contain;
       background-blend-mode: exclusion;
     }
+  header:
+    type: custom:button-card
+    color_type: label-card
+    entity: sensor.guests_home
+    name: >
+      [[[
+        let count = (entity && entity.attributes && entity.attributes['count']) || 0;
+        return count === 1
+          ? 'One guest is home'
+          : (count == 0 ? 'No' : count) + ' guests are home';
+      ]]]
+    show_icon: false
+    tap_action:
+      action: more-info
+    styles:
+      card:
+        - padding: 24px 16px 0
+        - box-shadow: none
+        - background: none
+        - color: var(--ha-card-header-color, --primary-text-color)
+        - font-size: var(--ha-card-header-font-size, 24px)
+        - font-family: var(--ha-card-header-font-family, inherit)
+      name:
+        - justify-self: start
+
   entities:
-    - type: custom:button-card
-      color_type: label-card
-      entity: sensor.guests_home
-      name: >
-        [[[
-          let count = (entity && entity.attributes && entity.attributes['count']) || 0;
-          return count === 1
-            ? 'One guest is home'
-            : (count == 0 ? 'No' : count) + ' guests are home';
-        ]]]
-      show_icon: false
-      tap_action:
-        action: more-info
-      styles:
-        card:
-          - padding: 0
-          - border: 0
-          - box-shadow: none
-          - background: none
-          - color: var(--ha-card-header-color, --primary-text-color)
-          - font-size: var(--ha-card-header-font-size, 24px)
-          - font-family: var(--ha-card-header-font-family, inherit)
-        name:
-          - justify-self: start
     - entity: input_boolean.force_guest_mode
     - type: custom:auto-entities
       show_empty: false
