@@ -63,7 +63,8 @@
         value: "on" 
       card:
         entity: switch.network_media
-        name: Status    
+        name: Status
+        state_color: true
     - entity: sensor.media_cpu_used
       name: Processor use
     - entity: sensor.media_cpu_temp
@@ -84,6 +85,7 @@
       card:
         entity: switch.network_relay_south
         name: Status
+        state_color: true
     - entity: sensor.relay_south_cpu_used
       name: Processor use
     - entity: sensor.relay_south_cpu_temp
@@ -104,6 +106,7 @@
       card:
         entity: switch.network_relay_north
         name: Status
+        state_color: true
     - entity: sensor.relay_north_cpu_used
       name: Processor use
     - entity: sensor.relay_north_cpu_temp
