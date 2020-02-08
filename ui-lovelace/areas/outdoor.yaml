@@ -57,7 +57,7 @@ elements:
           background-color: rgba(73, 73, 73, 0.9)
         elements:
           - type: state-icon # Icon
-            entity: sensor.dark_sky_summary
+            entity: sensor.weather_summary
             tap_action:
               action: more-info
             style: &room_title_icon_style
@@ -91,7 +91,7 @@ elements:
                   justify-content: flex-end
                 elements:
                   - type: state-icon
-                    entity: sensor.dark_sky_humidity
+                    entity: sensor.outdoor_humidity
                     title: Humidity
                     tap_action:
                       action: more-info
@@ -99,7 +99,7 @@ elements:
                       transform: &room_sensor_icon_transform scale(0.7)
                       transform-origin: center 60%
                   - type: state-label
-                    entity: sensor.dark_sky_humidity
+                    entity: sensor.outdoor_humidity
                     title: Humidity
                     tap_action:
                       action: more-info
@@ -112,13 +112,13 @@ elements:
                 elements_pos: *room_banner_sensor_group_style
                 elements:
                   - type: state-icon
-                    entity: sensor.dark_sky_temperature
+                    entity: sensor.outdoor_temperature
                     title: Temperature
                     tap_action:
                       action: more-info
                     style: *room_banner_sensor_icon_style
                   - type: state-label
-                    entity: sensor.dark_sky_temperature
+                    entity: sensor.outdoor_temperature
                     title: Temperature
                     tap_action:
                       action: more-info

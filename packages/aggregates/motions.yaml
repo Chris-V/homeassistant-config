@@ -1,7 +1,7 @@
 group:
   all_motions:
     name: "All motions"
-    icon: "mdi:run"
+    icon: "mdi:motion-sensor"
     entities: &motion_entities
       - binary_sensor.basement_bathroom_motion
       - binary_sensor.laundry_room_motion
@@ -14,7 +14,22 @@ binary_sensor:
       all_motions:
         friendly_name: "All motions"
         device_class: "motion"
-        value_template: "{{ is_state('group.all_motions', 'on') }}"
+        entity_id: *motion_entities
+        value_template: >-
+          {{
+            expand('group.all_motions')
+              | selectattr('state', 'eq', 'on')
+              | list
+              | length != 0
+          }}
+        attribute_templates:
+          entity_id: >-
+            {{
+              expand('group.all_motions')
+                | selectattr('state', 'eq', 'on')
+                | map('attr', 'entity_id')
+                | join(', ')
+            }}
 
 sensor:
   - platform: template
@@ -23,7 +38,11 @@ sensor:
         friendly_name: "Last motion"
         entity_id: *motion_entities
         icon_template: >-
-          mdi:{% if is_state('group.all_motions', 'on') %}motion-sensor{% else %}walk{% endif %}
+          {% set active = expand('group.all_motions')
+              | selectattr('state', 'eq', 'on')
+              | list
+              | length != 0 %}
+          mdi:{% if active %}motion-sensor{% else %}walk{% endif %}
         value_template: >-
           {{
             expand('group.all_motions')

@@ -91,9 +91,8 @@
       --paper-item-icon-active-color: var(--google-red-500)
     }
   entities:
-    - entity: sensor.all_batteries
-      name: Lowest
-      secondary_info: last-changed
+    - entity: binary_sensor.all_batteries
+      name: Status
 
     - type: custom:auto-entities
       sort:

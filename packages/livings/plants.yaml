@@ -8,12 +8,41 @@ group:
   all_plants:
     name: "All plants"
     icon: "mdi:flower"
-    entities:
+    entities: &plant_entities
       - "plant.dollorama"
       - "plant.maitre_doyle"
       - "plant.rubber_ducky"
       - "plant.spidy"
       - "plant.viny"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      all_plants:
+        friendly_name: "All plants"
+        device_class: "problem"
+        entity_id: *plant_entities
+        icon_template: >-
+          {% set active = expand('group.all_plants')
+              | selectattr('state', 'eq', 'problem')
+              | list
+              | length != 0 %}
+          mdi:leaf{% if active %}-off{% endif %}
+        value_template: >-
+          {{
+            expand('group.all_plants')
+              | selectattr('state', 'eq', 'problem')
+              | list
+              | length != 0
+          }}
+        attribute_templates:
+          entity_id: >-
+            {{
+              expand('group.all_plants')
+                | selectattr('state', 'eq', 'problem')
+                | map('attr', 'entity_id')
+                | join(', ')
+            }}
 
 automation:
   - alias: notify_plant_problems

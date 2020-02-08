@@ -1,12 +1,3 @@
-# TODO: Appropriate battery level on icon
-
-homeassistant:
-  customize:
-    sensor.all_batteries:
-      friendly_name: "All batteries"
-      icon: "mdi:battery-70"
-      device_class: "battery"
-
 group:
   all_batteries:
     name: "Batteries"
@@ -34,12 +25,36 @@ group:
       - sensor.water_heater_leak_sensor_battery
       - sensor.workshop_motion_sensor_battery
 
+binary_sensor:
+  - platform: template
+    sensors:
+      all_batteries:
+        friendly_name: "All batteries"
+        device_class: "battery"
+        entity_id: "sensor.low_batteries"
+        value_template: "{{ not is_state('sensor.low_batteries', '') }}"
+        attribute_templates:
+          entity_id: "{{ states('sensor.low_batteries') }}"
+
 sensor:
-  - platform: min_max
-    name: "all_batteries"
-    type: "min"
-    round_digits: 0
-    entity_ids: *battery_entities
+  - platform: template
+    sensors:
+      low_batteries:
+        friendly_name: "Low batteries"
+        icon_template: "mdi:battery"
+        entity_id: *battery_entities
+        value_template: >-
+          {% set n = namespace(entities = []) %}
+
+          {% for entity in expand('group.all_batteries') %}
+            {% set state = states(entity.entity_id) | int(100) %}
+            {% set warning_level = state_attr(entity.entity_id, 'battery_warning_level') | int(25) %}
+            {% if state <= warning_level %}
+              {% set n.entities = n.entities + [entity.entity_id] %}
+            {% endif %}
+          {% endfor %}
+
+          {{ n.entities | join(', ') }}
 
 automation:
   - alias: "Notify low batteries"
@@ -50,7 +65,7 @@ automation:
           {% if state.state in ['unknown', 'unavailable'] -%}
             100
           {%- else -%}
-            {{ state.state | int - state.attributes.battery_warning_level | default(25) | int }}
+            {{ state.state | int - state.attributes.battery_warning_level | int(25) }}
           {%- endif %}
         below: 0
         entity_id: *battery_entities

@@ -21,9 +21,11 @@ recorder:
       - zha
       - zwave
     entities:
+      - binary_sensor.all_batteries
       - binary_sensor.all_doors
       - binary_sensor.all_leaks
       - binary_sensor.all_motions
+      - binary_sensor.all_plants
       - binary_sensor.all_windows
       - binary_sensor.basement_bathroom_door
       - binary_sensor.basement_bathroom_motion
@@ -42,7 +44,6 @@ recorder:
       - binary_sensor.ups_online_status
       - binary_sensor.water_heater_leak
       - binary_sensor.workshop_motion
-      - sensor.all_batteries
       - sensor.basement_bathroom_door_sensor_battery
       - sensor.basement_bathroom_humidity
       - sensor.basement_bathroom_multisensor_battery
@@ -82,6 +83,7 @@ recorder:
       - sensor.living_room_thermostat_temperature
       - sensor.lounge_temperature
       - sensor.lounge_thermostat_temperature
+      - sensor.low_batteries
       - sensor.main_bathroom_door_sensor_battery
       - sensor.main_bathroom_humidity
       - sensor.main_bathroom_multisensor_battery
@@ -101,6 +103,8 @@ recorder:
       - sensor.memory_use_percent
       - sensor.office_temperature
       - sensor.office_thermostat_temperature
+      - sensor.outdoor_humidity
+      - sensor.outdoor_temperature
       - sensor.processor_temperature
       - sensor.processor_use
       - sensor.relay_north_cpu_used
@@ -143,12 +147,8 @@ recorder:
       - sensor.viny_problems
       - sensor.viny_temperature
       - sensor.water_heater_leak_sensor_battery
+      - sensor.weather_summary
       - sensor.workshop_motion_sensor_battery
-
-      # Weather sensors
-      - sensor.dark_sky_humidity
-      - sensor.dark_sky_summary
-      - sensor.dark_sky_temperature
 
 history:
   include: *recorder_inclusion

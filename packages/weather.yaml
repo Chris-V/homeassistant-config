@@ -26,8 +26,6 @@ sensor:
     language: "en"
     monitored_conditions:
       - humidity
-      - icon
       - summary
       - temperature
-      - uv_index
     scan_interval: "00:15"

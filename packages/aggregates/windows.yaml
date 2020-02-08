@@ -13,4 +13,19 @@ binary_sensor:
       all_windows:
         friendly_name: "All windows"
         device_class: "window"
-        value_template: "{{ is_state('group.all_windows', 'on') }}"
+        entity_id: *window_entities
+        value_template: >-
+          {{
+            expand('group.all_windows')
+              | selectattr('state', 'eq', 'on')
+              | list
+              | length != 0
+          }}
+        attribute_templates:
+          entity_id: >-
+            {{
+              expand('group.all_windows')
+                | selectattr('state', 'eq', 'on')
+                | map('attr', 'entity_id')
+                | join(', ')
+            }}

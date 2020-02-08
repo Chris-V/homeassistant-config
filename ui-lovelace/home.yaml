@@ -175,7 +175,7 @@
 
     - entity: binary_sensor.all_doors
     - entity: binary_sensor.all_windows
-    - entity: sensor.all_batteries
+    - entity: binary_sensor.all_batteries
 
     - entity: binary_sensor.carl_requires_attention
       tap_action:
@@ -185,7 +185,7 @@
       tap_action:
         action: navigate
         navigation_path: /lovelace/livings
-    - entity: group.all_plants
+    - entity: binary_sensor.all_plants
       tap_action:
         action: navigate
         navigation_path: /lovelace/livings

@@ -55,12 +55,12 @@
 
 - name: "Temperature"
   entities:
-    - sensor.dark_sky_temperature
+    - sensor.outdoor_temperature
   text_template: "${Math.round(entity.state) + ' ' + entity.attributes.unit_of_measurement}"
 
 - name: "Weather icon"
   entities:
-    - sensor.dark_sky_summary
+    - sensor.weather_summary
   image_template: "${entity.attributes.entity_picture}"
 
 - name: "Presence tracker"

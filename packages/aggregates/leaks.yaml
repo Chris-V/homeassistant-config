@@ -12,8 +12,28 @@ binary_sensor:
       all_leaks:
         friendly_name: "All leaks"
         device_class: "moisture"
-        icon_template: "mdi:pipe{% if is_state('group.all_leaks', 'on') %}-leak{% endif %}"
-        value_template: "{{ is_state('group.all_leaks', 'on') }}"
+        entity_id: *leak_entities
+        icon_template: >-
+          {% set active = expand('group.all_leaks')
+              | selectattr('state', 'eq', 'on')
+              | list
+              | length != 0 %}
+          mdi:pipe{% if active %}-leak{% endif %}
+        value_template: >-
+          {{
+            expand('group.all_leaks')
+              | selectattr('state', 'eq', 'on')
+              | list
+              | length != 0
+          }}
+        attribute_templates:
+          entity_id: >-
+            {{
+              expand('group.all_leaks')
+                | selectattr('state', 'eq', 'on')
+                | map('attr', 'entity_id')
+                | join(', ')
+            }}
 
 automation:
   - alias: "Notify water leaks"
