@@ -99,7 +99,7 @@ automation:
         event_data:
           action: "device_power_management_on"
     action:
-      - service: switch.turn_on
+      - service: input_boolean.turn_on
         data:
           entity_id: "input_boolean.power_outage_manage_devices"
 
@@ -115,7 +115,7 @@ automation:
         event_data:
           action: "device_power_management_off"
     action:
-      - service: switch.turn_off
+      - service: input_boolean.turn_off
         data:
           entity_id: "input_boolean.power_outage_manage_devices"
 
