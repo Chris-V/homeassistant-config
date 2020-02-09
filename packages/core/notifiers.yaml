@@ -6,24 +6,16 @@ notify:
     vapid_prv_key: !secret notifier_vapid_private_key
 
   - platform: group
-    name: "default"
-    services:
-      - service: html5
-
-  - platform: group
     name: "admin"
     services:
-      - service: html5
-        data:
-          target: ["chris_aero_arch_chrome", "chris_pixel_chrome"]
+      - service: mobile_app_chris_pixel_1
+      - service: html5_chris_aero_arch_chrome
 
   - platform: group
     name: "household"
     services:
       - service: admin
-      - service: html5
-        data:
-          target: ["karine pixel chrome"]
+      - service: mobile_app_karine_pixel_1
 
 custom_storage:
   audio_notifications:

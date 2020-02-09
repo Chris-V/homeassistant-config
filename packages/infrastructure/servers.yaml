@@ -147,7 +147,7 @@ automation:
           push_data:
             entity_id: "{{ trigger.entity_id }}"
           push_actions:
-            - action: "power_on"
+            - action: &power_on_action_key "power_on_server"
               title: "Power on"
               icon: "/local/icons/power-plug-on.png"
 
@@ -181,30 +181,38 @@ automation:
           push_data:
             entity_id: "{{ trigger.entity_id }}"
           push_actions:
-            - action: "power_off"
+            - action: &power_off_action_key "power_off_server"
               title: "Power off"
               icon: "/local/icons/power-plug-off.png"
 
   - alias: notification_action_power_on_server
     initial_state: True
     trigger:
-      platform: event
-      event_type: "html5_notification.clicked"
-      event_data:
-        action: power_on
+      - platform: event
+        event_type: "html5_notification.clicked"
+        event_data:
+          action: *power_on_action_key
+      - platform: event
+        event_type: "mobile_app_notification_action"
+        event_data:
+          action: *power_on_action_key
     action:
-      service: switch.turn_on
-      data_template:
-        entity_id: "{{ trigger.event.data.data.entity_id }}"
+      - service: switch.turn_on
+        data_template:
+          entity_id: "{{ trigger.event.data.data.entity_id }}"
 
   - alias: notification_action_power_off_server
     initial_state: True
     trigger:
-      platform: event
-      event_type: "html5_notification.clicked"
-      event_data:
-        action: power_off
+      - platform: event
+        event_type: "html5_notification.clicked"
+        event_data:
+          action: *power_off_action_key
+      - platform: event
+        event_type: "mobile_app_notification_action"
+        event_data:
+          action: *power_off_action_key
     action:
-      service: switch.turn_off
-      data_template:
-        entity_id: "{{ trigger.event.data.data.entity_id }}"
+      - service: switch.turn_off
+        data_template:
+          entity_id: "{{ trigger.event.data.data.entity_id }}"

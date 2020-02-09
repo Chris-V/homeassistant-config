@@ -49,9 +49,9 @@ automation:
         entity_id: "binary_sensor.ups_online_status"
         to: "on"
     condition: &power_outage_conditions
-      condition: state
-      entity_id: "input_boolean.notify_power_outages"
-      state: "on"
+      - condition: state
+        entity_id: "input_boolean.notify_power_outages"
+        state: "on"
     action:
       - service: python_script.notify
         data_template:
@@ -61,7 +61,7 @@ automation:
           title: "Power restored"
           message: "The power outage at home has finished after {{ relative_time(trigger.from_state.last_changed) }}."
           push_actions: &power_outage_actions
-            - action: "device_management_{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}"
+            - action: "device_power_management_{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}"
               title: "{% if states('input_boolean.power_outage_manage_devices') == 'off' %}Enable{% else %}Disable{% endif %} device management"
               icon: "/local/icons/power-plug-{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}.png"
 
@@ -90,26 +90,34 @@ automation:
   - alias: notification_action_enable_device_management
     initial_state: True
     trigger:
-      platform: event
-      event_type: "html5_notification.clicked"
-      event_data:
-        action: "device_management_on"
+      - platform: event
+        event_type: "html5_notification.clicked"
+        event_data:
+          action: "device_power_management_on"
+      - platform: event
+        event_type: "mobile_app_notification_action"
+        event_data:
+          action: "device_power_management_on"
     action:
-      service: switch.turn_on
-      data:
-        entity_id: "input_boolean.power_outage_manage_devices"
+      - service: switch.turn_on
+        data:
+          entity_id: "input_boolean.power_outage_manage_devices"
 
   - alias: notification_action_disable_device_management
     initial_state: True
     trigger:
-      platform: event
-      event_type: "html5_notification.clicked"
-      event_data:
-        action: "device_management_off"
+      - platform: event
+        event_type: "html5_notification.clicked"
+        event_data:
+          action: "device_power_management_off"
+      - platform: event
+        event_type: "mobile_app_notification_action"
+        event_data:
+          action: "device_power_management_off"
     action:
-      service: switch.turn_off
-      data:
-        entity_id: "input_boolean.power_outage_manage_devices"
+      - service: switch.turn_off
+        data:
+          entity_id: "input_boolean.power_outage_manage_devices"
 
   - alias: ups_power_off_devices
     initial_state: True

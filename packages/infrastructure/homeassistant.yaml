@@ -70,7 +70,7 @@ automation:
         data:
           message: Home-Assistant has restarted.
           data:
-            tag: hass-status
+            tag: homeassistant-status
   - alias: Notify HA shutdown
     trigger:
       - event: shutdown
@@ -80,4 +80,4 @@ automation:
         data:
           message: Home-Assistant is shutting down.
           data:
-            tag: hass-status
+            tag: homeassistant-status
