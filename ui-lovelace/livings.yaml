@@ -60,6 +60,8 @@
   template: plant
   variables:
     - image: /local/plants/tulips_card.jpg
+    - name_color: "#3B4049"
+    - name_shadow_color: "#E0E0E0"
     - plant_entity: plant.tully
     - entity_problems: sensor.tully_problems
     - entity_moisture: sensor.tully_moisture

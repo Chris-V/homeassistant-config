@@ -170,7 +170,6 @@
   entities:
     - entity: binary_sensor.all_motions
     - entity: sensor.last_motion
-      icon: mdi:motion-sensor
     - entity: binary_sensor.all_leaks
 
     - entity: binary_sensor.all_doors

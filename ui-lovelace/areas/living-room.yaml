@@ -197,7 +197,7 @@ elements:
           - type: state-icon
             entity: light.bookshelf
             title: Bookshelf
-            icon: mdi:wall-sconce-flat
+            icon: mdi:bookshelf
             style: &room_footer_icon_style
               transform: *room_banner_icon_transform
               transform-origin: center right

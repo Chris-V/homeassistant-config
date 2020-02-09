@@ -37,12 +37,7 @@ sensor:
       last_motion:
         friendly_name: "Last motion"
         entity_id: *motion_entities
-        icon_template: >-
-          {% set active = expand('group.all_motions')
-              | selectattr('state', 'eq', 'on')
-              | list
-              | length != 0 %}
-          mdi:{% if active %}motion-sensor{% else %}walk{% endif %}
+        icon_template: "mdi:motion-sensor"
         value_template: >-
           {{
             expand('group.all_motions')

@@ -113,7 +113,7 @@
                   {{ states['this.entity_id'].state_with_unit }}
                 {%- endif %}
               secondary: "{{ states['this.entity_id'].attributes.battery_type }}"
-              active: "{{ (states['this.entity_id'].state | int - states['this.entity_id'].attributes.battery_warning_level | default(25) | int) <= 0 }}"
+              active: "{{ 'this.entity_id' in states['sensor.low_batteries'].state }}"
       card:
         type: custom:fold-entity-row
         head:
