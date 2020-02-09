@@ -1,0 +1,84 @@
+homeassistant:
+  customize:
+    plant.tully:
+      friendly_name: "Tully"
+    sensor.tully_battery:
+      friendly_name: "Tully's battery"
+      battery_type: "CR2032 3V"
+      battery_warning_level: 15
+    sensor.tully_brightness:
+      friendly_name: "Tully's brightness"
+    sensor.tully_conductivity:
+      friendly_name: "Tully's conductivity"
+    sensor.tully_moisture:
+      friendly_name: "Tully's moisture"
+    sensor.tully_temperature:
+      friendly_name: "Tully's temperature"
+
+plant:
+  tully:
+    sensors:
+      battery: "sensor.tully_battery"
+      brightness: "sensor.tully_brightness"
+      conductivity: "sensor.tully_conductivity"
+      moisture: "sensor.tully_moisture"
+      temperature: "sensor.tully_temperature"
+    min_battery: 15
+    min_conductivity: 0 # 35
+    max_conductivity: 9999
+    min_moisture: 6
+    max_moisture: 60
+    min_temperature: 10
+
+sensor:
+  - platform: template
+    sensors:
+      tully_problems:
+        friendly_name: "Tully"
+        value_template: "{{ state_attr('plant.tully', 'problem') or 'none' }}"
+
+  - platform: mqtt
+    name: "tully_battery"
+    force_update: True
+    device_class: "battery"
+    unit_of_measurement: "%"
+    state_topic: &tully_topic "plants/tully"
+    value_template: "{{ value_json.battery | int('unknown') }}"
+    json_attributes_topic: *tully_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
+  - platform: mqtt
+    name: "tully_brightness"
+    force_update: True
+    device_class: "illuminance"
+    unit_of_measurement: "lx"
+    state_topic: *tully_topic
+    value_template: "{{ value_json.brightness | int('unknown') }}"
+    json_attributes_topic: *tully_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
+  - platform: mqtt
+    name: "tully_conductivity"
+    force_update: True
+    unit_of_measurement: "µS/cm"
+    icon: "mdi:poop"
+    state_topic: *tully_topic
+    value_template: "{{ value_json.conductivity | int('unknown') }}"
+    json_attributes_topic: *tully_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
+  - platform: mqtt
+    name: "tully_moisture"
+    force_update: True
+    device_class: "humidity"
+    unit_of_measurement: "%"
+    state_topic: *tully_topic
+    value_template: "{{ value_json.moisture | int('unknown') }}"
+    json_attributes_topic: *tully_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
+  - platform: mqtt
+    name: "tully_temperature"
+    force_update: True
+    device_class: "temperature"
+    unit_of_measurement: "°C"
+    state_topic: *tully_topic
+    value_template: "{{ value_json.temperature | float('unknown') }}"
+    json_attributes_topic: *tully_topic
+    json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"

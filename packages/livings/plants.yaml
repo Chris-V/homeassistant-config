@@ -13,6 +13,7 @@ group:
       - "plant.maitre_doyle"
       - "plant.rubber_ducky"
       - "plant.spidy"
+      - "plant.tully"
       - "plant.viny"
 
 binary_sensor:
@@ -54,6 +55,7 @@ automation:
           - "sensor.maitre_doyle_problems"
           - "sensor.rubber_ducky_problems"
           - "sensor.spidy_problems"
+          - "sensor.tully_problems"
           - "sensor.viny_problems"
     condition:
       - condition: template
