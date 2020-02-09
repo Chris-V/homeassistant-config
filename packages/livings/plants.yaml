@@ -1,9 +1,3 @@
-homeassistant:
-  customize:
-    automation.notify_plant_problems:
-      friendly_name: "Notify plant problems"
-      icon: "mdi:message-settings-variant"
-
 group:
   all_plants:
     name: "All plants"
@@ -45,6 +39,11 @@ binary_sensor:
                 | join(', ')
             }}
 
+input_boolean:
+  notify_plant_problems:
+    name: "Notify plant problems"
+    icon: 'mdi:message-settings-variant'
+
 automation:
   - alias: notify_plant_problems
     initial_state: True
@@ -58,6 +57,9 @@ automation:
           - "sensor.tully_problems"
           - "sensor.viny_problems"
     condition:
+      - condition: state
+        entity_id: "input_boolean.notify_plant_problems"
+        state:  "on"
       - condition: template
         value_template: "{{ trigger.to_state.state not in ('none', 'battery low') }}"
     action:

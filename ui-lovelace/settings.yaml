@@ -12,7 +12,7 @@
   entities:
     - entity: input_boolean.notify_individual_guest_arrivals
       name: Individual guest arrivals, or only first
-    - entity: automation.notify_plant_problems
+    - entity: input_boolean.notify_plant_problems
       name: Plant problems
     - entity: input_boolean.notify_power_outages
       name: Power outages
