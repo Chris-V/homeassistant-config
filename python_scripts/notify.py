@@ -51,7 +51,8 @@ if push_target:
     if tag:
         payload['data']['tag'] = tag
     if url:
-        payload['data']['url'] = url
+        payload['data']['url'] = url # Web
+        payload['data']['clickAction'] = url # Mobile App
     if push_actions:
         payload['data']['actions'] = push_actions
 
@@ -72,7 +73,6 @@ if persistent:
     hass.services.call('persistent_notification', 'create', payload)
 
 if audio:
-    audio_message = '. '.join([title, message])
-    payload = {'object_id': 'audio_notifications', 'data': audio_message}
+    payload = {'object_id': 'audio_notifications', 'data': message}
 
     hass.services.call('custom_storage', 'add', payload)

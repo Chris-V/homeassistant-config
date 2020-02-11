@@ -17,6 +17,14 @@ notify:
       - service: admin
       - service: mobile_app_karine_pixel_1
 
+tts:
+  - platform: google_cloud
+    key_file: ".secrets/gcp.json"
+    service_name: google_cloud_say
+    voice: "en-US-Wavenet-D" # https://cloud.google.com/text-to-speech/docs/voices
+    profiles:
+      - "small-bluetooth-speaker-class-device"
+
 custom_storage:
   audio_notifications:
     enable_persistence: True
@@ -75,7 +83,7 @@ automation:
             - media_player.lounge_google_home
             - media_player.master_bedroom_google_home
             - media_player.office_sonos
-          message: "{{ states.custom_storage.audio_notifications.attributes.item_0_data }}"
+          message: "Attention. {{ states.custom_storage.audio_notifications.attributes.item_0_data }}"
       - service: custom_storage.remove
         data_template:
           object_id: "audio_notifications"

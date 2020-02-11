@@ -2,4 +2,3 @@ zha:
   usb_path: "/dev/zigbee"
   radio_type: "ezsp"
   database_path: "/config/zigbee.db"
-
