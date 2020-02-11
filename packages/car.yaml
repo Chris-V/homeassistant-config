@@ -1,0 +1,85 @@
+homeassistant:
+  customize:
+    sensor.mychevy_2019_chevrolet_bolt_ev_electric_range:
+      unit_of_measurement: "km"
+    sensor.mychevy_2019_chevrolet_bolt_ev_mileage:
+      unit_of_measurement: "km"
+
+mychevy:
+  country: "ca"
+  username: !secret chevy_username
+  password: !secret chevy_password
+
+input_boolean:
+  notify_car_problems:
+    name: "Notify car problems"
+    icon: "mdi:message-settings-variant"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      bolt_ev_network_link:
+        friendly_name: "Bolt EV network link"
+        device_class: "connectivity"
+        value_template: "{{ is_state('sensor.mychevy_status', 'success') }}"
+        icon_template: >-
+          {% if is_state('sensor.mychevy_status', 'success') %}
+            mdi:car-connected
+          {% else %}
+            mdi:network-strength-off
+          {% endif %}
+      bolt_ev_recharge_recommended:
+        friendly_name: "Bolt EV recharge recommended"
+        value_template: >-
+          {{
+            states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int <= 75
+              and is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'off')
+          }}
+        icon_template: >-
+          {% if is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'on') %}
+            mdi:flash
+          {% elif states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int <= 75 %}
+            mdi:flash-alert
+          {% else %}
+            mdi:flash-off
+          {% endif %}
+
+automation:
+  - alias: notify_recommended_bolt_ev_recharge
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.bolt_ev_recharge_recommended"
+        to: "on"
+      - platform: state
+        entity_id: "person.chris"
+        to: "home"
+        for: "00:30:00"
+      - platform: time
+        at: "21:00:00"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.notify_car_problems"
+        state: "on"
+      - condition: state
+        entity_id: "binary_sensor.bolt_ev_recharge_recommended"
+        state: "on"
+      - condition: state
+        entity_id: "person.chris"
+        state: "home"
+        for: "00:30:00"
+      - condition: time
+        after: "21:00:00"
+    action:
+      - service: python_script.notify
+        data_template:
+          audio: True
+          push_target: "household"
+          tag: "charge_car"
+          title: "Plug-in car"
+          message: >- 
+            The Bolt's charge is at
+            {{ states('sensor.mychevy_2019_chevrolet_bolt_ev_battery_level') }} %
+            for an estimated range of
+            {{ states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') }} km.
+            Charging now would be a good idea.

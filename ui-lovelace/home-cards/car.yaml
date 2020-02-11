@@ -1,0 +1,109 @@
+type: picture-elements
+image: /local/car/bolt_ev_tile.png
+style: |
+  .element[class~=element] {
+    position: relative;
+    transform: none;
+  }
+  div.element group-element:first-child {
+    position: absolute;
+  }
+elements:
+  - type: custom:group-element
+    visible: true
+    no_toggle_hide: true
+    elements_pos:
+      position: absolute
+      top: 0
+      right: 0
+      left: 0
+      bottom: 0
+      display: flex
+      flex-direction: column-reverse
+      "--paper-item-icon-color": "#DADADB"
+      "--secondary-text-color": "#DADADB"
+      "--primary-text-color": "#DADADB"
+      "--iron-icon-height": 40px
+      "--iron-icon-width": 40px
+    elements:
+      - type: state-icon
+        entity: binary_sensor.bolt_ev_network_link
+        style:
+          position: absolute
+          top: -5px
+          left: -5px
+          "--iron-icon-height": 20px
+          "--iron-icon-width": 20px
+
+      - type: state-icon
+        entity: binary_sensor.bolt_ev_recharge_recommended
+        style:
+          position: absolute
+          top: 20px
+          left: -5px
+          "--iron-icon-height": 20px
+          "--iron-icon-width": 20px
+
+      - type: custom:group-element
+        visible: true
+        no_toggle_hide: true
+        elements_pos:
+          height: 2.2rem
+          overflow: hidden
+          display: flex
+          flex-grow: 0
+          flex-shrink: 0
+          align-items: center
+          justify-content: space-between
+          padding-left: 5px
+          background-color: rgba(0, 0, 0, 0.45)
+          color: "#D3D3D3"
+        elements:
+          - type: custom:group-element
+            visible: true
+            no_toggle_hide: true
+            elements_pos:
+              height: 100%
+              margin-left: 5px
+              display: flex
+              flex-direction: column
+              align-items: center
+            elements:
+              - type: state-icon
+                entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
+                title:
+                style:
+                  zoom: 40%
+              - type: state-label
+                entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
+                title:
+                style:
+                  margin: 2px -8px -8px -8px
+                  line-height: 0
+                  font-size: 0.9rem
+
+          # Group conditionals together to prevent messing up flex layout
+          - type: custom:group-element
+            visible: true
+            no_toggle_hide: true
+            elements:
+              - type: conditional
+                conditions:
+                  - entity: binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in
+                    state: "on"
+                elements:
+                  - type: state-label
+                    entity: sensor.mychevy_2019_chevrolet_bolt_ev_charged_by
+                    title: null
+              - type: conditional
+                conditions:
+                  - entity: binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in
+                    state: "off"
+                elements:
+                  - type: state-label
+                    entity: sensor.mychevy_2019_chevrolet_bolt_ev_electric_range
+                    title: null
+
+          - type: state-label
+            entity: sensor.mychevy_2019_chevrolet_bolt_ev_mileage
+            title: null
