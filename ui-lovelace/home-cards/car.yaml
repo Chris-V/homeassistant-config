@@ -39,7 +39,7 @@ elements:
         entity: binary_sensor.bolt_ev_recharge_recommended
         style:
           position: absolute
-          top: 20px
+          top: 25px
           left: -5px
           "--iron-icon-height": 20px
           "--iron-icon-width": 20px
@@ -68,6 +68,7 @@ elements:
               display: flex
               flex-direction: column
               align-items: center
+              justify-content: flex-start
             elements:
               - type: state-icon
                 entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
@@ -91,6 +92,8 @@ elements:
                 conditions:
                   - entity: binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in
                     state: "on"
+                  - entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
+                    state_not: 100
                 elements:
                   - type: state-label
                     entity: sensor.mychevy_2019_chevrolet_bolt_ev_charged_by

@@ -101,13 +101,13 @@
       variables:
         - image: /local/secrets/chris.webp
         - person_entity: person.chris
-        - mobile_app_entity: device_tracker.chris_mobile_app_pixel_1
+        - battery_entity: sensor.chris_pixel_1_battery_level
     - type: custom:decluttering-card
       template: person
       variables:
         - image: /local/secrets/karine.webp
         - person_entity: person.karine
-        - mobile_app_entity: device_tracker.karine_mobile_app_pixel_1
+        - battery_entity: sensor.karine_pixel_1_battery_level
 
 - !include home-cards/guests.yaml
 
