@@ -57,7 +57,7 @@ CONFIG_SCHEMA = vol.Schema({
 
 
 async def async_setup(hass, config):
-    """Initialize the shopping list."""
+    """Initialize the storage."""
     component = hass.data.get(DOMAIN)
 
     if component is None:
@@ -203,12 +203,14 @@ class Storage(Entity):
 
     async def add_item(self, data):
         """Add an item to the collection and generate a unique id."""
-        if not isinstance(data, str) or len(data.strip()) == 0:
+        if not isinstance(data, str) \
+            or len(data.strip()) == 0 \
+            or any(item['data'] == data for item in self._items):
             return None
 
         item = {
             'id': uuid.uuid4().hex,
-            'data': data
+            'data': data.strip()
         }
 
         self._items.append(item)
@@ -236,14 +238,14 @@ class Storage(Entity):
                     None)
 
         if item:
-            item['data'] = data
+            item['data'] = data.strip()
             self._refresh_state()
             await self._maybe_persist()
 
         return item
 
     def _refresh_state(self):
-        attributes = {'size': len(self._items)}
+        attributes = {}
 
         for idx, item in enumerate(self._items):
             key_prefix = 'item_{0}_'.format(idx)
@@ -251,7 +253,7 @@ class Storage(Entity):
             attributes[key_prefix + 'data'] = item['data']
 
         self._attributes = attributes
-        self._state = self._items[0]['data'] if attributes['size'] != 0 else ''
+        self._state = len(self._items)
 
     async def _maybe_persist(self):
         if self._persistence_file:

@@ -73,6 +73,6 @@ if persistent:
     hass.services.call('persistent_notification', 'create', payload)
 
 if audio:
-    payload = {'object_id': 'audio_notifications', 'data': message}
+    payload = {'object_id': 'broadcast_notifications', 'data': message}
 
     hass.services.call('custom_storage', 'add', payload)
