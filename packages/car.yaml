@@ -32,11 +32,14 @@ binary_sensor:
         friendly_name: "Bolt EV recharge recommended"
         value_template: >-
           {{
-            states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int <= 75
+            is_state('binary_sensor.bolt_ev_network_link', 'on')
+              and states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int(100) <= 75
               and is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'off')
           }}
         icon_template: >-
-          {% if is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'on') %}
+          {% if is_state('binary_sensor.bolt_ev_network_link', 'off') %}
+            mdi:help-circle
+          {% elif is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'on') %}
             mdi:flash
           {% elif states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int <= 75 %}
             mdi:flash-alert
