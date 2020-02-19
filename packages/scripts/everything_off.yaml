@@ -5,14 +5,16 @@ cloud:
         - "script.everything_off"
     entity_config:
       script.everything_off:
-        name: "Everything off"
+        name: "All off"
         aliases:
-          - "Everything"
-          - "All lights"
+          - "Everything off"
+          - "Empty house"
 
 script:
   everything_off:
-    alias: "Turn off all lights and switches"
+    alias: "All off"
+    description: "Turn off all devices in the house"
+    icon: "mdi:close-circle-outline"
     sequence:
       - service: homeassistant.turn_off
         data:

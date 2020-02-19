@@ -27,7 +27,8 @@ input_select:
 
 script:
   flash_karine_remote_entity:
-    alias: "Flash entity selected by Karine's remote"
+    alias: "Flash Karine' remote selection"
+    description: "Flash entity selected by Karine' remote"
     sequence:
       - service: light.toggle
         data_template:

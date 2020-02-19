@@ -5,14 +5,14 @@ cloud:
         - "script.ambiance"
     entity_config:
       script.ambiance:
-        name: "Ambiance mood"
+        name: "Evening ambiance"
         aliases:
-          - "Night ambiance"
           - "Ambiance"
 
 script:
   ambiance:
-    alias: "Ambiance mood"
+    alias: "Evening ambiance"
+    icon: "mdi:lamp"
     sequence:
       - service: homeassistant.turn_on
         data:

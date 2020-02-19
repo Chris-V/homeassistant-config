@@ -32,7 +32,6 @@
         - type: entity-button
           entity: script.ambiance
           name: Ambiance
-          icon: mdi:lamp
           tap_action:
             action: call-service
             service: script.turn_on
@@ -42,8 +41,6 @@
             action: none
         - type: entity-button
           entity: script.bedtime
-          name: Bedtime
-          icon: mdi:weather-night
           tap_action:
             action: call-service
             service: script.turn_on
@@ -53,8 +50,6 @@
             action: none
         - type: entity-button
           entity: script.everything_off
-          name: All off
-          icon: mdi:close-circle-outline
           tap_action:
             action: call-service
             service: script.turn_on

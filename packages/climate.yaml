@@ -78,6 +78,7 @@ sensor:
 script:
   active_climate_preset:
     alias: "Active climate preset"
+    icon: "mdi:thermometer-lines"
     sequence:
       - service: scene.apply
         data_template:
@@ -94,6 +95,7 @@ script:
 
   away_climate_preset:
     alias: "Away climate preset"
+    icon: "mdi:thermometer-lines"
     sequence:
       - service: scene.apply
         data_template:
@@ -110,6 +112,7 @@ script:
 
   bedtime_climate_preset:
     alias: "Bedtime climate preset"
+    icon: "mdi:thermometer-lines"
     sequence:
       - service: scene.apply
         data_template:
@@ -126,6 +129,7 @@ script:
 
   sleep_climate_preset:
     alias: "Sleep climate preset"
+    icon: "mdi:thermometer-lines"
     sequence:
       - service: scene.apply
         data_template:
@@ -142,11 +146,13 @@ script:
 
   scheduled_climate_preset:
     alias: "Scheduled climate preset"
+    icon: "mdi:thermometer-lines"
     sequence:
       - service_template: "script.{{ states('sensor.climate_preset') | lower }}_climate_preset"
 
   restore_climate_auto_mode:
     alias: "Restore auto mode on all thermostats"
+    icon: "mdi:thermometer-alert"
     sequence:
       - service: input_select.select_option
         data_template:

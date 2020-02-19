@@ -12,6 +12,7 @@ cloud:
 script:
   bedtime:
     alias: "Bedtime"
+    icon: "mdi:weather-night"
     sequence:
       - service: tts.google_cloud_say
         data_template:
