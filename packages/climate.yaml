@@ -23,7 +23,8 @@ sensor:
           - sensor.time
           - group.household
         value_template: |
-          {% if is_state('group.household', 'home') -%}
+          {% if is_state('group.household', 'home')
+              and 30 < as_timestamp(states.sensor.time.last_changed) - as_timestamp(states.group.household.last_changed -%}
             {% set schedule = [
               [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
               [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
@@ -260,13 +261,20 @@ automation:
           - climate.studio_thermostat
     condition:
       - condition: template
+        value_template: >
+          {{
+            trigger.from_state is undefined
+              or trigger.from_state.attributes.temperature != trigger.to_state.attributes.temperature
+          }}
+    action:
+      - delay: "00:00:05"
+      - condition: template
         value_template: |
           {% set prefix = trigger.to_state.object_id %}
           {% set mode = states('input_select.' ~ prefix ~ '_auto_mode') | default('eco') | lower %}
           {% set planned_setpoint = states('input_number.' ~ prefix ~ '_' ~ mode ~ '_setpoint') | float %}
           {{ trigger.to_state.attributes.preset_mode != 'none'
               or planned_setpoint != trigger.to_state.attributes.temperature | float }}
-    action:
       - service: "input_select.select_option"
         data_template:
           entity_id: "input_select.{{ trigger.to_state.object_id }}_mode"
