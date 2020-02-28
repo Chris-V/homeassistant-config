@@ -22,9 +22,9 @@ sensor:
         entity_id:
           - sensor.time
           - group.household
-        value_template: |
+        value_template: >-
           {% if is_state('group.household', 'home')
-              and 30 < as_timestamp(states.sensor.time.last_changed) - as_timestamp(states.group.household.last_changed -%}
+              and 30 < as_timestamp(states.sensor.time.last_changed) - as_timestamp(states.group.household.last_changed) %}
             {% set schedule = [
               [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
               [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
