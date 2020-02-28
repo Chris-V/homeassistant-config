@@ -21,7 +21,7 @@
 
 - type: custom:auto-entities
   sort:
-    method: last_changed
+    method: state
   filter:
     include:
       - group: group.all_doors
@@ -45,7 +45,7 @@
 
 - type: custom:auto-entities
   sort:
-    method: last_changed
+    method: state
   filter:
     include:
       - group: group.all_windows
@@ -59,7 +59,7 @@
 
 - type: custom:auto-entities
   sort:
-    method: last_changed
+    method: state
   filter:
     include:
       - group: group.all_leaks
@@ -73,7 +73,7 @@
 
 - type: custom:auto-entities
   sort:
-    method: last_changed
+    method: state
   filter:
     include:
       - group: group.all_motions
