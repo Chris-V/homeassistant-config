@@ -1,0 +1,94 @@
+homeassistant:
+  customize:
+    sensor.minecraft_latest_version:
+      friendly_name: "Latest Minecraft version"
+      icon: "mdi:update"
+
+sensor:
+  - platform: rest
+    name: "minecraft_latest_version"
+    resource: "https://launchermeta.mojang.com/mc/game/version_manifest.json"
+    value_template: "{{ value_json.latest.release }}"
+    scan_interval: 900
+
+input_boolean:
+  notify_minecraft_status:
+    name: "Notify Minecraft status"
+    icon: mdi:minecraft
+  notify_minecraft_player_changes:
+    name: "Notify Minecraft player changes"
+    icon: mdi:minecraft
+
+automation:
+  - alias: notify_minecraft_status
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.minecraft_server_status"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.notify_minecraft_status"
+        state: "on"
+      - condition: template
+        value_template: >-
+          {{
+            trigger.from_state is defined
+              and trigger.from_state.state != trigger.to_state.state
+          }}
+    action:
+      - service: python_script.notify
+        data_template:
+          push_target: "admin"
+          tag: "minecraft-status"
+          title: "Minecraft status"
+          message: "Minecraft server has gone {( trigger.to_state.state }}line."
+
+  - alias: notify_minecraft_update
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "sensor.minecraft_latest_version"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.notify_minecraft_status"
+        state: "on"
+      - condition: template
+        value_template: >-
+          {{
+            trigger.to_state.state not in ('unknown', 'unavailable')
+              and trigger.to_state.state != states('sensor.minecraft_server_version')
+          }}
+    action:
+      - service: python_script.notify
+        data_template:
+          persistent: True
+          push_target: "admin"
+          tag: "minecraft-update"
+          title: "Minecraft {{ states('sensor.minecraft_latest_version') }} available"
+          message: >-
+            Minecraft server can now be updated
+            from {{ states('sensor.minecraft_server_version') }}
+            to {{ states('sensor.minecraft_latest_version') }}.
+
+  - alias: notify_minecraft_player_changes
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: "sensor.minecraft_server_players_online"
+    condition:
+      - condition: state
+        entity_id: "input_boolean.notify_minecraft_player_changes"
+        state: "on"
+    action:
+      - service: python_script.notify
+        data_template:
+          push_target: "admin"
+          tag: "minecraft-players"
+          title: "{{ trigger.to_state.state }} minecraft player{% if trigger.to_state.state | int != 1 %}s{% endif %} online"
+          message: >-
+            {% set count = trigger.to_state.state | int %}
+            {% if count != 0 %}
+            {{ trigger.to_state.attributes.players_list }}
+            {% if count == 1 %}is{% else %}are{% endif %}
+            online.
+            {% endif %}

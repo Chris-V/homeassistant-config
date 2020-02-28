@@ -12,6 +12,10 @@
       name: Household changes
     - entity: input_boolean.notify_server_outages
       name: Server outages
+    - entity: input_boolean.notify_minecraft_status
+      name: Minecraft status
+    - entity: input_boolean.notify_minecraft_player_changes
+      name: Minecraft player changes
 
 - type: entities
   show_header_toggle: false
@@ -39,6 +43,24 @@
       name: HACS
     - sensor.current_home_assistant_version
     - sensor.latest_home_assistant_version
+
+- type: entities
+  title: Minecraft
+  show_header_toggle: false
+  entities:
+    - entity: binary_sensor.minecraft_server_status
+      name: Status
+      state_color: true
+    - entity: sensor.minecraft_server_version
+      name: Version
+    - entity: sensor.minecraft_latest_version
+      name: Latest version
+    - type: custom:template-entity-row
+      entity: sensor.minecraft_server_players_online
+      name: Players
+      secondary_info: "{{ state_attr('sensor.minecraft_server_players_online', 'players_list') | replace('None', '') }}"
+    - entity: sensor.minecraft_server_latency_time
+      name: Latency
 
 - type: entities
   title: Automate

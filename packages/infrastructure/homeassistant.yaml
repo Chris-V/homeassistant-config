@@ -28,11 +28,11 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: "{{ trigger.to_state.state != 'unknown' }}"
-        - condition: template
-          value_template: "{{ trigger.to_state.state != 'unavailable' }}"
-        - condition: template
-          value_template: "{{ trigger.to_state.state != states('sensor.current_home_assistant_version') }}"
+          value_template: >-
+            {{
+              trigger.to_state.state not in ('unknown', 'unavailable')
+                and trigger.to_state.state != states('sensor.current_home_assistant_version')
+            }}
     action:
       - service: python_script.notify
         data_template:

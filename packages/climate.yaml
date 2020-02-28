@@ -267,7 +267,7 @@ automation:
           - climate.studio_thermostat
     condition:
       - condition: template
-        value_template: >
+        value_template: >-
           {{
             trigger.from_state is undefined
               or trigger.from_state.attributes.temperature != trigger.to_state.attributes.temperature

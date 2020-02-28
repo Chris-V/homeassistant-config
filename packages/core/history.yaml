@@ -39,6 +39,7 @@ recorder:
       - binary_sensor.lounge_window
       - binary_sensor.main_bathroom_door
       - binary_sensor.main_bathroom_motion
+      - binary_sensor.minecraft_server_status
       - binary_sensor.slinky_requires_attention
       - binary_sensor.studio_window
       - binary_sensor.ups_online_status
@@ -101,6 +102,10 @@ recorder:
       - sensor.media_cpu_temp
       - sensor.media_ram_used_percent
       - sensor.memory_use_percent
+      - sensor.minecraft_latest_version
+      - sensor.minecraft_server_latency_time
+      - sensor.minecraft_server_players_online
+      - sensor.minecraft_server_version
       - sensor.office_temperature
       - sensor.office_thermostat_temperature
       - sensor.outdoor_humidity
