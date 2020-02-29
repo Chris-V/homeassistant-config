@@ -21,4 +21,6 @@ logger:
   default: "warn"
   logs:
     homeassistant.components.glances: "fatal"
+    homeassistant.components.mychevy: "fatal"
+    homeassistant.components.mychevy.sensor: "fatal"
     glances: "fatal"
