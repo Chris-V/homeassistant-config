@@ -1,11 +1,5 @@
 homeassistant:
   customize:
-    binary_sensor.main_bathroom_door:
-      friendly_name: "Main bathroom door"
-      device_class: "door"
-    sensor.main_bathroom_door_sensor_battery:
-      battery_type: "Sensative Strip"
-      battery_warning_level: 20
     sensor.main_bathroom_multisensor_battery:
       battery_type: "CR123A"
       battery_warning_level: 40
@@ -42,6 +36,11 @@ cloud:
 binary_sensor:
   - platform: template
     sensors:
+      main_bathroom_door:
+        friendly_name: "Main bathroom door"
+        device_class: "door"
+        value_template: on
+        entity_id: []
       main_bathroom_motion:
         friendly_name: "Main bathroom motion"
         device_class: "motion"

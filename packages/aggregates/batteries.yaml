@@ -14,7 +14,6 @@ group:
       - sensor.living_room_door_sensor_battery
       - sensor.laundry_motion_sensor_battery
       - sensor.lounge_window_sensor_battery
-      - sensor.main_bathroom_door_sensor_battery
       - sensor.main_bathroom_multisensor_battery
       - sensor.maitre_doyle_battery
       - sensor.rubber_ducky_battery

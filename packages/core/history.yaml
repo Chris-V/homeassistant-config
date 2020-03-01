@@ -85,7 +85,6 @@ recorder:
       - sensor.lounge_temperature
       - sensor.lounge_thermostat_temperature
       - sensor.low_batteries
-      - sensor.main_bathroom_door_sensor_battery
       - sensor.main_bathroom_humidity
       - sensor.main_bathroom_multisensor_battery
       - sensor.main_bathroom_temperature
