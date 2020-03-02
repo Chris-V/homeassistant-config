@@ -84,11 +84,15 @@ automation:
         data_template:
           push_target: "admin"
           tag: "minecraft-players"
-          title: "{{ trigger.to_state.state }} minecraft player{% if trigger.to_state.state | int != 1 %}s{% endif %} online"
+          title: >-
+            {% set count = trigger.to_state.state | int %}
+            {{ 'No' if count == 0 else count }} minecraft player{{ 's' if count != 1 }} online
           message: >-
             {% set count = trigger.to_state.state | int %}
             {% if count != 0 %}
-            {{ trigger.to_state.attributes.players_list }}
-            {% if count == 1 %}is{% else %}are{% endif %}
-            online.
+              {% for player in trigger.to_state.attributes.players_list | default([]) -%}
+                {{ player }}{{ ', ' if not loop.last and loop.revindex != 2 }}{{ ' and ' if loop.revindex == 2 }}
+              {%- endfor %}
+              {{ 'is' if count == 1 else 'are' }}
+              online.
             {% endif %}
