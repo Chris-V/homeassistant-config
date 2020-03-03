@@ -172,8 +172,8 @@ recorder:
       - sensor.mychevy_status
 
       # Person
-      - sensor.chris_pixel_1_battery_level
-      - sensor.chris_pixel_1_wifi_connection
+      - sensor.chris_moto_g7_battery_level
+      - sensor.chris_moto_g7_wifi_connection
       - sensor.karine_pixel_1_battery_level
       - sensor.karine_pixel_1_wifi_connection
 

@@ -96,7 +96,7 @@
       variables:
         - image: /local/secrets/chris.webp
         - person_entity: person.chris
-        - battery_entity: sensor.chris_pixel_1_battery_level
+        - battery_entity: sensor.chris_moto_g7_battery_level
     - type: custom:decluttering-card
       template: person
       variables:
