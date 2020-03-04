@@ -1,7 +1,7 @@
 input_boolean:
   automatic_night_theme:
     name: "Automatic night theme"
-    initial: True
+    initial: true
     icon: 'mdi:theme-light-dark'
 
 input_select:
@@ -17,7 +17,7 @@ input_select:
 
 automation:
   - alias: set_default_theme
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "input_select.default_theme"
@@ -29,7 +29,7 @@ automation:
           name: "{{ states('input_select.default_theme') | default('default') }}"
 
   - alias: sunrise_theme
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: sun
         event: "sunrise"
@@ -49,7 +49,7 @@ automation:
           entity_id: "input_select.default_theme"
           option: *day_theme
   - alias: sunset_theme
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: sun
         event: "sunset"

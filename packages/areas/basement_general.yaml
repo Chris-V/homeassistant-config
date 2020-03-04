@@ -71,7 +71,7 @@ sensor:
 
 automation:
   - alias: "triple_up_downstairs_lights"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -96,7 +96,7 @@ automation:
       data:
         entity_id: "light.basement_lights"
   - alias: "triple_down_downstairs_lights"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"

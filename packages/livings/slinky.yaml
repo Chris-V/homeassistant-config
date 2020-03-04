@@ -57,7 +57,7 @@ sensor:
 
 automation:
   - alias: slinky_wake_up
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: time
         at: "9:00:00"
@@ -72,7 +72,7 @@ automation:
           - "switch.slinky_uv_light"
 
   - alias: slinky_sleep
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: time
         at: "23:00:00"
@@ -89,14 +89,14 @@ automation:
         entity_id: "switch.slinky_heater"
 
   - alias: slinky_uv_burned_out
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "switch.slinky_uv_light"
         from: "off"
         to: "on"
         for: &on_delay
-          seconds: 330 # Wattage report rate is 300 seconds / 5 minutes
+          seconds: 330  # Wattage report rate is 300 seconds / 5 minutes
       - platform: numeric_state
         entity_id: "sensor.slinky_uv_light_power"
         below: &min_power 1
@@ -111,8 +111,8 @@ automation:
     action:
       - service: python_script.notify
         data:
-          audio: True
-          persistent: True
+          audio: true
+          persistent: true
           push_target: "household"
           tag: "slinky_uv_burned_out"
           url: "/lovelace/livings"
@@ -120,7 +120,7 @@ automation:
           message: "It appears that Slinky's UV light has burned out."
 
   - alias: slinky_heat_bulb_burned_out
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "switch.slinky_heat_bulb"
@@ -141,8 +141,8 @@ automation:
     action:
       - service: python_script.notify
         data:
-          audio: True
-          persistent: True
+          audio: true
+          persistent: true
           push_target: "household"
           tag: "slinky_heat_bulb_burned_out"
           url: "/lovelace/livings"
@@ -150,7 +150,7 @@ automation:
           message: "It appears that Slinky's heat bulb has burned out."
 
   - alias: slinky_heater_burned_out
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "switch.slinky_heater"
@@ -171,8 +171,8 @@ automation:
     action:
       - service: python_script.notify
         data:
-          audio: True
-          persistent: True
+          audio: true
+          persistent: true
           push_target: "household"
           tag: "slinky_heater_burned_out"
           url: "/lovelace/livings"

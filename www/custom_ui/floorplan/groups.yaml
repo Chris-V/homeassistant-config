@@ -1,6 +1,6 @@
 - name: "Default classes"
   elements:
-    - pixel # Small dummy element to avoid it being clicked pointlessly
+    - pixel  # Small dummy element to avoid it being clicked pointlessly
   action:
     - domain: class
       service: set

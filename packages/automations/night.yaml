@@ -1,6 +1,6 @@
 automation:
   - alias: close_outdoor_lights
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "light.outdoor_lights"

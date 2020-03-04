@@ -9,8 +9,8 @@ mqtt:
   birth_message:
     topic: "home-assistant/status"
     payload: "online"
-    retain: True
+    retain: true
   will_message:
     topic: "home-assistant/status"
     payload: "offline"
-    retain: True
+    retain: true

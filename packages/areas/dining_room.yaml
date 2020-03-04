@@ -72,7 +72,7 @@ sensor:
 
 automation:
   - alias: "hallway_light_double_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -85,7 +85,7 @@ automation:
       data:
         entity_id: "light.dining_room"
   - alias: "hallway_light_double_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"

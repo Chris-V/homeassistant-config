@@ -7,8 +7,8 @@ device_tracker:
       avatar_relay_south: !secret relay_south_ip
 
     # Options shared by all trackers
-    interval_seconds: 10 # seconds between each scan
-    consider_home: 35 # seconds unseen but considered home
+    interval_seconds: 10  # seconds between each scan
+    consider_home: 35  # seconds unseen but considered home
     new_device_defaults:
       track_new_devices: false
 

@@ -161,7 +161,7 @@ script:
 
 automation:
   - alias: apply_scheduled_climate_preset
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "sensor.climate_preset"
@@ -169,7 +169,7 @@ automation:
       - service: script.scheduled_climate_preset
 
   - alias: "revert_manual_thermostat_mode"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: *thermostat_modes
@@ -182,7 +182,7 @@ automation:
           option: "Auto"
 
   - alias: "update_thermostat_setpoint"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: *thermostat_modes
@@ -252,7 +252,7 @@ automation:
             {{ states('input_number.' ~ area_prefix ~ '_thermostat_' ~ mode ~ '_setpoint') }}
 
   - alias: "select_manual_thermostat_mode"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id:

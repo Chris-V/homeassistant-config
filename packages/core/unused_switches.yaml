@@ -12,4 +12,3 @@ switch:
         friendly_name: "Unused RF 4"
         command_on: "sgkyAAYUEggGFBIIBhMGFAYUEggGFBIHBhQSBxIIEgcGFBMHBhQGFAYUBhQGFAYUEggSBwa/AAAA"
         command_off: "sgkyAAYUEggGFBIIBhQGFAYTEggGFBIHBhQSBxIIEggGFBIHBhQGFAYUBhQSCBIHBhQGFAa/AAAA"
-

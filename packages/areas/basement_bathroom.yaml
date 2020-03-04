@@ -119,7 +119,7 @@ light:
 automation:
   # Automated fan management
   - alias: "basement_bathroom_auto_fan_on"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: numeric_state
         entity_id: "sensor.basement_bathroom_humidity"
@@ -138,7 +138,7 @@ automation:
         data:
           entity_id: "fan.basement_bathroom"
   - alias: "basement_bathroom_auto_fan_off"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: numeric_state
         entity_id: "sensor.basement_bathroom_humidity"
@@ -158,7 +158,7 @@ automation:
 
   # Automated light management
   - alias: "basement_bathroom_auto_lights_on"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.basement_bathroom_motion"
@@ -181,7 +181,7 @@ automation:
             {%- else -%} 50
             {%- endif -%}
   - alias: "basement_bathroom_auto_lights_off"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.basement_bathroom_motion"
@@ -199,7 +199,7 @@ automation:
 
   # Double tap fan switch will turn fan on/off
   - alias: "basement_bathroom_fan_double_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -212,7 +212,7 @@ automation:
       data:
         entity_id: "fan.basement_bathroom"
   - alias: "basement_bathroom_fan_double_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -227,7 +227,7 @@ automation:
 
   # Double tap vanity switch will turn spots on/off (spots switch on opposite side of the room)
   - alias: "basement_bathroom_vanity_double_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -240,7 +240,7 @@ automation:
       data:
         entity_id: "light.basement_bathroom"
   - alias: "basement_bathroom_vanity_double_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -255,7 +255,7 @@ automation:
 
   # Double tap ceiling switch will turn vanity on/off (vanity switch on opposite side of the room)
   - alias: "basement_bathroom_ceiling_double_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -268,7 +268,7 @@ automation:
       data:
         entity_id: "light.basement_bathroom_vanity"
   - alias: "basement_bathroom_ceiling_double_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -283,7 +283,7 @@ automation:
 
   # Triple tap any light switch will turn bathroom lights on/off
   - alias: "basement_bathroom_lights_triple_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -302,7 +302,7 @@ automation:
       data:
         entity_id: "light.basement_bathroom_lights"
   - alias: "basement_bathroom_lights_triple_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"

@@ -86,7 +86,7 @@ sensor:
 
 automation:
   - alias: notify_guest_arrives
-    initial_state: True
+    initial_state: true
     trigger:
       platform: state
       entity_id: *guest_entities
@@ -101,13 +101,13 @@ automation:
     action:
       - service: python_script.notify
         data_template:
-          persistent: True
+          persistent: true
           push_target: "household"
           title: "Guests are home"
           message: "{{ trigger.to_state.name }} just arrived home."
 
   - alias: notify_household_person_arrives
-    initial_state: True
+    initial_state: true
     trigger:
       platform: state
       entity_id: *household_entities
@@ -125,7 +125,7 @@ automation:
           message: "Household is {{ states('group.household') }}."
 
   - alias: notify_household_person_leaves
-    initial_state: True
+    initial_state: true
     trigger:
       platform: state
       entity_id: *household_entities

@@ -38,7 +38,7 @@ elements:
       "--ha-card-background": rgba(0, 0, 0, 0)
       "--ha-card-box-shadow": none
     elements:
-      - type: custom:group-element # Header
+      - type: custom:group-element  # Header
         visible: true
         no_toggle_hide: true
         elements_pos:
@@ -56,7 +56,7 @@ elements:
           align-items: center
           background-color: rgba(160, 0, 0, 0.9)
         elements:
-          - type: conditional # Room icon
+          - type: conditional  # Room icon
             conditions:
               - entity: binary_sensor.living_room_door
                 state: "off"
@@ -69,7 +69,7 @@ elements:
                 style: &room_title_icon_style
                   cursor: default
 
-          - type: conditional # Alert icon
+          - type: conditional  # Alert icon
             conditions:
               - entity: binary_sensor.living_room_door
                 state: "on"
@@ -83,10 +83,10 @@ elements:
                   <<: *room_title_icon_style
                   color: "#FF0"
 
-          - type: custom:text-element # Title
+          - type: custom:text-element  # Title
             text: Living room
 
-          - type: custom:group-element # Sensors
+          - type: custom:group-element  # Sensors
             visible: true
             no_toggle_hide: true
             elements_pos:
@@ -97,7 +97,7 @@ elements:
               flex-grow: 1
               font-size: 0.55em
             elements:
-              - type: state-icon # Door
+              - type: state-icon  # Door
                 entity: binary_sensor.living_room_door
                 title: Door
                 tap_action:
@@ -106,7 +106,7 @@ elements:
                   transform: &room_sensor_icon_transform scale(0.7)
                   transform-origin: center right
 
-              - type: custom:group-element # Temperature
+              - type: custom:group-element  # Temperature
                 visible: true
                 no_toggle_hide: true
                 elements_pos:
@@ -148,7 +148,7 @@ elements:
           "--iron-icon-width": 24px
           "--iron-icon-height": 24px
         elements:
-          - type: custom:gap-card # Initial
+          - type: custom:gap-card  # Initial
             height: 0
             style: &room_card_content_slide_style
               display: block
@@ -156,13 +156,13 @@ elements:
               height: 100%
               flex-shrink: 0
               scroll-snap-align: start
-          - type: custom:hui-horizontal-stack-card # Thermostat
+          - type: custom:hui-horizontal-stack-card  # Thermostat
             style:
               <<: *room_card_content_slide_style
               background-color: rgba(0, 0, 0, 0.55)
             cards:
               - type: entities
-                show_header_toggle: False
+                show_header_toggle: false
                 style: |
                   ha-card .card-content { padding: 0; }
                 entities:
@@ -175,14 +175,14 @@ elements:
 
               - type: custom:simple-thermostat
                 entity: "climate.living_room_thermostat"
-                name: False
+                name: false
                 hide:
                   temperature: true
                   state: true
                 step_size: 0.5
                 control: []
 
-      - type: custom:group-element # Footer
+      - type: custom:group-element  # Footer
         visible: true
         no_toggle_hide: true
         elements_pos:

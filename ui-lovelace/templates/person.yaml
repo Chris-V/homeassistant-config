@@ -46,7 +46,7 @@ card:
             background-color: rgba(0, 0, 0, 0.45)
             color: "#D3D3D3"
           elements:
-            - type: custom:group-element # Battery
+            - type: custom:group-element  # Battery
               visible: true
               no_toggle_hide: true
               elements_pos:

@@ -49,7 +49,7 @@ binary_sensor:
 
 automation:
   - alias: notify_recommended_bolt_ev_recharge
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.bolt_ev_recharge_recommended"
@@ -76,11 +76,11 @@ automation:
     action:
       - service: python_script.notify
         data_template:
-          audio: True
+          audio: true
           push_target: "household"
           tag: "charge_car"
           title: "Plug-in car"
-          message: >- 
+          message: >-
             The Bolt's charge is at
             {{ states('sensor.mychevy_2019_chevrolet_bolt_ev_battery_level') }} %
             for an estimated range of

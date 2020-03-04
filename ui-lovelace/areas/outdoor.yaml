@@ -38,7 +38,7 @@ elements:
       "--ha-card-background": rgba(0, 0, 0, 0)
       "--ha-card-box-shadow": none
     elements:
-      - type: custom:group-element # Header
+      - type: custom:group-element  # Header
         visible: true
         no_toggle_hide: true
         elements_pos:
@@ -56,7 +56,7 @@ elements:
           align-items: center
           background-color: rgba(73, 73, 73, 0.9)
         elements:
-          - type: state-icon # Icon
+          - type: state-icon  # Icon
             entity: sensor.weather_summary
             tap_action:
               action: more-info
@@ -65,10 +65,10 @@ elements:
               transform-origin: center 60%
               margin-right: 10px
 
-          - type: custom:text-element # Title
+          - type: custom:text-element  # Title
             text: Outdoor
 
-          - type: custom:group-element # Sensors
+          - type: custom:group-element  # Sensors
             visible: true
             no_toggle_hide: true
             elements_pos:
@@ -79,7 +79,7 @@ elements:
               flex-grow: 1
               font-size: 0.55em
             elements:
-              - type: custom:group-element # Humidity
+              - type: custom:group-element  # Humidity
                 visible: true
                 no_toggle_hide: true
                 elements_pos: &room_banner_sensor_group_style
@@ -106,7 +106,7 @@ elements:
                     style: &room_banner_sensor_label_style
                       margin: -8px
 
-              - type: custom:group-element # Temperature
+              - type: custom:group-element  # Temperature
                 visible: true
                 no_toggle_hide: true
                 elements_pos: *room_banner_sensor_group_style
@@ -124,7 +124,7 @@ elements:
                       action: more-info
                     style: *room_banner_sensor_label_style
 
-      - type: custom:gap-card # Content
+      - type: custom:gap-card  # Content
         height: 0
         style:
           order: 2
@@ -132,7 +132,7 @@ elements:
           flex-shrink: 1
           overflow: hidden
 
-      - type: custom:group-element # Footer
+      - type: custom:group-element  # Footer
         visible: true
         no_toggle_hide: true
         elements_pos:

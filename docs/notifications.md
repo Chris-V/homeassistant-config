@@ -1,4 +1,4 @@
-## Targets 
+## Targets
 
 * Push notifications. Groups:
   * Admin (A)
@@ -7,7 +7,7 @@
 * Audio. Everybody
   * Only if household is home
 
-The `alert` component is an option, although is only support notify groups: https://www.home-assistant.io/components/alert/ 
+The `alert` component is an option, although is only support notify groups: https://www.home-assistant.io/components/alert/
 
 ## Notifications
 
@@ -33,4 +33,3 @@ The `alert` component is an option, although is only support notify groups: http
 | -  | Low battery | battery\_low\__battery_name_ | H | Y | N |
 
 ---
-

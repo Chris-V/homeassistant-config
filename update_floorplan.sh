@@ -70,4 +70,3 @@ get_file jquery-3.2.1.min.js https://github.com/Chris-V/ha-floorplan/blob/multip
 get_file moment.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/moment.min.js www/custom_ui/floorplan/lib/
 get_file yaml.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/yaml.min.js www/custom_ui/floorplan/lib/
 get_file svg-pan-zoom.min.js https://github.com/Chris-V/ha-floorplan/blob/multiple_Actions/www/custom_ui/floorplan/lib/svg-pan-zoom.min.js www/custom_ui/floorplan/lib/
-

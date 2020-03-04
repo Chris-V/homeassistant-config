@@ -81,7 +81,7 @@ sensor:
 
 automation:
   - alias: "double_up_lounge"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -94,7 +94,7 @@ automation:
       data:
         entity_id: "light.lounge_ambiance"
   - alias: "double_down_lounge"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"

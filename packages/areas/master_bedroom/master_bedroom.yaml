@@ -95,7 +95,7 @@ sensor:
 
 automation:
   - alias: "master_bedroom_double_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -108,7 +108,7 @@ automation:
       data:
         entity_id: "light.master_bedroom_bedsides"
   - alias: "master_bedroom_double_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -122,7 +122,7 @@ automation:
         entity_id: "light.master_bedroom_bedsides"
 
   - alias: "master_bedroom_quad_tap"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -140,7 +140,7 @@ automation:
       service: script.bedtime
 
   - alias: "master_bedroom_quint_tap"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"

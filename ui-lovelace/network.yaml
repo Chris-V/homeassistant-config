@@ -85,7 +85,7 @@
             - user: 221fad543e1a4c05af8aaac8c68e985e
       condition:
         entity: switch.network_media
-        value: "on" 
+        value: "on"
       card:
         entity: switch.network_media
         name: Status
@@ -106,7 +106,7 @@
       restrictions: *server_toggle_restrictions
       condition:
         entity: switch.network_relay_south
-        value: "on" 
+        value: "on"
       card:
         entity: switch.network_relay_south
         name: Status
@@ -127,7 +127,7 @@
       restrictions: *server_toggle_restrictions
       condition:
         entity: switch.network_relay_north
-        value: "on" 
+        value: "on"
       card:
         entity: switch.network_relay_north
         name: Status

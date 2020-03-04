@@ -1,20 +1,20 @@
 # Some workaround to ensure the HS-WD100+ devices status is correctly reported
 
 zwave:
-  autoheal: False
+  autoheal: false
   device_config:
     light.basement_bathroom_vanity:
-      refresh_value: True
+      refresh_value: true
     light.basement_hallway:
-      refresh_value: True
+      refresh_value: true
     light.dining_room:
-      refresh_value: True
+      refresh_value: true
     light.lounge:
-      refresh_value: True
+      refresh_value: true
     light.main_bathroom_spots:
-      refresh_value: True
+      refresh_value: true
     light.office:
-      refresh_value: True
+      refresh_value: true
 
 automation:
   - alias: Notify Z-Wave network ready

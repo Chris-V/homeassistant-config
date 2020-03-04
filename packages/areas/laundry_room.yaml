@@ -49,7 +49,7 @@ light:
 automation:
   # Automated light management
   - alias: "laundry_room_auto_lights_on"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.laundry_room_motion"
@@ -59,7 +59,7 @@ automation:
         data:
           entity_id: "light.laundry_room"
   - alias: "laundry_room_auto_lights_off"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.laundry_room_motion"
@@ -73,7 +73,7 @@ automation:
 
   # Multi taps will turn light on/off
   - alias: "laundry_room_multi_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -92,7 +92,7 @@ automation:
       data:
         entity_id: "light.laundry_room"
   - alias: "laundry_room_multi_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"

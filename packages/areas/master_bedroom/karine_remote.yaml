@@ -70,7 +70,7 @@ automation:
 
   - alias: karine_remote_tap_power
     description: Toggle selected light
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -88,7 +88,7 @@ automation:
           entity_id: "{{ states('input_select.karine_remote_entity') }}"
   - alias: karine_remote_hold_power
     description: Toggle bedroom light
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -107,7 +107,7 @@ automation:
 
   - alias: karine_remote_tap_dim_up
     description: Increase dim level
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -126,7 +126,7 @@ automation:
           brightness: "{{ (state_attr('light.bedside_karine', 'brightness') | int + 32)| max(12) | min(255) }}"
   - alias: karine_remote_tap_dim_down
     description: Increase dim level
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -146,7 +146,7 @@ automation:
 
   - alias: karine_remote_hold_dim_up
     description: Select next color
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -164,7 +164,7 @@ automation:
           entity_id: input_select.karine_remote_color
   - alias: karine_remote_hold_dim_down
     description: Select previous color
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -183,7 +183,7 @@ automation:
 
   - alias: karine_remote_tap_left
     description: Previous bedroom light
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -202,7 +202,7 @@ automation:
       - service: script.flash_karine_remote_entity
   - alias: karine_remote_tap_right
     description: Next bedroom light
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -222,7 +222,7 @@ automation:
 
   - alias: karine_remote_hold_left
     description: Activate bedtime
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event
@@ -238,7 +238,7 @@ automation:
       - service: script.bedtime
   - alias: karine_remote_hold_right
     description: Turn everything off
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: zha_event

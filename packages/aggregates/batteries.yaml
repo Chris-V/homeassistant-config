@@ -58,7 +58,7 @@ sensor:
 
 automation:
   - alias: "Notify low batteries"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: numeric_state
         value_template: >-
@@ -72,7 +72,7 @@ automation:
     action:
       - service: python_script.notify
         data_template:
-          persistent: True
+          persistent: true
           push_target: "household"
           tag: "battery_low_{{ trigger.to_state.object_id }}"
           url: "https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.to_state.entity_id, 'battery_type') | d('', True)  | replace(' ', '+') }}"

@@ -39,7 +39,7 @@ binary_sensor:
       main_bathroom_door:
         friendly_name: "Main bathroom door"
         device_class: "door"
-        value_template: on
+        value_template: true
         entity_id: []
       main_bathroom_motion:
         friendly_name: "Main bathroom motion"
@@ -94,7 +94,7 @@ light:
 automation:
   # Automated fan management
   - alias: "main_bathroom_auto_fan_on"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: numeric_state
         entity_id: "sensor.main_bathroom_humidity"
@@ -113,7 +113,7 @@ automation:
         data:
           entity_id: "fan.main_bathroom"
   - alias: "main_bathroom_auto_fan_off"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: numeric_state
         entity_id: "sensor.main_bathroom_humidity"
@@ -133,7 +133,7 @@ automation:
 
   # Automated light management
   - alias: "main_bathroom_auto_lights_on"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.main_bathroom_motion"
@@ -156,7 +156,7 @@ automation:
             {%- else -%} 50
             {%- endif -%}
   - alias: "main_bathroom_auto_lights_off"
-    initial_state: False
+    initial_state: false
     trigger:
       - platform: state
         entity_id: "binary_sensor.main_bathroom_motion"
@@ -174,7 +174,7 @@ automation:
 
   # Double tap fan switch will turn fan on/off
   - alias: "main_bathroom_fan_double_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -187,7 +187,7 @@ automation:
       data:
         entity_id: "fan.main_bathroom"
   - alias: "main_bathroom_fan_double_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -202,7 +202,7 @@ automation:
 
   # Double tap vanity switch will turn vanity light on/off
   - alias: "main_bathroom_vanity_double_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -215,7 +215,7 @@ automation:
       data:
         entity_id: "light.main_bathroom_vanity"
   - alias: "main_bathroom_vanity_double_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -230,7 +230,7 @@ automation:
 
   # Double tap spots switch will turn spots on/off
   - alias: "main_bathroom_spots_double_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -243,7 +243,7 @@ automation:
       data:
         entity_id: "light.main_bathroom_spots"
   - alias: "main_bathroom_spots_double_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -258,7 +258,7 @@ automation:
 
   # Triple tap any light switch will turn bathroom lights on/off
   - alias: "main_bathroom_lights_triple_up"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -277,7 +277,7 @@ automation:
       data:
         entity_id: "light.main_bathroom_lights"
   - alias: "main_bathroom_lights_triple_down"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"

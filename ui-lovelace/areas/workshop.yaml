@@ -38,7 +38,7 @@ elements:
       "--ha-card-background": rgba(0, 0, 0, 0)
       "--ha-card-box-shadow": none
     elements:
-      - type: custom:group-element # Header
+      - type: custom:group-element  # Header
         visible: true
         no_toggle_hide: true
         elements_pos:
@@ -56,7 +56,7 @@ elements:
           align-items: center
           background-color: rgba(95, 67, 57, 0.9)
         elements:
-          - type: conditional # Room icon
+          - type: conditional  # Room icon
             conditions:
               - entity: binary_sensor.water_heater_leak
                 state: "off"
@@ -69,7 +69,7 @@ elements:
                 style: &room_title_icon_style
                   cursor: default
 
-          - type: conditional # Alert icon
+          - type: conditional  # Alert icon
             conditions:
               - entity: binary_sensor.water_heater_leak
                 state: "on"
@@ -83,10 +83,10 @@ elements:
                   <<: *room_title_icon_style
                   color: "#FF0"
 
-          - type: custom:text-element # Title
+          - type: custom:text-element  # Title
             text: Workshop
 
-          - type: custom:group-element # Sensors
+          - type: custom:group-element  # Sensors
             visible: true
             no_toggle_hide: true
             elements_pos:
@@ -97,7 +97,7 @@ elements:
               flex-grow: 1
               font-size: 0.55em
             elements:
-              - type: state-icon # Leak
+              - type: state-icon  # Leak
                 entity: binary_sensor.water_heater_leak
                 title: Leak
                 tap_action:
@@ -105,14 +105,14 @@ elements:
                 style: &room_banner_binary_sensor_style
                   transform: &room_sensor_icon_transform scale(0.7)
                   transform-origin: center right
-              - type: state-icon # Motion
+              - type: state-icon  # Motion
                 entity: binary_sensor.workshop_motion
                 title: Motion
                 tap_action:
                   action: more-info
                 style: *room_banner_binary_sensor_style
 
-      - type: custom:gap-card # Content
+      - type: custom:gap-card  # Content
         height: 0
         style:
           order: 2
@@ -120,7 +120,7 @@ elements:
           flex-shrink: 1
           overflow: hidden
 
-      - type: custom:group-element # Footer
+      - type: custom:group-element  # Footer
         visible: true
         no_toggle_hide: true
         elements_pos:

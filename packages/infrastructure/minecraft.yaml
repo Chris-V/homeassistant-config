@@ -21,7 +21,7 @@ input_boolean:
 
 automation:
   - alias: notify_minecraft_status
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.minecraft_server_status"
@@ -44,7 +44,7 @@ automation:
           message: "Minecraft server has gone {( trigger.to_state.state }}line."
 
   - alias: notify_minecraft_update
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "sensor.minecraft_latest_version"
@@ -61,7 +61,7 @@ automation:
     action:
       - service: python_script.notify
         data_template:
-          persistent: True
+          persistent: true
           push_target: "admin"
           tag: "minecraft-update"
           title: "Minecraft {{ states('sensor.minecraft_latest_version') }} available"
@@ -71,7 +71,7 @@ automation:
             to {{ states('sensor.minecraft_latest_version') }}.
 
   - alias: notify_minecraft_player_changes
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "sensor.minecraft_server_players_online"

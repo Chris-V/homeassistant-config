@@ -14,12 +14,12 @@ binary_sensor:
 sensor:
   - platform: apcupsd
     resources:
-      - bcharge # Battery Charge
-      - linev # Input Voltage
-      - loadpct # Load %
+      - bcharge  # Battery Charge
+      - linev  # Input Voltage
+      - loadpct  # Load %
       - status
-      - timeleft # Time Left on Battery
-      - tonbatt # Time on Battery
+      - timeleft  # Time Left on Battery
+      - tonbatt  # Time on Battery
   - platform: template
     sensors:
       ups_battery_status:
@@ -43,7 +43,7 @@ input_text:
 
 automation:
   - alias: notify_power_restored
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.ups_online_status"
@@ -55,7 +55,7 @@ automation:
     action:
       - service: python_script.notify
         data_template:
-          persistent: True
+          persistent: true
           push_target: "household"
           tag: "power_outage_{{ states('input_text.power_outage_id') }}"
           title: "Power restored"
@@ -66,7 +66,7 @@ automation:
               icon: "/local/icons/power-plug-{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}.png"
 
   - alias: notify_power_outage
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id: "binary_sensor.ups_online_status"
@@ -79,7 +79,7 @@ automation:
           value: "{{ as_timestamp(now()) | int }}"
       - service: python_script.notify
         data_template:
-          persistent: True
+          persistent: true
           push_target: "household"
           tag: "power_outage_{{ states('input_text.power_outage_id') }}"
           title: "Power outage"
@@ -88,7 +88,7 @@ automation:
             <<: *power_outage_actions
 
   - alias: notification_action_enable_device_management
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "html5_notification.clicked"
@@ -104,7 +104,7 @@ automation:
           entity_id: "input_boolean.power_outage_manage_devices"
 
   - alias: notification_action_disable_device_management
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "html5_notification.clicked"
@@ -120,13 +120,13 @@ automation:
           entity_id: "input_boolean.power_outage_manage_devices"
 
   - alias: ups_power_off_devices
-    initial_state: True
+    initial_state: true
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"
       to: "off"
       for:
-        seconds: 70 # UPS is polled every 60 secs, this *must* be higher to outlast short power outages.
+        seconds: 70  # UPS is polled every 60 secs, this *must* be higher to outlast short power outages.
     condition:
       condition: state
       entity_id: "input_boolean.power_outage_manage_devices"
@@ -137,13 +137,13 @@ automation:
         - switch.network_media
 
   - alias: ups_power_on_devices
-    initial_state: True
+    initial_state: true
     trigger:
       platform: state
       entity_id: "binary_sensor.ups_online_status"
       to: "on"
       for:
-        seconds: 30 # Power can come back for a couple seconds then cut again. Been there done that.
+        seconds: 30  # Power can come back for a couple seconds then cut again. Been there done that.
     condition:
       condition: state
       entity_id: "input_boolean.power_outage_manage_devices"

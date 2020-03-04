@@ -22,13 +22,13 @@ tts:
   - platform: google_cloud
     key_file: ".secrets/gcp.json"
     service_name: google_cloud_say
-    voice: "en-US-Wavenet-D" # https://cloud.google.com/text-to-speech/docs/voices
+    voice: "en-US-Wavenet-D"  # https://cloud.google.com/text-to-speech/docs/voices
     profiles:
       - "small-bluetooth-speaker-class-device"
 
 custom_storage:
   broadcast_notifications:
-    enable_persistence: True
+    enable_persistence: true
 
 group:
   broadcast_media_players:
@@ -54,7 +54,7 @@ script:
       - service: media_player.turn_on
         data:
           entity_id: "group.broadcast_media_players"
-      - wait_template: >- # yet again, expanding groups doesn't infer all entities
+      - wait_template: >-  # yet again, expanding groups doesn't infer all entities
           {{
             expand(
               'media_player.laundry_room_google_home',
@@ -88,7 +88,7 @@ script:
 
 automation:
   - alias: broadcast_notifications
-    initial_state: True
+    initial_state: true
 
     trigger:
       - platform: homeassistant

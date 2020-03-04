@@ -24,7 +24,7 @@ plant:
       moisture: "sensor.tully_moisture"
       temperature: "sensor.tully_temperature"
     min_battery: 15
-    min_conductivity: 0 # 35
+    min_conductivity: 0  # 35
     max_conductivity: 9999
     min_moisture: 6
     max_moisture: 60
@@ -39,7 +39,7 @@ sensor:
 
   - platform: mqtt
     name: "tully_battery"
-    force_update: True
+    force_update: true
     device_class: "battery"
     unit_of_measurement: "%"
     state_topic: &tully_topic "plants/tully"
@@ -48,7 +48,7 @@ sensor:
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
     name: "tully_brightness"
-    force_update: True
+    force_update: true
     device_class: "illuminance"
     unit_of_measurement: "lx"
     state_topic: *tully_topic
@@ -57,7 +57,7 @@ sensor:
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
     name: "tully_conductivity"
-    force_update: True
+    force_update: true
     unit_of_measurement: "µS/cm"
     icon: "mdi:poop"
     state_topic: *tully_topic
@@ -66,7 +66,7 @@ sensor:
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
     name: "tully_moisture"
-    force_update: True
+    force_update: true
     device_class: "humidity"
     unit_of_measurement: "%"
     state_topic: *tully_topic
@@ -75,7 +75,7 @@ sensor:
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
     name: "tully_temperature"
-    force_update: True
+    force_update: true
     device_class: "temperature"
     unit_of_measurement: "°C"
     state_topic: *tully_topic

@@ -76,7 +76,7 @@ sensor:
 
 automation:
   - alias: "double_up_outdoor_lights"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -101,7 +101,7 @@ automation:
       data:
         entity_id: "light.outdoor_lights"
   - alias: "double_down_outdoor_lights"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"

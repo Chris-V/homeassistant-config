@@ -46,7 +46,7 @@ input_boolean:
 
 automation:
   - alias: notify_plant_problems
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: state
         entity_id:
@@ -59,14 +59,14 @@ automation:
     condition:
       - condition: state
         entity_id: "input_boolean.notify_plant_problems"
-        state:  "on"
+        state: "on"
       - condition: template
         value_template: "{{ trigger.to_state.state not in ('none', 'battery low') }}"
     action:
       - service: python_script.notify
         data_template:
-          audio: True
-          persistent: True
+          audio: true
+          persistent: true
           push_target: "household"
           tag: "plant_{{ trigger.to_state.object_id }}"
           url: "/lovelace/livings"
