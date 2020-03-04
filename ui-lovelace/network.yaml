@@ -60,7 +60,7 @@
       name: Players
       secondary: >-
         {% for player in states['sensor.minecraft_server_players_online'].attributes['players_list'] | default([]) -%}
-          {{ player }}{{ ', ' if not loop.last and loop.revindex != 2 }}{{ ' and ' if loop.revindex == 2 }}
+        {{ player }}{{ ', ' if not loop.last and loop.revindex != 2 }}{{ ' and ' if loop.revindex == 2 }}
         {%- endfor %}
     - entity: sensor.minecraft_server_latency_time
       name: Latency

@@ -90,9 +90,9 @@ automation:
           message: >-
             {% set count = trigger.to_state.state | int %}
             {% if count != 0 %}
-              {% for player in trigger.to_state.attributes.players_list | default([]) -%}
-                {{ player }}{{ ', ' if not loop.last and loop.revindex != 2 }}{{ ' and ' if loop.revindex == 2 }}
-              {%- endfor %}
-              {{ 'is' if count == 1 else 'are' }}
-              online.
+            {% for player in trigger.to_state.attributes.players_list | default([]) -%}
+            {{ player }}{{ ', ' if not loop.last and loop.revindex != 2 }}{{ ' and ' if loop.revindex == 2 }}
+            {%- endfor %}
+            {{ 'is' if count == 1 else 'are' }}
+            online.
             {% endif %}
