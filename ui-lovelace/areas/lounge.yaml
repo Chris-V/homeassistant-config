@@ -175,7 +175,7 @@ elements:
           min-height: 1.75em
         elements:
           - type: state-icon
-            entity: light.bookshelf
+            entity: light.lounge
             title: Spots
             icon: mdi:wall-sconce-flat
             style: &room_footer_icon_style
