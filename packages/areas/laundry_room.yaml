@@ -1,7 +1,11 @@
 homeassistant:
   customize:
+    binary_sensor.washing_machine_leak:
+      device_class: "moisture"
     light.laundry_room:
       friendly_name: "Laundry room light"
+    sensor.laundry_room_temperature:
+      friendly_name: "Laundry room temperature"
 
 cloud:
   google_actions:
@@ -28,13 +32,13 @@ binary_sensor:
         value_template: "{{ is_state('sensor.laundry_motion_sensor_burglar', '8') }}"
 
 sensor:
-  - platform: template
-    sensors:
-      laundry_room_temperature:
-        friendly_name: "Laundry room temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "{{ states('sensor.basement_hallway_thermostat_temperature') | round(1) }}"
+  - platform: min_max
+    name: "laundry_room_temperature"
+    type: "mean"
+    round_digits: 1
+    entity_ids:
+      - "sensor.basement_hallway_thermostat_temperature"
+      - "sensor.washing_machine_leak_temperature"
 
 light:
   - platform: group

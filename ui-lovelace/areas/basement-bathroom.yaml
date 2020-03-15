@@ -139,7 +139,7 @@ elements:
                       action: more-info
                     style: *room_banner_sensor_label_style
 
-      - type: custom:group-element
+      - type: custom:group-element  # Content
         visible: true
         no_toggle_hide: true
         elements_pos:

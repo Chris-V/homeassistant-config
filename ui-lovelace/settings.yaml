@@ -20,6 +20,10 @@
       name: Power outages
 
 - type: custom:auto-entities
+  card:
+    type: entities
+    title: Doors
+    show_header_toggle: false
   sort:
     method: state
   filter:
@@ -38,12 +42,12 @@
                 _(state.binary_sensor.{{ state.attributes.device_class }}.{{ state.state }})
               {%- endif %}
           name: "{{ states['this.entity_id'].name | replace(' door', '') }}"
-  card:
-    type: entities
-    title: Doors
-    show_header_toggle: false
 
 - type: custom:auto-entities
+  card:
+    type: entities
+    title: Windows
+    show_header_toggle: false
   sort:
     method: state
   filter:
@@ -52,12 +56,12 @@
         options:
           <<: *aggregate_row_options
           name: "{{ states['this.entity_id'].name | replace(' window', '') }}"
-  card:
-    type: entities
-    title: Windows
-    show_header_toggle: false
 
 - type: custom:auto-entities
+  card:
+    type: entities
+    title: Leaks
+    show_header_toggle: false
   sort:
     method: state
   filter:
@@ -66,12 +70,12 @@
         options:
           <<: *aggregate_row_options
           name: "{{ states['this.entity_id'].name | replace(' leak', '') }}"
-  card:
-    type: entities
-    title: Leaks
-    show_header_toggle: false
 
 - type: custom:auto-entities
+  card:
+    type: entities
+    title: Motion
+    show_header_toggle: false
   sort:
     method: state
   filter:
@@ -80,10 +84,6 @@
         options:
           <<: *aggregate_row_options
           name: "{{ states['this.entity_id'].name | replace(' motion', '') }}"
-  card:
-    type: entities
-    title: Motion
-    show_header_toggle: false
 
 - type: entities
   title: Batteries
@@ -97,6 +97,11 @@
       name: Status
 
     - type: custom:auto-entities
+      card:
+        type: custom:fold-entity-row
+        head:
+          type: section
+          label: Details
       sort:
         method: state
         numeric: true
@@ -116,8 +121,3 @@
                 {%- endif %}
               secondary: "{{ states['this.entity_id'].attributes.battery_type }}"
               active: "{{ 'this.entity_id' in states['sensor.low_batteries'].state }}"
-      card:
-        type: custom:fold-entity-row
-        head:
-          type: section
-          label: Details

@@ -4,7 +4,7 @@ homeassistant:
       friendly_name: "Viny"
     sensor.viny_battery:
       friendly_name: "Viny's battery"
-      battery_type: "CR2032 3V"
+      battery_type: "CR2032"
       battery_warning_level: 20
     sensor.viny_brightness:
       friendly_name: "Viny's brightness"

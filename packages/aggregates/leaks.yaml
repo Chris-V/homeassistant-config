@@ -4,6 +4,7 @@ group:
     icon: "mdi:pipe-leak"
     entities: &leak_entities
       - binary_sensor.kitchen_sink_leak
+      - binary_sensor.washing_machine_leak
       - binary_sensor.water_heater_leak
 
 binary_sensor:

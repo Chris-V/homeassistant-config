@@ -4,7 +4,7 @@ homeassistant:
       friendly_name: "Dollorama"
     sensor.dollorama_battery:
       friendly_name: "Dollorama's battery"
-      battery_type: "CR2032 3V"
+      battery_type: "CR2032"
       battery_warning_level: 20
     sensor.dollorama_brightness:
       friendly_name: "Dollorama's brightness"

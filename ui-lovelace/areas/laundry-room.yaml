@@ -77,14 +77,49 @@ elements:
               flex-grow: 1
               font-size: 0.55em
             elements:
-              - type: state-icon  # Motion
-                entity: binary_sensor.laundry_room_motion
+              - type: state-icon  # Leak
+                entity: binary_sensor.washing_machine_leak
                 title: Motion
                 tap_action:
                   action: more-info
                 style: &room_banner_binary_sensor_style
                   transform: &room_sensor_icon_transform scale(0.7)
                   transform-origin: center right
+
+              - type: state-icon  # Motion
+                entity: binary_sensor.laundry_room_motion
+                title: Motion
+                tap_action:
+                  action: more-info
+                style: *room_banner_binary_sensor_style
+
+              - type: custom:group-element  # Temperature
+                visible: true
+                no_toggle_hide: true
+                elements_pos: &room_banner_sensor_group_style
+                  height: 100%
+                  margin-left: 10px
+                  display: flex
+                  flex-direction: column
+                  align-items: center
+                  justify-content: flex-end
+                elements:
+                  - type: state-icon
+                    entity: sensor.laundry_room_temperature
+                    title: Temperature
+                    icon: mdi:thermometer
+                    tap_action:
+                      action: more-info
+                    style: &room_banner_sensor_icon_style
+                      transform: *room_sensor_icon_transform
+                      transform-origin: center 60%
+                  - type: state-label
+                    entity: sensor.laundry_room_temperature
+                    title: Temperature
+                    tap_action:
+                      action: more-info
+                    style: &room_banner_sensor_label_style
+                      margin: -8px
 
       - type: custom:gap-card  # Content
         height: 0

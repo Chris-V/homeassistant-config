@@ -43,6 +43,7 @@ recorder:
       - binary_sensor.slinky_requires_attention
       - binary_sensor.studio_window
       - binary_sensor.ups_online_status
+      - binary_sensor.washing_machine_leak
       - binary_sensor.water_heater_leak
       - binary_sensor.workshop_motion
       - sensor.basement_bathroom_door_sensor_battery
@@ -156,6 +157,7 @@ recorder:
       - sensor.viny_moisture
       - sensor.viny_problems
       - sensor.viny_temperature
+      - sensor.washing_machine_leak_temperature
       - sensor.water_heater_leak_sensor_battery
       - sensor.weather_summary
       - sensor.workshop_motion_sensor_battery
