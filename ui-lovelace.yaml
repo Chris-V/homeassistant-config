@@ -10,13 +10,13 @@ resources:
   - {type: "module", url: "/hacsfiles/group-element/group-element-bundle.js"}
   - {type: "module", url: "/hacsfiles/lovelace-auto-entities/auto-entities.js"}
   - {type: "module", url: "/hacsfiles/lovelace-card-mod/card-mod.js"}
+  - {type: "module", url: "/hacsfiles/lovelace-card-tools/card-tools.js"}
+  - {type: "module", url: "/hacsfiles/lovelace-fold-entity-row/fold-entity-row.js"}
+  - {type: "module", url: "/hacsfiles/lovelace-gap-card/gap-card.js"}
   - {type: "module", url: "/hacsfiles/lovelace-template-entity-row/template-entity-row.js"}
   - {type: "module", url: "/hacsfiles/restriction-card/restriction-card.js"}
   - {type: "module", url: "/hacsfiles/simple-thermostat/simple-thermostat.js"}
   - {type: "module", url: "/hacsfiles/weather-card/weather-card.js"}
-  - {type: "js", url: "/hacsfiles/lovelace-card-tools/card-tools.js"}
-  - {type: "js", url: "/hacsfiles/lovelace-fold-entity-row/fold-entity-row.js"}
-  - {type: "js", url: "/hacsfiles/lovelace-gap-card/gap-card.js"}
   - {type: "js", url: "/hacsfiles/text-element/text-element.js"}
 
 custom_header:
@@ -36,57 +36,43 @@ custom_header:
         options_hide: true
 
 decluttering_templates:
-  plant: !include ui-lovelace/templates/plant.yaml
-  person: !include ui-lovelace/templates/person.yaml
+  plant: !include dashboards/overview/templates/plant.yaml
+  person: !include dashboards/overview/templates/person.yaml
 
 button_card_templates:
-  plant_badge: !include ui-lovelace/templates/plant-badge.yaml
-  terra_detailed_switch: !include ui-lovelace/templates/terra-detailed-switch.yaml
-  terra_footer_switch: !include ui-lovelace/templates/terra-footer-switch.yaml
+  plant_badge: !include dashboards/overview/templates/plant-badge.yaml
+  terra_detailed_switch: !include dashboards/overview/templates/terra-detailed-switch.yaml
+  terra_footer_switch: !include dashboards/overview/templates/terra-footer-switch.yaml
 
 views:
   - title: Home
     path: home
     icon: mdi:home
-    cards: !include ui-lovelace/home.yaml
+    cards: !include dashboards/overview/home.yaml
 
   - title: Ground Floor
     path: ground
     icon: mdi:home-floor-g
-    cards:
-      - !include ui-lovelace/areas/outdoor.yaml
-      - !include ui-lovelace/areas/living-room.yaml
-      - !include ui-lovelace/areas/kitchen.yaml
-      - !include ui-lovelace/areas/dining-room.yaml
-      - !include ui-lovelace/areas/main-bathroom.yaml
-      - !include ui-lovelace/areas/master-bedroom.yaml
-      - !include ui-lovelace/areas/office.yaml
+    cards: !include dashboards/overview/ground-floor.yaml
 
   - title: Basement
     path: basement
     icon: mdi:home-floor-b
-    cards:
-      - !include ui-lovelace/areas/basement-general.yaml
-      - !include ui-lovelace/areas/lounge.yaml
-      - !include ui-lovelace/areas/basement-bathroom.yaml
-      - !include ui-lovelace/areas/guest-bedroom.yaml
-      - !include ui-lovelace/areas/studio.yaml
-      - !include ui-lovelace/areas/laundry-room.yaml
-      - !include ui-lovelace/areas/workshop.yaml
+    cards: !include dashboards/overview/basement.yaml
 
   - title: Livings
     path: livings
     icon: mdi:leaf
-    cards: !include ui-lovelace/livings.yaml
+    cards: !include dashboards/overview/livings.yaml
 
   - title: Settings
     path: settings
     icon: mdi:settings
-    cards: !include ui-lovelace/settings.yaml
+    cards: !include dashboards/overview/settings.yaml
 
   - title: Network
     path: network
     icon: mdi:server-network
     visible:
       - user: 221fad543e1a4c05af8aaac8c68e985e
-    cards: !include ui-lovelace/network.yaml
+    cards: !include dashboards/overview/network.yaml
