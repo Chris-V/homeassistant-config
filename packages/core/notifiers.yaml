@@ -8,7 +8,6 @@ notify:
   - platform: group
     name: "admin"
     services:
-      - service: mobile_app_chris_pixel_1
       - service: mobile_app_chris_moto_g7
       - service: html5_chris_aero_arch_chrome
 

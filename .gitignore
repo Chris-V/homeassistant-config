@@ -26,7 +26,8 @@ pyozw.sqlite
 
 panels/floorplan.html
 
-custom_components/hacs/
+/custom_components/
+!/custom_components/custom_storage
 
 www/custom_ui/floorplan/ha-floorplan.html
 www/custom_ui/floorplan/lib/
