@@ -14,13 +14,11 @@ homeassistant:
 
 cloud:
 
-hacs:  # Does not support packages
+hacs:
   token: !secret hacs_github_token
 
 logger:
   default: "warn"
   logs:
     homeassistant.components.glances: "fatal"
-    homeassistant.components.mychevy: "fatal"
-    homeassistant.components.mychevy.sensor: "fatal"
     glances: "fatal"
