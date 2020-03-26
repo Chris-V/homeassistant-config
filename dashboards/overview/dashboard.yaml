@@ -21,7 +21,6 @@ custom_header:
 
 decluttering_templates:
   plant: !include cards/plant.template.yaml
-  person: !include cards/person.template.yaml
 
 button_card_templates:
   plant_badge: !include cards/plant-badge.template.yaml

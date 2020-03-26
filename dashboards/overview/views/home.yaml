@@ -89,21 +89,7 @@
             action: call-service
             service: script.restore_climate_auto_mode
 
-- type: horizontal-stack
-  cards:
-    - type: custom:decluttering-card
-      template: person
-      variables:
-        - image: /local/secrets/chris.webp
-        - person_entity: person.chris
-        - battery_entity: sensor.chris_moto_g7_battery_level
-    - type: custom:decluttering-card
-      template: person
-      variables:
-        - image: /local/secrets/karine.webp
-        - person_entity: person.karine
-        - battery_entity: sensor.karine_pixel_1_battery_level
-
+- !include ../cards/household.yaml
 - !include ../cards/guests.yaml
 
 - type: horizontal-stack
@@ -113,7 +99,7 @@
     - type: picture-elements
       image: /local/car/bolt_ev_tile.png
       elements: []
-    - !include ../cards/livings.yaml
+    - !include ../cards/livings-overview.yaml
 
 - type: glance
   columns: 3
