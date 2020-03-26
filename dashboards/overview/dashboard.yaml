@@ -1,0 +1,62 @@
+title: Overview
+
+preload:  # TODO: Use https://github.com/thomasloven/lovelace-hui-element instead
+  - markdown
+
+custom_header:
+  compact_mode: true
+  chevrons: false
+  hide_help: true
+  hide_unused: true
+  hide_config: true
+  hide_raw: true
+  button_text:
+    options: "{{ hours24LZ }}:{{ minutesLZ }}"
+  exceptions:
+    - conditions:
+        user_agent: "Mobile"
+      config:
+        menu_hide: true
+        options_hide: true
+
+decluttering_templates:
+  plant: !include cards/plant.template.yaml
+  person: !include cards/person.template.yaml
+
+button_card_templates:
+  plant_badge: !include cards/plant-badge.template.yaml
+  terra_detailed_switch: !include cards/terra-detailed-switch.template.yaml
+  terra_footer_switch: !include cards/terra-footer-switch.template.yaml
+
+views:
+  - title: Home
+    path: home
+    icon: mdi:home
+    cards: !include views/home.yaml
+
+  - title: Ground Floor
+    path: ground
+    icon: mdi:home-floor-g
+    cards: !include views/ground-floor.yaml
+
+  - title: Basement
+    path: basement
+    icon: mdi:home-floor-b
+    cards: !include views/basement.yaml
+
+  - title: Livings
+    path: livings
+    icon: mdi:leaf
+    cards: !include views/livings.yaml
+
+  - title: Settings
+    path: settings
+    icon: mdi:settings
+    cards: !include views/settings.yaml
+
+  - title: Network
+    path: network
+    icon: mdi:server-network
+    visible:
+      - user: 221fad543e1a4c05af8aaac8c68e985e
+    cards: !include views/network.yaml

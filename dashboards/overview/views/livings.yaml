@@ -1,5 +1,5 @@
-- !include livings/carl.yaml
-- !include livings/slinky.yaml
+- !include ../cards/carl.yaml
+- !include ../cards/slinky.yaml
 
 - type: custom:decluttering-card
   template: plant

@@ -104,16 +104,16 @@
         - person_entity: person.karine
         - battery_entity: sensor.karine_pixel_1_battery_level
 
-- !include home-cards/guests.yaml
+- !include ../cards/guests.yaml
 
 - type: horizontal-stack
   cards:
     # MyChevy broken. Using a placeholder.
-    # - !include home-cards/car.yaml
+    # - !include ../cards/car.yaml
     - type: picture-elements
       image: /local/car/bolt_ev_tile.png
       elements: []
-    - !include home-cards/livings.yaml
+    - !include ../cards/livings.yaml
 
 - type: glance
   columns: 3

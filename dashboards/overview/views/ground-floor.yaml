@@ -1,0 +1,7 @@
+- !include ../areas/outdoor.yaml
+- !include ../areas/living-room.yaml
+- !include ../areas/kitchen.yaml
+- !include ../areas/dining-room.yaml
+- !include ../areas/main-bathroom.yaml
+- !include ../areas/master-bedroom.yaml
+- !include ../areas/office.yaml

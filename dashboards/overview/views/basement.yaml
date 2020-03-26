@@ -1,0 +1,7 @@
+- !include ../areas/basement-general.yaml
+- !include ../areas/lounge.yaml
+- !include ../areas/basement-bathroom.yaml
+- !include ../areas/guest-bedroom.yaml
+- !include ../areas/studio.yaml
+- !include ../areas/laundry-room.yaml
+- !include ../areas/workshop.yaml
