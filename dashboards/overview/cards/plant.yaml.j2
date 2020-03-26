@@ -1,0 +1,109 @@
+{# Parameters:
+ #   * badges_position: (end | start)
+ #   * image: The URL of the image to display in background.
+ #   * name_color: The color for the title
+ #   * name_shadow_color: The color for the title's shadow
+ #   * plant_entity_id: The URL of the image to display in background.
+ #   * problems_entity_id: Entity representing problems for this plant
+ #}
+
+type: picture-elements
+image: "{{ image }}"
+style: |
+  .element[class~=element] {
+    transform: none;
+  }
+  .element button-card {
+    position: relative;
+    --ha-label-badge-title-font-size: 0;
+    --ha-label-badge-font-size: 1.2rem;
+    --label-badge-red: #363941;
+  }
+  .element button-card + button-card {
+      margin-left: 1em;
+  }
+elements:
+  - type: custom:button-card
+    color_type: label-card
+    entity: "{{ plant_entity_id }}"
+    show_icon: false
+    tap_action:
+      action: more-info
+    style:
+      top: 1.25em
+      left: 1.5em
+    styles:
+      card:
+        - background-color: transparent
+        - box-shadow: none
+        - color: "{{ name_color | default("#E0E0E0") }}"
+        - filter: "drop-shadow({{ name_shadow_color | default("#3B4049") }} 0 0 2px)"
+        - font-size: 1.25rem
+        - font-weight: 500
+
+  - type: conditional
+    conditions:
+      - entity: "{{ problems_entity_id }}"
+        state_not: "none"
+    elements:
+      - type: icon
+        icon: mdi:alert-circle
+        title: Problems
+        entity: "{{ problems_entity_id }}"
+        tap_action:
+          action: more-info
+        style:
+          right: 1em
+          top: 1.25em
+          color: var(--google-red-500)
+          filter: drop-shadow(black 0 0 1px)
+
+  - type: custom:group-element
+    visible: true
+    no_toggle_hide: true
+    elements_pos:
+      position: absolute
+      bottom: 0
+      width: 100%
+      padding: 1em
+      box-sizing: border-box
+      transform: none
+      display: flex
+      flex-direction: row
+      justify-content: "flex-{{ badges_position | default("start") }}"
+    elements:
+{% for sensor_type in ('moisture', 'temperature', 'conductivity', 'brightness') -%}
+{% set entity_id = (state_attr(plant_entity_id, 'sensors') | default({}))[sensor_type] %}
+      - type: custom:button-card
+
+        custom_fields:
+          badge:
+            card:
+              type: custom:hui-state-badge-element
+              entity: {{ entity_id }}
+              title:
+
+        tap_action:
+          action: more-info
+          entity: {{ entity_id }}
+
+        styles:
+          grid:
+            - position: relative
+            - grid-template-areas: '"l" "badge"'
+            - grid-template-columns: min-content
+            - grid-template-rows: 0 min-content
+          card:
+            - background-color: transparent
+            - box-shadow: none
+            - overflow: visible
+          custom_fields:
+            badge:
+              - overflow: visible
+              - --label-badge-red: |
+                  [[[
+                    return states["{{ problems_entity_id }}"].state.indexOf("{{ sensor_type }}") === -1
+                      ? "#363941"
+                      : "var(--google-red-500)"
+                  ]]]
+{% endfor %}

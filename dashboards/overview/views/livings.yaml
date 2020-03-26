@@ -1,70 +1,51 @@
 - !include ../cards/carl.yaml
 - !include ../cards/slinky.yaml
 
-- type: custom:decluttering-card
-  template: plant
+- !template
+  file: ../cards/plant.yaml.j2
   variables:
-    - image: /local/plants/money_tree_card.jpg
-    - badges_position: "end"
-    - plant_entity: plant.dollorama
-    - entity_problems: sensor.dollorama_problems
-    - entity_moisture: sensor.dollorama_moisture
-    - entity_temperature: sensor.dollorama_temperature
-    - entity_conductivity: sensor.dollorama_conductivity
-    - entity_brightness: sensor.dollorama_brightness
-- type: custom:decluttering-card
-  template: plant
+    badges_position: "end"
+    image: /local/plants/money_tree_card.jpg
+    plant_entity_id: plant.dollorama
+    problems_entity_id: sensor.dollorama_problems
+
+- !template
+  file: ../cards/plant.yaml.j2
   variables:
-    - image: /local/plants/avocado_hall_card.jpg
-    - plant_entity: plant.maitre_doyle
-    - entity_problems: sensor.maitre_doyle_problems
-    - entity_moisture: sensor.maitre_doyle_moisture
-    - entity_temperature: sensor.maitre_doyle_temperature
-    - entity_conductivity: sensor.maitre_doyle_conductivity
-    - entity_brightness: sensor.maitre_doyle_brightness
-- type: custom:decluttering-card
-  template: plant
+    image: /local/plants/avocado_hall_card.jpg
+    plant_entity_id: plant.maitre_doyle
+    problems_entity_id: sensor.maitre_doyle_problems
+
+- !template
+  file: ../cards/plant.yaml.j2
   variables:
-    - image: /local/plants/jade_plant_card.jpg
-    - plant_entity: plant.rubber_ducky
-    - entity_problems: sensor.rubber_ducky_problems
-    - entity_moisture: sensor.rubber_ducky_moisture
-    - entity_temperature: sensor.rubber_ducky_temperature
-    - entity_conductivity: sensor.rubber_ducky_conductivity
-    - entity_brightness: sensor.rubber_ducky_brightness
-- type: custom:decluttering-card
-  template: plant
+    image: /local/plants/jade_plant_card.jpg
+    plant_entity_id: plant.rubber_ducky
+    problems_entity_id: sensor.rubber_ducky_problems
+
+- !template
+  file: ../cards/plant.yaml.j2
   variables:
-    - image: /local/plants/spider_plant_card.jpg
-    - badges_position: "end"
-    - plant_entity: plant.spidy
-    - entity_problems: sensor.spidy_problems
-    - entity_moisture: sensor.spidy_moisture
-    - entity_temperature: sensor.spidy_temperature
-    - entity_conductivity: sensor.spidy_conductivity
-    - entity_brightness: sensor.spidy_brightness
-- type: custom:decluttering-card
-  template: plant
+    badges_position: "end"
+    image: /local/plants/spider_plant_card.jpg
+    plant_entity_id: plant.spidy
+    problems_entity_id: sensor.spidy_problems
+
+- !template
+  file: ../cards/plant.yaml.j2
   variables:
-    - image: /local/plants/devils_ivy_card.jpg
-    - name_color: "#3B4049"
-    - name_shadow_color: "#E0E0E0"
-    - badges_position: "end"
-    - plant_entity: plant.viny
-    - entity_problems: sensor.viny_problems
-    - entity_moisture: sensor.viny_moisture
-    - entity_temperature: sensor.viny_temperature
-    - entity_conductivity: sensor.viny_conductivity
-    - entity_brightness: sensor.viny_brightness
-- type: custom:decluttering-card
-  template: plant
+    badges_position: "end"
+    image: /local/plants/devils_ivy_card.jpg
+    name_color: "#3B4049"
+    name_shadow_color: "#E0E0E0"
+    plant_entity_id: plant.viny
+    problems_entity_id: sensor.viny_problems
+
+- !template
+  file: ../cards/plant.yaml.j2
   variables:
-    - image: /local/plants/tulips_card.jpg
-    - name_color: "#3B4049"
-    - name_shadow_color: "#E0E0E0"
-    - plant_entity: plant.tully
-    - entity_problems: sensor.tully_problems
-    - entity_moisture: sensor.tully_moisture
-    - entity_temperature: sensor.tully_temperature
-    - entity_conductivity: sensor.tully_conductivity
-    - entity_brightness: sensor.tully_brightness
+    image: /local/plants/tulips_card.jpg
+    name_color: "#3B4049"
+    name_shadow_color: "#E0E0E0"
+    plant_entity_id: plant.tully
+    problems_entity_id: sensor.tully_problems
