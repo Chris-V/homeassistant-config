@@ -19,10 +19,6 @@ custom_header:
         menu_hide: true
         options_hide: true
 
-button_card_templates:
-  terra_detailed_switch: !include cards/terra-detailed-switch.template.yaml
-  terra_footer_switch: !include cards/terra-footer-switch.template.yaml
-
 views:
   - title: Home
     path: home

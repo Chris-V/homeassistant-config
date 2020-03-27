@@ -1,5 +1,90 @@
-- !include ../cards/carl.yaml
-- !include ../cards/slinky.yaml
+- !template
+  file: ../cards/terrarium.yaml.j2
+  variables:
+    image: /local/animals/carl_card.jpg
+    problems_entity_id: binary_sensor.carl_requires_attention
+    switches:
+      - entity_id: input_boolean.carl_scheduled_lights
+        name: Scheduling
+        lock: true
+      - entity_id: switch.carl_power_strip
+        name: Master
+        has_power_metrics: true
+        lock: true
+      - entity_id: switch.carl_outlet_5
+        name: Controller
+        has_power_metrics: true
+        lock: true
+      - entity_id: switch.carl_uv_light
+        name: UV light
+        problem_key: uv_light
+        has_power_metrics: true
+        show_in_footer: true
+      - entity_id: switch.carl_heater
+        name: Heater
+        problem_key: heater
+        has_power_metrics: true
+        show_in_footer: true
+      - entity_id: switch.carl_heat_bulb
+        name: Heat bulb
+        problem_key: heat_bulb
+        has_power_metrics: true
+        show_in_footer: true
+      - entity_id: switch.carl_outlet_4
+        name: Mister
+        problem_key: mister
+        has_power_metrics: true
+        show_in_footer: true
+    sensors:
+      - entity_id: sensor.carl_temperature
+        name: Temperature
+      - entity_id: sensor.carl_basking_temperature
+        name: Basking temperature
+      - entity_id: sensor.carl_humidity
+        name: Humidity
+
+- !template
+  file: ../cards/terrarium.yaml.j2
+  variables:
+    image: /local/animals/slinky_card.jpg
+    problems_entity_id: binary_sensor.slinky_requires_attention
+    switches:
+      - entity_id: input_boolean.slinky_scheduled_lights
+        name: Scheduling
+        lock: true
+      - entity_id: switch.slinky_power_strip
+        name: Master
+        has_power_metrics: true
+        lock: true
+      - entity_id: switch.slinky_outlet_5
+        name: Controller
+        has_power_metrics: true
+        lock: true
+      - entity_id: switch.slinky_uv_light
+        name: UV light
+        problem_key: uv_light
+        has_power_metrics: true
+        show_in_footer: true
+      - entity_id: switch.slinky_heater
+        name: Heater
+        problem_key: heater
+        has_power_metrics: true
+        show_in_footer: true
+      - entity_id: switch.slinky_heat_bulb
+        name: Heat bulb
+        problem_key: heat_bulb
+        has_power_metrics: true
+        show_in_footer: true
+      - entity_id: switch.slinky_outlet_4
+        name: Outlet 4
+        has_power_metrics: true
+    sensors:
+      - entity_id: sensor.slinky_temperature
+        name: Temperature
+      - entity_id: sensor.slinky_basking_temperature
+        name: Basking temperature
+      - entity_id: sensor.slinky_humidity
+        name: Humidity
 
 - !template
   file: ../cards/plant.yaml.j2
