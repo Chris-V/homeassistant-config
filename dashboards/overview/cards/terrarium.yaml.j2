@@ -48,7 +48,7 @@
       - font-size: 14px
       - padding: 0px 5px
     label:
-      - color: "#80828A"
+      - color: "#BDBDBD"
       - font-size: 12px
       - padding: 0px 5px
 {% endmacro %}
@@ -136,10 +136,11 @@ elements:
               flex-shrink: 0
               scroll-snap-align: start
 
-          - type: custom:hui-vertical-stack-card  # All switches
+          - type: custom:hui-element  # All switches
+            card_type: vertical-stack
             style:
               <<: *content_slide_style
-              background-color: rgba(0, 0, 0, 0.75)
+              background-color: rgba(0, 0, 0, 0.45)
             cards:
               - type: horizontal-stack
                 cards:

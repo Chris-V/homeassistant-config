@@ -41,7 +41,7 @@ automation:
           push_target: "admin"
           tag: "minecraft-status"
           title: "Minecraft status"
-          message: "Minecraft server has gone {( trigger.to_state.state }}line."
+          message: "Minecraft server has gone {{ trigger.to_state.state }}line."
 
   - alias: notify_minecraft_update
     initial_state: true

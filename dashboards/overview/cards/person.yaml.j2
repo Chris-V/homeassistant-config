@@ -70,7 +70,8 @@ elements:
             style:
               text-transform: uppercase
 
-          - type: custom:hui-markdown-card
+          - type: custom:hui-element
+            card_type: markdown
             entity_id: "{{ person_entity }}"
             content: "{{ "{{" }} relative_time(states['{{ person_entity }}'].last_changed) {{ "}}" }}"
             theme: blank

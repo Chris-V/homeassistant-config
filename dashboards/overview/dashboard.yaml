@@ -1,8 +1,5 @@
 title: Overview
 
-preload:  # TODO: Use https://github.com/thomasloven/lovelace-hui-element instead
-  - markdown
-
 custom_header:
   compact_mode: true
   chevrons: false

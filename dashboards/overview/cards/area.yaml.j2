@@ -222,7 +222,8 @@ elements:
               scroll-snap-align: start
 
 {% if climate is defined %}
-          - type: custom:hui-horizontal-stack-card  # Thermostat
+          - type: custom:hui-element  # Thermostat
+            card_type: horizontal-stack
             style:
               <<: *slide_section_style
               background-color: rgba(0, 0, 0, 0.55)
