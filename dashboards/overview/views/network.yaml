@@ -73,71 +73,23 @@
     - sensor.processor_temperature
     - sensor.memory_use_percent
 
-- type: entities
-  title: Media
-  show_header_toggle: false
-  entities:
-    - type: custom:restriction-card
-      row: true
-      restrictions: &server_toggle_restrictions
-        block:
-          exemptions:
-            - user: 221fad543e1a4c05af8aaac8c68e985e
-      condition:
-        entity: switch.network_media
-        value: "on"
-      card:
-        entity: switch.network_media
-        name: Status
-        state_color: true
-    - entity: sensor.media_cpu_used
-      name: Processor use
-    - entity: sensor.media_cpu_temp
-      name: Processor temperature
-    - entity: sensor.media_ram_used_percent
-      name: Memory use
+- !template
+  file: ../cards/server.yaml.j2
+  variables:
+    name: Media
+    key: media
 
-- type: entities
-  title: Relay South
-  show_header_toggle: false
-  entities:
-    - type: custom:restriction-card
-      row: true
-      restrictions: *server_toggle_restrictions
-      condition:
-        entity: switch.network_relay_south
-        value: "on"
-      card:
-        entity: switch.network_relay_south
-        name: Status
-        state_color: true
-    - entity: sensor.relay_south_cpu_used
-      name: Processor use
-    - entity: sensor.relay_south_cpu_temp
-      name: Processor temperature
-    - entity: sensor.relay_south_ram_used_percent
-      name: Memory use
+- !template
+  file: ../cards/server.yaml.j2
+  variables:
+    name: Relay South
+    key: relay_south
 
-- type: entities
-  title: Relay North
-  show_header_toggle: false
-  entities:
-    - type: custom:restriction-card
-      row: true
-      restrictions: *server_toggle_restrictions
-      condition:
-        entity: switch.network_relay_north
-        value: "on"
-      card:
-        entity: switch.network_relay_north
-        name: Status
-        state_color: true
-    - entity: sensor.relay_north_cpu_used
-      name: Processor use
-    - entity: sensor.relay_north_cpu_temp
-      name: Processor temperature
-    - entity: sensor.relay_north_ram_used_percent
-      name: Memory use
+- !template
+  file: ../cards/server.yaml.j2
+  variables:
+    name: Relay North
+    key: relay_north
 
 - type: entities
   title: Z-Wave

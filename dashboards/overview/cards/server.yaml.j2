@@ -1,0 +1,29 @@
+{# Parameters:
+ #   * name: The server's display name
+ #   * key: The server's key used in `entity_id`s
+ #}
+
+type: entities
+title: {{ name }}
+show_header_toggle: false
+entities:
+  - type: custom:restriction-card
+    row: true
+    restrictions:
+      block:
+        exemptions:
+          - user: 221fad543e1a4c05af8aaac8c68e985e
+    condition:
+      entity: switch.network_{{ key }}
+      value: "on"
+    card:
+      entity: switch.network_{{ key }}
+      name: Status
+      state_color: true
+
+  - entity: sensor.{{ key }}_cpu_used
+    name: Processor use
+  - entity: sensor.{{ key }}_cpu_temp
+    name: Processor temperature
+  - entity: sensor.{{ key }}_ram_used_percent
+    name: Memory use
