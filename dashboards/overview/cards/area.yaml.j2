@@ -1,0 +1,281 @@
+{# Parameters:
+ #   * name: This room's name
+ #   * icon_entity_id: The entity id for this card's icon
+ #   * icon: The icon to display next to the rooms name
+ #   * image: (optional) This image to display in the background
+ #   * color: The accent color for this room, in decimal form (RRR, GGG, BBB)
+ #   * sensors: array
+ #     * entity_id: A sensor entity to show in the header
+ #     * name: That sensor's name
+ #     * icon: (optional) That entity's icon
+ #     * alert_if_on: (optional) Alter the room's icon to display an alert if this sensor is on
+ #   * switches: array
+ #     * entity_id: An entity to to control in the footer
+ #     * name: That entity's name
+ #     * icon: (optional) That entity's icon
+ #     * tap_action: (optional) object. Override for the tap_action
+ #   * climate: (optional) object
+ #     * entity_id: The climate entity id
+ #     * comfort_setpoint_entity_id:
+ #     * eco_setpoint_entity_id:
+ #     * mode_entity_id:
+ #}
+
+{% set banner_icon_transform = 'scale(0.8)' %}
+{% set sensor_icon_transform = 'scale(0.7)' %}
+{% set sensors = sensors | default([]) | list %}
+{% set alert_sensors = sensors | selectattr('alert_if_on', 'true') | list %}
+{% set switches = switches | default([]) | list %}
+
+{% macro card_icon(icon, entity_id, color = None, indent = 0) -%}
+{% filter indent(indent * 2) -%}
+{% if entity_id is defined %}
+- type: state-icon
+  entity: {{ entity_id }}
+  {% if icon is defined %}icon: {{ icon }}{% endif %}
+  tap_action:
+    action: more-info
+  style:
+{% else %}
+- type: icon
+  icon: {{ icon | default('mdi:texture-box') }}
+  style:
+    cursor: default
+{% endif %}
+    transform: {{ banner_icon_transform }}
+    margin-right: 10px
+    {% if color is not none %}color: "{{ color }}"{% endif %}
+{%- endfilter %}
+{%- endmacro %}
+
+{% macro binary_sensor_element(sensor_config) %}
+- type: state-icon
+  entity: {{ sensor_config.entity_id }}
+  title: {{ sensor_config.name }}
+  {% if sensor_config.icon is defined -%}
+  icon: {{ sensor_config.icon }}
+  {% endif %}
+  tap_action:
+    action: more-info
+  style:
+    transform: {{ sensor_icon_transform }}
+    transform-origin: center right
+{% endmacro %}
+
+{% macro sensor_element(sensor_config) %}
+- type: custom:group-element
+  visible: true
+  no_toggle_hide: true
+  elements_pos:
+    height: 100%
+    margin-left: 10px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: flex-end
+  elements:
+    - type: state-icon
+      entity: {{ sensor_config.entity_id }}
+      title: {{ sensor_config.name }}
+      {% if sensor_config.icon is defined -%}
+      icon: {{ sensor_config.icon }}
+      {% endif %}
+      tap_action:
+        action: more-info
+      style:
+        transform: {{ sensor_icon_transform }}
+        transform-origin: center 60%
+    - type: state-label
+      entity: {{ sensor_config.entity_id }}
+      title: {{ sensor_config.name }}
+      tap_action:
+        action: more-info
+      style:
+        margin: -8px
+{% endmacro %}
+
+type: picture-elements
+image: {{ image | default('/local/rooms/placeholder.webp') }}
+style: |
+  .element[class~=element] {
+    position: relative;
+    transform: none;
+  }
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.55);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba({{ color }}, 0.55);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba({{ color }}, 1);
+  }
+elements:
+  - type: custom:group-element
+    visible: true
+    no_toggle_hide: true
+    elements_pos:
+      position: absolute
+      top: 0
+      right: 0
+      left: 0
+      bottom: 0
+      display: flex
+      flex-direction: column
+      "--secondary-text-color": "#DADADB"
+      "--primary-text-color": "#DADADB"
+      "--paper-item-icon-color": "#DADADB"
+      "--iron-icon-width": 40px
+      "--iron-icon-height": 40px
+      "--ha-card-background": rgba(0, 0, 0, 0)
+      "--ha-card-box-shadow": none
+    elements:
+      - type: custom:group-element  # Header
+        visible: true
+        no_toggle_hide: true
+        elements_pos:
+          <<: &banner_style
+            overflow: hidden
+            display: flex
+            flex-grow: 0
+            flex-shrink: 0
+            padding: 0 10px
+            color: "#D3D3D3"
+            font-size: 1.6em
+            font-weight: 500
+          height: 2.25em
+          order: 1
+          align-items: center
+          background-color: rgba({{ color }}, 0.9)
+        elements:
+{% if alert_sensors | length == 0 %}
+{{ card_icon(icon, icon_entity_id, indent = 5) }}
+{% else %}
+          - type: conditional  # Room icon
+            conditions:
+{% for sensor_config in alert_sensors %}
+              - entity: {{ sensor_config.entity_id }}
+                state: "off"
+{% endfor %}
+            elements:
+{{ card_icon(icon, icon_entity_id, indent = 7) }}
+
+          - type: conditional  # Alert icon
+            conditions:
+{% for sensor_config in alert_sensors %}
+              - entity: {{ sensor_config.entity_id }}
+                state: "on"
+{% endfor %}
+            elements:
+{{ card_icon('mdi:home-alert', icon_entity_id, '#FFFF00', indent = 7) }}
+{% endif %}
+
+          - type: custom:text-element  # Title
+            text: {{ name }}
+
+          - type: custom:group-element  # Sensors
+            visible: true
+            no_toggle_hide: true
+            elements_pos:
+              height: 100%
+              display: flex
+              align-items: center
+              justify-content: flex-end
+              flex-grow: 1
+              font-size: 0.55em
+            elements:
+{% filter indent(14) -%}
+{% for sensor_config in sensors if sensor_config.entity_id.startswith('binary_sensor.') -%}
+{{ binary_sensor_element(sensor_config) }}
+{% endfor %}
+{% for sensor_config in sensors if sensor_config.entity_id.startswith('sensor.') -%}
+{{ sensor_element(sensor_config) }}
+{% endfor %}
+{%- endfilter %}
+
+      - type: custom:group-element  # Content
+        visible: true
+        no_toggle_hide: true
+        elements_pos:
+          order: 2
+          flex-grow: 1
+          flex-shrink: 1
+          display: flex
+          overflow: auto hidden
+          scroll-behavior: smooth
+          scroll-snap-type: x mandatory
+          "-webkit-overflow-scrolling": touch
+          "--iron-icon-width": 24px
+          "--iron-icon-height": 24px
+        elements:
+          - type: custom:gap-card  # Initial
+            height: 0
+            style: &slide_section_style
+              display: block
+              width: 100%
+              height: 100%
+              flex-shrink: 0
+              scroll-snap-align: start
+
+{% if climate is defined %}
+          - type: custom:hui-horizontal-stack-card  # Thermostat
+            style:
+              <<: *slide_section_style
+              background-color: rgba(0, 0, 0, 0.55)
+            cards:
+              - type: entities
+                show_header_toggle: false
+                style: |
+                  ha-card .card-content { padding: 0; }
+                entities:
+                  - entity: {{ climate.mode_entity_id }}
+                    name: Mode
+                  - entity: {{ climate.comfort_setpoint_entity_id }}
+                    name: Comfort
+                  - entity: {{ climate.eco_setpoint_entity_id }}
+                    name: Eco
+
+              - type: custom:simple-thermostat
+                entity: {{ climate.entity_id }}
+                name: false
+                hide:
+                  temperature: true
+                  state: true
+                step_size: 0.5
+                control: []
+{% endif %}
+
+      - type: custom:group-element  # Footer
+        visible: true
+        no_toggle_hide: true
+        elements_pos:
+          <<: *banner_style
+          order: 3
+          align-items: flex-end
+          justify-content: center
+          background-color: rgba(0, 0, 0, 0.55)
+          height: unset
+          min-height: 1.75em
+        elements:
+{% for switch_config in switches %}
+          - type: state-icon
+            entity: {{ switch_config.entity_id }}
+            title: {{ switch_config.name }}
+            {% if switch_config.icon is defined -%}
+            icon: {{ switch_config.icon }}
+            {% endif %}
+            style:
+              transform: {{ banner_icon_transform }}
+              transform-origin: center right
+              margin: 0 15px
+            tap_action:
+{% if switch_config.tap_action is defined %}
+              {{ switch_config.tap_action | tojson }}
+{% else %}
+              action: {% if switch_config.entity_id.startswith('media_player.') %}more-info{% else %}toggle{% endif %}
+{% endif %}
+{% endfor %}

@@ -1,7 +1,160 @@
-- !include ../areas/basement-general.yaml
-- !include ../areas/lounge.yaml
-- !include ../areas/basement-bathroom.yaml
-- !include ../areas/guest-bedroom.yaml
-- !include ../areas/studio.yaml
-- !include ../areas/laundry-room.yaml
-- !include ../areas/workshop.yaml
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Common
+    icon: mdi:source-commit-next-local
+    color: 73, 73, 73
+    sensors:
+      - entity_id: sensor.basement_hallway_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.basement_hallway
+        name: Hallway
+        icon: mdi:wall-sconce-flat
+      - entity_id: light.downstairs
+        name: Downstairs
+        icon: mdi:lightbulb
+    climate:
+      entity_id: climate.basement_hallway_thermostat
+      comfort_setpoint_entity_id: input_number.basement_hallway_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.basement_hallway_thermostat_eco_setpoint
+      mode_entity_id: input_select.basement_hallway_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Lounge
+    icon: mdi:sofa
+    color: 160, 0, 0
+    sensors:
+      - entity_id: binary_sensor.lounge_window
+        name: Window
+      - entity_id: sensor.lounge_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.lounge
+        name: Ambiance
+        icon: mdi:floor-lamp
+      - entity_id: switch.lounge_tv
+        name: TV
+        icon: mdi:television
+      - entity_id: media_player.lounge_chromecast
+        name: Chromecast
+        icon: mdi:television-play
+      - entity_id: media_player.lounge_google_home
+        name: Google Home
+        icon: mdi:speaker
+    climate:
+      entity_id: climate.lounge_thermostat
+      comfort_setpoint_entity_id: input_number.lounge_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.lounge_thermostat_eco_setpoint
+      mode_entity_id: input_select.lounge_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Bathroom
+    icon: mdi:toilet
+    color: 0, 34, 123
+    sensors:
+      - entity_id: binary_sensor.basement_bathroom_motion
+        name: Motion
+      - entity_id: binary_sensor.basement_bathroom_door
+        name: Door
+      - entity_id: sensor.basement_bathroom_humidity
+        name: Humidity
+      - entity_id: sensor.basement_bathroom_temperature
+        name: Temperature
+        icon: mdi:thermometer
+    switches:
+      - entity_id: light.basement_bathroom
+        name: Spots
+        icon: mdi:wall-sconce-flat
+      - entity_id: light.basement_bathroom_vanity
+        name: Vanity
+        icon: mdi:vanity-light
+      - entity_id: fan.basement_bathroom
+        name: Fan
+    climate:
+      entity_id: climate.basement_bathroom_thermostat
+      comfort_setpoint_entity_id: input_number.basement_bathroom_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.basement_bathroom_thermostat_eco_setpoint
+      mode_entity_id: input_select.basement_bathroom_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Guest's bedroom
+    icon: mdi:hotel
+    color: 0, 96, 15
+    sensors:
+      - entity_id: binary_sensor.guest_bedroom_window
+        name: Window
+      - entity_id: sensor.guest_bedroom_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.guest_bedroom
+        name: Light
+    climate:
+      entity_id: climate.guest_bedroom_thermostat
+      comfort_setpoint_entity_id: input_number.guest_bedroom_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.guest_bedroom_thermostat_eco_setpoint
+      mode_entity_id: input_select.guest_bedroom_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Studio
+    icon: mdi:desk
+    color: 0, 54, 58
+    sensors:
+      - entity_id: binary_sensor.studio_window
+        name: Window
+      - entity_id: sensor.studio_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.studio
+        name: Light
+    climate:
+      entity_id: climate.studio_thermostat
+      comfort_setpoint_entity_id: input_number.studio_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.studio_thermostat_eco_setpoint
+      mode_entity_id: input_select.studio_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Laundry room
+    icon: mdi:washing-machine
+    color: 0, 122, 193
+    sensors:
+      - entity_id: binary_sensor.washing_machine_leak
+        name: Washing machine leak
+        alert_if_on: true
+      - entity_id: binary_sensor.laundry_room_motion
+        name: Motion
+      - entity_id: sensor.laundry_room_temperature
+        name: Temperature
+        icon: mdi:thermometer
+    switches:
+      - entity_id: light.laundry_room
+        name: Light
+      - entity_id: media_player.laundry_room_google_home
+        name: Google Home
+        icon: mdi:speaker
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Workshop
+    icon: mdi:hammer
+    color: 95, 67, 57
+    sensors:
+      - entity_id: binary_sensor.water_heater_leak
+        name: Water hearer leak
+        alert_if_on: true
+      - entity_id: binary_sensor.workshop_motion
+        name: Motion
+    switches:
+      - entity_id: light.workshop
+        name: Light

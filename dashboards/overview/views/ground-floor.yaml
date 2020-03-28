@@ -1,7 +1,184 @@
-- !include ../areas/outdoor.yaml
-- !include ../areas/living-room.yaml
-- !include ../areas/kitchen.yaml
-- !include ../areas/dining-room.yaml
-- !include ../areas/main-bathroom.yaml
-- !include ../areas/master-bedroom.yaml
-- !include ../areas/office.yaml
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Outdoor
+    icon_entity_id: sensor.weather_summary
+    color: 73, 73, 73
+    sensors:
+      - entity_id: sensor.outdoor_humidity
+        name: Humidity
+      - entity_id: sensor.outdoor_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.side_porch
+        name: Side porch
+        icon: mdi:outdoor-lamp
+      - entity_id: light.front_porch
+        name: Front porch
+        icon: mdi:outdoor-lamp
+      - entity_id: light.shed
+        name: Shed
+        icon: mdi:garage
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Living room
+    icon: mdi:sofa
+    color: 160, 0, 0
+    sensors:
+      - entity_id: binary_sensor.living_room_door
+        name: Door
+        alert_if_on: true
+      - entity_id: sensor.living_room_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.bookshelf
+        name: Bookshelf
+        icon: mdi:bookshelf
+      - entity_id: light.living_room_ambiance
+        name: Ambiance
+        icon: mdi:floor-lamp-dual
+      - entity_id: switch.bookshelf_outlet
+        name: Bookshelf outlet
+        icon: mdi:power-socket-us
+      - entity_id: media_player.living_room_tv
+        name: TV
+        icon: mdi:television
+        tap_action:
+          action: call-service
+          service: switch.toggle
+          service_data:
+            entity_id: switch.living_room_tv_power
+      - entity_id: media_player.living_room_google_home
+        name: Google Home
+        icon: mdi:speaker
+    climate:
+      entity_id: climate.living_room_thermostat
+      comfort_setpoint_entity_id: input_number.living_room_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.living_room_thermostat_eco_setpoint
+      mode_entity_id: input_select.living_room_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Kitchen
+    icon: mdi:fridge
+    color: 187, 77, 0
+    sensors:
+      - entity_id: binary_sensor.kitchen_sink_leak
+        name: Sink leak
+        alert_if_on: true
+      - entity_id: binary_sensor.kitchen_door
+        name: Door
+        alert_if_on: true
+      - entity_id: sensor.kitchen_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.kitchen
+        name: Spots
+        icon: mdi:track-light
+      - entity_id: light.kitchen_sink
+        name: Sink
+        icon: mdi:wall-sconce-flat
+    climate:  # (same as living_room)
+      entity_id: climate.living_room_thermostat
+      comfort_setpoint_entity_id: input_number.living_room_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.living_room_thermostat_eco_setpoint
+      mode_entity_id: input_select.living_room_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Dining room
+    icon: mdi:silverware-fork-knife
+    color: 95, 67, 57
+    sensors:
+      - entity_id: sensor.dining_room_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.dining_room
+        name: Table
+        icon: mdi:vanity-light
+      - entity_id: light.hallway
+        name: Hallway
+        icon: mdi:wall-sconce-flat
+    climate:
+      entity_id: climate.dining_room_thermostat
+      comfort_setpoint_entity_id: input_number.dining_room_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.dining_room_thermostat_eco_setpoint
+      mode_entity_id: input_select.dining_room_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Bathroom
+    icon: mdi:shower
+    color: 0, 34, 123
+    sensors:
+      - entity_id: binary_sensor.main_bathroom_motion
+        name: Motion
+      - entity_id: binary_sensor.main_bathroom_door
+        name: Door
+      - entity_id: sensor.main_bathroom_humidity
+        name: Humidity
+      - entity_id: sensor.main_bathroom_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.main_bathroom_spots
+        name: Spots
+        icon: mdi:wall-sconce-flat
+      - entity_id: light.main_bathroom_vanity
+        name: Vanity
+        icon: mdi:vanity-light
+      - entity_id: fan.main_bathroom
+        name: Fan
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Bedroom
+    icon: mdi:bed-king
+    color: 0, 96, 15
+    sensors:
+      - entity_id: sensor.master_bedroom_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.master_bedroom
+        name: Light
+        icon: mdi:wall-sconce
+      - entity_id: light.bedside_chris
+        name: Chris' lamp
+        icon: mdi:lamp
+      - entity_id: light.bedside_karine
+        name: Karine's lamp
+        icon: mdi:lava-lamp
+      - entity_id: media_player.master_bedroom_google_home
+        name: Google Home
+        icon: mdi:speaker
+    climate:
+      entity_id: climate.master_bedroom_thermostat
+      comfort_setpoint_entity_id: input_number.master_bedroom_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.master_bedroom_thermostat_eco_setpoint
+      mode_entity_id: input_select.master_bedroom_thermostat_mode
+
+- !template
+  file: ../cards/area.yaml.j2
+  variables:
+    name: Office
+    icon: mdi:desk
+    color: 0, 54, 58
+    sensors:
+      - entity_id: sensor.office_temperature
+        name: Temperature
+    switches:
+      - entity_id: light.office
+        name: Light
+      - entity_id: media_player.office_sonos
+        name: Sonos
+        icon: mdi:speaker
+    climate:
+      entity_id: climate.office_thermostat
+      comfort_setpoint_entity_id: input_number.office_thermostat_comfort_setpoint
+      eco_setpoint_entity_id: input_number.office_thermostat_eco_setpoint
+      mode_entity_id: input_select.office_thermostat_mode
