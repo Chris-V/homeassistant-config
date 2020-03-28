@@ -6,8 +6,8 @@ endif
 
 CURRENT_DIR       = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-FILE_LINT_VERSION = latest
-YAML_LINT_VERSION = latest
+FILE_LINT_VERSION = 0.3
+YAML_LINT_VERSION = 1.20
 LINT_IGNORE_PATHS = .git/,.github/,.vscode/
 
 lint: _lint-files _lint-yaml
