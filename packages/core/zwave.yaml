@@ -2,6 +2,8 @@
 
 zwave:
   autoheal: false
+  usb_path: /dev/zwave
+  config_path: /openzwave/config
   device_config:
     light.basement_bathroom_vanity:
       refresh_value: true
