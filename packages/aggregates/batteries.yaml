@@ -47,7 +47,7 @@ sensor:
           {% set n = namespace(entities = []) %}
 
           {% for entity in expand('group.all_batteries') %}
-            {% set state = states(entity.entity_id) | int(100) %}
+            {% set state = entity.state | int(100) %}
             {% set warning_level = state_attr(entity.entity_id, 'battery_warning_level') | int(25) %}
             {% if state <= warning_level %}
               {% set n.entities = n.entities + [entity.entity_id] %}
@@ -65,7 +65,7 @@ automation:
           {% if state.state in ['unknown', 'unavailable'] -%}
             100
           {%- else -%}
-            {{ state.state | int - state.attributes.battery_warning_level | int(25) }}
+            {{ state.state | int - state_attr(x.entity_id, 'battery_warning_level') | int(25) }}
           {%- endif %}
         below: 0
         entity_id: *battery_entities
