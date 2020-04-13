@@ -129,12 +129,12 @@ automation:
         seconds: 45
     condition:
       condition: template
-      value_template: "{{ '|' ~ trigger.to_state.object_id ~ '|' not in states.input_text.offline_servers.state }}"
+      value_template: "{{ '|' ~ trigger.to_state.object_id ~ '|' not in states('input_text.offline_servers') }}"
     action:
       - service: input_text.set_value
         data_template:
           entity_id: "input_text.offline_servers"
-          value: "{{ states.input_text.offline_servers.state }}|{{ trigger.to_state.object_id }}|"
+          value: "{{ states('input_text.offline_servers') }}|{{ trigger.to_state.object_id }}|"
       - condition: state
         entity_id: "input_boolean.notify_server_outages"
         state: "on"
