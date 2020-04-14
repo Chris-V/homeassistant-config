@@ -65,7 +65,7 @@ automation:
           {% if state.state in ['unknown', 'unavailable'] -%}
             100
           {%- else -%}
-            {{ state.state | int - state_attr(x.entity_id, 'battery_warning_level') | int(25) }}
+            {{ state.state | int - state_attr(state.entity_id, 'battery_warning_level') | int(25) }}
           {%- endif %}
         below: 0
         entity_id: *battery_entities
