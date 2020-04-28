@@ -18,6 +18,11 @@
 - type: custom:button-card
   name: {{ switch.name }}
   entity: {{ switch.entity_id }}
+  {% if switch.has_power_metrics is true -%}
+  triggers_update:
+    - sensor.{{ object_id }}_power
+    - sensor.{{ object_id }}_energy
+  {%- endif %}
   aspect_ratio: {{ aspect_ratio }}
   show_label: {{ switch.has_power_metrics is true }}
   {% if switch.lock is true -%}
@@ -176,6 +181,11 @@ elements:
           - type: custom:button-card
             name: {{ switch.name }}
             entity: {{ switch.entity_id }}
+            triggers_update:
+              - {{ problems_entity_id }}
+              {% if switch.has_power_metrics is true -%}
+              - sensor.{{ object_id }}_power
+              {% endif %}
             show_label: false
             show_name: false
             show_icon: true

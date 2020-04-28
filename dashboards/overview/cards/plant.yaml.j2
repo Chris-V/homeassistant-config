@@ -75,6 +75,9 @@ elements:
 {% for sensor_type in ('moisture', 'temperature', 'conductivity', 'brightness') -%}
 {% set entity_id = (state_attr(plant_entity_id, 'sensors') | default({}))[sensor_type] %}
       - type: custom:button-card
+        triggers_update:
+          - {{ entity_id }}
+          - {{ problems_entity_id }}
 
         custom_fields:
           badge:
