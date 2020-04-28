@@ -114,4 +114,4 @@
     - entity: binary_sensor.all_leaks
 
 - type: custom:weather-card
-  entity: weather.dark_sky
+  entity: weather.quebec

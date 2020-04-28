@@ -1,31 +1,13 @@
-homeassistant:
-  customize:
-    weather.dark_sky:
-      friendly_name: "Weather"
-
 weather:
-  - platform: darksky
-    api_key: !secret weather_dark_sky_api_key
-    mode: "daily"
+  - platform: environment_canada
+    name: "Québec"
+    station: &env_canada_station "QC/s0000620"
 
 sun: {}
 
 sensor:
   - platform: moon
-  - platform: darksky
-    api_key: !secret weather_dark_sky_api_key
-    forecast:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-    language: "en"
-    monitored_conditions:
-      - humidity
-      - summary
-      - temperature
-    scan_interval: "00:15"
+
+  - platform: environment_canada
+    entity_namespace: "weather_quebec"
+    station: *env_canada_station

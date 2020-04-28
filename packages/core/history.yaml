@@ -18,6 +18,7 @@ recorder:
       - plant
       - remote
       - switch
+      - weather
       - zha
       - zwave
     entities:
