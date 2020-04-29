@@ -13,12 +13,12 @@ device_tracker:
       track_new_devices: false
 
   - platform: snmp
-    host: !secret device_tracker_router_host
-    community: "public"
+    host: !secret router_ip
+    community: !secret router_snmp_community
     baseoid: "1.3.6.1.2.1.4.22.1.2"
 
   - platform: ddwrt
-    host: !secret device_tracker_router_host
-    username: !secret device_tracker_ddwrt_username
-    password: !secret device_tracker_ddwrt_password
+    host: !secret router_ip
+    username: !secret router_username
+    password: !secret router_password
     wireless_only: true
