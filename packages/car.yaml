@@ -1,7 +1,3 @@
-# MyChevy integration is broken since GM update. See issues:
-#   https://github.com/home-assistant/core/issues/33132
-#   https://github.com/sdague/mychevy/issues/11
-
 homeassistant:
   customize:
     sensor.mychevy_2019_chevrolet_bolt_ev_electric_range:

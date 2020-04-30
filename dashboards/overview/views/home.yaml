@@ -94,11 +94,7 @@
 
 - type: horizontal-stack
   cards:
-    # MyChevy broken. Using a placeholder.
-    # - !include ../cards/car.yaml
-    - type: picture-elements
-      image: /local/car/bolt_ev_tile.png
-      elements: []
+    - !include ../cards/car.yaml
     - !include ../cards/livings-overview.yaml
 
 - type: glance
