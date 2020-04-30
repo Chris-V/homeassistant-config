@@ -21,8 +21,6 @@
  #     * mode_entity_id:
  #}
 
-{% set banner_icon_transform = 'scale(0.8)' %}
-{% set sensor_icon_transform = 'scale(0.7)' %}
 {% set sensors = sensors | default([]) | list %}
 {% set alert_sensors = sensors | selectattr('alert_if_on', 'true') | list %}
 {% set switches = switches | default([]) | list %}
@@ -42,8 +40,9 @@
   style:
     cursor: default
 {% endif %}
-    transform: {{ banner_icon_transform }}
-    margin-right: 10px
+    margin: -4px 9px -4px -4px
+    "--iron-icon-width": 32px
+    "--iron-icon-height": 32px
     {% if color is not none %}color: "{{ color }}"{% endif %}
 {%- endfilter %}
 {%- endmacro %}
@@ -58,8 +57,7 @@
   tap_action:
     action: more-info
   style:
-    transform: {{ sensor_icon_transform }}
-    transform-origin: center right
+    margin: -6px -3px
 {% endmacro %}
 
 {% macro sensor_element(sensor_config) %}
@@ -68,7 +66,7 @@
   no_toggle_hide: true
   elements_pos:
     height: 100%
-    margin-left: 10px
+    margin: 0 3px
     display: flex
     flex-direction: column
     align-items: center
@@ -83,8 +81,7 @@
       tap_action:
         action: more-info
       style:
-        transform: {{ sensor_icon_transform }}
-        transform-origin: center 60%
+        margin: -6px -3px
     - type: state-label
       entity: {{ sensor_config.entity_id }}
       title: {{ sensor_config.name }}
@@ -187,6 +184,8 @@ elements:
               justify-content: flex-end
               flex-grow: 1
               font-size: 0.55em
+              "--iron-icon-width": 28px
+              "--iron-icon-height": 28px
             elements:
 {% filter indent(14) -%}
 {% for sensor_config in sensors if sensor_config.entity_id.startswith('binary_sensor.') -%}
@@ -256,7 +255,7 @@ elements:
         elements_pos:
           <<: *banner_style
           order: 3
-          align-items: flex-end
+          align-items: baseline
           justify-content: center
           background-color: rgba(0, 0, 0, 0.55)
           height: unset
@@ -270,9 +269,9 @@ elements:
             icon: {{ switch_config.icon }}
             {% endif %}
             style:
-              transform: {{ banner_icon_transform }}
-              transform-origin: center right
-              margin: 0 15px
+              margin: -4px 6px
+              "--iron-icon-width": 32px
+              "--iron-icon-height": 32px
             tap_action:
 {% if switch_config.tap_action is defined %}
               {{ switch_config.tap_action | tojson }}

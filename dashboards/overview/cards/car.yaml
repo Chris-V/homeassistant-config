@@ -48,7 +48,7 @@ elements:
         visible: true
         no_toggle_hide: true
         elements_pos:
-          height: 2.2rem
+          height: 30px
           overflow: hidden
           display: flex
           flex-grow: 0
@@ -74,7 +74,9 @@ elements:
                 entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
                 title:
                 style:
-                  zoom: 40%
+                  margin: -12px
+                  "--iron-icon-height": 16px
+                  "--iron-icon-width": 16px
               - type: state-label
                 entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
                 title:

@@ -237,11 +237,12 @@ elements:
             visible: true
             no_toggle_hide: true
             elements_pos:
-              margin-left: 20px
+              margin-left: 10px
               display: flex
               flex-direction: column
               align-items: center
-              justify-content: flex-end
+              "--iron-icon-width": 28px
+              "--iron-icon-height": 28px
             elements:
               - type: state-icon
                 entity: {{ sensor.entity_id }}
@@ -249,7 +250,7 @@ elements:
                 tap_action:
                   action: more-info
                 style:
-                  transform: scale(0.6)
+                  margin: -6px
               - type: state-label
                 entity: {{ sensor.entity_id }}
                 title: {{ sensor.name }}
