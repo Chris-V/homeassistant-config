@@ -166,8 +166,9 @@
   file: ../cards/area.yaml.j2
   variables:
     name: Office
-    icon: mdi:desk
     color: 0, 54, 58
+    icon: mdi:desk
+    image: /local/rooms/office.jpg
     sensors:
       - entity_id: sensor.office_temperature
         name: Temperature

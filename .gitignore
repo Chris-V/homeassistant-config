@@ -29,11 +29,13 @@ panels/floorplan.html
 /custom_components/
 !/custom_components/custom_storage
 
-www/custom_ui/floorplan/ha-floorplan.html
-www/custom_ui/floorplan/lib/
-www/github/
-www/community/
-www/secrets/
+/www/custom_ui/floorplan/ha-floorplan.html
+/www/custom_ui/floorplan/lib/
+/www/github/
+/www/community/
+/www/rooms/*
+!/www/rooms/placeholder.webp
+/www/secrets/
 
 deps/
 __pycache__/
