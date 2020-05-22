@@ -5,6 +5,8 @@ homeassistant:
   elevation: !secret zone_home_elevation
   time_zone: !secret zone_home_tz
   unit_system: metric
+  external_url: !secret http_public_host
+  internal_url: !secret http_public_host
   auth_providers:
     - type: "homeassistant"
   auth_mfa_modules:

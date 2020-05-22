@@ -1,5 +1,4 @@
 http:
-  base_url: !secret http_public_host
   use_x_forwarded_for: true
   trusted_proxies: !secret http_trusted_proxy_ips
   cors_allowed_origins:
