@@ -23,8 +23,7 @@ elements:
       "--paper-item-icon-color": "#DADADB"
       "--secondary-text-color": "#DADADB"
       "--primary-text-color": "#DADADB"
-      "--iron-icon-height": 40px
-      "--iron-icon-width": 40px
+      "--mdc-icon-size": 40px
     elements:
       - type: state-icon
         entity: binary_sensor.bolt_ev_network_link
@@ -32,8 +31,7 @@ elements:
           position: absolute
           top: -5px
           left: -5px
-          "--iron-icon-height": 20px
-          "--iron-icon-width": 20px
+          "--mdc-icon-size": 20px
 
       - type: state-icon
         entity: binary_sensor.bolt_ev_recharge_recommended
@@ -41,8 +39,7 @@ elements:
           position: absolute
           top: 25px
           left: -5px
-          "--iron-icon-height": 20px
-          "--iron-icon-width": 20px
+          "--mdc-icon-size": 20px
 
       - type: custom:group-element
         visible: true
@@ -74,9 +71,8 @@ elements:
                 entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
                 title:
                 style:
-                  margin: -12px
-                  "--iron-icon-height": 16px
-                  "--iron-icon-width": 16px
+                  margin: -16px -12px -12px -12px
+                  "--mdc-icon-size": 16px
               - type: state-label
                 entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
                 title:
