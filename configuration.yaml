@@ -22,5 +22,7 @@ hacs:
 logger:
   default: "warn"
   logs:
+    homeassistant.bootstrap: "info"
+    homeassistant.setup: "info"
     homeassistant.components.glances: "fatal"
     glances: "fatal"
