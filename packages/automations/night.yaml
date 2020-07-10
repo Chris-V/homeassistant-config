@@ -10,19 +10,17 @@ automation:
       - platform: time
         at: "23:15:00"
     condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: "binary_sensor.guest_mode"
-          state: "off"
-        - condition: state
-          entity_id: "light.outdoor_lights"
-          state: "on"
-          for:
-            minutes: 5
-        - condition: time
-          after: "23:15:00"
-          before: "5:00:00"
+      - condition: state
+        entity_id: "binary_sensor.guest_mode"
+        state: "off"
+      - condition: state
+        entity_id: "light.outdoor_lights"
+        state: "on"
+        for:
+          minutes: 5
+      - condition: time
+        after: "23:15:00"
+        before: "5:00:00"
     action:
       service: homeassistant.turn_off
       entity_id: "light.outdoor_lights"

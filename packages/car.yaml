@@ -62,10 +62,9 @@ automation:
         at: "21:00:00"
     condition:
       - condition: state
-        entity_id: "input_boolean.notify_car_problems"
-        state: "on"
-      - condition: state
-        entity_id: "binary_sensor.bolt_ev_recharge_recommended"
+        entity_id:
+          - "input_boolean.notify_car_problems"
+          - "binary_sensor.bolt_ev_recharge_recommended"
         state: "on"
       - condition: state
         entity_id: "person.chris"

@@ -25,14 +25,12 @@ automation:
       - platform: state
         entity_id: sensor.latest_home_assistant_version
     condition:
-      condition: and
-      conditions:
-        - condition: template
-          value_template: >-
-            {{
-              trigger.to_state.state not in ('unknown', 'unavailable')
-                and trigger.to_state.state != states('sensor.current_home_assistant_version')
-            }}
+      - condition: template
+        value_template: >-
+          {{
+            trigger.to_state.state not in ('unknown', 'unavailable')
+              and trigger.to_state.state != states('sensor.current_home_assistant_version')
+          }}
     action:
       - service: python_script.notify
         data_template:
