@@ -1,4 +1,4 @@
 discovery:
 ssdp:
 zeroconf:
-  default_interface: True
+  default_interface: true
