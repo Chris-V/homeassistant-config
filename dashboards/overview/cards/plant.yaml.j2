@@ -55,7 +55,7 @@ elements:
         style:
           right: 1em
           top: 1.25em
-          color: var(--google-red-500)
+          color: var(--error-color)
           filter: drop-shadow(black 0 0 1px)
 
   - type: custom:group-element
@@ -108,6 +108,6 @@ elements:
                   [[[
                     return states["{{ problems_entity_id }}"].state.indexOf("{{ sensor_type }}") === -1
                       ? "#363941"
-                      : "var(--google-red-500)"
+                      : "var(--error-color)"
                   ]]]
 {% endfor %}

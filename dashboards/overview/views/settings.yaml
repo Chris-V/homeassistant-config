@@ -90,7 +90,7 @@
   show_header_toggle: false
   style: |
     :host {
-      --paper-item-icon-active-color: var(--google-red-500)
+      --paper-item-icon-active-color: var(--error-color)
     }
   entities:
     - entity: binary_sensor.all_batteries

@@ -127,7 +127,7 @@ elements:
                   right: 1em
                   top: 1.25em
                   z-index: 1
-                  color: var(--google-red-500)
+                  color: var(--error-color)
                   filter: drop-shadow(black 0 0 1px)
 
           - type: custom:gap-card  # Initial
@@ -227,7 +227,7 @@ elements:
                   - width: 10px
                   - height: 10px
                   - border-radius: 50%
-                  - background-color: var(--google-red-500)
+                  - background-color: var(--error-color)
 {% endfor %}
 
 {% for sensor in sensors | default([]) %}
