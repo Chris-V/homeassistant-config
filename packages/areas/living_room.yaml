@@ -37,10 +37,6 @@ cloud:
           - "Christmas tree"
           - "Xmas tree"
 
-cast:
-  media_player:
-    - host: !secret media_player_home_lr_host
-
 roku:
   - host: !secret media_player_roku_lr_host
 

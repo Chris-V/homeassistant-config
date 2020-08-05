@@ -19,10 +19,6 @@ cloud:
         aliases:
           - "Laundry room"
 
-cast:
-  media_player:
-    - host: !secret media_player_home_laundry_host
-
 binary_sensor:
   - platform: template
     sensors:

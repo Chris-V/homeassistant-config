@@ -35,10 +35,6 @@ cloud:
         aliases:
           - "Karine's bedside"
 
-cast:
-  media_player:
-    - host: !secret media_player_home_mbr_host
-
 input_number:
   master_bedroom_thermostat_eco_setpoint:
     name: "Master bedroom thermostat eco setpoint"

@@ -30,11 +30,6 @@ cloud:
         aliases:
           - "Lounge ambiance light"
 
-cast:
-  media_player:
-    - host: !secret media_player_cast_lounge_host
-    - host: !secret media_player_home_lounge_host
-
 input_number:
   lounge_thermostat_eco_setpoint:
     name: "Lounge thermostat eco setpoint"
