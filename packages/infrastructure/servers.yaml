@@ -31,7 +31,7 @@ homeassistant:
 input_boolean:
   notify_server_outages:
     name: "Notify server outages"
-    icon: "mdi:message-settings-variant"
+    icon: "mdi:message-cog"
 
 input_text:
   offline_servers:

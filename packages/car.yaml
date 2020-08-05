@@ -13,7 +13,7 @@ mychevy:
 input_boolean:
   notify_car_problems:
     name: "Notify car problems"
-    icon: "mdi:message-settings-variant"
+    icon: "mdi:message-cog"
 
 binary_sensor:
   - platform: template

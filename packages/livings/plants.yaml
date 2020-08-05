@@ -42,7 +42,7 @@ binary_sensor:
 input_boolean:
   notify_plant_problems:
     name: "Notify plant problems"
-    icon: 'mdi:message-settings-variant'
+    icon: 'mdi:message-cog'
 
 automation:
   - alias: notify_plant_problems

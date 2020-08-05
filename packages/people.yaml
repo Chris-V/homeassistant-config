@@ -42,10 +42,10 @@ input_boolean:
     icon: "mdi:human-greeting"
   notify_household_changes:
     name: "Notify household changes"
-    icon: "mdi:message-settings-variant"
+    icon: "mdi:message-cog"
   notify_individual_guest_arrivals:
     name: "Notify individual guest arrivals"
-    icon: "mdi:message-settings-variant"
+    icon: "mdi:message-cog"
 
 binary_sensor:
   - platform: template

@@ -32,7 +32,7 @@ sensor:
 input_boolean:
   notify_power_outages:
     name: "Notify power outages"
-    icon: "mdi:message-settings-variant"
+    icon: "mdi:message-cog"
   power_outage_manage_devices:
     name: "Manage devices based on power outages"
     initial: "on"

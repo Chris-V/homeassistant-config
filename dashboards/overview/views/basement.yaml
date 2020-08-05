@@ -85,7 +85,7 @@
   file: ../cards/area.yaml.j2
   variables:
     name: Guest's bedroom
-    icon: mdi:hotel
+    icon: mdi:bed
     color: 0, 96, 15
     sensors:
       - entity_id: binary_sensor.guest_bedroom_window

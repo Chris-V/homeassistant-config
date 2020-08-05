@@ -39,7 +39,7 @@ views:
 
   - title: Settings
     path: settings
-    icon: mdi:settings
+    icon: mdi:cog
     cards: !include views/settings.yaml
 
   - title: Network
