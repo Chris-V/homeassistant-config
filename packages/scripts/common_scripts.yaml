@@ -1,0 +1,19 @@
+script:
+  flash_light:
+    alias: "Flash a light"
+    description: "Flash a specific light for 1 second"
+    fields:
+      entity_id:
+        description: "The entity to flash."
+        example: "light.ambiance"
+    mode: "queued"
+    sequence:
+      - service: light.toggle
+        data_template:
+          entity_id: "{{ entity_id }}"
+          transition: 0
+      - delay: 00:00:01
+      - service: light.toggle
+        data_template:
+          entity_id: "{{ entity_id }}"
+          transition: 0
