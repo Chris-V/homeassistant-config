@@ -20,6 +20,7 @@ binary_sensor:
   - platform: template
     sensors:
       carl_requires_attention:
+        unique_id: "binary_sensor.carl_requires_attention"
         friendly_name: "Carl requires attention"
         device_class: "problem"
         entity_picture_template: "/local/animals/carl_avatar.jpg"
@@ -40,16 +41,19 @@ sensor:
   - platform: template
     sensors:
       carl_basking_temperature:
+        unique_id: "sensor.carl_basking_temperature"
         friendly_name: "Carl's basking spot temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         value_template: "0.0"
       carl_temperature:
+        unique_id: "sensor.carl_temperature"
         friendly_name: "Carl's terrarium temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         value_template: "0.0"
       carl_humidity:
+        unique_id: "sensor.carl_humidity"
         friendly_name: "Carl's terrarium humidity"
         device_class: "humidity"
         unit_of_measurement: "%"

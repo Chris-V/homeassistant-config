@@ -6,6 +6,8 @@ homeassistant:
     sensor.lounge_window_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
+    switch.lounge_tv:
+      friendly_name: "Living room TV"
 
 cloud:
   google_actions:
@@ -69,10 +71,19 @@ sensor:
   - platform: template
     sensors:
       lounge_temperature:
+        unique_id: "sensor.lounge_temperature"
         friendly_name: "Lounge temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         value_template: "{{ states('sensor.lounge_thermostat_temperature') | round(1) }}"
+
+switch:
+  - platform: broadlink
+    mac: !secret broadlink_mac
+    switches:
+      - name: "lounge_tv"
+        command_on: "JgBQAAABKJMTERQRFDUUERQRFBEUERQQFDYTNhQRFDUUNhM2FDYTNhQRFBEUEBQ2ExIUEBQRFBEUNRQ2EzYUERQ1FDYTNhQ2EwAFIwABKEgUAA0FAAAAAAAAAAA="
+        command_off: "JgBYAAABKZITERQRFDUXDhUQFBEUEBUQFDYTNhUQFTQUNhQ1FTUUNRQRFBEUEBQ2FRESERQRFBEUNRQ2FDUUERQ1EzcUNRQ2FAAFIgABKEkUAAxPAAEoSBQADQU="
 
 automation:
   - alias: "double_up_lounge"

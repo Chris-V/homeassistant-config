@@ -65,6 +65,7 @@ sensor:
   - platform: template
     sensors:
       dining_room_temperature:
+        unique_id: "sensor.dining_room_temperature"
         friendly_name: "Dining room temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"

@@ -23,6 +23,7 @@ sensor:
   - platform: template
     sensors:
       ups_battery_status:
+        unique_id: "sensor.ups_battery_status"
         friendly_name: "UPS battery status"
         device_class: "battery"
         unit_of_measurement: "%"

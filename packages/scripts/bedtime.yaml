@@ -82,10 +82,10 @@ script:
   bedtime_maybe_living_room_tv:
     sequence:
       - condition: template
-        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}"
-      - service: switch.turn_off
+        value_template: "{{ not is_state('media_player.living_room_tv', 'standby') and not is_state('media_player.living_room_tv', 'home') }}"
+      - service: remote.turn_off
         data:
-          entity_id: "switch.living_room_tv_power"
+          entity_id: "remote.living_room_tv"
   bedtime_maybe_main_bathroom:
     sequence:
       - condition: state

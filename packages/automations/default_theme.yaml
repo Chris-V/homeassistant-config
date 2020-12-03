@@ -33,8 +33,9 @@ automation:
     trigger:
       - platform: sun
         event: "sunrise"
-      - platform: homeassistant
-        event: "start"
+      - platform: state
+        entity_id: "input_boolean.automatic_night_theme"
+        to: "on"
     condition:
       - condition: state
         entity_id: "input_boolean.automatic_night_theme"
@@ -53,8 +54,9 @@ automation:
     trigger:
       - platform: sun
         event: "sunset"
-      - platform: homeassistant
-        event: "start"
+      - platform: state
+        entity_id: "input_boolean.automatic_night_theme"
+        to: "on"
     condition:
       - condition: state
         entity_id: "input_boolean.automatic_night_theme"

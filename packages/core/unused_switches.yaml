@@ -1,14 +1,10 @@
 switch:
   - platform: broadlink
     mac: !secret broadlink_mac
-    host: !secret broadlink_host
-    type: "rm2_pro_plus"
     switches:
-      unused_rf_3:
-        friendly_name: "Unused RF 3"
+      - name: "unused_rf_3"
         command_on: "sggyAAYUEggGFBIIBhQGFAYUEggGFBMHBhQTBwYUEggSCBIIBhQGFAYUBhQGFAYUEgcSCAa/AAAA"
         command_off: "sgoyAAYUEggGFBIIBhQGFAYUEggGFBIHBhQSBwYUEggTBxIIBhQGFAYUBhQSCBIIBhQGFAa/AAAA"
-      unused_rf_4:
-        friendly_name: "Unused RF 4"
+      - name: "unused_rf_4"
         command_on: "sgkyAAYUEggGFBIIBhMGFAYUEggGFBIHBhQSBxIIEgcGFBMHBhQGFAYUBhQGFAYUEggSBwa/AAAA"
         command_off: "sgkyAAYUEggGFBIIBhQGFAYTEggGFBIHBhQSBxIIEggGFBIHBhQGFAYUBhQSCBIHBhQGFAa/AAAA"

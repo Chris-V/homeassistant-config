@@ -34,6 +34,7 @@ sensor:
   - platform: template
     sensors:
       maitre_doyle_problems:
+        unique_id: "sensor.maitre_doyle_problems"
         friendly_name: "Maître Doyle"
         value_template: "{{ state_attr('plant.maitre_doyle', 'problem') or 'none' }}"
 

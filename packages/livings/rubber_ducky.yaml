@@ -34,6 +34,7 @@ sensor:
   - platform: template
     sensors:
       rubber_ducky_problems:
+        unique_id: "sensor.rubber_ducky_problems"
         friendly_name: "Rubber Ducky"
         value_template: "{{ state_attr('plant.rubber_ducky', 'problem') or 'none' }}"
 

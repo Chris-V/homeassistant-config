@@ -2,7 +2,7 @@ group:
   all_motions:
     name: "All motions"
     icon: "mdi:motion-sensor"
-    entities: &motion_entities
+    entities:
       - binary_sensor.basement_bathroom_motion
       - binary_sensor.laundry_room_motion
       - binary_sensor.main_bathroom_motion
@@ -12,9 +12,9 @@ binary_sensor:
   - platform: template
     sensors:
       all_motions:
+        unique_id: "binary_sensor.all_motions"
         friendly_name: "All motions"
         device_class: "motion"
-        entity_id: *motion_entities
         value_template: >-
           {{
             expand('group.all_motions')
@@ -35,8 +35,8 @@ sensor:
   - platform: template
     sensors:
       last_motion:
+        unique_id: "sensor.last_motion"
         friendly_name: "Last motion"
-        entity_id: *motion_entities
         icon_template: "mdi:motion-sensor"
         value_template: >-
           {{

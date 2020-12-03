@@ -61,6 +61,7 @@ switch:
   - platform: template
     switches:
       network_media:
+        unique_id: "switch.network_media"
         friendly_name: "Media"
         value_template: "{{ is_state('device_tracker.avatar_media', 'home') }}"
         icon_template: "mdi:server-network{% if not is_state('device_tracker.avatar_media', 'home') %}-off{% endif %}"
@@ -75,6 +76,7 @@ switch:
             server_key: "media"
 
       network_relay_north:
+        unique_id: "switch.network_relay_north"
         friendly_name: "Relay North"
         value_template: "{{ is_state('device_tracker.avatar_relay_north', 'home') }}"
         icon_template: "mdi:server-network{% if not is_state('device_tracker.avatar_relay_north', 'home') %}-off{% endif %}"
@@ -89,6 +91,7 @@ switch:
             server_key: "relay_north"
 
       network_relay_south:
+        unique_id: "switch.network_relay_south"
         friendly_name: "Relay South"
         value_template: "{{ is_state('device_tracker.avatar_relay_south', 'home') }}"
         icon_template: "mdi:server-network{% if not is_state('device_tracker.avatar_relay_south', 'home') %}-off{% endif %}"

@@ -3,13 +3,17 @@ homeassistant:
     binary_sensor.living_room_door:
       friendly_name: "Living room door"
       device_class: "door"
-    sensor.living_room_door_sensor_battery:
-      battery_type: "Sensative Strip"
-      battery_warning_level: 20
     light.living_room_ambiance:
       friendly_name: "Living room ambiance"
     light.bookshelf:
       friendly_name: "Bookshelf light"
+    sensor.living_room_door_sensor_battery:
+      battery_type: "Sensative Strip"
+      battery_warning_level: 20
+    switch.bookshelf_outlet:
+      friendly_name: "Bookshelf outlet"
+    switch.living_room_ambiance:
+      friendly_name: "Ambiance outlet"
 
 cloud:
   google_actions:
@@ -37,23 +41,16 @@ cloud:
           - "Christmas tree"
           - "Xmas tree"
 
-roku:
-  - host: !secret media_player_roku_lr_host
-
 switch:
-  - platform: template
+  - platform: broadlink
+    mac: !secret broadlink_mac
     switches:
-      living_room_tv_power:
-        friendly_name: "Living room TV"
-        turn_on:
-          service: "media_player.turn_on"
-          data:
-            entity_id: "media_player.living_room_tv"
-        turn_off:
-          service: "media_player.turn_off"
-          data:
-            entity_id: "media_player.living_room_tv"
-        value_template: '{{ not is_state("media_player.living_room_tv", "standby") }}'
+      - name: "living_room_ambiance"
+        command_on: "svAyABMHBhMTBwYTBhMHExMHBxMTBwYTEwcHExMHBxMTBwYTBxMTBxMHBxMHExMHEwcGvwYTAAAA"
+        command_off: "ssoyAAYUEggGFBIIBhQGFAYUEggGFRIIBhQSCAYUEggGFBMHBhQGFBIIEggTCBIIBhQGFAbAAAAA"
+      - name: "bookshelf_outlet"
+        command_on: "sggyAAYUEggGFBMIBhQGFAYUEgcGFBIIBhQSCAYUEggGFBIIEwcSCAYUBhQGFAcUEggSCAa/AAAA"
+        command_off: "sgkyAAYUEgcGFBIHBhQGFAYUEgcGFBIHBhQSCAYUEggGFBIHEggSCAYUBhQSBxMHBhQGFAa/AAAA"
 
 input_number:
   living_room_thermostat_eco_setpoint:
@@ -102,6 +99,7 @@ sensor:
   - platform: template
     sensors:
       living_room_temperature:
+        unique_id: "sensor.living_room_temperature"
         friendly_name: "Living room temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"

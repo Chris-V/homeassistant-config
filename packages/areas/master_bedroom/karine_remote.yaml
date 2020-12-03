@@ -48,10 +48,7 @@ automation:
       - service: light.turn_on
         data_template:
           entity_id: "{{ states('input_select.karine_remote_entity') }}"
-          rgb_color:
-            - "{{ (trigger.to_state.state | from_json)[0] | int }}"
-            - "{{ (trigger.to_state.state | from_json)[1] | int }}"
-            - "{{ (trigger.to_state.state | from_json)[2] | int }}"
+          rgb_color: "{{ trigger.to_state.state }}"
 
   - alias: karine_remote_tap_power
     description: Toggle selected light
@@ -188,7 +185,7 @@ automation:
         entity_id: script.flash_light
         data_template:
           variables:
-            entity_id: "{{ input_select.karine_remote_entity }}"
+            entity_id: "{{ states('input_select.karine_remote_entity') }}"
   - alias: karine_remote_tap_right
     description: Next bedroom light
     initial_state: true
@@ -211,7 +208,7 @@ automation:
         entity_id: script.flash_light
         data_template:
           variables:
-            entity_id: "{{ input_select.karine_remote_entity }}"
+            entity_id: "{{ states('input_select.karine_remote_entity') }}"
 
   - alias: karine_remote_hold_left
     description: Activate bedtime

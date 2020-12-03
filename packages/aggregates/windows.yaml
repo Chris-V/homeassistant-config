@@ -2,7 +2,7 @@ group:
   all_windows:
     name: "All windows"
     icon: "mdi:window-closed"
-    entities: &window_entities
+    entities:
       - binary_sensor.guest_bedroom_window
       - binary_sensor.studio_window
       - binary_sensor.lounge_window
@@ -11,9 +11,9 @@ binary_sensor:
   - platform: template
     sensors:
       all_windows:
+        unique_id: "binary_sensor.all_windows"
         friendly_name: "All windows"
         device_class: "window"
-        entity_id: *window_entities
         value_template: >-
           {{
             expand('group.all_windows')

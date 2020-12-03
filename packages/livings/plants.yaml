@@ -2,7 +2,7 @@ group:
   all_plants:
     name: "All plants"
     icon: "mdi:flower"
-    entities: &plant_entities
+    entities:
       - "plant.dollorama"
       - "plant.maitre_doyle"
       - "plant.rubber_ducky"
@@ -14,9 +14,9 @@ binary_sensor:
   - platform: template
     sensors:
       all_plants:
+        unique_id: "binary_sensor.all_plants"
         friendly_name: "All plants"
         device_class: "problem"
-        entity_id: *plant_entities
         icon_template: >-
           {% set active = expand('group.all_plants')
               | selectattr('state', 'eq', 'problem')

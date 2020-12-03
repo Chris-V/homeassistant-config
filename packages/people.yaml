@@ -51,6 +51,7 @@ binary_sensor:
   - platform: template
     sensors:
       guest_mode:
+        unique_id: "binary_sensor.guest_mode"
         friendly_name: "Guest mode"
         icon_template: "mdi:human-greeting"
         value_template: >-
@@ -63,9 +64,9 @@ sensor:
   - platform: template
     sensors:
       guests_home:
+        unique_id: "sensor.guests_home"
         friendly_name: "Guests at home"
         icon_template: "mdi:account-star"
-        entity_id: *guest_entities
         value_template: >-
           {{
             expand('group.guests')

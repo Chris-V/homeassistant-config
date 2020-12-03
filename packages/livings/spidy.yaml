@@ -34,6 +34,7 @@ sensor:
   - platform: template
     sensors:
       spidy_problems:
+        unique_id: "sensor.spidy_problems"
         friendly_name: "Spidy"
         value_template: "{{ state_attr('plant.spidy', 'problem') or 'none' }}"
 

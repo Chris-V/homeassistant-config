@@ -2,7 +2,7 @@ group:
   all_doors:
     name: "All doors"
     icon: "mdi:door"
-    entities: &door_entities
+    entities:
       - binary_sensor.kitchen_door
       - binary_sensor.living_room_door
 
@@ -10,9 +10,9 @@ binary_sensor:
   - platform: template
     sensors:
       all_doors:
+        unique_id: "binary_sensor.all_doors"
         friendly_name: "All doors"
         device_class: "door"
-        entity_id: *door_entities
         value_template: >-
           {{
             expand('group.all_doors')

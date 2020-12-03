@@ -20,6 +20,7 @@ binary_sensor:
   - platform: template
     sensors:
       slinky_requires_attention:
+        unique_id: "binary_sensor.slinky_requires_attention"
         friendly_name: "Slinky requires attention"
         device_class: "problem"
         entity_picture_template: "/local/animals/slinky_avatar.jpg"
@@ -40,16 +41,19 @@ sensor:
   - platform: template
     sensors:
       slinky_basking_temperature:
+        unique_id: "sensor.slinky_basking_temperature"
         friendly_name: "Slinky's basking spot temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         value_template: "0.0"
       slinky_temperature:
+        unique_id: "sensor.slinky_temperature"
         friendly_name: "Slinky's terrarium temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         value_template: "0.0"
       slinky_humidity:
+        unique_id: "sensor.slinky_humidity"
         friendly_name: "Slinky's terrarium humidity"
         device_class: "humidity"
         unit_of_measurement: "%"

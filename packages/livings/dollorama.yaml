@@ -34,6 +34,7 @@ sensor:
   - platform: template
     sensors:
       dollorama_problems:
+        unique_id: "sensor.dollorama_problems"
         friendly_name: "Dollorama"
         value_template: "{{ state_attr('plant.dollorama', 'problem') or 'none' }}"
 

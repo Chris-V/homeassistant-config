@@ -63,6 +63,7 @@ sensor:
   - platform: template
     sensors:
       studio_temperature:
+        unique_id: "sensor.studio_temperature"
         friendly_name: "Studio temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"

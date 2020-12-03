@@ -11,9 +11,9 @@ binary_sensor:
   - platform: template
     sensors:
       all_leaks:
+        unique_id: "binary_sensor.all_leaks"
         friendly_name: "All leaks"
         device_class: "moisture"
-        entity_id: *leak_entities
         icon_template: >-
           {% set active = expand('group.all_leaks')
               | selectattr('state', 'eq', 'on')

@@ -48,6 +48,7 @@ binary_sensor:
   - platform: template
     sensors:
       kitchen_sink_leak:
+        unique_id: "binary_sensor.kitchen_sink_leak"
         friendly_name: "Kitchen sink leak"
         device_class: "moisture"
         value_template: "{{ is_state('sensor.kitchen_sink_leak_sensor_flood', '2') }}"
@@ -56,6 +57,7 @@ sensor:
   - platform: template
     sensors:
       kitchen_temperature:
+        unique_id: "sensor.kitchen_temperature"
         friendly_name: "Kitchen temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
