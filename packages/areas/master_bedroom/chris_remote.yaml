@@ -9,8 +9,8 @@ input_select:
     name: "Entity controlled by Chris' remote"
     initial: "light.bedside_chris"
     options:
-      - "light.bedside_chris"
       - "light.bedside_karine"
+      - "light.bedside_chris"
       - "light.master_bedroom_bedsides"
   chris_remote_color:
     name: "Color applied by Chris' remote"
