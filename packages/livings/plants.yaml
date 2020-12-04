@@ -64,7 +64,7 @@ automation:
         value_template: "{{ trigger.to_state.state not in ('none', 'battery low') }}"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           audio: true
           persistent: true
           push_target: "household"

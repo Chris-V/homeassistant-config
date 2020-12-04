@@ -25,7 +25,7 @@ automation:
         event: "start"
     action:
       - service: frontend.set_theme
-        data_template:
+        data:
           name: "{{ states('input_select.default_theme') | default('default') }}"
 
   - alias: sunrise_theme

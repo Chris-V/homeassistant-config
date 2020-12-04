@@ -71,7 +71,7 @@ automation:
         entity_id: *battery_entities
     action:
       - service: python_script.notify
-        data_template:
+        data:
           persistent: true
           push_target: "household"
           tag: "battery_low_{{ trigger.to_state.object_id }}"

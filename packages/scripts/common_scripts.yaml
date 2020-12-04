@@ -9,11 +9,11 @@ script:
     mode: "queued"
     sequence:
       - service: light.toggle
-        data_template:
+        data:
           entity_id: "{{ entity_id }}"
           transition: 0
       - delay: 00:00:01
       - service: light.toggle
-        data_template:
+        data:
           entity_id: "{{ entity_id }}"
           transition: 0

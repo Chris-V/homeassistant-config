@@ -33,7 +33,7 @@ automation:
           }}
     action:
       - service: python_script.notify
-        data_template:
+        data:
           persistent: true
           push_target: "admin"
           tag: "hass_version"
@@ -54,7 +54,7 @@ automation:
         value_template: "{{ trigger.event.data.service_data.notification_id == 'http-login' }}"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           push_target: "admin"
           title: "{{ trigger.event.data.service_data.title }}"
           message: "{{ trigger.event.data.service_data.message }}"

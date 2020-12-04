@@ -79,7 +79,7 @@ script:
     icon: "mdi:thermometer-lines"
     sequence:
       - service: scene.apply
-        data_template:
+        data:
           entities:
             input_select.basement_bathroom_thermostat_auto_mode: "Comfort"
             input_select.basement_hallway_thermostat_auto_mode: "Comfort"
@@ -96,7 +96,7 @@ script:
     icon: "mdi:thermometer-lines"
     sequence:
       - service: scene.apply
-        data_template:
+        data:
           entities:
             input_select.basement_bathroom_thermostat_auto_mode: "Eco"
             input_select.basement_hallway_thermostat_auto_mode: "Eco"
@@ -113,7 +113,7 @@ script:
     icon: "mdi:thermometer-lines"
     sequence:
       - service: scene.apply
-        data_template:
+        data:
           entities:
             input_select.basement_bathroom_thermostat_auto_mode: "Eco"
             input_select.basement_hallway_thermostat_auto_mode: "Eco"
@@ -130,7 +130,7 @@ script:
     icon: "mdi:thermometer-lines"
     sequence:
       - service: scene.apply
-        data_template:
+        data:
           entities:
             input_select.basement_bathroom_thermostat_auto_mode: "Eco"
             input_select.basement_hallway_thermostat_auto_mode: "Eco"
@@ -153,7 +153,7 @@ script:
     icon: "mdi:thermometer-alert"
     sequence:
       - service: input_select.select_option
-        data_template:
+        data:
           entity_id: *thermostat_modes
           option: "Auto"
 
@@ -175,7 +175,7 @@ automation:
         for: "01:00:00"
     action:
       - service: input_select.select_option
-        data_template:
+        data:
           entity_id: "{{ trigger.to_state.entity_id }}"
           option: "Auto"
 
@@ -232,7 +232,7 @@ automation:
               and planned_setpoint != state_attr('climate.' ~ area_prefix ~ '_thermostat', 'temperature') | float }}
     action:
       - service: "climate.set_temperature"
-        data_template:
+        data:
           entity_id: |
             {% set area_prefix = trigger.to_state.object_id
                 | replace('_thermostat_mode', '')
@@ -280,6 +280,6 @@ automation:
           {{ trigger.to_state.attributes.preset_mode != 'none'
               or planned_setpoint != trigger.to_state.attributes.temperature | float }}
       - service: "input_select.select_option"
-        data_template:
+        data:
           entity_id: "input_select.{{ trigger.to_state.object_id }}_mode"
           option: "Manual"

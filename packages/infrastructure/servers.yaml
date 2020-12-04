@@ -113,7 +113,7 @@ automation:
       event_type: "device_tracker_new_device"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           push_target: "admin"
           persistent: true
           title: "New device detected on network"
@@ -135,14 +135,14 @@ automation:
       value_template: "{{ '|' ~ trigger.to_state.object_id ~ '|' not in states('input_text.offline_servers') }}"
     action:
       - service: input_text.set_value
-        data_template:
+        data:
           entity_id: "input_text.offline_servers"
           value: "{{ states('input_text.offline_servers') }}|{{ trigger.to_state.object_id }}|"
       - condition: state
         entity_id: "input_boolean.notify_server_outages"
         state: "on"
       - service: python_script.notify
-        data_template:
+        data:
           push_target: "admin"
           tag: "server_{{ trigger.to_state.object_id }}"
           url: "/lovelace/network"
@@ -169,14 +169,14 @@ automation:
       value_template: "{{ '|' ~ trigger.to_state.object_id ~ '|' in states.input_text.offline_servers.state }}"
     action:
       - service: input_text.set_value
-        data_template:
+        data:
           entity_id: "input_text.offline_servers"
           value: "{{ states.input_text.offline_servers.state | replace('|' ~ trigger.to_state.object_id ~ '|', '') }}"
       - condition: state
         entity_id: "input_boolean.notify_server_outages"
         state: "on"
       - service: python_script.notify
-        data_template:
+        data:
           push_target: "admin"
           tag: "server_outage_{{ trigger.to_state.object_id }}"
           url: "/lovelace/network"
@@ -201,7 +201,7 @@ automation:
           action: *power_on_action_key
     action:
       - service: switch.turn_on
-        data_template:
+        data:
           entity_id: "{{ trigger.event.data.data.entity_id }}"
 
   - alias: notification_action_power_off_server
@@ -217,5 +217,5 @@ automation:
           action: *power_off_action_key
     action:
       - service: switch.turn_off
-        data_template:
+        data:
           entity_id: "{{ trigger.event.data.data.entity_id }}"

@@ -37,7 +37,7 @@ automation:
           }}
     action:
       - service: python_script.notify
-        data_template:
+        data:
           push_target: "admin"
           tag: "minecraft-status"
           title: "Minecraft status"
@@ -60,7 +60,7 @@ automation:
           }}
     action:
       - service: python_script.notify
-        data_template:
+        data:
           persistent: true
           push_target: "admin"
           tag: "minecraft-update"
@@ -81,7 +81,7 @@ automation:
         state: "on"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           push_target: "admin"
           tag: "minecraft-players"
           title: >-

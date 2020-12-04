@@ -45,7 +45,7 @@ automation:
         to: "on"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           audio: true
           persistent: true
           push_target: "household"

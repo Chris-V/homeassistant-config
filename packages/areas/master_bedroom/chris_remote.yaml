@@ -35,7 +35,7 @@ automation:
         for: "00:05:00"
     action:
       - service: "input_select.select_option"
-        data_template:
+        data:
           entity_id: "input_select.chris_remote_entity"
           option: "{{ state_attr('input_select.chris_remote_entity', 'options')[0] }}"
 
@@ -46,7 +46,7 @@ automation:
         entity_id: input_select.chris_remote_color
     action:
       - service: light.turn_on
-        data_template:
+        data:
           entity_id: "{{ states('input_select.chris_remote_entity') }}"
           rgb_color: "{{ trigger.to_state.state }}"
 
@@ -66,7 +66,7 @@ automation:
         value_template: "{{ trigger.event.data.args == [] }}"
     action:
       - service: light.toggle
-        data_template:
+        data:
           entity_id: "{{ states('input_select.chris_remote_entity') }}"
   - alias: chris_remote_hold_power
     description: Toggle bedroom light
@@ -103,7 +103,7 @@ automation:
         value_template: "{{ trigger.event.data.args == [0, 43, 5] }}"
     action:
       - service: light.turn_on
-        data_template:
+        data:
           entity_id: "{{ states('input_select.chris_remote_entity') }}"
           brightness: "{{ (state_attr('light.bedside_chris', 'brightness') | int + 32)| max(12) | min(255) }}"
   - alias: chris_remote_tap_dim_down
@@ -122,7 +122,7 @@ automation:
         value_template: "{{ trigger.event.data.args == [1, 43, 5] }}"
     action:
       - service: light.turn_on
-        data_template:
+        data:
           entity_id: "{{ states('input_select.chris_remote_entity') }}"
           brightness: "{{ (state_attr('light.bedside_chris', 'brightness') | int - 32)| max(12) | min(255) }}"
 
@@ -183,7 +183,7 @@ automation:
           entity_id: input_select.chris_remote_entity
       - service: script.turn_on
         entity_id: script.flash_light
-        data_template:
+        data:
           variables:
             entity_id: "{{ states('input_select.chris_remote_entity') }}"
   - alias: chris_remote_tap_right
@@ -206,7 +206,7 @@ automation:
           entity_id: input_select.chris_remote_entity
       - service: script.turn_on
         entity_id: script.flash_light
-        data_template:
+        data:
           variables:
             entity_id: "{{ states('input_select.chris_remote_entity') }}"
 

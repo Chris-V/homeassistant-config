@@ -101,7 +101,7 @@ automation:
           }}
     action:
       - service: python_script.notify
-        data_template:
+        data:
           persistent: true
           push_target: "household"
           title: "Guests are home"
@@ -119,7 +119,7 @@ automation:
         state: "on"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           push_target: "admin"
           tag: "presence_{{ trigger.to_state.object_id }}"
           title: "{{ trigger.to_state.name }} arrived home."
@@ -137,7 +137,7 @@ automation:
         state: "on"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           push_target: "admin"
           tag: "presence_{{ trigger.to_state.object_id }}"
           title: "{{ trigger.to_state.name }} left home."

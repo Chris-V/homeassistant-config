@@ -67,7 +67,7 @@ script:
         timeout: "00:00:30"
 
       - service: tts.google_cloud_say
-        data_template:
+        data:
           entity_id: "group.broadcast_media_players"
           message: "{{ message }}"
 
@@ -134,13 +134,13 @@ automation:
         entity_id: "automation.broadcast_notifications"
 
       - service: script.broadcast_notification
-        data_template:
+        data:
           message: "Attention. {{ state_attr('custom_storage.broadcast_notifications', 'item_0_data') }}"
       - wait_template: "{{ is_state('script.broadcast_notification', 'off') }}"
 
       - service: automation.turn_on
         entity_id: "automation.broadcast_notifications"
       - service: custom_storage.remove
-        data_template:
+        data:
           object_id: "broadcast_notifications"
           id: "{{ state_attr('custom_storage.broadcast_notifications', 'item_0_id') }}"

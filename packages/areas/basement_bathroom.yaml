@@ -191,7 +191,7 @@ automation:
         state: "off"
     action:
       - service: light.turn_on
-        data_template:
+        data:
           entity_id: "light.basement_bathroom_vanity"
           brightness_pct: >-
             {% set time = now().strftime('%H%M') | int %}

@@ -76,7 +76,7 @@ automation:
         after: "21:00:00"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           audio: true
           push_target: "household"
           tag: "charge_car"

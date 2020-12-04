@@ -55,7 +55,7 @@ automation:
         state: "on"
     action:
       - service: python_script.notify
-        data_template:
+        data:
           persistent: true
           push_target: "household"
           tag: "power_outage_{{ states('input_text.power_outage_id') }}"
@@ -75,11 +75,11 @@ automation:
     condition: *power_outage_conditions
     action:
       - service: input_text.set_value
-        data_template:
+        data:
           entity_id: "input_text.power_outage_id"
           value: "{{ as_timestamp(now()) | int }}"
       - service: python_script.notify
-        data_template:
+        data:
           persistent: true
           push_target: "household"
           tag: "power_outage_{{ states('input_text.power_outage_id') }}"
