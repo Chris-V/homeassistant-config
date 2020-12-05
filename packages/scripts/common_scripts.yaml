@@ -12,7 +12,7 @@ script:
         data:
           entity_id: "{{ entity_id }}"
           transition: 0
-      - delay: 00:00:01
+      - delay: 1
       - service: light.toggle
         data:
           entity_id: "{{ entity_id }}"

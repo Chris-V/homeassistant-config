@@ -13,6 +13,8 @@ script:
   bedtime:
     alias: "Bedtime"
     icon: "mdi:weather-night"
+    mode: "single"
+    max_exceeded: "silent"
     sequence:
       - service: tts.google_cloud_say
         data:
@@ -29,76 +31,74 @@ script:
           entity_id: "light.master_bedroom_bedsides"
           brightness_pct: 5
           kelvin: 2200
-      - service: light.turn_off
-        data:
-          entity_id: "light.master_bedroom"
-      - service: light.turn_off
-        data:
-          entity_id: "light.kitchen_lights"
-      - service: light.turn_off
-        data:
-          entity_id: "light.living_room_lights"
-      - service: light.turn_off
-        data:
-          entity_id: "light.common_basement_lights"
-      - service: light.turn_off
-        data:
-          entity_id: "light.lounge_lights"
-      - service: light.turn_off
-        data:
-          entity_id: "light.office_lights"
-      - service: script.bedtime_maybe_basement_bathroom
-      - service: script.bedtime_maybe_dining_room
-      - service: script.bedtime_maybe_laundry_room
-      - service: script.bedtime_maybe_living_room_tv
-      - service: script.bedtime_maybe_main_bathroom
-      - service: script.bedtime_maybe_workshop
 
-  bedtime_maybe_basement_bathroom:
-    sequence:
-      - condition: state
-        entity_id: "binary_sensor.basement_bathroom_motion"
-        state: "off"
       - service: light.turn_off
         data:
-          entity_id: "light.basement_bathroom_lights"
-  bedtime_maybe_dining_room:
-    sequence:
-      - condition: state
-        entity_id: "light.dining_room"
-        state: "on"
-      - service: light.turn_on
-        data:
-          entity_id: "light.dining_room"
-          brightness_pct: 10
-  bedtime_maybe_laundry_room:
-    sequence:
-      - condition: state
-        entity_id: "binary_sensor.laundry_room_motion"
-        state: "off"
-      - service: light.turn_off
-        data:
-          entity_id: "light.laundry_room_lights"
-  bedtime_maybe_living_room_tv:
-    sequence:
-      - condition: template
-        value_template: "{{ not is_state('media_player.living_room_tv', 'standby') and not is_state('media_player.living_room_tv', 'home') }}"
-      - service: remote.turn_off
-        data:
-          entity_id: "remote.living_room_tv"
-  bedtime_maybe_main_bathroom:
-    sequence:
-      - condition: state
-        entity_id: "binary_sensor.main_bathroom_motion"
-        state: "off"
-      - service: light.turn_off
-        data:
-          entity_id: "light.main_bathroom_lights"
-  bedtime_maybe_workshop:
-    sequence:
-      - condition: state
-        entity_id: "binary_sensor.workshop_motion"
-        state: "off"
-      - service: light.turn_off
-        data:
-          entity_id: "light.workshop_lights"
+          entity_id:
+            - "light.master_bedroom"
+            - "light.kitchen_lights"
+            - "light.living_room_lights"
+            - "light.common_basement_lights"
+            - "light.lounge_lights"
+            - "light.office_lights"
+
+      - choose:
+          conditions:
+            - condition: state
+              entity_id: "binary_sensor.basement_bathroom_motion"
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data:
+                entity_id: "light.basement_bathroom_lights"
+
+      - choose:
+          conditions:
+            - condition: state
+              entity_id: "light.dining_room"
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: "light.dining_room"
+                brightness_pct: 10
+
+      - choose:
+          conditions:
+            - condition: state
+              entity_id: "binary_sensor.laundry_room_motion"
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data:
+                entity_id: "light.laundry_room_lights"
+
+      - choose:
+          conditions:
+            - condition: state
+              entity_id: "media_player.living_room_tv"
+              state: "home"
+          sequence:
+            - service: remote.turn_off
+              data:
+                entity_id: "remote.living_room_tv"
+
+      - choose:
+          conditions:
+            - condition: state
+              entity_id: "binary_sensor.main_bathroom_motion"
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data:
+                entity_id: "light.main_bathroom_lights"
+
+      - choose:
+          conditions:
+            - condition: state
+              entity_id: "binary_sensor.workshop_motion"
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              data:
+                entity_id: "light.workshop_lights"
