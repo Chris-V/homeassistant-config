@@ -34,7 +34,7 @@ group:
     name: "Broadcast enabled media players"
     icon: "mdi:speaker-multiple"
     all: true
-    entities: &broadcast_media_players
+    entities:
       - media_player.laundry_room_google_home
       - media_player.living_room_google_home
       - media_player.lounge_google_home
@@ -45,49 +45,45 @@ script:
   broadcast_notification:
     alias: "Broadcast notification"
     description: "Synchronize `group.broadcast_media_players` and broadcast an audio message"
+    mode: "queued"
+    max: 25
+
     fields:
       message:
         description: "The message to play on the speakers."
         example: "Today is a fine day. Don't forget to charge your phone."
+
     sequence:
       - service: media_player.turn_on
         data:
           entity_id: "group.broadcast_media_players"
-      - wait_template: >-  # yet again, expanding groups doesn't infer all entities
+      - wait_template: >-
           {{
-            expand(
-              'media_player.laundry_room_google_home',
-              'media_player.living_room_google_home',
-              'media_player.lounge_google_home',
-              'media_player.master_bedroom_google_home',
-              'media_player.office_sonos'
-            ) | selectattr('state', '==', 'off')
+            expand('group.broadcast_media_players')
+              | selectattr('state', '==', 'off')
               | first is undefined
           }}
-        timeout: "00:00:30"
+        timeout: 15
 
       - service: tts.google_cloud_say
         data:
           entity_id: "group.broadcast_media_players"
           message: "{{ message }}"
 
-      - delay: "00:00:02"
+      - delay: 5
       - wait_template: >-
           {{
-            expand(
-              'media_player.laundry_room_google_home',
-              'media_player.living_room_google_home',
-              'media_player.lounge_google_home',
-              'media_player.master_bedroom_google_home',
-              'media_player.office_sonos'
-            ) | selectattr('state', '==', 'playing')
+            expand('group.broadcast_media_players')
+              | selectattr('state', '==', 'playing')
               | first is undefined
           }}
-        timeout: "00:02:00"
+        timeout: 60
 
 automation:
-  - alias: broadcast_notifications
+  - alias: "broadcast_notifications"
     initial_state: true
+    mode: "queued"
+    max: 25
 
     trigger:
       - platform: homeassistant
@@ -97,12 +93,11 @@ automation:
       - platform: state
         entity_id: "group.household"
         to: "home"
-        for:
-          minutes: 2
+        for: 120
       - platform: time
-        at: "8:00:00"
-      - platform: time
-        at: "9:30:00"
+        at:
+          - &week_trigger_time "08:00:00"
+          - &weekend_trigger_time "09:30:00"
 
     condition:
       - condition: numeric_state
@@ -111,10 +106,11 @@ automation:
       - condition: state
         entity_id: "group.household"
         state: "home"
+        for: 120
       - condition: or
         conditions:
           - condition: time
-            after: "8:00:00"
+            after: *week_trigger_time
             before: "23:59:59"
             weekday:
               - mon
@@ -122,24 +118,19 @@ automation:
               - wed
               - thu
               - fri
-              - sat
           - condition: time
-            after: "9:30:00"
+            after: *weekend_trigger_time
             before: "23:59:59"
             weekday:
+              - sat
               - sun
 
     action:
-      - service: automation.turn_off
-        entity_id: "automation.broadcast_notifications"
-
       - service: script.broadcast_notification
         data:
           message: "Attention. {{ state_attr('custom_storage.broadcast_notifications', 'item_0_data') }}"
       - wait_template: "{{ is_state('script.broadcast_notification', 'off') }}"
 
-      - service: automation.turn_on
-        entity_id: "automation.broadcast_notifications"
       - service: custom_storage.remove
         data:
           object_id: "broadcast_notifications"
