@@ -1,21 +1,22 @@
 group:
-  all_thermostat_auto_modes:
-    name: "Thermostat auto modes"
-    icon: "mdi:home-thermometer-outline"
-    entities:
-      - input_select.basement_bathroom_thermostat_auto_mode
-      - input_select.basement_hallway_thermostat_auto_mode
-      - input_select.dining_room_thermostat_auto_mode
-      - input_select.guest_bedroom_thermostat_auto_mode
-      - input_select.living_room_thermostat_auto_mode
-      - input_select.lounge_thermostat_auto_mode
-      - input_select.master_bedroom_thermostat_auto_mode
-      - input_select.office_thermostat_auto_mode
-      - input_select.studio_thermostat_auto_mode
-  all_thermostat_modes:
-    name: "Thermostat modes"
+  managed_thermostats:
+    name: "Managed thermostats"
+    icon: "mdi:thermostat-box"
+    entities: &managed_thermostats
+      - "climate.basement_bathroom_thermostat"
+      - "climate.basement_hallway_thermostat"
+      - "climate.dining_room_thermostat"
+      - "climate.guest_bedroom_thermostat"
+      - "climate.living_room_thermostat"
+      - "climate.lounge_thermostat"
+      - "climate.master_bedroom_thermostat"
+      - "climate.office_thermostat"
+      - "climate.studio_thermostat"
+
+  managed_thermostat_modes:
+    name: "Managed thermostat modes"
     icon: "mdi:home-thermometer"
-    entities: &thermostat_modes
+    entities: &managed_thermostat_modes
       - input_select.basement_bathroom_thermostat_mode
       - input_select.basement_hallway_thermostat_mode
       - input_select.dining_room_thermostat_mode
@@ -25,6 +26,48 @@ group:
       - input_select.master_bedroom_thermostat_mode
       - input_select.office_thermostat_mode
       - input_select.studio_thermostat_mode
+
+  managed_thermostat_auto_modes:
+    name: "Managed thermostat auto modes"
+    icon: "mdi:home-thermometer"
+    entities: &managed_thermostat_auto_modes
+      - input_select.basement_bathroom_thermostat_auto_mode
+      - input_select.basement_hallway_thermostat_auto_mode
+      - input_select.dining_room_thermostat_auto_mode
+      - input_select.guest_bedroom_thermostat_auto_mode
+      - input_select.living_room_thermostat_auto_mode
+      - input_select.lounge_thermostat_auto_mode
+      - input_select.master_bedroom_thermostat_auto_mode
+      - input_select.office_thermostat_auto_mode
+      - input_select.studio_thermostat_auto_mode
+
+  managed_thermostat_eco_setpoints:
+    name: "Managed thermostat eco setpoints"
+    icon: "mdi:thermometer-chevron-down"
+    entities: &managed_thermostat_eco_setpoints
+      - input_number.basement_bathroom_thermostat_eco_setpoint
+      - input_number.basement_hallway_thermostat_eco_setpoint
+      - input_number.dining_room_thermostat_eco_setpoint
+      - input_number.guest_bedroom_thermostat_eco_setpoint
+      - input_number.living_room_thermostat_eco_setpoint
+      - input_number.lounge_thermostat_eco_setpoint
+      - input_number.master_bedroom_thermostat_eco_setpoint
+      - input_number.office_thermostat_eco_setpoint
+      - input_number.studio_thermostat_eco_setpoint
+
+  managed_thermostat_comfort_setpoints:
+    name: "Managed thermostat comfort setpoints"
+    icon: "mdi:thermometer-chevron-up"
+    entities: &managed_thermostat_comfort_setpoints
+      - input_number.basement_bathroom_thermostat_comfort_setpoint
+      - input_number.basement_hallway_thermostat_comfort_setpoint
+      - input_number.dining_room_thermostat_comfort_setpoint
+      - input_number.guest_bedroom_thermostat_comfort_setpoint
+      - input_number.living_room_thermostat_comfort_setpoint
+      - input_number.lounge_thermostat_comfort_setpoint
+      - input_number.master_bedroom_thermostat_comfort_setpoint
+      - input_number.office_thermostat_comfort_setpoint
+      - input_number.studio_thermostat_comfort_setpoint
 
 sensor:
   - platform: template
@@ -62,7 +105,7 @@ sensor:
 
             {{ match.preset | default('Away') }}
           {%- else -%}
-          Away
+            Away
           {%- endif %}
 
       manual_thermostats_count:
@@ -71,7 +114,7 @@ sensor:
         icon_template: "mdi:thermometer-alert"
         value_template: |
           {{
-            expand('group.all_thermostat_modes')
+            expand('group.managed_thermostat_modes')
               | selectattr('state', 'eq', 'Manual')
               | list
               | count
@@ -79,7 +122,7 @@ sensor:
         attribute_templates:
           entity_id: |
             {{
-              expand('group.all_thermostat_modes')
+              expand('group.managed_thermostat_modes')
                 | selectattr('state', 'eq', 'Manual')
                 | map('attr', 'entity_id')
                 | join(', ')
@@ -89,199 +132,168 @@ sensor:
 script:
   assign_climate_auto_mode:
     alias: "Assign auto climate mode"
-    mode: restart
+    mode: "restart"
     fields:
       preset:
         description: "The preset to assign to all entities. Either Eco or Comfort."
         example: "Comfort"
       overrides:
         description: "Dictionary of entities and their preset that do not use the default value."
-        example: "{\"input_select.basement_bathroom_thermostat_auto_mode\": \"Comfort\"}"
+        example: "{\"input_select.my_room_thermostat_auto_mode\": \"Comfort\"}"
     sequence:
       - service: scene.apply
         data:
           entities: >
             {% set ns = namespace(entries = []) %}
-            {% for entity_id in expand('group.all_thermostat_auto_modes') | map(attribute = 'entity_id') %}
+            {% for entity_id in expand('group.managed_thermostat_auto_modes') | map(attribute = 'entity_id') %}
               {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, preset)] %}
             {% endfor %}
-            {% for entity_id, override_preset in overrides.items() %}
+            {% for entity_id, override_preset in (overrides | default({})).items() %}
               {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, override_preset)] %}
             {% endfor %}
             {{ "{{\n{}\n}}".format(ns.entries | join(',\n')) | from_json }}
 
-  active_climate_preset:
+  apply_active_climate_preset:
     alias: "Set auto climate mode to active"
     icon: "mdi:thermometer-lines"
+    mode: "single"
     sequence:
-      - service: scipt.assign_climate_auto_mode
+      - service: script.assign_climate_auto_mode
         data:
           preset: "Comfort"
 
-  away_climate_preset:
+  apply_away_climate_preset:
     alias: "Set auto climate mode to away"
     icon: "mdi:thermometer-lines"
+    mode: "single"
     sequence:
-      - service: scipt.assign_climate_auto_mode
+      - service: script.assign_climate_auto_mode
         data:
           preset: "Eco"
 
-  bedtime_climate_preset:
+  apply_bedtime_climate_preset:
     alias: "Set auto climate mode to bedtime"
     icon: "mdi:thermometer-lines"
+    mode: "single"
     sequence:
-      - service: scipt.assign_climate_auto_mode
+      - service: script.assign_climate_auto_mode
         data:
           preset: "Eco"
           overrides:
             input_select.master_bedroom_thermostat_auto_mode: "Comfort"
 
-  sleep_climate_preset:
+  apply_sleep_climate_preset:
     alias: "Set auto climate mode to sleep"
     icon: "mdi:thermometer-lines"
+    mode: "single"
     sequence:
-      - service: scipt.assign_climate_auto_mode
+      - service: script.assign_climate_auto_mode
         data:
           preset: "Eco"
 
-  scheduled_climate_preset:
-    alias: "Set auto climate mode based on schedule"
+  apply_scheduled_climate_preset:
+    alias: "Set auto climate modes based on schedule"
     icon: "mdi:thermometer-lines"
+    mode: "restart"
     sequence:
-      - service_template: "script.{{ states('sensor.scheduled_climate_preset') | lower }}_climate_preset"
+      - service_template: "script.apply_{{ states('sensor.scheduled_climate_preset') | lower }}_climate_preset"
 
   restore_climate_auto_mode:
     alias: "Restore auto mode on all thermostats"
     icon: "mdi:thermometer-alert"
+    mode: "queued"
+    max_exceeded: "silent"
     sequence:
       - service: input_select.select_option
         data:
-          entity_id: {{ expand('group.all_thermostat_modes') | map(attribute = 'entity_id') | list  }}
+          entity_id: "{{ expand('group.managed_thermostat_modes') | map(attribute = 'entity_id') | list  }}"
           option: "Auto"
 
 automation:
-  - alias: apply_scheduled_climate_preset
+  - alias: "apply_scheduled_climate_preset"
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: state
         entity_id: "sensor.scheduled_climate_preset"
     action:
-      - service: script.scheduled_climate_preset
+      - service: script.apply_scheduled_climate_preset
 
   - alias: "revert_manual_thermostat_mode"
     initial_state: true
+    mode: "parallel"
+    max: 9
     trigger:
       - platform: state
-        entity_id: *thermostat_modes
+        entity_id: *managed_thermostat_modes
         to: "Manual"
-        for: "01:00:00"
+        for: 3600
     action:
       - service: input_select.select_option
         data:
           entity_id: "{{ trigger.to_state.entity_id }}"
           option: "Auto"
 
-  - alias: "update_thermostat_setpoint"
+  - alias: "select_manual_thermostat_mode"
     initial_state: true
+    mode: "parallel"
+    max: 9
+
     trigger:
       - platform: state
-        entity_id: *thermostat_modes
+        entity_id: *managed_thermostats
+        attribute: "temperature"
+        for: 5
+
+    variables:
+      <<: &climate_variables
+        thermostat_name: >-
+          {{
+            trigger.to_state.object_id
+              | replace('_auto_mode', '')
+              | replace('_mode', '')
+              | replace('_eco_setpoint', '')
+              | replace('_comfort_setpoint', '')
+          }}
+        auto_mode: "{{ states('input_select.{}_auto_mode'.format(thermostat_name)) | default('Eco') }}"
+        mode: "{{ states('input_select.{}_mode'.format(thermostat_name)) | default('Auto') }}"
+        planned_setpoint: "{{ states('input_number.{}_{}_setpoint'.format(thermostat_name, auto_mode | lower)) | float }}"
+      current_setpoint: "{{ trigger.to_state.attributes.temperature | float }}"
+
+    condition: "{{ trigger.to_state.attributes.preset_mode != 'none' or planned_setpoint != current_setpoint }}"
+
+    action:
+      - service: "input_select.select_option"
+        data:
+          entity_id: "input_select.{{ thermostat_name }}_mode"
+          option: "Manual"
+
+  - alias: "update_thermostat_setpoint"
+    initial_state: true
+    mode: "queued"
+    max: 9
+
+    trigger:
+      - platform: state
+        entity_id: *managed_thermostat_modes
         to: "Auto"
       - platform: state
-        entity_id:
-          - input_select.basement_bathroom_thermostat_auto_mode
-          - input_select.basement_hallway_thermostat_auto_mode
-          - input_select.dining_room_thermostat_auto_mode
-          - input_select.guest_bedroom_thermostat_auto_mode
-          - input_select.living_room_thermostat_auto_mode
-          - input_select.lounge_thermostat_auto_mode
-          - input_select.master_bedroom_thermostat_auto_mode
-          - input_select.office_thermostat_auto_mode
-          - input_select.studio_thermostat_auto_mode
+        entity_id: *managed_thermostat_auto_modes
       - platform: state
-        entity_id:
-          - input_number.basement_bathroom_thermostat_comfort_setpoint
-          - input_number.basement_hallway_thermostat_comfort_setpoint
-          - input_number.dining_room_thermostat_comfort_setpoint
-          - input_number.guest_bedroom_thermostat_comfort_setpoint
-          - input_number.living_room_thermostat_comfort_setpoint
-          - input_number.lounge_thermostat_comfort_setpoint
-          - input_number.master_bedroom_thermostat_comfort_setpoint
-          - input_number.office_thermostat_comfort_setpoint
-          - input_number.studio_thermostat_comfort_setpoint
+        entity_id: *managed_thermostat_comfort_setpoints
+        for: 5
       - platform: state
-        entity_id:
-          - input_number.basement_bathroom_thermostat_eco_setpoint
-          - input_number.basement_hallway_thermostat_eco_setpoint
-          - input_number.dining_room_thermostat_eco_setpoint
-          - input_number.guest_bedroom_thermostat_eco_setpoint
-          - input_number.living_room_thermostat_eco_setpoint
-          - input_number.lounge_thermostat_eco_setpoint
-          - input_number.master_bedroom_thermostat_eco_setpoint
-          - input_number.office_thermostat_eco_setpoint
-          - input_number.studio_thermostat_eco_setpoint
-    condition:
-      - condition: template
-        value_template: |
-          {% set area_prefix = trigger.to_state.object_id
-              | replace('_thermostat_mode', '')
-              | replace('_thermostat_auto_mode', '')
-              | replace('_thermostat_eco_setpoint', '')
-              | replace('_thermostat_comfort_setpoint', '') %}
-          {% set mode = states('input_select.' ~ area_prefix ~ '_thermostat_auto_mode') | default('eco') | lower %}
-          {% set planned_setpoint = states('input_number.' ~ area_prefix ~ '_' ~ mode ~ '_setpoint') | float %}
-          {{ is_state('input_select.' ~ area_prefix ~ '_thermostat_mode', 'Auto')
-              and planned_setpoint != state_attr('climate.' ~ area_prefix ~ '_thermostat', 'temperature') | float }}
+        entity_id: *managed_thermostat_eco_setpoints
+        for: 5
+
+    variables:
+      <<: *climate_variables
+      current_setpoint: "{{ state_attr('climate.{}'.format(thermostat_name), 'temperature') | float }}"
+
+    condition: "{{ mode == 'Auto' and planned_setpoint != current_setpoint }}"
+
     action:
       - service: "climate.set_temperature"
         data:
-          entity_id: |
-            {% set area_prefix = trigger.to_state.object_id
-                | replace('_thermostat_mode', '')
-                | replace('_thermostat_auto_mode', '')
-                | replace('_thermostat_eco_setpoint', '')
-                | replace('_thermostat_comfort_setpoint', '') %}
-            climate.{{ area_prefix }}_thermostat
-          temperature: |
-            {% set area_prefix = trigger.to_state.object_id
-                | replace('_thermostat_mode', '')
-                | replace('_thermostat_auto_mode', '')
-                | replace('_thermostat_eco_setpoint', '')
-                | replace('_thermostat_comfort_setpoint', '') %}
-            {% set mode = states('input_select.' ~ area_prefix ~ '_thermostat_auto_mode') | default('eco') | lower %}
-            {{ states('input_number.' ~ area_prefix ~ '_thermostat_' ~ mode ~ '_setpoint') }}
-
-  - alias: "select_manual_thermostat_mode"
-    initial_state: true
-    trigger:
-      - platform: state
-        entity_id:
-          - climate.basement_bathroom_thermostat
-          - climate.basement_hallway_thermostat
-          - climate.dining_room_thermostat
-          - climate.guest_bedroom_thermostat
-          - climate.living_room_thermostat
-          - climate.lounge_thermostat
-          - climate.master_bedroom_thermostat
-          - climate.office_thermostat
-          - climate.studio_thermostat
-    condition:
-      - condition: template
-        value_template: >-
-          {{
-            trigger.from_state is undefined
-              or trigger.from_state.attributes.temperature != trigger.to_state.attributes.temperature
-          }}
-    action:
-      - delay: "00:00:05"
-      - condition: template
-        value_template: |
-          {% set prefix = trigger.to_state.object_id %}
-          {% set mode = states('input_select.' ~ prefix ~ '_auto_mode') | default('eco') | lower %}
-          {% set planned_setpoint = states('input_number.' ~ prefix ~ '_' ~ mode ~ '_setpoint') | float %}
-          {{ trigger.to_state.attributes.preset_mode != 'none'
-              or planned_setpoint != trigger.to_state.attributes.temperature | float }}
-      - service: "input_select.select_option"
-        data:
-          entity_id: "input_select.{{ trigger.to_state.object_id }}_mode"
-          option: "Manual"
+          entity_id: "climate.{{ thermostat_name }}"
+          temperature: "{{ planned_setpoint }}"

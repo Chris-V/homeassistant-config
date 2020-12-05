@@ -78,7 +78,7 @@
             [[[ return 'Preset: ' + states['sensor.scheduled_climate_preset'].state; ]]]
           tap_action:
             action: call-service
-            service: script.scheduled_climate_preset
+            service: script.apply_scheduled_climate_preset
 
         - <<: *climate_button_card_defaults
           entity: sensor.manual_thermostats_count
