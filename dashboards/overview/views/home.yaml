@@ -72,10 +72,10 @@
                 - color: var(--secondary-text-color)
             hold_action:
               action: more-info
-          entity: sensor.climate_preset
+          entity: sensor.scheduled_climate_preset
           name: Apply schedule
           label: >
-            [[[ return 'Preset: ' + states['sensor.climate_preset'].state; ]]]
+            [[[ return 'Preset: ' + states['sensor.scheduled_climate_preset'].state; ]]]
           tap_action:
             action: call-service
             service: script.scheduled_climate_preset

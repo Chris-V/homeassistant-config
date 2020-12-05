@@ -1,7 +1,20 @@
 group:
+  all_thermostat_auto_modes:
+    name: "Thermostat auto modes"
+    icon: "mdi:home-thermometer-outline"
+    entities:
+      - input_select.basement_bathroom_thermostat_auto_mode
+      - input_select.basement_hallway_thermostat_auto_mode
+      - input_select.dining_room_thermostat_auto_mode
+      - input_select.guest_bedroom_thermostat_auto_mode
+      - input_select.living_room_thermostat_auto_mode
+      - input_select.lounge_thermostat_auto_mode
+      - input_select.master_bedroom_thermostat_auto_mode
+      - input_select.office_thermostat_auto_mode
+      - input_select.studio_thermostat_auto_mode
   all_thermostat_modes:
     name: "Thermostat modes"
-    icon: "mdi:home-temperature"
+    icon: "mdi:home-thermometer"
     entities: &thermostat_modes
       - input_select.basement_bathroom_thermostat_mode
       - input_select.basement_hallway_thermostat_mode
@@ -16,8 +29,8 @@ group:
 sensor:
   - platform: template
     sensors:
-      climate_preset:
-        unique_id: "sensor.climate_preset"
+      scheduled_climate_preset:
+        unique_id: "sensor.scheduled_climate_preset"
         friendly_name: "Scheduled climate preset"
         icon_template: "mdi:thermometer-lines"
         value_template: >-
@@ -64,7 +77,7 @@ sensor:
               | count
           }}
         attribute_templates:
-          entities: |
+          entity_id: |
             {{
               expand('group.all_thermostat_modes')
                 | selectattr('state', 'eq', 'Manual')
@@ -74,79 +87,68 @@ sensor:
             }}
 
 script:
-  active_climate_preset:
-    alias: "Active climate preset"
-    icon: "mdi:thermometer-lines"
+  assign_climate_auto_mode:
+    alias: "Assign auto climate mode"
+    mode: restart
+    fields:
+      preset:
+        description: "The preset to assign to all entities. Either Eco or Comfort."
+        example: "Comfort"
+      overrides:
+        description: "Dictionary of entities and their preset that do not use the default value."
+        example: "{\"input_select.basement_bathroom_thermostat_auto_mode\": \"Comfort\"}"
     sequence:
       - service: scene.apply
         data:
-          entities:
-            input_select.basement_bathroom_thermostat_auto_mode: "Comfort"
-            input_select.basement_hallway_thermostat_auto_mode: "Comfort"
-            input_select.dining_room_thermostat_auto_mode: "Comfort"
-            input_select.guest_bedroom_thermostat_auto_mode: "Comfort"
-            input_select.living_room_thermostat_auto_mode: "Comfort"
-            input_select.lounge_thermostat_auto_mode: "Comfort"
-            input_select.master_bedroom_thermostat_auto_mode: "Comfort"
-            input_select.office_thermostat_auto_mode: "Comfort"
-            input_select.studio_thermostat_auto_mode: "Comfort"
+          entities: >
+            {% set ns = namespace(entries = []) %}
+            {% for entity_id in expand('group.all_thermostat_auto_modes') | map(attribute = 'entity_id') %}
+              {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, preset)] %}
+            {% endfor %}
+            {% for entity_id, override_preset in overrides.items() %}
+              {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, override_preset)] %}
+            {% endfor %}
+            {{ "{{\n{}\n}}".format(ns.entries | join(',\n')) | from_json }}
+
+  active_climate_preset:
+    alias: "Set auto climate mode to active"
+    icon: "mdi:thermometer-lines"
+    sequence:
+      - service: scipt.assign_climate_auto_mode
+        data:
+          preset: "Comfort"
 
   away_climate_preset:
-    alias: "Away climate preset"
+    alias: "Set auto climate mode to away"
     icon: "mdi:thermometer-lines"
     sequence:
-      - service: scene.apply
+      - service: scipt.assign_climate_auto_mode
         data:
-          entities:
-            input_select.basement_bathroom_thermostat_auto_mode: "Eco"
-            input_select.basement_hallway_thermostat_auto_mode: "Eco"
-            input_select.dining_room_thermostat_auto_mode: "Eco"
-            input_select.guest_bedroom_thermostat_auto_mode: "Eco"
-            input_select.living_room_thermostat_auto_mode: "Eco"
-            input_select.lounge_thermostat_auto_mode: "Eco"
-            input_select.master_bedroom_thermostat_auto_mode: "Eco"
-            input_select.office_thermostat_auto_mode: "Eco"
-            input_select.studio_thermostat_auto_mode: "Eco"
+          preset: "Eco"
 
   bedtime_climate_preset:
-    alias: "Bedtime climate preset"
+    alias: "Set auto climate mode to bedtime"
     icon: "mdi:thermometer-lines"
     sequence:
-      - service: scene.apply
+      - service: scipt.assign_climate_auto_mode
         data:
-          entities:
-            input_select.basement_bathroom_thermostat_auto_mode: "Eco"
-            input_select.basement_hallway_thermostat_auto_mode: "Eco"
-            input_select.dining_room_thermostat_auto_mode: "Eco"
-            input_select.guest_bedroom_thermostat_auto_mode: "Eco"
-            input_select.living_room_thermostat_auto_mode: "Eco"
-            input_select.lounge_thermostat_auto_mode: "Eco"
+          preset: "Eco"
+          overrides:
             input_select.master_bedroom_thermostat_auto_mode: "Comfort"
-            input_select.office_thermostat_auto_mode: "Eco"
-            input_select.studio_thermostat_auto_mode: "Eco"
 
   sleep_climate_preset:
-    alias: "Sleep climate preset"
+    alias: "Set auto climate mode to sleep"
     icon: "mdi:thermometer-lines"
     sequence:
-      - service: scene.apply
+      - service: scipt.assign_climate_auto_mode
         data:
-          entities:
-            input_select.basement_bathroom_thermostat_auto_mode: "Eco"
-            input_select.basement_hallway_thermostat_auto_mode: "Eco"
-            input_select.dining_room_thermostat_auto_mode: "Eco"
-            input_select.guest_bedroom_thermostat_auto_mode: "Eco"
-            input_select.living_room_thermostat_auto_mode: "Eco"
-            input_select.lounge_thermostat_auto_mode: "Eco"
-            input_select.master_bedroom_thermostat_auto_mode: "Eco"
-            input_select.office_thermostat_auto_mode: "Eco"
-            input_select.studio_thermostat_auto_mode: "Eco"
+          preset: "Eco"
 
   scheduled_climate_preset:
-    alias: "Scheduled climate preset"
+    alias: "Set auto climate mode based on schedule"
     icon: "mdi:thermometer-lines"
     sequence:
-      - service_template: "script.{{ states('sensor.climate_preset') | lower }}_climate_preset"
+      - service_template: "script.{{ states('sensor.scheduled_climate_preset') | lower }}_climate_preset"
 
   restore_climate_auto_mode:
     alias: "Restore auto mode on all thermostats"
@@ -154,7 +156,7 @@ script:
     sequence:
       - service: input_select.select_option
         data:
-          entity_id: *thermostat_modes
+          entity_id: {{ expand('group.all_thermostat_modes') | map(attribute = 'entity_id') | list  }}
           option: "Auto"
 
 automation:
@@ -162,7 +164,7 @@ automation:
     initial_state: true
     trigger:
       - platform: state
-        entity_id: "sensor.climate_preset"
+        entity_id: "sensor.scheduled_climate_preset"
     action:
       - service: script.scheduled_climate_preset
 

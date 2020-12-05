@@ -57,7 +57,6 @@ recorder:
       - sensor.carl_heater_power
       - sensor.carl_heat_bulb_power
       - sensor.chris_bedside_remote_battery
-      - sensor.climate_preset
       - sensor.connected_clients
       - sensor.current_home_assistant_version
       - sensor.dining_room_temperature
@@ -124,6 +123,7 @@ recorder:
       - sensor.rubber_ducky_moisture
       - sensor.rubber_ducky_problems
       - sensor.rubber_ducky_temperature
+      - sensor.scheduled_climate_preset
       - sensor.slinky_power_strip_energy
       - sensor.slinky_power_strip_power
       - sensor.slinky_uv_light_power
