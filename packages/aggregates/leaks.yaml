@@ -39,6 +39,7 @@ binary_sensor:
 automation:
   - alias: "Notify water leaks"
     initial_state: true
+    mode: "parallel"
     trigger:
       - platform: state
         entity_id: *leak_entities
@@ -49,7 +50,7 @@ automation:
           audio: true
           persistent: true
           push_target: "household"
-          tag: "water_{{ trigger.to_state.object_id }}"
+          tag: "water_leak_{{ trigger.to_state.object_id }}"
           url: "/lovelace/settings"
           title: "Water leak detected"
           message: "A water leak has been detected at the {{ trigger.to_state.name | title | replace('Leak', '') | replace('Sensor', '') | trim }}."

@@ -59,8 +59,10 @@ sensor:
 automation:
   - alias: "Notify low batteries"
     initial_state: true
+    mode: "parallel"
     trigger:
       - platform: numeric_state
+        entity_id: *battery_entities
         value_template: >-
           {% if state.state in ['unknown', 'unavailable'] -%}
             100
@@ -68,13 +70,22 @@ automation:
             {{ state.state | int - state_attr(state.entity_id, 'battery_warning_level') | int(25) }}
           {%- endif %}
         below: 0
-        entity_id: *battery_entities
     action:
       - service: python_script.notify
         data:
           persistent: true
           push_target: "household"
           tag: "battery_low_{{ trigger.to_state.object_id }}"
-          url: "https://www.amazon.ca/s/?field-keywords=battery+{{ state_attr(trigger.to_state.entity_id, 'battery_type') | d('', True)  | replace(' ', '+') }}"
+          url: >-
+            {% set battery_type = state_attr(trigger.to_state.entity_id, 'battery_type') %}
+            {% if battery_type is none %}
+              "/lovelace/settings"
+            {% else %}
+              https://www.amazon.ca/s/?field-keywords=battery+{{ battery_type | replace(' ', '+') }}
+            {% endif %}
           title: "Replace {{ trigger.to_state.name | lower }}"
-          message: "Search on Amazon for \"{{ state_attr(trigger.to_state.entity_id, 'battery_type') }}\" batteries."
+          message: >-
+            {% set battery_type = state_attr(trigger.to_state.entity_id, 'battery_type') %}
+            {% if battery_type is not none %}
+              Search on Amazon for "{{ battery_type }}" batteries.
+            {% endif %}

@@ -21,11 +21,11 @@ script:
           entity_id: "media_player.master_bedroom_google_home"
           message: >-
             {{ [
-                 "Sweet dreams!",
-                 "Good night!",
-                 "Night! Night!",
-                 "Don\'t let the bed bugs bite!",
-               ] | random }}
+                  "Sweet dreams!",
+                  "Good night!",
+                  "Night! Night!",
+                  "Don\'t let the bed bugs bite!",
+                ] | random }}
       - service: light.turn_on
         data:
           entity_id: "light.master_bedroom_bedsides"

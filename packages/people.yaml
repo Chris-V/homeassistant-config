@@ -88,31 +88,32 @@ sensor:
 automation:
   - alias: notify_guest_arrives
     initial_state: true
+    mode: "parallel"
     trigger:
-      platform: state
-      entity_id: *guest_entities
-      to: "home"
-    condition:
-      - condition: template
-        value_template: >-
-          {{
-            is_state('input_boolean.notify_individual_guest_arrivals', 'on')
-              or is_state_attr('sensor.guests_home', 'count', '1')
-          }}
+      - platform: state
+        entity_id: *guest_entities
+        to: "home"
+    condition: >-
+      {{
+        is_state('input_boolean.notify_individual_guest_arrivals', 'on')
+          or is_state_attr('sensor.guests_home', 'count', '1')
+      }}
     action:
       - service: python_script.notify
         data:
           persistent: true
           push_target: "household"
-          title: "Guests are home"
-          message: "{{ trigger.to_state.name }} just arrived home."
+          tag: "presence_{{ trigger.to_state.object_id }}"
+          title: "{{ trigger.to_state.name }} is here"
+          message: "{{ state_attr('sensor.guests_home', 'count') }} guests are home."
 
   - alias: notify_household_person_arrives
     initial_state: true
+    mode: "parallel"
     trigger:
-      platform: state
-      entity_id: *household_entities
-      to: "home"
+      - platform: state
+        entity_id: *household_entities
+        to: "home"
     condition:
       - condition: state
         entity_id: input_boolean.notify_household_changes
@@ -127,10 +128,11 @@ automation:
 
   - alias: notify_household_person_leaves
     initial_state: true
+    mode: "parallel"
     trigger:
-      platform: state
-      entity_id: *household_entities
-      from: "home"
+      - platform: state
+        entity_id: *household_entities
+        from: "home"
     condition:
       - condition: state
         entity_id: input_boolean.notify_household_changes

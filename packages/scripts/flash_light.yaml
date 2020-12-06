@@ -21,4 +21,4 @@ script:
             - choose:
                 - conditions: "{{ not repeat.last }}"
                   sequence:
-                    - delay: 0.5
+                    - delay: 1

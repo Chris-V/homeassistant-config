@@ -4,6 +4,8 @@
   entities:
     - input_boolean.force_guest_mode
     - input_boolean.automatic_night_theme
+    - input_select.day_theme
+    - input_select.night_theme
     - input_select.default_theme
 
 - type: entities

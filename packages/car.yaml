@@ -52,16 +52,19 @@ binary_sensor:
 automation:
   - alias: notify_recommended_bolt_ev_recharge
     initial_state: true
+    mode: "single"
     trigger:
       - platform: state
-        entity_id: "binary_sensor.bolt_ev_recharge_recommended"
+        entity_id:
+          - "input_boolean.notify_car_problems"
+          - "binary_sensor.bolt_ev_recharge_recommended"
         to: "on"
       - platform: state
         entity_id: "person.chris"
         to: "home"
-        for: "00:30:00"
+        for: &min_time_at_home "00:10:00"
       - platform: time
-        at: "21:00:00"
+        at: &announcement_time "21:00:00"
     condition:
       - condition: state
         entity_id:
@@ -71,9 +74,9 @@ automation:
       - condition: state
         entity_id: "person.chris"
         state: "home"
-        for: "00:30:00"
+        for: *min_time_at_home
       - condition: time
-        after: "21:00:00"
+        after: *announcement_time
     action:
       - service: python_script.notify
         data:

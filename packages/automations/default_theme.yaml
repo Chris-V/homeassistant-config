@@ -2,73 +2,81 @@ input_boolean:
   automatic_night_theme:
     name: "Automatic night theme"
     initial: true
-    icon: 'mdi:theme-light-dark'
+    icon: "mdi:theme-light-dark"
 
 input_select:
   default_theme:
-    name: 'Default theme'
-    options:
-      - 'default'
-      - 'Google Light Theme'
-      - &night_theme 'Google Dark Theme'
-      - &day_theme 'clear'
-      - 'clear-dark'
-    icon: 'mdi:palette'
+    name: "Default theme"
+    icon: "mdi:palette"
+    options: &themes
+      - "default"
+      - "Google Light Theme"
+      - "Google Dark Theme"
+      - "clear"
+      - "clear-dark"
+
+  day_theme:
+    name: "Day theme"
+    icon: "mdi:weather-sunset-up"
+    options: *themes
+
+  night_theme:
+    name: "Night theme"
+    icon: "mdi:weather-sunset-down"
+    options: *themes
 
 automation:
-  - alias: set_default_theme
+  - alias: apply_default_theme
     initial_state: true
+    mode: "queued"
     trigger:
       - platform: state
         entity_id: "input_select.default_theme"
-      - platform: homeassistant
-        event: "start"
     action:
       - service: frontend.set_theme
         data:
           name: "{{ states('input_select.default_theme') | default('default') }}"
 
-  - alias: sunrise_theme
+  - alias: update_default_theme
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: sun
         event: "sunrise"
-      - platform: state
-        entity_id: "input_boolean.automatic_night_theme"
-        to: "on"
-    condition:
-      - condition: state
-        entity_id: "input_boolean.automatic_night_theme"
-        state: "on"
-      - condition: sun
-        after: "sunrise"
-      - condition: sun
-        before: "sunset"
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: "input_select.default_theme"
-          option: *day_theme
-  - alias: sunset_theme
-    initial_state: true
-    trigger:
       - platform: sun
         event: "sunset"
       - platform: state
         entity_id: "input_boolean.automatic_night_theme"
         to: "on"
+      - platform: state
+        entity_id: "input_select.day_theme"
+      - platform: homeassistant
+        event: "start"
     condition:
       - condition: state
         entity_id: "input_boolean.automatic_night_theme"
         state: "on"
-      - condition: or
-        conditions:
-          - condition: sun
-            after: "sunset"
-          - condition: sun
-            before: "sunrise"
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: "input_select.default_theme"
-          option: *night_theme
+      - choose:
+          - conditions:  # Day
+              - condition: sun
+                after: "sunrise"
+              - condition: sun
+                before: "sunset"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: "input_select.default_theme"
+                  option: "{{ states('input_select.day_theme') | default('default') }}"
+          - conditions:  # Night
+              - condition: or
+                conditions:
+                  - condition: sun
+                    after: "sunset"
+                  - condition: sun
+                    before: "sunrise"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: "input_select.default_theme"
+                  option: "{{ states('input_select.night_theme') | default('default') }}"
