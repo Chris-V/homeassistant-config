@@ -15,11 +15,12 @@ cloud:
         - "fan.main_bathroom"
     entity_config:
       light.main_bathroom_spots:
-        room: "Main bathroom spots"
+        room: "Main bathroom"
         name: "Bathroom spots"
         aliases:
           - "Bathroom light"
           - "Main bathroom light"
+          - "Main bathroom spots"
       light.main_bathroom_vanity:
         room: "Main bathroom"
         name: "Vanity light"
@@ -177,6 +178,7 @@ automation:
             {%- endif -%}
   - alias: "main_bathroom_auto_lights_off"
     initial_state: false
+    mode: "single"
     trigger:
       - platform: state
         entity_id: "binary_sensor.main_bathroom_motion"
@@ -193,125 +195,106 @@ automation:
           entity_id: "light.main_bathroom_lights"
 
   # Double tap fan switch will turn fan on/off
-  - alias: "main_bathroom_fan_double_up"
+  - alias: "main_bathroom_fan_double_tap"
     initial_state: true
+    mode: "queued"
+    variables:
+      entity_id: "fan.main_bathroom"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.main_bathroom_fan_switch"
-          scene_id: 1
           scene_data: 7860
     action:
-      service: switch.turn_on
-      data:
-        entity_id: "fan.main_bathroom"
-  - alias: "main_bathroom_fan_double_down"
-    initial_state: true
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_fan_switch"
-          scene_id: 2
-          scene_data: 7860
-    action:
-      service: fan.turn_off
-      data:
-        entity_id: "fan.main_bathroom"
+      - choose:
+          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  entity_id: "{{ entity_id }}"
+          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
+            sequence:
+              - service: light.turn_off
+                data:
+                  entity_id: "{{ entity_id }}"
 
   # Double tap vanity switch will turn vanity light on/off
-  - alias: "main_bathroom_vanity_double_up"
+  - alias: "main_bathroom_vanity_double_tap"
     initial_state: true
+    mode: "queued"
+    variables:
+      entity_id: "light.main_bathroom_vanity"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.main_bathroom_vanity_light_switch"
-          scene_id: 1
           scene_data: 7860
     action:
-      service: light.turn_on
-      data:
-        entity_id: "light.main_bathroom_vanity"
-  - alias: "main_bathroom_vanity_double_down"
-    initial_state: true
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_vanity_light_switch"
-          scene_id: 2
-          scene_data: 7860
-    action:
-      service: light.turn_off
-      data:
-        entity_id: "light.main_bathroom_vanity"
+      - choose:
+          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  entity_id: "{{ entity_id }}"
+          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
+            sequence:
+              - service: light.turn_off
+                data:
+                  entity_id: "{{ entity_id }}"
 
   # Double tap spots switch will turn spots on/off
-  - alias: "main_bathroom_spots_double_up"
+  - alias: "main_bathroom_spots_double_tap"
     initial_state: true
+    mode: "queued"
+    variables:
+      entity_id: "light.main_bathroom_spots"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.main_bathroom_light_dimmer"
-          scene_id: 1
           scene_data: 7860
     action:
-      service: light.turn_on
-      data:
-        entity_id: "light.main_bathroom_spots"
-  - alias: "main_bathroom_spots_double_down"
-    initial_state: true
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_light_dimmer"
-          scene_id: 2
-          scene_data: 7860
-    action:
-      service: light.turn_off
-      data:
-        entity_id: "light.main_bathroom_spots"
+      - choose:
+          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  entity_id: "{{ entity_id }}"
+          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
+            sequence:
+              - service: light.turn_off
+                data:
+                  entity_id: "{{ entity_id }}"
 
   # Triple tap any light switch will turn bathroom lights on/off
-  - alias: "main_bathroom_lights_triple_up"
+  - alias: "main_bathroom_lights_triple_tap"
     initial_state: true
+    mode: "queued"
+    variables:
+      entity_id: "light.main_bathroom_lights"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.main_bathroom_light_dimmer"
-          scene_id: 1
           scene_data: 7920
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.main_bathroom_vanity_light_switch"
-          scene_id: 1
           scene_data: 7920
     action:
-      service: light.turn_on
-      data:
-        entity_id: "light.main_bathroom_lights"
-  - alias: "main_bathroom_lights_triple_down"
-    initial_state: true
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_light_dimmer"
-          scene_id: 2
-          scene_data: 7920
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_vanity_light_switch"
-          scene_id: 2
-          scene_data: 7920
-    action:
-      service: light.turn_off
-      data:
-        entity_id: "light.main_bathroom_lights"
+      - choose:
+          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  entity_id: "{{ entity_id }}"
+          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
+            sequence:
+              - service: light.turn_off
+                data:
+                  entity_id: "{{ entity_id }}"

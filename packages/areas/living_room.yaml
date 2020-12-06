@@ -106,29 +106,55 @@ sensor:
         value_template: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
 
 automation:
-  - alias: "double_up_bookshelf"
+  - alias: "living_room_double_tap"
     initial_state: true
+    mode: "queued"
+    variables:
+      entity_id: "light.living_room_ambiance"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.bookshelf_light_switch"
-          scene_id: 1
+          scene_data: 7860
+      - platform: event
+        event_type: "zwave.scene_activated"
+        event_data:
+          entity_id: "zwave.staircase_light_dimmer"
           scene_data: 7860
     action:
-      service: light.turn_on
-      data:
-        entity_id: "light.living_room_ambiance"
-  - alias: "double_down_bookshelf"
+      - choose:
+          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  entity_id: "{{ entity_id }}"
+          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
+            sequence:
+              - service: light.turn_off
+                data:
+                  entity_id: "{{ entity_id }}"
+
+  - alias: "staircase_triple_tap"
     initial_state: true
+    mode: "queued"
+    variables:
+      entity_id: "light.downstairs"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
-          entity_id: "zwave.bookshelf_light_switch"
-          scene_id: 2
-          scene_data: 7860
+          entity_id: "zwave.staircase_light_dimmer"
+          scene_data: 7920
     action:
-      service: light.turn_off
-      data:
-        entity_id: "light.living_room_ambiance"
+      - choose:
+          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  entity_id: "{{ entity_id }}"
+          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
+            sequence:
+              - service: light.turn_off
+                data:
+                  entity_id: "{{ entity_id }}"
