@@ -7,14 +7,24 @@ homeassistant:
     switch.carl_uv_light:
       icon: "mdi:weather-sunny"
     switch.carl_outlet_4:
-      icon: "mdi:weather-fog"
+      icon: "mdi:weat her-fog"
     switch.carl_outlet_5:
       icon: "mdi:chip"
 
 input_boolean:
   carl_scheduled_lights:
-    name: "Carl's lights scheduling"
+    name: "Automate Carl's terrarium"
     icon: "mdi:home-automation"
+
+input_datetime:
+  carl_day_time:
+    name: Time at which Carl's terrarium lights turn on
+    has_date: false
+    has_time: true
+  carl_night_time:
+    name: Time at which Carl's terrarium lights turn off
+    has_date: false
+    has_time: true
 
 binary_sensor:
   - platform: template
@@ -30,10 +40,10 @@ binary_sensor:
           heater: "{{ is_state('switch.carl_heater', 'off') or states('sensor.carl_heater_power') | float > 1 }}"
           uv_light: "{{ is_state('switch.carl_uv_light', 'off') or states('sensor.carl_uv_light_power') | float > 1 }}"
         value_template: >-
-          {{    is_state('input_boolean.carl_scheduled_lights', 'off')
-             or (is_state('switch.carl_heat_bulb', 'on') and states('sensor.carl_heat_bulb_power') | float < 1)
-             or (is_state('switch.carl_heater', 'on') and states('sensor.carl_heater_power') | float < 1)
-             or (is_state('switch.carl_uv_light', 'on') and states('sensor.carl_uv_light_power') | float < 1)
+          {{ is_state('input_boolean.carl_scheduled_lights', 'off')
+              or (is_state('switch.carl_heat_bulb', 'on') and states('sensor.carl_heat_bulb_power') | float < 1)
+              or (is_state('switch.carl_heater', 'on') and states('sensor.carl_heater_power') | float < 1)
+              or (is_state('switch.carl_uv_light', 'on') and states('sensor.carl_uv_light_power') | float < 1)
           }}
 
 # Fake sensors until everything is ready
@@ -60,50 +70,61 @@ sensor:
         value_template: "0.0"
 
 automation:
-  - alias: carl_wake_up
+  - alias: carl_scheduling
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: time
-        at: "8:00:00"
+        at:
+          - "input_datetime.carl_day_time"
+          - "input_datetime.carl_night_time"
+      - platform: state
+        entity_id: "input_boolean.carl_scheduled_lights"
+        from: "off"
+        to: "on"
+      - platform: homeassistant
+        event: "start"
     condition:
       - condition: state
         entity_id: "input_boolean.carl_scheduled_lights"
         state: "on"
     action:
-      - service: switch.turn_on
-        entity_id:
-          - "switch.carl_heater"
-          - "switch.carl_uv_light"
+      - choose:
+          - conditions:  # Day
+              - condition: time
+                after: "input_datetime.carl_day_time"
+                before: "input_datetime.carl_night_time"
+            sequence:
+              - service: switch.turn_on
+                entity_id:
+                  - "switch.carl_heater"
+                  - "switch.carl_uv_light"
 
-  - alias: carl_sleep
-    initial_state: true
-    trigger:
-      - platform: time
-        at: "22:00:00"
-    condition:
-      - condition: state
-        entity_id: "input_boolean.carl_scheduled_lights"
-        state: "on"
-    action:
-      - service: switch.turn_off
-        entity_id:
-          - "switch.carl_heat_bulb"
-          - "switch.carl_uv_light"
-      - service: switch.turn_on
-        entity_id: "switch.carl_heater"
+          - conditions:  # Night
+              - condition: time
+                after: "input_datetime.carl_night_time"
+                before: "input_datetime.carl_day_time"
+            sequence:
+              - service: switch.turn_off
+                entity_id:
+                  - "switch.carl_heat_bulb"
+                  - "switch.carl_uv_light"
+              - service: switch.turn_on
+                entity_id: "switch.carl_heater"
 
   - alias: carl_uv_burned_out
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: state
         entity_id: "switch.carl_uv_light"
         from: "off"
         to: "on"
-        for: &on_delay
-          seconds: 330  # Wattage report rate is 300 seconds / 5 minutes
+        for: &on_delay 310  # Wattage report rate is 5 minutes
       - platform: numeric_state
         entity_id: "sensor.carl_uv_light_power"
         below: &min_power 1
+        for: *on_delay
     condition:
       - condition: state
         entity_id: "switch.carl_uv_light"
@@ -125,6 +146,7 @@ automation:
 
   - alias: carl_heat_bulb_burned_out
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: state
         entity_id: "switch.carl_heat_bulb"
@@ -134,6 +156,7 @@ automation:
       - platform: numeric_state
         entity_id: "sensor.carl_heat_bulb_power"
         below: *min_power
+        for: *on_delay
     condition:
       - condition: state
         entity_id: "switch.carl_heat_bulb"
@@ -155,6 +178,7 @@ automation:
 
   - alias: carl_heater_burned_out
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: state
         entity_id: "switch.carl_heater"
@@ -164,6 +188,7 @@ automation:
       - platform: numeric_state
         entity_id: "sensor.carl_heater_power"
         below: *min_power
+        for: *on_delay
     condition:
       - condition: state
         entity_id: "switch.carl_heater"
