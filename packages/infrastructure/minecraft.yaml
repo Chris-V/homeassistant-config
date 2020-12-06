@@ -22,6 +22,7 @@ input_boolean:
 automation:
   - alias: notify_minecraft_status
     initial_state: true
+    mode: "queued"
     trigger:
       - platform: state
         entity_id: "binary_sensor.minecraft_server_status"
@@ -45,6 +46,7 @@ automation:
 
   - alias: notify_minecraft_update
     initial_state: true
+    mode: "parallel"
     trigger:
       - platform: state
         entity_id: "sensor.minecraft_latest_version"
@@ -54,9 +56,11 @@ automation:
         state: "on"
       - condition: template
         value_template: >-
+          {% set current_version = states('sensor.minecraft_server_version') %}
           {{
-            trigger.to_state.state not in ('unknown', 'unavailable')
-              and trigger.to_state.state != states('sensor.minecraft_server_version')
+            current_version not in ('unknown', 'unavailable')
+              and trigger.to_state.state not in ('unknown', 'unavailable')
+              and trigger.to_state.state != current_version
           }}
     action:
       - service: python_script.notify
@@ -72,6 +76,7 @@ automation:
 
   - alias: notify_minecraft_player_changes
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: state
         entity_id: "sensor.minecraft_server_players_online"
@@ -93,6 +98,6 @@ automation:
             {% for player in trigger.to_state.attributes.players_list | default([]) -%}
             {{ player }}{{ ', ' if not loop.last and loop.revindex != 2 }}{{ ' and ' if loop.revindex == 2 }}
             {%- endfor %}
-            {{ 'is' if count == 1 else 'are' }}
+            {{ ' is ' if count == 1 else ' are ' }}
             online.
             {% endif %}

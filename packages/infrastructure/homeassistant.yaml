@@ -21,16 +21,15 @@ sensor:
 automation:
   - alias: notify_update_available
     initial_state: true
+    mode: "parallel"
     trigger:
       - platform: state
         entity_id: sensor.latest_home_assistant_version
-    condition:
-      - condition: template
-        value_template: >-
-          {{
-            trigger.to_state.state not in ('unknown', 'unavailable')
-              and trigger.to_state.state != states('sensor.current_home_assistant_version')
-          }}
+    condition: >-
+      {{
+        trigger.to_state.state not in ('unknown', 'unavailable')
+          and trigger.to_state.state != states('sensor.current_home_assistant_version')
+      }}
     action:
       - service: python_script.notify
         data:
@@ -43,15 +42,15 @@ automation:
 
   - alias: notify_failed_login_attempt
     initial_state: true
+    mode: "parallel"
     trigger:
       - platform: event
         event_type: "call_service"
         event_data:
           domain: "persistent_notification"
           service: "create"
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.service_data.notification_id == 'http-login' }}"
+          service_data:
+            notification_id: "http-login"
     action:
       - service: python_script.notify
         data:
@@ -61,21 +60,21 @@ automation:
 
   - alias: Notify HA startup
     trigger:
-      - event: start
-        platform: homeassistant
+      - platform: homeassistant
+        event: "start"
     action:
       - service: notify.admin
         data:
-          message: Home-Assistant has restarted.
+          message: Home-Assistant has started.
           data:
-            tag: homeassistant-status
+            tag: &ha_status_tag "homeassistant-status"
   - alias: Notify HA shutdown
     trigger:
-      - event: shutdown
-        platform: homeassistant
+      - platform: homeassistant
+        event: "shutdown"
     action:
       - service: notify.admin
         data:
-          message: Home-Assistant is shutting down.
+          message: Home-Assistant has shut down.
           data:
-            tag: homeassistant-status
+            tag: *ha_status_tag
