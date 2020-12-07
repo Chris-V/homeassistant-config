@@ -47,6 +47,7 @@ input_boolean:
 automation:
   - alias: notify_plant_problems
     initial_state: true
+    mode: "parallel"
     trigger:
       - platform: state
         entity_id:
@@ -61,7 +62,9 @@ automation:
         entity_id: "input_boolean.notify_plant_problems"
         state: "on"
       - condition: template
-        value_template: "{{ trigger.to_state.state not in ('none', 'battery low') }}"
+        value_template: >-
+          {% set state = trigger.to_state.state %}
+          {{ 'unavailable' not in state and state not in ('none', 'battery low') }}
     action:
       - service: python_script.notify
         data:
