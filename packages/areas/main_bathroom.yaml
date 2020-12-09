@@ -152,44 +152,42 @@ automation:
         data:
           entity_id: "fan.main_bathroom"
 
-  # Automated light management
-  - alias: "main_bathroom_auto_lights_on"
+  - alias: "main_bathroom_auto_lights"
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: state
         entity_id: "binary_sensor.main_bathroom_motion"
         to: "on"
-    condition:
-      - condition: state
-        entity_id: "binary_sensor.main_bathroom_door"
-        state: "on"
-      - condition: state
-        entity_id: "light.main_bathroom_lights"
-        state: "off"
     action:
-      - service: light.turn_on
-        data:
-          entity_id: "light.main_bathroom_spots"
-          brightness_pct: >-
-            {% set time = now().strftime('%H%M') | int %}
-            {%- if time <= 600 -%} 5
-            {%- elif time >= 900 and time <= 1800 -%} 85
-            {%- else -%} 50
-            {%- endif -%}
-  - alias: "main_bathroom_auto_lights_off"
-    initial_state: false
-    mode: "single"
-    trigger:
-      - platform: state
-        entity_id: "binary_sensor.main_bathroom_motion"
-        to: "off"
-        for:
-          minutes: 2
-    condition:
-      - condition: state
-        entity_id: "binary_sensor.main_bathroom_door"
-        state: "on"
-    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: "binary_sensor.main_bathroom_door"
+                state: "on"
+              - condition: state
+                entity_id: "light.main_bathroom_lights"
+                state: "off"
+            sequence:
+              - service: light.turn_on
+                data:
+                  entity_id: "light.main_bathroom_spots"
+                  brightness_pct: >-
+                    {% set time = now().strftime('%H%M') | int %}
+                    {%- if time <= 600 -%} 5
+                    {%- elif time >= 900 and time <= 1800 -%} 85
+                    {%- else -%} 50
+                    {%- endif -%}
+
+      - wait_for_trigger:
+          - platform: template
+            value_template: >-
+              {{
+                is_state('binary_sensor.main_bathroom_motion', 'off')
+                  and is_state('binary_sensor.main_bathroom_door', 'on')
+              }}
+            for: 120
+
       - service: light.turn_off
         data:
           entity_id: "light.main_bathroom_lights"

@@ -44,9 +44,9 @@ binary_sensor:
         value_template: "{{ is_state('sensor.workshop_motion_sensor_burglar', '8') }}"
 
 automation:
-  # Automated light management
-  - alias: "workshop_auto_lights_on"
+  - alias: "workshop_auto_lights"
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: state
         entity_id: "binary_sensor.workshop_motion"
@@ -55,15 +55,13 @@ automation:
       - service: light.turn_on
         data:
           entity_id: "light.workshop"
-  - alias: "workshop_auto_lights_off"
-    initial_state: true
-    trigger:
-      - platform: state
-        entity_id: "binary_sensor.workshop_motion"
-        to: "off"
-        for:
-          minutes: 2
-    action:
+
+      - wait_for_trigger:
+          - platform: state
+            entity_id: "binary_sensor.laundry_room_motion"
+            to: "off"
+            for: 120
+
       - service: light.turn_off
         data:
           entity_id: "light.workshop_lights"

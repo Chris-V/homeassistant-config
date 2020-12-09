@@ -48,9 +48,9 @@ light:
     entity_id: "switch.laundry_room_light"
 
 automation:
-  # Automated light management
-  - alias: "laundry_room_auto_lights_on"
+  - alias: "laundry_room_auto_lights"
     initial_state: true
+    mode: "restart"
     trigger:
       - platform: state
         entity_id: "binary_sensor.laundry_room_motion"
@@ -60,15 +60,12 @@ automation:
         data:
           entity_id: "light.laundry_room"
 
-  - alias: "laundry_room_auto_lights_off"
-    initial_state: true
-    trigger:
-      - platform: state
-        entity_id: "binary_sensor.laundry_room_motion"
-        to: "off"
-        for:
-          minutes: 2
-    action:
+      - wait_for_trigger:
+          - platform: state
+            entity_id: "binary_sensor.laundry_room_motion"
+            to: "off"
+            for: 120
+
       - service: light.turn_off
         data:
           entity_id: "light.laundry_room_lights"
