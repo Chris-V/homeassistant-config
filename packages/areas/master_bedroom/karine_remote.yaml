@@ -26,7 +26,6 @@ input_select:
       - "[0, 255, 0]"
 
 automation:
-  # Quirks: https://github.com/dmulcahey/zha-device-handlers/blob/dev/zhaquirks/ikea/fivebtnremote.py#L126
   - alias: karine_remote_restore_initial_option
     description: "Restore entity selected by Karine's remote after some time"
     trigger:
@@ -44,212 +43,110 @@ automation:
     mode: "queued"
     trigger:
       - platform: state
-        entity_id: input_select.karine_remote_color
+        entity_id: "input_select.karine_remote_color"
     action:
       - service: light.turn_on
         data:
           entity_id: "{{ states('input_select.karine_remote_entity') }}"
           rgb_color: "{{ trigger.to_state.state }}"
 
-  - alias: karine_remote_tap_power
-    description: Toggle selected light
-    initial_state: true
+  - alias: karine_remote
+    description: Map Karine's remote buttons to useful actions
     mode: "queued"
     trigger:
       - platform: event
-        event_type: zha_event
+        event_type: "zha_event"
         event_data:
-          device_ieee: &karine_remote_ieee "14:b4:57:ff:fe:7c:23:0e"
-          command: "toggle"
-          cluster_id: 6
+          device_ieee: "14:b4:57:ff:fe:7c:23:0e"
           endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [] }}"
     action:
-      - service: light.toggle
-        data:
-          entity_id: "{{ states('input_select.karine_remote_entity') }}"
-  - alias: karine_remote_hold_power
-    description: Toggle bedroom light
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "release"
-          cluster_id: 5
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [0] }}"
-    action:
-      - service: light.toggle
-        data:
-          entity_id: light.master_bedroom
+      choose:
+        # Quirks: https://github.com/dmulcahey/zha-device-handlers/blob/dev/zhaquirks/ikea/fivebtnremote.py#L126
 
-  - alias: karine_remote_tap_dim_up
-    description: Increase dim level
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "step_with_on_off"
-          cluster_id: 8
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [0, 43, 5] }}"
-    action:
-      - service: light.turn_on
-        data:
-          entity_id: "{{ states('input_select.karine_remote_entity') }}"
-          brightness: "{{ (state_attr('light.bedside_karine', 'brightness') | int + 32)| max(12) | min(255) }}"
-  - alias: karine_remote_tap_dim_down
-    description: Increase dim level
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "step"
-          cluster_id: 8
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [1, 43, 5] }}"
-    action:
-      - service: light.turn_on
-        data:
-          entity_id: "{{ states('input_select.karine_remote_entity') }}"
-          brightness: "{{ (state_attr('light.bedside_karine', 'brightness') | int - 32)| max(12) | min(255) }}"
+        # Tap power
+        - conditions: >-
+            {{ {'command': 'toggle', 'cluster_id': 6, 'args': []}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: light.toggle
+              data:
+                entity_id: "{{ states('input_select.karine_remote_entity') }}"
 
-  - alias: karine_remote_hold_dim_up
-    description: Select next color
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "move_with_on_off"
-          cluster_id: 8
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [0, 83] }}"
-    action:
-      - service: input_select.select_next
-        data:
-          entity_id: input_select.karine_remote_color
-  - alias: karine_remote_hold_dim_down
-    description: Select previous color
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "move"
-          cluster_id: 8
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [1, 83] }}"
-    action:
-      - service: input_select.select_previous
-        data:
-          entity_id: input_select.karine_remote_color
+        # Hold power
+        - conditions: >-
+            {{ {'command': 'release', 'cluster_id': 5, 'args': [0]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: light.toggle
+              data:
+                entity_id: light.master_bedroom
 
-  - alias: karine_remote_tap_left
-    description: Previous bedroom light
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "press"
-          cluster_id: 5
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [257, 13, 0] }}"
-    action:
-      - service: input_select.select_previous
-        data:
-          entity_id: input_select.karine_remote_entity
-      - service: script.turn_on
-        entity_id: script.flash_light
-        data:
-          variables:
-            entity_id: "{{ states('input_select.karine_remote_entity') }}"
-  - alias: karine_remote_tap_right
-    description: Next bedroom light
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "press"
-          cluster_id: 5
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [256, 13, 0] }}"
-    action:
-      - service: input_select.select_next
-        data:
-          entity_id: input_select.karine_remote_entity
-      - service: script.turn_on
-        entity_id: script.flash_light
-        data:
-          variables:
-            entity_id: "{{ states('input_select.karine_remote_entity') }}"
+        # Tap dim up
+        - conditions: >-
+            {{ {'command': 'step_with_on_off', 'cluster_id': 8, 'args': [0, 43, 5]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: "{{ states('input_select.karine_remote_entity') }}"
+                brightness: "{{ (state_attr('light.bedside_karine', 'brightness') | int + 32)| max(12) | min(255) }}"
 
-  - alias: karine_remote_hold_left
-    description: Activate bedtime
-    initial_state: true
-    mode: "single"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "hold"
-          cluster_id: 5
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [3329, 0] }}"
-    action:
-      - service: script.bedtime
-  - alias: karine_remote_hold_right
-    description: Turn everything off
-    initial_state: true
-    mode: "single"
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data:
-          device_ieee: *karine_remote_ieee
-          command: "hold"
-          cluster_id: 5
-          endpoint_id: 1
-    condition:
-      - condition: template
-        value_template: "{{ trigger.event.data.args == [3328, 0] }}"
-    action:
-      - service: script.everything_off
+        # Hold dim up
+        - conditions: >-
+            {{ {'command': 'move_with_on_off', 'cluster_id': 8, 'args': [0, 83]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: input_select.select_next
+              data:
+                entity_id: input_select.karine_remote_color
+
+        # Tap dim down
+        - conditions: >-
+            {{ {'command': 'step', 'cluster_id': 8, 'args': [1, 43, 5]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: "{{ states('input_select.karine_remote_entity') }}"
+                brightness: "{{ (state_attr('light.bedside_karine', 'brightness') | int - 32)| max(12) | min(255) }}"
+
+        # Hold dim down
+        - conditions: >-
+            {{ {'command': 'move', 'cluster_id': 8, 'args': [1, 83]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: input_select.select_previous
+              data:
+                entity_id: input_select.karine_remote_color
+
+        # Tap left
+        - conditions: >-
+            {{ {'command': 'press', 'cluster_id': 5, 'args': [257, 13, 0]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: input_select.select_previous
+              data:
+                entity_id: input_select.karine_remote_entity
+            - service: script.turn_on
+              entity_id: script.flash_light
+              data:
+                variables:
+                  entity_id: "{{ states('input_select.karine_remote_entity') }}"
+
+        # Hold left
+        - conditions: >-
+            {{ {'command': 'hold', 'cluster_id': 5, 'args': [3329, 0]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: script.bedtime
+
+        # Tap right
+        - conditions: >-
+            {{ {'command': 'press', 'cluster_id': 5, 'args': [256, 13, 0]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: input_select.select_next
+              data:
+                entity_id: input_select.karine_remote_entity
+            - service: script.turn_on
+              entity_id: script.flash_light
+              data:
+                variables:
+                  entity_id: "{{ states('input_select.karine_remote_entity') }}"
+
+        # Hold right
+        - conditions: >-
+            {{ {'command': 'hold', 'cluster_id': 5, 'args': [3328, 0]}.items() <= trigger.event.data.items() }}
+          sequence:
+            - service: script.everything_off
