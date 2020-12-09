@@ -97,60 +97,53 @@ light:
     entity_id: "switch.main_bathroom_vanity_light"
 
 automation:
-  # Automated fan management
-  - alias: "main_bathroom_auto_fan_on"
+  - alias: "main_bathroom_auto_fan"
     initial_state: true
+    mode: "restart"
+
     trigger:
-      - platform: numeric_state
+      - platform: state
         entity_id: "sensor.main_bathroom_humidity"
-        <<: &fan_on_condition
-          value_template: >-
-            {{ [65 + 10, states('sensor.outdoor_humidity') | int] | max
-                - states('sensor.main_bathroom_humidity') | int }}
-          below: 11
+      - platform: state
+        entity_id: "sensor.outdoor_humidity"
       - platform: state
         entity_id: "fan.main_bathroom"
-        to: "off"
         for: &fan_cycle_time
           minutes: 30
-    condition:
-      - condition: numeric_state
-        entity_id: "sensor.main_bathroom_humidity"
-        <<: *fan_on_condition
-      - condition: state
-        entity_id: "fan.main_bathroom"
-        state: "off"
-        for: *fan_cycle_time
+
     action:
-      - service: fan.turn_on
-        data:
-          entity_id: "fan.main_bathroom"
-  - alias: "main_bathroom_auto_fan_off"
-    initial_state: true
-    trigger:
-      - platform: numeric_state
-        entity_id: "sensor.main_bathroom_humidity"
-        <<: &fan_off_condition
-          value_template: >-
-            {{ states('sensor.main_bathroom_humidity') | int
-                - [60 - 5, states('sensor.outdoor_humidity') | int] | max }}
-          below: 6
-      - platform: state
-        entity_id: "fan.main_bathroom"
-        to: "on"
-        for: *fan_cycle_time
-    condition:
-      - condition: numeric_state
-        entity_id: "sensor.main_bathroom_humidity"
-        <<: *fan_off_condition
-      - condition: state
-        entity_id: "fan.main_bathroom"
-        state: "on"
-        for: *fan_cycle_time
-    action:
-      - service: fan.turn_off
-        data:
-          entity_id: "fan.main_bathroom"
+      - choose:
+          - conditions:
+              - condition: numeric_state
+                entity_id: "sensor.main_bathroom_humidity"
+                value_template: >-
+                  {{ [65 + 10, states('sensor.outdoor_humidity') | int] | max
+                      - state.state | int }}
+                below: 11
+              - condition: state
+                entity_id: "fan.main_bathroom"
+                state: "off"
+                for: *fan_cycle_time
+            sequence:
+              - service: fan.turn_on
+                data:
+                  entity_id: "fan.main_bathroom"
+
+          - conditions:
+              - condition: numeric_state
+                entity_id: "sensor.main_bathroom_humidity"
+                value_template: >-
+                  {{ state.state | int
+                      - [60 - 5, states('sensor.outdoor_humidity') | int] | max }}
+                below: 6
+              - condition: state
+                entity_id: "fan.main_bathroom"
+                state: "on"
+                for: *fan_cycle_time
+            sequence:
+              - service: fan.turn_off
+                data:
+                  entity_id: "fan.main_bathroom"
 
   - alias: "main_bathroom_auto_lights"
     initial_state: true
