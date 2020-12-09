@@ -35,45 +35,49 @@ group:
     icon: "mdi:speaker-multiple"
     all: true
     entities:
-      - media_player.laundry_room_google_home
-      - media_player.living_room_google_home
-      - media_player.lounge_google_home
-      - media_player.master_bedroom_google_home
+      - media_player.cast_whole_house
       - media_player.office_sonos
 
 script:
   broadcast_notification:
     alias: "Broadcast notification"
-    description: "Synchronize `group.broadcast_media_players` and broadcast an audio message"
+    description: "Synchronize media players and broadcast an audio message."
     mode: "queued"
     max: 25
 
     fields:
+      media_players:
+        description: "The media players to play the message on. Defaults to group.broadcast_media_players."
+        example: "group.broadcast_media_players"
       message:
         description: "The message to play on the speakers."
         example: "Today is a fine day. Don't forget to charge your phone."
 
     sequence:
+      - variables:
+          media_players: "{{ media_players | default('group.broadcast_media_players') }}"
+
       - service: media_player.turn_on
         data:
-          entity_id: "group.broadcast_media_players"
+          entity_id: "{{ media_players }}"
       - wait_template: >-
           {{
-            expand('group.broadcast_media_players')
+            expand(media_players)
               | selectattr('state', '==', 'off')
               | first is undefined
           }}
         timeout: 15
+        continue_on_timeout: true
 
       - service: tts.google_cloud_say
         data:
-          entity_id: "group.broadcast_media_players"
+          entity_id: "{{ media_players }}"
           message: "{{ message }}"
 
       - delay: 5
       - wait_template: >-
           {{
-            expand('group.broadcast_media_players')
+            expand(media_players)
               | selectattr('state', '==', 'playing')
               | first is undefined
           }}
