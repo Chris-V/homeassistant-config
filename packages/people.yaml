@@ -70,19 +70,19 @@ sensor:
         value_template: >-
           {{
             expand('group.guests')
-             | selectattr('state', 'eq', 'home')
-             | map('attr', 'name')
-             | sort
-             | join(', ')
-             | default('None', true)
+              | selectattr('state', 'eq', 'home')
+              | map('attr', 'name')
+              | sort
+              | join(', ')
+              | default('Nobody', true)
           }}
         attribute_templates:
           count: >-
             {{
               expand('group.guests')
-              | selectattr('state', 'eq', 'home')
-              | list
-              | count
+                | selectattr('state', 'eq', 'home')
+                | list
+                | count
             }}
 
 automation:
