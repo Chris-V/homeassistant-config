@@ -18,8 +18,6 @@
       name: Car problems
     - entity: input_boolean.notify_plant_problems
       name: Plant problems
-    - entity: input_boolean.notify_power_outages
-      name: Power outages
 
 - type: custom:auto-entities
   card:

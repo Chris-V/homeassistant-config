@@ -31,125 +31,182 @@ sensor:
           {% if 'REPLACEBATT' in states('sensor.ups_status') %}0{% else %}100{% endif %}
 
 input_boolean:
-  notify_power_outages:
-    name: "Notify power outages"
-    icon: "mdi:message-cog"
   power_outage_manage_devices:
     name: "Manage devices based on power outages"
-    initial: "on"
 
-input_text:
-  power_outage_id:
-    name: "Power outage ID"
+group:
+  managed_servers:
+    name: "Managed auxialiary servers"
+    icon: "mdi:server-security"
+    entities:
+      - "switch.network_media"
 
 automation:
-  - alias: notify_power_restored
+  - alias: power_outage_management
     initial_state: true
-    trigger:
-      - platform: state
-        entity_id: "binary_sensor.ups_online_status"
-        to: "on"
-    condition: &power_outage_conditions
-      - condition: state
-        entity_id: "input_boolean.notify_power_outages"
-        state: "on"
-    action:
-      - service: python_script.notify
-        data:
-          persistent: true
-          push_target: "household"
-          tag: "power_outage_{{ states('input_text.power_outage_id') }}"
-          title: "Power restored"
-          message: "The power outage at home has finished after {{ relative_time(trigger.from_state.last_changed) }}."
-          push_actions: &power_outage_actions
-            - action: "device_power_management_{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}"
-              title: "{% if states('input_boolean.power_outage_manage_devices') == 'off' %}Enable{% else %}Disable{% endif %} device management"
-              icon: "/local/icons/power-plug-{% if states('input_boolean.power_outage_manage_devices') == 'off' %}on{% else %}off{% endif %}.png"
+    mode: "restart"
 
-  - alias: notify_power_outage
-    initial_state: true
+    variables:
+      shutdown_minutes: 2
+
     trigger:
       - platform: state
         entity_id: "binary_sensor.ups_online_status"
         to: "off"
-    condition: *power_outage_conditions
+        for: 30
+
     action:
-      - service: input_text.set_value
+      - service: python_script.notify
         data:
-          entity_id: "input_text.power_outage_id"
-          value: "{{ as_timestamp(now()) | int }}"
+          <<: &outage_notification_options
+            persistent: true
+            push_target: "household"
+            tag: "power_outage"
+            title: "Power outage"
+            url: "/lovelace/network"
+          message: |-
+            A power outage is ongoing at home.
+            {%- if is_state('group.managed_servers', 'off') -%}
+              Auxiliary servers are already turned off.
+            {% elif is_state('input_boolean.power_outage_manage_devices', 'on') -%}
+              Auxiliary servers will automatically shutdown in {{ shutdown_minutes }} minutes.
+            {%- else -%}
+              Automatic shutdown of auxiliary servers is disabled.
+            {%- endif %}
+          push_actions: >-
+            {% set ns = namespace(actions = []) %}
+            {% if is_state('group.managed_servers', 'on') %}
+              {% set ns.actions = ns.actions + [{"action": "power_outage_shutdown", "title": "Shutdown now"}] %}
+              {% if is_state('input_boolean.power_outage_manage_devices', 'on') %}
+                {% set ns.actions = ns.actions + [{"action": "power_outage_cancel", "title": "Cancel"}] %}
+              {% endif %}
+            {% endif %}
+            {{ ns.actions }}
+
+      - condition: state
+        entity_id: "group.managed_servers"
+        state: "on"
+
+      - wait_for_trigger:
+          - platform: state
+            entity_id: "binary_sensor.ups_online_status"
+            to: "on"
+          - platform: event
+            event_type: "html5_notification.clicked"
+            event_data:
+              action: "power_outage_shutdown"
+          - platform: event
+            event_type: "html5_notification.clicked"
+            event_data:
+              action: "power_outage_cancel"
+          - platform: event
+            event_type: "mobile_app_notification_action"
+            event_data:
+              action: "power_outage_shutdown"
+          - platform: event
+            event_type: "mobile_app_notification_action"
+            event_data:
+              action: "power_outage_cancel"
+        timeout:
+          minutes: "{{ shutdown_minutes if is_state('input_boolean.power_outage_manage_devices', 'on') else 240 }}"
+        continue_on_timeout: true
+
+      - condition: template
+        value_template: >-
+          {% set timed_out = wait.trigger is none %}
+          {{
+            is_state('binary_sensor.ups_online_status', 'off')
+              and (
+                (timed_out and is_state('input_boolean.power_outage_manage_devices', 'on'))
+                  or (not timed_out and wait.trigger.event.data.action != 'power_outage_cancel')
+              )
+          }}
+
+      - service: switch.turn_off
+        entity_id: "switch.network_media"
+      - service: python_script.notify
+        data:
+          <<: *outage_notification_options
+          message: "A power outage is ongoing at home. Auxiliary servers have been shutdown."
+
+  - alias: notify_power_restored
+    initial_state: true
+    mode: "restart"
+    variables:
+      power_on_minutes: 2
+
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.ups_online_status"
+        to: "on"
+        for: 60
+      # It's possible Automate has shut down if the outage outlasted the UPS.
+      # This shutdown is handled by a local daemon.
+      - platform: homeassistant
+        event: "start"
+
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.ups_online_status"
+        state: "on"
+        for: 60
+
+    action:
       - service: python_script.notify
         data:
           persistent: true
           push_target: "household"
-          tag: "power_outage_{{ states('input_text.power_outage_id') }}"
-          title: "Power outage"
-          message: "A power outage is ongoing at home."
-          push_actions:
-            <<: *power_outage_actions
+          title: "Power restored"
+          message: |-
+            A power outage has finished after {{ relative_time(trigger.from_state.last_changed) }}.
+            {%- if is_state('group.managed_servers', 'on') -%}
+              Auxiliary servers are already powered on.
+            {% elif is_state('input_boolean.power_outage_manage_devices', 'on') -%}
+              Auxiliary servers will automatically power on in {{ power_on_minutes }} minutes.
+            {%- else -%}
+              Automatic power on of auxiliary servers is disabled.
+            {%- endif %}
+          push_actions: >-
+            {% set ns = namespace(actions = []) %}
+            {% if is_state('group.managed_servers', 'off') and is_state('input_boolean.power_outage_manage_devices', 'on') %}
+              {% set ns.actions = ns.actions + [{"action": "power_restored_cancel", "title": "Cancel"}] %}
+            {% endif %}
+            {{ ns.actions }}
+      # TODO: dismiss outstanding power outage notifications, but stack power restored ones
 
-  - alias: notification_action_enable_device_management
-    initial_state: true
-    trigger:
-      - platform: event
-        event_type: "html5_notification.clicked"
-        event_data:
-          action: "device_power_management_on"
-      - platform: event
-        event_type: "mobile_app_notification_action"
-        event_data:
-          action: "device_power_management_on"
-    action:
-      - service: input_boolean.turn_on
-        data:
-          entity_id: "input_boolean.power_outage_manage_devices"
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: "group.managed_servers"
+            state: "off"
+          - condition: state
+            entity_id: "input_boolean.power_outage_manage_devices"
+            state: "on"
 
-  - alias: notification_action_disable_device_management
-    initial_state: true
-    trigger:
-      - platform: event
-        event_type: "html5_notification.clicked"
-        event_data:
-          action: "device_power_management_off"
-      - platform: event
-        event_type: "mobile_app_notification_action"
-        event_data:
-          action: "device_power_management_off"
-    action:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: "input_boolean.power_outage_manage_devices"
+      - wait_for_trigger:
+          - platform: state
+            entity_id: "binary_sensor.ups_online_status"
+            to: "off"
+          - platform: event
+            event_type: "html5_notification.clicked"
+            event_data:
+              action: "power_restored_cancel"
+          - platform: event
+            event_type: "mobile_app_notification_action"
+            event_data:
+              action: "power_restored_cancel"
+        timeout:
+          minutes: "{{ power_on_minutes }}"
+        continue_on_timeout: true
 
-  - alias: ups_power_off_devices
-    initial_state: true
-    trigger:
-      platform: state
-      entity_id: "binary_sensor.ups_online_status"
-      to: "off"
-      for:
-        seconds: 70  # UPS is polled every 60 secs, this *must* be higher to outlast short power outages.
-    condition:
-      condition: state
-      entity_id: "input_boolean.power_outage_manage_devices"
-      state: "on"
-    action:
-      service: switch.turn_off
-      entity_id:
-        - switch.network_media
+      - condition: template
+        value_template: >-
+          {% set timed_out = wait.trigger is none %}
+          {{
+            is_state('binary_sensor.ups_online_status', 'on')
+              and timed_out
+              and is_state('input_boolean.power_outage_manage_devices', 'on')
+          }}
 
-  - alias: ups_power_on_devices
-    initial_state: true
-    trigger:
-      platform: state
-      entity_id: "binary_sensor.ups_online_status"
-      to: "on"
-      for:
-        seconds: 30  # Power can come back for a couple seconds then cut again. Been there done that.
-    condition:
-      condition: state
-      entity_id: "input_boolean.power_outage_manage_devices"
-      state: "on"
-    action:
-      service: switch.turn_on
-      entity_id:
-        - switch.network_media
+      - service: switch.turn_on
+        entity_id: "switch.network_media"
