@@ -74,8 +74,6 @@ automation:
   - alias: "downstairs_lights_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.staircase"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -87,6 +85,8 @@ automation:
         event_data:
           entity_id: "zwave.downstairs_light_switch"
           scene_data: 7860
+    variables:
+      entity_id: "light.staircase"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
@@ -103,8 +103,6 @@ automation:
   - alias: "downstairs_lights_triple_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.basement_lights"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -116,6 +114,8 @@ automation:
         event_data:
           entity_id: "zwave.downstairs_light_switch"
           scene_data: 7920
+    variables:
+      entity_id: "light.basement_lights"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"

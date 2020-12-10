@@ -196,7 +196,7 @@ script:
     icon: "mdi:thermometer-lines"
     mode: "restart"
     sequence:
-      - service_template: "script.apply_{{ states('sensor.scheduled_climate_preset') | lower }}_climate_preset"
+      - service: "script.apply_{{ states('sensor.scheduled_climate_preset') | lower }}_climate_preset"
 
   restore_climate_auto_mode:
     alias: "Restore auto mode on all thermostats"

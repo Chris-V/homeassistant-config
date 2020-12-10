@@ -89,14 +89,14 @@ automation:
   - alias: "lounge_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.lounge_ambiance"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.lounge_light_dimmer"
           scene_data: 7860
+    variables:
+      entity_id: "light.lounge_ambiance"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"

@@ -46,14 +46,14 @@ automation:
     initial_state: true
     mode: "restart"
 
-    variables:
-      shutdown_minutes: 2
-
     trigger:
       - platform: state
         entity_id: "binary_sensor.ups_online_status"
         to: "off"
         for: 30
+
+    variables:
+      shutdown_minutes: 2
 
     action:
       - service: python_script.notify
@@ -132,8 +132,6 @@ automation:
   - alias: notify_power_restored
     initial_state: true
     mode: "restart"
-    variables:
-      power_on_minutes: 2
 
     trigger:
       - platform: state
@@ -144,6 +142,9 @@ automation:
       # This shutdown is handled by a local daemon.
       - platform: homeassistant
         event: "start"
+
+    variables:
+      power_on_minutes: 2
 
     condition:
       - condition: state

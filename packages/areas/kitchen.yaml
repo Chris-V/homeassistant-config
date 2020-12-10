@@ -68,14 +68,14 @@ automation:
   - alias: "kitchen_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.kitchen_sink"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.kitchen_light_switch"
           scene_data: 7860
+    variables:
+      entity_id: "light.kitchen_sink"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
@@ -92,14 +92,14 @@ automation:
   - alias: "kitchen_triple_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.kitchen_lights"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.kitchen_light_switch"
           scene_data: 7920
+    variables:
+      entity_id: "light.kitchen_lights"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
@@ -116,14 +116,14 @@ automation:
   - alias: "kitchen_sink_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.kitchen"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.kitchen_sink_light_switch"
           scene_data: 3
+    variables:
+      entity_id: "light.kitchen"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
@@ -140,14 +140,14 @@ automation:
   - alias: "kitchen_sink_triple_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.kitchen_lights"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.kitchen_sink_light_switch"
           scene_data: 4
+    variables:
+      entity_id: "light.kitchen_lights"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"

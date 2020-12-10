@@ -87,8 +87,6 @@ automation:
   - alias: "outdoor_switches_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.outdoor_lights"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -105,6 +103,8 @@ automation:
         event_data:
           entity_id: "zwave.shed_outdoor_light_switch"
           scene_data: 7860
+    variables:
+      entity_id: "light.outdoor_lights"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"

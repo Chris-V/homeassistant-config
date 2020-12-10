@@ -212,14 +212,14 @@ automation:
   - alias: "basement_bathroom_fan_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "fan.basement_bathroom"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.basement_bathroom_fan_switch"
           scene_data: 7860
+    variables:
+      entity_id: "fan.basement_bathroom"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
@@ -237,14 +237,14 @@ automation:
   - alias: "basement_bathroom_vanity_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.basement_bathroom"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.basement_bathroom_vanity_light_dimmer"
           scene_data: 7860
+    variables:
+      entity_id: "light.basement_bathroom"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
@@ -262,14 +262,14 @@ automation:
   - alias: "basement_bathroom_ceiling_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.basement_bathroom_vanity"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.basement_bathroom_light_switch"
           scene_data: 7860
+    variables:
+      entity_id: "light.basement_bathroom_vanity"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
@@ -287,8 +287,6 @@ automation:
   - alias: "basement_bathroom_lights_triple_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.basement_bathroom_lights"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
@@ -300,6 +298,8 @@ automation:
         event_data:
           entity_id: "zwave.basement_bathroom_vanity_light_dimmer"
           scene_data: 7920
+    variables:
+      entity_id: "light.basement_bathroom_lights"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"

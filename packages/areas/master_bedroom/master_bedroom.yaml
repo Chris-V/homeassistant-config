@@ -94,14 +94,14 @@ automation:
   - alias: "master_bedroom_double_tap"
     initial_state: true
     mode: "queued"
-    variables:
-      entity_id: "light.master_bedroom_bedsides"
     trigger:
       - platform: event
         event_type: "zwave.scene_activated"
         event_data:
           entity_id: "zwave.master_bedroom_light_switch"
           scene_data: 3
+    variables:
+      entity_id: "light.master_bedroom_bedsides"
     action:
       - choose:
           - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
