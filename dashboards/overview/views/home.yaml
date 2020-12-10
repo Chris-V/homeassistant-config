@@ -1,6 +1,8 @@
 - type: vertical-stack
   cards:
-    - type: horizontal-stack
+    - type: grid
+      square: true
+      columns: 3
       cards:
         - type: entity-button
           entity: light.outdoor_lights
@@ -27,8 +29,6 @@
           hold_action:
             action: more-info
 
-    - type: horizontal-stack
-      cards:
         - type: entity-button
           entity: script.ambiance
           name: Ambiance
@@ -58,7 +58,9 @@
           hold_action:
             action: none
 
-    - type: horizontal-stack
+    - type: grid
+      square: false
+      columns: 2
       cards:
         - <<: &climate_button_card_defaults
             type: custom:button-card
@@ -89,10 +91,14 @@
             action: call-service
             service: script.restore_climate_auto_mode
 
-- !include ../cards/household.yaml
-- !include ../cards/guests.yaml
+- type: vertical-stack
+  cards:
+    - !include ../cards/household.yaml
+    - !include ../cards/guests.yaml
 
-- type: horizontal-stack
+- type: grid
+  square: false
+  columns: 2
   cards:
     - !include ../cards/car.yaml
     - !include ../cards/livings-overview.yaml

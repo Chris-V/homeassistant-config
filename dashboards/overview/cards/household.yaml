@@ -1,4 +1,6 @@
-type: horizontal-stack
+type: grid
+square: true
+columns: 2
 cards:
   - !template
     file: person.yaml.j2
