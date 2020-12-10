@@ -41,7 +41,7 @@ binary_sensor:
         unique_id: "binary_sensor.main_bathroom_door"
         friendly_name: "Main bathroom door"
         device_class: "door"
-        value_template: true
+        value_template: false
       main_bathroom_motion:
         unique_id: "binary_sensor.main_bathroom_motion"
         friendly_name: "Main bathroom motion"
@@ -176,7 +176,8 @@ automation:
           - platform: template
             value_template: >-
               {{
-                is_state('binary_sensor.main_bathroom_motion', 'off')
+                false
+                  and is_state('binary_sensor.main_bathroom_motion', 'off')
                   and is_state('binary_sensor.main_bathroom_door', 'on')
               }}
             for: 120
