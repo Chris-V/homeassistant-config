@@ -128,8 +128,6 @@ automation:
       - platform: state
         entity_id: "sensor.basement_bathroom_humidity"
       - platform: state
-        entity_id: "sensor.outdoor_humidity"
-      - platform: state
         entity_id: "fan.basement_bathroom"
         for: &fan_cycle_time
           minutes: 30
@@ -139,10 +137,7 @@ automation:
           - conditions:
               - condition: numeric_state
                 entity_id: "sensor.basement_bathroom_humidity"
-                value_template: >-
-                  {{ [65 + 10, states('sensor.outdoor_humidity') | int] | max
-                      - state.state | int }}
-                below: 11
+                above: 64
               - condition: state
                 entity_id: "fan.basement_bathroom"
                 state: "off"
@@ -155,10 +150,7 @@ automation:
           - conditions:
               - condition: numeric_state
                 entity_id: "sensor.basement_bathroom_humidity"
-                value_template: >-
-                  {{ state.state | int
-                      - [60 - 5, states('sensor.outdoor_humidity') | int] | max }}
-                below: 6
+                below: 61
               - condition: state
                 entity_id: "fan.basement_bathroom"
                 state: "on"
