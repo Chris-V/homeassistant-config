@@ -85,40 +85,5 @@
           <<: *aggregate_row_options
           name: "{{ states['this.entity_id'].name | replace(' motion', '') }}"
 
-- type: entities
-  title: Batteries
-  show_header_toggle: false
-  style: |
-    :host {
-      --paper-item-icon-active-color: var(--error-color)
-    }
-  entities:
-    - entity: binary_sensor.all_batteries
-      name: Status
-
-    - type: custom:auto-entities
-      card:
-        type: custom:fold-entity-row
-        head:
-          type: section
-          label: Details
-      sort:
-        method: state
-        numeric: true
-      options:
-      filter:
-        include:
-          - group: group.all_batteries
-            options:
-              type: custom:template-entity-row
-              name: >-
-                {{ states['this.entity_id'].name | replace("'s battery", '') | replace(' battery', '') }}
-              state: >-
-                {% set state = states['this.entity_id'] %}
-                {% if state.state | int != 0 -%}
-                  {{ state.state_with_unit }}
-                {%- else -%}
-                  _(state.default.{{ state.state }})
-                {%- endif %}
-              secondary: "{{ states['this.entity_id'].attributes.battery_type }}"
-              active: "{{ 'this.entity_id' in states['sensor.low_batteries'].state }}"
+- !template
+  file: ../cards/batteries.yaml.j2
