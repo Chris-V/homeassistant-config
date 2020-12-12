@@ -47,10 +47,12 @@ automation:
   - alias: "workshop_auto_lights"
     initial_state: true
     mode: "restart"
+
     trigger:
       - platform: state
-        entity_id: "binary_sensor.workshop_motion"
+        entity_id: &motion_entity "binary_sensor.workshop_motion"
         to: "on"
+
     action:
       - service: light.turn_on
         data:
@@ -58,7 +60,7 @@ automation:
 
       - wait_for_trigger:
           - platform: state
-            entity_id: "binary_sensor.laundry_room_motion"
+            entity_id: *motion_entity
             to: "off"
             for: 120
 
