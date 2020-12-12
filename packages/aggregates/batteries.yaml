@@ -42,12 +42,12 @@ sensor:
       low_batteries:
         unique_id: "sensor.low_batteries"
         friendly_name: "Low batteries"
-        icon_template: "mdi:battery"
+        icon_template: "mdi:battery-alert"
         value_template: >-
           {% set n = namespace(entities = []) %}
 
           {% for entity in expand('group.all_batteries') %}
-            {% set state = entity.state | int(100) %}
+            {% set state = entity.state | int(0) %}
             {% set warning_level = state_attr(entity.entity_id, 'battery_warning_level') | int(25) %}
             {% if state <= warning_level %}
               {% set n.entities = n.entities + [entity.entity_id] %}
