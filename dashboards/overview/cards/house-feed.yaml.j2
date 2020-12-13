@@ -1,0 +1,32 @@
+# Using my own expand because the built-in expand only works on group.*
+
+{% macro expand_ids(entity_id, include_groups = False) %}
+  {%- set ns = namespace(entity_ids = []) %}
+  {%- set entity = states[entity_id] %}
+  {%- if entity.attributes.entity_id %}
+    {%- for entity_id in entity.attributes.entity_id -%}
+      {% set ns.entity_ids = ns.entity_ids + [expand_ids(entity_id, include_groups)] %}
+    {%- endfor %}
+    {%- if include_groups %}
+      {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+    {%- endif %}
+  {%- else %}
+    {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+  {%- endif -%}
+  {{ ns.entity_ids | join(',') }}
+{%- endmacro %}
+
+type: logbook
+title: House feed
+hours_to_show: 24
+entities:
+  - fan.main_bathroom
+  - fan.basement_bathroom
+  - {{ expand_ids('light.basement_lights').split(',') | join('\n  - ') }}
+  - {{ expand_ids('light.ground_floor_lights').split(',') | join('\n  - ') }}
+  - {{ expand_ids('group.all_doors').split(',') | join('\n  - ') }}
+  - {{ expand_ids('group.all_leaks').split(',') | join('\n  - ') }}
+  - {{ expand_ids('group.all_motions').split(',') | join('\n  - ') }}
+  - {{ expand_ids('group.all_windows').split(',') | join('\n  - ') }}
+  - {{ expand_ids('group.household').split(',') | join('\n  - ') }}
+  - {{ expand_ids('group.guests').split(',') | join('\n  - ') }}
