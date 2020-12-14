@@ -134,6 +134,7 @@ automation:
       - variables:
           # Normalize state to only on/off
           state: "{% if trigger.to_state.state == 'on' %}on{% else %}off{% endif %}"
+          state_action: "{% if state == 'on' %}off{% else %}on{% endif %}"
       - service: python_script.notify
         data:
           push_target: "admin"
@@ -143,9 +144,9 @@ automation:
           push_data:
             entity_id: "{{ trigger.entity_id }}"
           push_actions:
-            - action: "power_{{ state }}_server"
-              title: "Power {{ state }}"
-              icon: "/local/icons/power-plug-{{ state }}.png"
+            - action: "power_{{ state_action }}_server"
+              title: "Power {{ state_action }}"
+              icon: "/local/icons/power-plug-{{ state_action }}.png"
 
   - alias: power_on_server
     initial_state: true
