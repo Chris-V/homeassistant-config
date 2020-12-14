@@ -114,7 +114,7 @@
       entities:
         - entity: binary_sensor.all_motions
         - entity: sensor.last_motion
-        - entity: sensor.low_batteries
+        - entity: binary_sensor.all_batteries
 
         - entity: binary_sensor.all_doors
         - entity: binary_sensor.all_windows
