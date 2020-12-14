@@ -73,6 +73,7 @@ automation:
   - alias: carl_scheduling
     initial_state: true
     mode: "restart"
+
     trigger:
       - platform: time
         at:
@@ -84,11 +85,16 @@ automation:
         to: "on"
       - platform: homeassistant
         event: "start"
+
     condition:
       - condition: state
         entity_id: "input_boolean.carl_scheduled_lights"
         state: "on"
+
     action:
+      - service: switch.turn_on
+        entity_id: "switch.carl_heater"
+
       - choose:
           - conditions:  # Day
               - condition: time
@@ -96,9 +102,7 @@ automation:
                 before: "input_datetime.carl_night_time"
             sequence:
               - service: switch.turn_on
-                entity_id:
-                  - "switch.carl_heater"
-                  - "switch.carl_uv_light"
+                entity_id: "switch.carl_uv_light"
 
           - conditions:  # Night
               - condition: time
@@ -109,8 +113,6 @@ automation:
                 entity_id:
                   - "switch.carl_heat_bulb"
                   - "switch.carl_uv_light"
-              - service: switch.turn_on
-                entity_id: "switch.carl_heater"
 
   - alias: carl_uv_burned_out
     initial_state: true

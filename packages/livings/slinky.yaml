@@ -73,6 +73,7 @@ automation:
   - alias: slinky_scheduling
     initial_state: true
     mode: "restart"
+
     trigger:
       - platform: time
         at:
@@ -84,11 +85,16 @@ automation:
         to: "on"
       - platform: homeassistant
         event: "start"
+
     condition:
       - condition: state
         entity_id: "input_boolean.slinky_scheduled_lights"
         state: "on"
+
     action:
+      - service: switch.turn_on
+        entity_id: "switch.slinky_heater"
+
       - choose:
           - conditions:  # Day
               - condition: time
@@ -96,9 +102,7 @@ automation:
                 before: "input_datetime.slinky_night_time"
             sequence:
               - service: switch.turn_on
-                entity_id:
-                  - "switch.slinky_heater"
-                  - "switch.slinky_uv_light"
+                entity_id: "switch.slinky_uv_light"
 
           - conditions:  # Night
               - condition: time
@@ -109,8 +113,6 @@ automation:
                 entity_id:
                   - "switch.slinky_heat_bulb"
                   - "switch.slinky_uv_light"
-              - service: switch.turn_on
-                entity_id: "switch.slinky_heater"
 
   - alias: slinky_uv_burned_out
     initial_state: true
