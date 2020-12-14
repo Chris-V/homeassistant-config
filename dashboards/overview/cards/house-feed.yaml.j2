@@ -19,17 +19,21 @@
   {%- endif %}
 {%- endmacro %}
 
+{%- set entities = [
+  'fan.main_bathroom',
+  'fan.basement_bathroom',
+] + expand_ids('light.basement_lights').split(',') | reject('eq', '') | list
+  + expand_ids('light.ground_floor_lights').split(',') | reject('eq', '') | list
+  + expand_ids('group.all_doors').split(',') | reject('eq', '') | list
+  + expand_ids('group.all_leaks').split(',') | reject('eq', '') | list
+  + expand_ids('group.all_motions').split(',') | reject('eq', '') | list
+  + expand_ids('group.all_windows').split(',') | reject('eq', '') | list
+  + expand_ids('group.household').split(',') | reject('eq', '') | list
+  + expand_ids('group.guests').split(',') | reject('eq', '') | list
+%}
+
 type: logbook
 title: House feed
 hours_to_show: 24
 entities:
-  - fan.main_bathroom
-  - fan.basement_bathroom
-  - {{ expand_ids('light.basement_lights').split(',') | join('\n  - ') }}
-  - {{ expand_ids('light.ground_floor_lights').split(',') | join('\n  - ') }}
-  - {{ expand_ids('group.all_doors').split(',') | join('\n  - ') }}
-  - {{ expand_ids('group.all_leaks').split(',') | join('\n  - ') }}
-  - {{ expand_ids('group.all_motions').split(',') | join('\n  - ') }}
-  - {{ expand_ids('group.all_windows').split(',') | join('\n  - ') }}
-  - {{ expand_ids('group.household').split(',') | join('\n  - ') }}
-  - {{ expand_ids('group.guests').split(',') | join('\n  - ') }}
+  - {{ entities | join('\n  - ') }}
