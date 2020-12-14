@@ -1,11 +1,13 @@
 {# Parameters:
  #   * badges_position: (end | start)
+ #   * color: [light (default) | dark]
  #   * image: The URL of the image to display in background.
- #   * name_color: The color for the title
- #   * name_shadow_color: The color for the title's shadow
  #   * plant_entity_id: The URL of the image to display in background.
  #   * problems_entity_id: Entity representing problems for this plant
  #}
+
+{% set name_color = '#3B4049' if color == 'dark' else '#E0E0E0' %}
+{% set name_shadow_color = '#E0E0E0' if color == 'dark' else '#3B4049' %}
 
 type: picture-elements
 image: "{{ image }}"

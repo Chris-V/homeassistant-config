@@ -120,17 +120,15 @@
   file: ../cards/plant.yaml.j2
   variables:
     badges_position: "end"
+    color: dark
     image: /local/plants/devils_ivy_card.jpg
-    name_color: "#3B4049"
-    name_shadow_color: "#E0E0E0"
     plant_entity_id: plant.viny
     problems_entity_id: sensor.viny_problems
 
 - !template
   file: ../cards/plant.yaml.j2
   variables:
-    image: /local/plants/tulips_card.jpg
-    name_color: "#3B4049"
-    name_shadow_color: "#E0E0E0"
-    plant_entity_id: plant.tully
-    problems_entity_id: sensor.tully_problems
+    color: dark
+    image: /local/plants/dracaena_fragrans_card.jpg
+    plant_entity_id: plant.drake
+    problems_entity_id: sensor.drake_problems

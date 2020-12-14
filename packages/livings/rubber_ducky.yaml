@@ -43,43 +43,43 @@ sensor:
     force_update: true
     device_class: "battery"
     unit_of_measurement: "%"
-    state_topic: &rubber_ducky_topic "plants/rubber_ducky"
+    state_topic: &state_topic "plants/rubber_ducky"
     value_template: "{{ value_json.battery | int('unknown') }}"
-    json_attributes_topic: *rubber_ducky_topic
+    json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
     name: "rubber_ducky_brightness"
     force_update: true
     device_class: "illuminance"
     unit_of_measurement: "lx"
-    state_topic: *rubber_ducky_topic
+    state_topic: *state_topic
     value_template: "{{ value_json.brightness | int('unknown') }}"
-    json_attributes_topic: *rubber_ducky_topic
+    json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
     name: "rubber_ducky_conductivity"
     force_update: true
     unit_of_measurement: "µS/cm"
     icon: "mdi:poop"
-    state_topic: *rubber_ducky_topic
+    state_topic: *state_topic
     value_template: "{{ value_json.conductivity | int('unknown') }}"
-    json_attributes_topic: *rubber_ducky_topic
+    json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
     name: "rubber_ducky_moisture"
     force_update: true
     device_class: "humidity"
     unit_of_measurement: "%"
-    state_topic: *rubber_ducky_topic
+    state_topic: *state_topic
     value_template: "{{ value_json.moisture | int('unknown') }}"
-    json_attributes_topic: *rubber_ducky_topic
+    json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
     name: "rubber_ducky_temperature"
     force_update: true
     device_class: "temperature"
     unit_of_measurement: "°C"
-    state_topic: *rubber_ducky_topic
+    state_topic: *state_topic
     value_template: "{{ value_json.temperature | float('unknown') }}"
-    json_attributes_topic: *rubber_ducky_topic
+    json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"

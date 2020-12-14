@@ -138,12 +138,12 @@ recorder:
       - sensor.studio_window_sensor_battery
       - sensor.studio_temperature
       - sensor.studio_thermostat_temperature
-      - sensor.tully_battery
-      - sensor.tully_brightness
-      - sensor.tully_conductivity
-      - sensor.tully_moisture
-      - sensor.tully_problems
-      - sensor.tully_temperature
+      - sensor.drake_battery
+      - sensor.drake_brightness
+      - sensor.drake_conductivity
+      - sensor.drake_moisture
+      - sensor.drake_problems
+      - sensor.drake_temperature
       - sensor.ups_battery
       - sensor.ups_battery_status
       - sensor.ups_input_voltage

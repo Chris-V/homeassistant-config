@@ -7,6 +7,7 @@ group:
       - sensor.basement_bathroom_multisensor_battery
       - sensor.chris_bedside_remote_battery
       - sensor.dollorama_battery
+      - sensor.drake_battery
       - sensor.guest_bedroom_window_sensor_battery
       - sensor.karine_bedside_remote_battery
       - sensor.kitchen_door_sensor_battery
@@ -19,7 +20,6 @@ group:
       - sensor.rubber_ducky_battery
       - sensor.spidy_battery
       - sensor.studio_window_sensor_battery
-      - sensor.tully_battery
       - sensor.ups_battery_status
       - sensor.viny_battery
       - sensor.water_heater_leak_sensor_battery
