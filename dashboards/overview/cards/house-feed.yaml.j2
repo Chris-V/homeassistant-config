@@ -3,17 +3,20 @@
 {% macro expand_ids(entity_id, include_groups = False) %}
   {%- set ns = namespace(entity_ids = []) %}
   {%- set entity = states[entity_id] %}
-  {%- if entity.attributes.entity_id %}
-    {%- for entity_id in entity.attributes.entity_id -%}
-      {% set ns.entity_ids = ns.entity_ids + [expand_ids(entity_id, include_groups)] %}
-    {%- endfor %}
-    {%- if include_groups %}
+  {%- if entity %}
+    {%- set children = entity.attributes.entity_id %}
+    {%- if children %}
+      {%- for entity_id in children -%}
+        {% set ns.entity_ids = ns.entity_ids + [expand_ids(entity_id, include_groups)] %}
+      {%- endfor %}
+      {%- if include_groups %}
+        {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+      {%- endif %}
+    {%- else %}
       {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
-    {%- endif %}
-  {%- else %}
-    {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
-  {%- endif -%}
-  {{ ns.entity_ids | join(',') }}
+    {%- endif -%}
+    {{ ns.entity_ids | join(',') }}
+  {%- endif %}
 {%- endmacro %}
 
 type: logbook
