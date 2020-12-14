@@ -128,7 +128,6 @@
 - !template
   file: ../cards/plant.yaml.j2
   variables:
-    color: dark
     image: /local/plants/dracaena_fragrans_card.jpg
     plant_entity_id: plant.drake
     problems_entity_id: sensor.drake_problems
