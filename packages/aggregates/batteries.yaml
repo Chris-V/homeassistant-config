@@ -32,17 +32,6 @@ binary_sensor:
         unique_id: "binary_sensor.all_batteries"
         friendly_name: "All batteries"
         device_class: "battery"
-        value_template: "{{ not is_state('sensor.low_batteries', '') }}"
-        attribute_templates:
-          entity_id: "{{ states('sensor.low_batteries') }}"
-
-sensor:
-  - platform: template
-    sensors:
-      low_batteries:
-        unique_id: "sensor.low_batteries"
-        friendly_name: "Low batteries"
-        icon_template: "mdi:battery-alert"
         value_template: >-
           {% set n = namespace(entities = []) %}
 
@@ -54,7 +43,20 @@ sensor:
             {% endif %}
           {% endfor %}
 
-          {{ n.entities | join(', ') }}
+          {{ n.entities | length != 0 }}
+        attribute_templates:
+          entity_id: >-
+            {% set n = namespace(entities = []) %}
+
+            {% for entity in expand('group.all_batteries') %}
+              {% set state = entity.state | int(0) %}
+              {% set warning_level = state_attr(entity.entity_id, 'battery_warning_level') | int(25) %}
+              {% if state <= warning_level %}
+                {% set n.entities = n.entities + [entity.entity_id] %}
+              {% endif %}
+            {% endfor %}
+
+            {{ n.entities | join(', ') }}
 
 automation:
   - alias: "Notify low batteries"
