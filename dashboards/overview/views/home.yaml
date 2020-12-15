@@ -120,5 +120,4 @@
         - entity: binary_sensor.all_windows
         - entity: binary_sensor.all_leaks
 
-    - !template
-      file: ../cards/house-feed.yaml.j2
+    - !include ../cards/house-feed.yaml

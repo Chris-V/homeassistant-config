@@ -1,0 +1,41 @@
+type: custom:auto-entities
+card:
+  type: logbook
+  title: House feed
+  hours_to_show: 24
+entities:
+  - fan.main_bathroom
+  - fan.basement_bathroom
+filter:
+  template: >-
+    {# Using my own expand because the built-in expand only works on group.* #}
+    {% macro expand_ids(entity_id, include_groups = False) %}
+      {%- set ns = namespace(entity_ids = []) %}
+      {%- set entity = states[entity_id] %}
+      {%- if entity %}
+        {%- set children = entity.attributes.entity_id %}
+        {%- if children %}
+          {%- for entity_id in children -%}
+            {% set ns.entity_ids = ns.entity_ids + [expand_ids(entity_id, include_groups)] %}
+          {%- endfor %}
+          {%- if include_groups %}
+            {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+          {%- endif %}
+        {%- else %}
+          {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+        {%- endif -%}
+        {{ ns.entity_ids | join(',') }}
+      {%- endif %}
+    {%- endmacro %}
+
+    {{ (expand_ids('light.basement_lights').split(',')
+          + expand_ids('light.ground_floor_lights').split(',')
+          + expand_ids('group.all_doors').split(',')
+          + expand_ids('group.all_leaks').split(',')
+          + expand_ids('group.all_motions').split(',')
+          + expand_ids('group.all_windows').split(',')
+          + expand_ids('group.household').split(',')
+          + expand_ids('group.guests').split(',')
+        ) | reject('eq', '')
+          | list
+    }}
