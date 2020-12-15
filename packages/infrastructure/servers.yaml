@@ -106,8 +106,8 @@ automation:
     initial_state: true
     mode: "parallel"
     trigger:
-      platform: event
-      event_type: "device_tracker_new_device"
+      - platform: event
+        event_type: "device_tracker_new_device"
     action:
       - service: python_script.notify
         data:
@@ -153,13 +153,11 @@ automation:
     mode: "parallel"
     trigger:
       - platform: event
-        event_type: "html5_notification.clicked"
+        event_type:
+          - "html5_notification.clicked"
+          - "mobile_app_notification_action"
         event_data:
-          action: &power_on_action_key power_on_server
-      - platform: event
-        event_type: "mobile_app_notification_action"
-        event_data:
-          action: *power_on_action_key
+          action: "power_on_server"
     action:
       - service: switch.turn_on
         data:
@@ -170,13 +168,11 @@ automation:
     mode: "parallel"
     trigger:
       - platform: event
-        event_type: "html5_notification.clicked"
+        event_type:
+          - "html5_notification.clicked"
+          - "mobile_app_notification_action"
         event_data:
-          action: &power_off_action_key power_off_server
-      - platform: event
-        event_type: "mobile_app_notification_action"
-        event_data:
-          action: *power_off_action_key
+          action: "power_off_server"
     action:
       - service: switch.turn_off
         data:
