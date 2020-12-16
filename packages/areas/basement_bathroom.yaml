@@ -42,6 +42,16 @@ binary_sensor:
         friendly_name: "Basement bathroom motion"
         device_class: "motion"
         value_template: "{{ is_state('sensor.basement_bathroom_multisensor_burglar', '8') }}"
+
+      basement_bathroom_presence:
+        unique_id: "binary_sensor.basement_bathroom_presence"
+        friendly_name: "Basement bathroom presence"
+        device_class: "presence"
+        value_template: >-
+          {{
+            is_state('binary_sensor.basement_bathroom_motion', 'on')
+              or is_state('binary_sensor.basement_bathroom_door', 'off')
+          }}
         delay_off: 15
 
 sensor:
@@ -52,6 +62,7 @@ sensor:
     entity_ids:
       - "sensor.basement_bathroom_multisensor_temperature"
       - "sensor.basement_bathroom_thermostat_temperature"
+
   - platform: template
     sensors:
       basement_bathroom_humidity:
@@ -162,44 +173,18 @@ automation:
                   entity_id: "fan.basement_bathroom"
 
   - alias: "basement_bathroom_auto_lights"
-    initial_state: true
-    mode: "restart"
-    trigger:
-      - platform: state
-        entity_id: "binary_sensor.basement_bathroom_motion"
-        to: "on"
-    action:
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: "binary_sensor.basement_bathroom_door"
-                state: "on"
-              - condition: state
-                entity_id: "light.basement_bathroom_lights"
-                state: "off"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "light.basement_bathroom_vanity"
-                  brightness_pct: >-
-                    {% set time = now().strftime('%H%M') | int %}
-                    {%- if time <= 600 -%} 5
-                    {%- elif time >= 900 and time <= 1800 -%} 85
-                    {%- else -%} 50
-                    {%- endif -%}
-
-      - wait_for_trigger:
-          - platform: template
-            value_template: >-
-              {{
-                is_state('binary_sensor.basement_bathroom_motion', 'off')
-                  and is_state('binary_sensor.basement_bathroom_door', 'on')
-              }}
-            for: 120
-
-      - service: light.turn_off
-        data:
-          entity_id: "light.basement_bathroom_lights"
+    use_blueprint:
+      path: "presence_light.yaml"
+      input:
+        light_entity: "light.basement_bathroom_vanity"
+        light_off_entity: "light.basement_bathroom_lights"
+        presence_entity: "binary_sensor.basement_bathroom_presence"
+        brightness_pct: >
+          {% set time = now().strftime('%H%M') | int %}
+          {%- if time <= 600 -%} 1
+          {%- elif time >= 900 and time <= 1800 -%} 85
+          {%- else -%} 50
+          {%- endif -%}
 
   # Double tap fan switch will turn fan on/off
   - alias: "basement_bathroom_fan_double_tap"

@@ -96,14 +96,6 @@ automation:
         entity_id: "switch.carl_heater"
 
       - choose:
-          - conditions:  # Day
-              - condition: time
-                after: "input_datetime.carl_day_time"
-                before: "input_datetime.carl_night_time"
-            sequence:
-              - service: switch.turn_on
-                entity_id: "switch.carl_uv_light"
-
           - conditions:  # Night
               - condition: time
                 after: "input_datetime.carl_night_time"
@@ -113,6 +105,9 @@ automation:
                 entity_id:
                   - "switch.carl_heat_bulb"
                   - "switch.carl_uv_light"
+        default:  # Day
+          - service: switch.turn_on
+            entity_id: "switch.carl_uv_light"
 
   - alias: carl_uv_burned_out
     initial_state: true

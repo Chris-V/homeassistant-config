@@ -42,29 +42,13 @@ binary_sensor:
         friendly_name: "Workshop motion"
         device_class: "motion"
         value_template: "{{ is_state('sensor.workshop_motion_sensor_burglar', '8') }}"
-        delay_off: 15
 
 automation:
   - alias: "workshop_auto_lights"
-    initial_state: true
-    mode: "restart"
-
-    trigger:
-      - platform: state
-        entity_id: &motion_entity "binary_sensor.workshop_motion"
-        to: "on"
-
-    action:
-      - service: light.turn_on
-        data:
-          entity_id: "light.workshop"
-
-      - wait_for_trigger:
-          - platform: state
-            entity_id: *motion_entity
-            to: "off"
-            for: 120
-
-      - service: light.turn_off
-        data:
-          entity_id: "light.workshop_lights"
+    use_blueprint:
+      path: "presence_light.yaml"
+      input:
+        delay_off: 300
+        light_entity: "light.workshop"
+        light_off_entity: "light.workshop_lights"
+        presence_entity: "binary_sensor.workshop_motion"

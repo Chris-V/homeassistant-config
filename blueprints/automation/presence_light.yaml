@@ -1,0 +1,85 @@
+blueprint:
+  name: Presence-activated light
+  description: Toggle a light based on presence
+  domain: automation
+  input:
+    brightness_pct:
+      name: Brightness percentage
+      description: |
+        Brightness percentage of the light when it turns on.
+        Can be a template.
+        1 is the minimum brightness for the light.
+        100 is the maximum brightness for the light.
+      default: 100
+    delay_off:
+      name: Delay off
+      description: >
+        Wait that many seconds for the light to turn off after presence is no
+        longer detected.
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: seconds
+      default: 120
+    light_entity:
+      name: Light
+      description: This light will turn on when presence is detected.
+      selector:
+        entity:
+          domain: light
+    light_off_entity:
+      name: Light
+      description: >
+        Optional. If this light is on, then `light_entity` will not turn on.
+        This light will turn off when presence is no longer detected.
+        Defaults to `light_entity`.
+      selector:
+        entity:
+          domain: light
+      default: ""
+    presence_entity:
+      name: Presence entity
+      description: The presence sensor that will be used as a trigger.
+      selector:
+        entity:
+          domain: binary_sensor
+          device_class: presence
+
+initial_state: true
+max_exceeded: silent
+mode: "restart"
+
+trigger:
+  - platform: state
+    entity_id: !input presence_entity
+    from: "off"
+    to: "on"
+
+variables:
+  brightness_pct: !input brightness_pct
+  light_entity: !input light_entity
+  optional_light_off_entity: !input light_off_entity
+  light_off_entity: "{{ optional_light_off_entity or light_entity }}"
+  presence_entity: !input presence_entity
+
+action:
+  - choose:
+      - conditions:
+          - "{{ is_state(presence_entity, 'on') }}"
+          - "{{ is_state(light_off_entity, 'off') }}"
+        sequence:
+          - service: light.turn_on
+            data:
+              entity_id: !input light_entity
+              brightness_pct: "{{ brightness_pct | int(100) | max(1) | min(100) }}"
+
+  - wait_for_trigger:
+      - platform: state
+        entity_id: !input presence_entity
+        to: "off"
+        for: !input delay_off
+
+  - service: light.turn_off
+    data:
+      entity_id: "{{ light_off_entity }}"

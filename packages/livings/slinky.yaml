@@ -96,14 +96,6 @@ automation:
         entity_id: "switch.slinky_heater"
 
       - choose:
-          - conditions:  # Day
-              - condition: time
-                after: "input_datetime.slinky_day_time"
-                before: "input_datetime.slinky_night_time"
-            sequence:
-              - service: switch.turn_on
-                entity_id: "switch.slinky_uv_light"
-
           - conditions:  # Night
               - condition: time
                 after: "input_datetime.slinky_night_time"
@@ -113,6 +105,9 @@ automation:
                 entity_id:
                   - "switch.slinky_heat_bulb"
                   - "switch.slinky_uv_light"
+        default:  # Day
+          - service: switch.turn_on
+            entity_id: "switch.slinky_uv_light"
 
   - alias: slinky_uv_burned_out
     initial_state: true
