@@ -83,8 +83,8 @@ automation:
         entity_id: "input_boolean.slinky_scheduled_lights"
         from: "off"
         to: "on"
-      - platform: homeassistant
-        event: "start"
+      - platform: event
+        event_type: "zwave.network_ready"
 
     condition:
       - condition: state
@@ -96,18 +96,21 @@ automation:
         entity_id: "switch.slinky_heater"
 
       - choose:
-          - conditions:  # Night
-              - condition: time
-                after: "input_datetime.slinky_night_time"
-                before: "input_datetime.slinky_day_time"
+          # Day
+          - conditions: >-
+              {% set now = strptime(states('sensor.time'), '%H:%M') %}
+              {% set day_time = strptime(states('input_datetime.slinky_day_time'), '%H:%M:%S') %}
+              {% set night_time = strptime(states('input_datetime.slinky_night_time'), '%H:%M:%S') %}
+              {{ day_time <= now < night_time }}
             sequence:
-              - service: switch.turn_off
-                entity_id:
-                  - "switch.slinky_heat_bulb"
-                  - "switch.slinky_uv_light"
-        default:  # Day
-          - service: switch.turn_on
-            entity_id: "switch.slinky_uv_light"
+              - service: switch.turn_on
+                entity_id: "switch.slinky_uv_light"
+        # Night
+        default:
+          - service: switch.turn_off
+            entity_id:
+              - "switch.slinky_heat_bulb"
+              - "switch.slinky_uv_light"
 
   - alias: slinky_uv_burned_out
     initial_state: true

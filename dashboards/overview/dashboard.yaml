@@ -1,21 +1,5 @@
 title: Overview
 
-custom_header:
-  compact_mode: true
-  chevrons: false
-  hide_help: true
-  hide_unused: true
-  hide_config: true
-  hide_raw: true
-  button_text:
-    options: "{{ hours24LZ }}:{{ minutesLZ }}"
-  exceptions:
-    - conditions:
-        user_agent: "Mobile"
-      config:
-        menu_hide: true
-        options_hide: true
-
 views:
   - title: Home
     path: home
