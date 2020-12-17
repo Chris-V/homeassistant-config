@@ -9,10 +9,8 @@ style: |
     position: absolute;
   }
 elements:
-  - type: custom:group-element
-    visible: true
-    no_toggle_hide: true
-    elements_pos:
+  - type: custom:container-element
+    style:
       position: absolute
       top: 0
       right: 0
@@ -41,10 +39,8 @@ elements:
           left: -5px
           "--mdc-icon-size": 20px
 
-      - type: custom:group-element
-        visible: true
-        no_toggle_hide: true
-        elements_pos:
+      - type: custom:container-element
+        style:
           height: 30px
           overflow: hidden
           display: flex
@@ -56,10 +52,8 @@ elements:
           background-color: rgba(0, 0, 0, 0.45)
           color: "#D3D3D3"
         elements:
-          - type: custom:group-element
-            visible: true
-            no_toggle_hide: true
-            elements_pos:
+          - type: custom:container-element
+            style:
               height: 100%
               margin-left: 5px
               display: flex
@@ -82,9 +76,7 @@ elements:
                   font-size: 0.9rem
 
           # Group conditionals together to prevent messing up flex layout
-          - type: custom:group-element
-            visible: true
-            no_toggle_hide: true
+          - type: custom:container-element
             elements:
               - type: conditional
                 conditions:

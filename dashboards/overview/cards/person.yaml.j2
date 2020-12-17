@@ -9,10 +9,8 @@ style: |
     position: absolute;
   }
 elements:
-  - type: custom:group-element
-    visible: true
-    no_toggle_hide: true
-    elements_pos:
+  - type: custom:container-element
+    style:
       position: absolute
       top: 0
       right: 0
@@ -27,10 +25,8 @@ elements:
       "--primary-text-color": "#DADADB"
       "--mdc-icon-size": 40px
     elements:
-      - type: custom:group-element
-        visible: true
-        no_toggle_hide: true
-        elements_pos:
+      - type: custom:container-element
+        style:
           height: 40px
           overflow: hidden
           display: flex
@@ -42,10 +38,8 @@ elements:
           background-color: rgba(0, 0, 0, 0.45)
           color: "#D3D3D3"
         elements:
-          - type: custom:group-element  # Battery
-            visible: true
-            no_toggle_hide: true
-            elements_pos:
+          - type: custom:container-element  # Battery
+            style:
               height: 100%
               margin-left: 5px
               display: flex

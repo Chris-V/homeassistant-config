@@ -79,10 +79,8 @@ style: |
     background: rgba(0, 139, 239, 1);
   }
 elements:
-  - type: custom:group-element
-    visible: true
-    no_toggle_hide: true
-    elements_pos:
+  - type: custom:container-element
+    style:
       position: absolute
       top: 0
       right: 0
@@ -97,10 +95,8 @@ elements:
       "--ha-card-background": rgba(0, 0, 0, 0)
       "--ha-card-box-shadow": none
     elements:
-      - type: custom:group-element  # Content
-        visible: true
-        no_toggle_hide: true
-        elements_pos:
+      - type: custom:container-element  # Content
+        style:
           order: 1
           flex-grow: 1
           flex-shrink: 1
@@ -160,10 +156,8 @@ elements:
 {% endfor %}
 {%- endfilter %}
 
-      - type: custom:group-element  # Footer
-        visible: true
-        no_toggle_hide: true
-        elements_pos:
+      - type: custom:container-element  # Footer
+        style:
           overflow: hidden
           display: flex
           order: 2
@@ -231,10 +225,8 @@ elements:
 {% endfor %}
 
 {% for sensor in sensors | default([]) %}
-          - type: custom:group-element
-            visible: true
-            no_toggle_hide: true
-            elements_pos:
+          - type: custom:container-element
+            style:
               margin-left: 10px
               display: flex
               flex-direction: column
