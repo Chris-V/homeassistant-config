@@ -91,62 +91,27 @@ sensor:
         value_template: "{{ states('sensor.master_bedroom_thermostat_temperature') | round(1) }}"
 
 automation:
-  - alias: "master_bedroom_double_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.master_bedroom_light_switch"
-          scene_data: 3
-    variables:
-      entity_id: "light.master_bedroom_bedsides"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+  - alias: "master_bedroom_light_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/inovelli_nzw30_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.master_bedroom_light_switch"
 
-  - alias: "master_bedroom_four_taps"
-    initial_state: true
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.master_bedroom_light_switch"
-          scene_id: 1
-          scene_data: 5
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.master_bedroom_light_switch"
-          scene_id: 2
-          scene_data: 5
-    action:
-      - service: script.bedtime
+        tap_on_2x:
+          - service: light.turn_on
+            data:
+              entity_id: "light.master_bedroom_bedsides"
+        tap_off_2x:
+          - service: light.turn_off
+            data:
+              entity_id: "light.master_bedroom_bedsides"
 
-  - alias: "master_bedroom_five_taps"
-    initial_state: true
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.master_bedroom_light_switch"
-          scene_id: 1
-          scene_data: 6
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.master_bedroom_light_switch"
-          scene_id: 2
-          scene_data: 6
-    action:
-      - service: script.everything_off
+        tap_on_4x:
+          - service: script.bedtime
+        tap_off_4x:
+          - service: script.bedtime
+
+        tap_on_5x:
+          - service: script.everything_off
+        tap_off_5x:
+          - service: script.everything_off

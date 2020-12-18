@@ -1,0 +1,162 @@
+blueprint:
+  name: Scene control for Inovelli's Gen. 1 NZW30 and NZW31.
+  description: >
+    Associate actions to scenes from Inovelli's Gen. 1 NZW30 swiches and NZW31 dimmers.
+  domain: automation
+  input:
+    zwave_entity:
+      name: Z-Wave entity
+      description: Listen to scene events form this Z-Wave entity.
+      selector:
+        entity:
+          domain: zwave
+
+    hold_on:
+      name: Hold on paddle
+      description: Action to execute when the on paddle is held.
+      default: []
+      selector:
+        action:
+    hold_off:
+      name: Hold off paddle
+      description: Action to execute when the off paddle is held.
+      default: []
+      selector:
+        action:
+
+    tap_on_1x:
+      name: Tap the on paddle once
+      description: Action to run when the on paddle is pressed.
+      default: []
+      selector:
+        action:
+    tap_off_1x:
+      name: Tap the off paddle once
+      description: Action to run when the off paddle is pressed.
+      default: []
+      selector:
+        action:
+
+    tap_on_2x:
+      name: Tap the on paddle twice
+      description: Action to run when the on paddle is quickly pressed twice.
+      default: []
+      selector:
+        action:
+    tap_off_2x:
+      name: Tap the off paddle twice
+      description: Action to run when the off paddle is quickly pressed twice.
+      default: []
+      selector:
+        action:
+
+    tap_on_3x:
+      name: Tap the on paddle 3 times
+      description: Action to run when the on paddle is quickly pressed 3 times.
+      default: []
+      selector:
+        action:
+    tap_off_3x:
+      name: Tap the off paddle 3 times
+      description: Action to run when the off paddle is quickly pressed 3 times.
+      default: []
+      selector:
+        action:
+
+    tap_on_4x:
+      name: Tap the on paddle 4 times
+      description: Action to run when the on paddle is quickly pressed 4 times.
+      default: []
+      selector:
+        action:
+    tap_off_4x:
+      name: Tap the off paddle 4 times
+      description: Action to run when the off paddle is quickly pressed 4 times.
+      default: []
+      selector:
+        action:
+
+    tap_on_5x:
+      name: Tap the on paddle 5 times
+      description: Action to run when the on paddle is quickly pressed 5 times.
+      default: []
+      selector:
+        action:
+    tap_off_5x:
+      name: Tap the off paddle 5 times
+      description: Action to run when the off paddle is quickly pressed 5 times.
+      default: []
+      selector:
+        action:
+
+initial_state: true
+max_exceeded: silent
+mode: "queued"
+
+trigger:
+  - platform: event
+    event_type: "zwave.scene_activated"
+    event_data:
+      entity_id: !input zwave_entity
+
+variables:
+  scene_data: "{{ trigger.event.data.scene_data | int }}"
+  scene_id: "{{ trigger.event.data.scene_id | int }}"
+  on_button_id: 2
+  off_button_id: 1
+
+action:
+  - choose:
+      # Tap 1x
+      - conditions: "{{ scene_data == 1 }}"
+        sequence:
+          - choose:
+              - conditions: "{{ scene_id == on_button_id }}"
+                sequence: !input tap_on_1x
+              - conditions: "{{ scene_id == off_button_id }}"
+                sequence: !input tap_off_1x
+
+      # Hold
+      - conditions: "{{ scene_data == 2 }}"
+        sequence:
+          - choose:
+              - conditions: "{{ scene_id == on_button_id }}"
+                sequence: !input hold_on
+              - conditions: "{{ scene_id == off_button_id }}"
+                sequence: !input hold_off
+
+      # Tap 2x
+      - conditions: "{{ scene_data == 3 }}"
+        sequence:
+          - choose:
+              - conditions: "{{ scene_id == on_button_id }}"
+                sequence: !input tap_on_2x
+              - conditions: "{{ scene_id == off_button_id }}"
+                sequence: !input tap_off_2x
+
+      # Tap 3x
+      - conditions: "{{ scene_data == 4 }}"
+        sequence:
+          - choose:
+              - conditions: "{{ scene_id == on_button_id }}"
+                sequence: !input tap_on_3x
+              - conditions: "{{ scene_id == off_button_id }}"
+                sequence: !input tap_off_3x
+
+      # Tap 4x
+      - conditions: "{{ scene_data == 5 }}"
+        sequence:
+          - choose:
+              - conditions: "{{ scene_id == on_button_id }}"
+                sequence: !input tap_on_4x
+              - conditions: "{{ scene_id == off_button_id }}"
+                sequence: !input tap_off_4x
+
+      # Tap 5x
+      - conditions: "{{ scene_data == 6 }}"
+        sequence:
+          - choose:
+              - conditions: "{{ scene_id == on_button_id }}"
+                sequence: !input tap_on_5x
+              - conditions: "{{ scene_id == off_button_id }}"
+                sequence: !input tap_off_5x
