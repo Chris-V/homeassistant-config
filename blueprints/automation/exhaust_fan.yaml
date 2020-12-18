@@ -1,0 +1,98 @@
+blueprint:
+  name: Humidity-based exhaust fan
+  description: Activate an exhaust fan based on relative humidity levels.
+  domain: automation
+  input:
+    fan_entity:
+      name: Fan
+      description: The fan to control.
+      selector:
+        entity:
+          domain: fan
+    humidity_entity:
+      name: Humidity sensor entity
+      description: The relative humidity sensor that will be used as a trigger.
+      selector:
+        entity:
+          domain: sensor
+          device_class: humidity
+    humidity_start:
+      name: Start humidity level (exclusive)
+      description: >
+        Start the exhaust fan when humidity reaches this level or more.
+        It makes sense to start the fan at a higher level than the stop trigger.
+      default: 64
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"
+          mode: slider
+    humidity_stop:
+      name: Stop humidity level (exclusive)
+      description: >
+        Stop the exhaust fan when humidity reaches this level or less.
+        It makes sense to stop the fan at a lower level than the start trigger.
+      default: 61
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"
+          mode: slider
+    runtime:
+      name: Minimum runtime
+      description: >
+        The minimum runtime of the fan in minutes. The fan will always stay in its current
+        state, either on or off, for that long. This prevents fluctuations in the sensor
+        readings to overwork the fan switch.
+        It also allows for manual overrides. ie: physically turning on the switch will
+        leave it running for that amount of time.
+      default: 30
+      selector:
+        number:
+          min: 5
+          max: 90
+          step: 5
+          unit_of_measurement: minutes
+          mode: slider
+
+initial_state: true
+max_exceeded: silent
+mode: "restart"
+
+trigger:
+  - platform: state
+    entity_id: !input humidity_entity
+  - platform: state
+    entity_id: !input fan_entity
+    for:
+      minutes: !input runtime
+
+action:
+  - choose:
+      - conditions:
+          - condition: numeric_state
+            entity_id: !input humidity_entity
+            above: !input humidity_start
+          - condition: state
+            entity_id: !input fan_entity
+            state: "off"
+            for: !input runtime
+        sequence:
+          - service: fan.turn_on
+            data:
+              entity_id: !input fan_entity
+
+      - conditions:
+          - condition: numeric_state
+            entity_id: !input humidity_entity
+            below: !input humidity_stop
+          - condition: state
+            entity_id: !input fan_entity
+            state: "on"
+            for: !input runtime
+        sequence:
+          - service: fan.turn_off
+            data:
+              entity_id: !input fan_entity

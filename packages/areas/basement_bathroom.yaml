@@ -133,44 +133,11 @@ light:
 
 automation:
   - alias: "basement_bathroom_auto_fan"
-    initial_state: true
-    mode: "restart"
-
-    trigger:
-      - platform: state
-        entity_id: "sensor.basement_bathroom_humidity"
-      - platform: state
-        entity_id: "fan.basement_bathroom"
-        for: &fan_cycle_time
-          minutes: 30
-
-    action:
-      - choose:
-          - conditions:
-              - condition: numeric_state
-                entity_id: "sensor.basement_bathroom_humidity"
-                above: 64
-              - condition: state
-                entity_id: "fan.basement_bathroom"
-                state: "off"
-                for: *fan_cycle_time
-            sequence:
-              - service: fan.turn_on
-                data:
-                  entity_id: "fan.basement_bathroom"
-
-          - conditions:
-              - condition: numeric_state
-                entity_id: "sensor.basement_bathroom_humidity"
-                below: 61
-              - condition: state
-                entity_id: "fan.basement_bathroom"
-                state: "on"
-                for: *fan_cycle_time
-            sequence:
-              - service: fan.turn_off
-                data:
-                  entity_id: "fan.basement_bathroom"
+    use_blueprint:
+      path: "exhaust_fan.yaml"
+      input:
+        fan_entity: "fan.basement_bathroom"
+        humidity_entity: "sensor.basement_bathroom_humidity"
 
   - alias: "basement_bathroom_auto_lights"
     use_blueprint:
