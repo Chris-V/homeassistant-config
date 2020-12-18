@@ -130,107 +130,59 @@ automation:
           {%- else -%} 50
           {%- endif -%}
 
-  # Double tap fan switch will turn fan on/off
-  - alias: "main_bathroom_fan_double_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_fan_switch"
-          scene_data: 7860
-    variables:
-      entity_id: "fan.main_bathroom"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+  - alias: "main_bathroom_fan_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.main_bathroom_fan_switch"
 
-  # Double tap vanity switch will turn vanity light on/off
-  - alias: "main_bathroom_vanity_double_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_vanity_light_switch"
-          scene_data: 7860
-    variables:
-      entity_id: "light.main_bathroom_vanity"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+        tap_on_2x:
+          - service: light.turn_on
+            data:
+              entity_id: "fan.main_bathroom"
+        tap_off_2x:
+          - service: light.turn_off
+            data:
+              entity_id: "fan.main_bathroom"
 
-  # Double tap spots switch will turn spots on/off
-  - alias: "main_bathroom_spots_double_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_light_dimmer"
-          scene_data: 7860
-    variables:
-      entity_id: "light.main_bathroom_spots"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+  - alias: "main_bathroom_vanity_light_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.main_bathroom_vanity_light_switch"
 
-  # Triple tap any light switch will turn bathroom lights on/off
-  - alias: "main_bathroom_lights_triple_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_light_dimmer"
-          scene_data: 7920
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.main_bathroom_vanity_light_switch"
-          scene_data: 7920
-    variables:
-      entity_id: "light.main_bathroom_lights"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+        tap_on_2x:
+          - service: light.turn_on
+            data:
+              entity_id: "light.main_bathroom_vanity"
+        tap_off_2x:
+          - service: light.turn_off
+            data:
+              entity_id: "light.main_bathroom_vanity"
+
+        <<: &tap_3x
+          tap_on_3x:
+            - service: light.turn_on
+              data:
+                entity_id: "light.main_bathroom_lights"
+          tap_off_3x:
+            - service: light.turn_off
+              data:
+                entity_id: "light.main_bathroom_lights"
+
+  - alias: "main_bathroom_light_dimmer_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.main_bathroom_light_dimmer"
+
+        tap_on_2x:
+          - service: light.turn_on
+            data:
+              entity_id: "light.main_bathroom_spots"
+        tap_off_2x:
+          - service: light.turn_off
+            data:
+              entity_id: "light.main_bathroom_spots"
+
+        <<: *tap_3x

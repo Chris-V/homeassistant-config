@@ -65,53 +65,29 @@ sensor:
         value_template: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
 
 automation:
-  - alias: "kitchen_double_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.kitchen_light_switch"
-          scene_data: 7860
-    variables:
-      entity_id: "light.kitchen_sink"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+  - alias: "kitchen_light_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.kitchen_light_switch"
 
-  - alias: "kitchen_triple_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.kitchen_light_switch"
-          scene_data: 7920
-    variables:
-      entity_id: "light.kitchen_lights"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+        tap_on_2x:
+          - service: light.turn_on
+            data:
+              entity_id: "light.kitchen_sink"
+        tap_off_2x:
+          - service: light.turn_off
+            data:
+              entity_id: "light.kitchen_sink"
+
+        tap_on_3x:
+          - service: light.turn_on
+            data:
+              entity_id: "light.kitchen_lights"
+        tap_off_3x:
+          - service: light.turn_off
+            data:
+              entity_id: "light.kitchen_lights"
 
   - alias: "kitchen_sink_double_tap"
     initial_state: true

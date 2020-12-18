@@ -71,60 +71,44 @@ sensor:
         value_template: "{{ states('sensor.basement_hallway_thermostat_temperature') | round(1) }}"
 
 automation:
-  - alias: "downstairs_lights_double_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.basement_hallway_light_dimmer"
-          scene_data: 7860
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.downstairs_light_switch"
-          scene_data: 7860
-    variables:
-      entity_id: "light.staircase"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+  - alias: "basement_hallway_light_dimmer_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.basement_hallway_light_dimmer"
 
-  - alias: "downstairs_lights_triple_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.basement_hallway_light_dimmer"
-          scene_data: 7920
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.downstairs_light_switch"
-          scene_data: 7920
-    variables:
-      entity_id: "light.basement_lights"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+        tap_on_2x:
+          - service: light.turn_on
+            data:
+              entity_id: "light.staircase"
+        tap_off_2x:
+          - service: light.turn_off
+            data:
+              entity_id: "light.staircase"
+
+        tap_3x: &tap_3x
+          tap_on_3x:
+            - service: light.turn_on
+              data:
+                entity_id: "light.basement_lights"
+          tap_off_3x:
+            - service: light.turn_off
+              data:
+                entity_id: "light.basement_lights"
+
+  - alias: "downstairs_light_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.downstairs_light_switch"
+
+        tap_on_2x:
+          - service: light.turn_on
+            data:
+              entity_id: "light.staircase"
+        tap_off_2x:
+          - service: light.turn_off
+            data:
+              entity_id: "light.staircase"
+
+        <<: *tap_3x

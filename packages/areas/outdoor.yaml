@@ -84,36 +84,32 @@ sensor:
         availability_template: "{{ not is_state('sensor.weather_quebec_forecast', 'unavailable') }}"
 
 automation:
-  - alias: "outdoor_switches_double_tap"
-    initial_state: true
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.front_porch_light_switch"
-          scene_data: 7860
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.side_porch_light_switch"
-          scene_data: 7860
-      - platform: event
-        event_type: "zwave.scene_activated"
-        event_data:
-          entity_id: "zwave.shed_outdoor_light_switch"
-          scene_data: 7860
-    variables:
-      entity_id: "light.outdoor_lights"
-    action:
-      - choose:
-          - conditions: "{{ trigger.event.data.scene_id | int == 1 }}"
-            sequence:
-              - service: light.turn_on
-                data:
-                  entity_id: "{{ entity_id }}"
-          - conditions: "{{ trigger.event.data.scene_id | int == 2 }}"
-            sequence:
-              - service: light.turn_off
-                data:
-                  entity_id: "{{ entity_id }}"
+  - alias: "front_porch_light_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.front_porch_light_switch"
+
+        <<: &tap_2x
+          tap_on_2x:
+            - service: light.turn_on
+              data:
+                entity_id: "light.outdoor_lights"
+          tap_off_2x:
+            - service: light.turn_off
+              data:
+                entity_id: "light.outdoor_lights"
+
+  - alias: "side_porch_light_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.side_porch_light_switch"
+        <<: *tap_2x
+
+  - alias: "shed_outdoor_light_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      input:
+        zwave_entity: "zwave.shed_outdoor_light_switch"
+        <<: *tap_2x
