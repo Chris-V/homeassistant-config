@@ -85,5 +85,4 @@
           <<: *aggregate_row_options
           name: "{{ states['this.entity_id'].name | replace(' motion', '') }}"
 
-- !template
-  file: ../cards/batteries.yaml.j2
+- !include ../cards/batteries.yaml
