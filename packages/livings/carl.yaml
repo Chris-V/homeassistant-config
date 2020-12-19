@@ -71,139 +71,61 @@ sensor:
 
 automation:
   - alias: carl_scheduling
-    initial_state: true
-    mode: "restart"
-
-    trigger:
-      - platform: time
-        at:
-          - "input_datetime.carl_day_time"
-          - "input_datetime.carl_night_time"
-      - platform: state
-        entity_id: "input_boolean.carl_scheduled_lights"
-        from: "off"
-        to: "on"
-      - platform: event
-        event_type: "zwave.network_ready"
-
-    condition:
-      - condition: state
-        entity_id: "input_boolean.carl_scheduled_lights"
-        state: "on"
-
-    action:
-      - service: switch.turn_on
-        entity_id: "switch.carl_heater"
-
-      - choose:
-          # Day
-          - conditions: >-
-              {% set now = strptime(states('sensor.time'), '%H:%M') %}
-              {% set day_time = strptime(states('input_datetime.slinky_day_time'), '%H:%M:%S') %}
-              {% set night_time = strptime(states('input_datetime.slinky_night_time'), '%H:%M:%S') %}
-              {{ day_time <= now < night_time }}
-            sequence:
-              - service: switch.turn_on
-                entity_id: "switch.carl_uv_light"
-        # Night
-        default:
-          - service: switch.turn_off
-            entity_id:
-              - "switch.carl_heat_bulb"
-              - "switch.carl_uv_light"
+    use_blueprint:
+      path: "terrarium_scheduling.yaml"
+      input:
+        scheduling_entity: "input_boolean.carl_scheduled_lights"
+        day_time_entity: "input_datetime.carl_day_time"
+        night_time_entity: "input_datetime.carl_night_time"
+        heat_bulb_switch: "switch.carl_heat_bulb"
+        heater_switch: "switch.carl_heater"
+        uv_light_switch: "switch.carl_uv_light"
 
   - alias: carl_uv_burned_out
-    initial_state: true
-    mode: "restart"
-    trigger:
-      - platform: state
+    use_blueprint:
+      path: "device_stopped_consuming.yaml"
+      input:
+        delay: &power_delay 310  # Wattage report rate is 5 minutes
         entity_id: "switch.carl_uv_light"
-        from: "off"
-        to: "on"
-        for: &on_delay 310  # Wattage report rate is 5 minutes
-      - platform: numeric_state
-        entity_id: "sensor.carl_uv_light_power"
-        below: &min_power 1
-        for: *on_delay
-    condition:
-      - condition: state
-        entity_id: "switch.carl_uv_light"
-        state: "on"
-        for: *on_delay
-      - condition: numeric_state
-        entity_id: "sensor.carl_uv_light_power"
-        below: *min_power
-    action:
-      - service: python_script.notify
-        data:
-          audio: true
-          persistent: true
-          push_target: "household"
-          tag: "carl_uv_burned_out"
-          url: "/lovelace/livings"
-          title: "Check Carl's UV Light"
-          message: "It appears that Carl's UV light has burned out."
+        power_sensor: "sensor.carl_uv_light_power"
+        action:
+          - service: python_script.notify
+            data:
+              <<: &power_notification_data
+                audio: true
+                persistent: true
+                push_target: "household"
+                url: "/lovelace/livings"
+              tag: "carl_uv_burned_out"
+              title: "Check Carl's UV Light"
+              message: "It appears that Carl's UV light has burned out."
 
   - alias: carl_heat_bulb_burned_out
-    initial_state: true
-    mode: "restart"
-    trigger:
-      - platform: state
+    use_blueprint:
+      path: "device_stopped_consuming.yaml"
+      input:
+        delay: *power_delay
         entity_id: "switch.carl_heat_bulb"
-        from: "off"
-        to: "on"
-        for: *on_delay
-      - platform: numeric_state
-        entity_id: "sensor.carl_heat_bulb_power"
-        below: *min_power
-        for: *on_delay
-    condition:
-      - condition: state
-        entity_id: "switch.carl_heat_bulb"
-        state: "on"
-        for: *on_delay
-      - condition: numeric_state
-        entity_id: "sensor.carl_heat_bulb_power"
-        below: *min_power
-    action:
-      - service: python_script.notify
-        data:
-          audio: true
-          persistent: true
-          push_target: "household"
-          tag: "carl_heat_bulb_burned_out"
-          url: "/lovelace/livings"
-          title: "Check Carl's Heat Bulb"
-          message: "It appears that Carl's heat bulb has burned out."
+        power_sensor: "sensor.carl_heat_bulb_power"
+        action:
+          - service: python_script.notify
+            data:
+              <<: *power_notification_data
+              tag: "carl_heat_bulb_burned_out"
+              title: "Check Carl's Heat Bulb"
+              message: "It appears that Carl's heat bulb has burned out."
 
   - alias: carl_heater_burned_out
-    initial_state: true
-    mode: "restart"
-    trigger:
-      - platform: state
+    use_blueprint:
+      path: "device_stopped_consuming.yaml"
+      input:
+        delay: *power_delay
         entity_id: "switch.carl_heater"
-        from: "off"
-        to: "on"
-        for: *on_delay
-      - platform: numeric_state
-        entity_id: "sensor.carl_heater_power"
-        below: *min_power
-        for: *on_delay
-    condition:
-      - condition: state
-        entity_id: "switch.carl_heater"
-        state: "on"
-        for: *on_delay
-      - condition: numeric_state
-        entity_id: "sensor.carl_heater_power"
-        below: *min_power
-    action:
-      - service: python_script.notify
-        data:
-          audio: true
-          persistent: true
-          push_target: "household"
-          tag: "carl_heater_burned_out"
-          url: "/lovelace/livings"
-          title: "Check Carl's Ceramic Heater"
-          message: "It appears that Carl's ceramic heater has burned out."
+        power_sensor: "sensor.carl_heater_power"
+        action:
+          - service: python_script.notify
+            data:
+              <<: *power_notification_data
+              tag: "carl_heater_burned_out"
+              title: "Check Carl's Ceramic Heater"
+              message: "It appears that Carl's ceramic heater has burned out."

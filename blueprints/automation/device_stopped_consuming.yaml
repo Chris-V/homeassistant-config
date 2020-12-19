@@ -1,0 +1,57 @@
+blueprint:
+  name: Device stopped consuming power
+  description: Monitor a device in case is stops consuming power.
+  domain: automation
+  input:
+    delay:
+      name: Delay
+      description: How long to wait before reporting the power failure.
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: seconds
+          mode: box
+    entity_id:
+      name: Monitored switch
+      selector:
+        entity:
+          domain: switch
+    power_sensor:
+      name: Power sensor
+      description: The sensor that reports power consumption for the switch.
+      selector:
+        entity:
+          domain: sensor
+          device_class: power
+    action:
+      name: Actions
+      description: Actions to perform when consumption stops.
+      selector:
+        action:
+
+initial_state: true
+mode: "restart"
+
+trigger:
+  - platform: state
+    entity_id: !input entity_id
+    from: "off"
+    to: "on"
+    for: !input delay
+  - platform: numeric_state
+    entity_id: !input power_sensor
+    below: 1
+    for: !input delay
+
+condition:
+  - condition: state
+    entity_id: !input entity_id
+    state: "on"
+    for: !input delay
+  - condition: numeric_state
+    entity_id: !input power_sensor
+    below: 1
+
+action: !input action

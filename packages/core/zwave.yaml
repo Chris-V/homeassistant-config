@@ -27,7 +27,7 @@ automation:
       - service: notify.admin
         data:
           message: Z-Wave network is ready.
-          data:
+          data: &data
             tag: zwave-status
   - alias: Notify Z-Wave network complete
     trigger:
@@ -37,5 +37,4 @@ automation:
       - service: notify.admin
         data:
           message: Z-Wave network is complete.
-          data:
-            tag: zwave-status
+          data: *data

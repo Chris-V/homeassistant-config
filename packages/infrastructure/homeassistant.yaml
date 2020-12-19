@@ -66,8 +66,8 @@ automation:
       - service: notify.admin
         data:
           message: Home-Assistant has started.
-          data:
-            tag: &ha_status_tag "homeassistant-status"
+          data: &ha_status_data
+            tag: "homeassistant-status"
   - alias: Notify HA shutdown
     trigger:
       - platform: homeassistant
@@ -76,5 +76,4 @@ automation:
       - service: notify.admin
         data:
           message: Home-Assistant has shut down.
-          data:
-            tag: *ha_status_tag
+          data: *ha_status_data
