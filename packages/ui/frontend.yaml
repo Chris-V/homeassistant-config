@@ -6,7 +6,6 @@ lovelace:
   mode: "yaml"
   resources:
     - {type: "module", url: "/hacsfiles/button-card/button-card.js"}
-    - {type: "module", url: "/hacsfiles/group-element/group-element-bundle.js"}
     - {type: "module", url: "/hacsfiles/lovelace-auto-entities/auto-entities.js"}
     - {type: "module", url: "/hacsfiles/lovelace-battery-entity-row/battery-entity-row.js"}
     - {type: "module", url: "/hacsfiles/lovelace-card-mod/card-mod.js"}
