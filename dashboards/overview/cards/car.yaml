@@ -5,9 +5,6 @@ style: |
     position: relative;
     transform: none;
   }
-  div.element group-element:first-child {
-    position: absolute;
-  }
 elements:
   - type: custom:container-element
     style:
