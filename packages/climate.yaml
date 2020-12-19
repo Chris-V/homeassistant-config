@@ -220,19 +220,14 @@ automation:
       - service: script.apply_scheduled_climate_preset
 
   - alias: "revert_manual_thermostat_mode"
-    initial_state: true
     mode: "parallel"
     max: 9
-    trigger:
-      - platform: state
+    use_blueprint:
+      path: "reset_input_select.yaml"
+      input:
+        default_option: "Auto"
+        delay: 3600
         entity_id: *managed_thermostat_modes
-        to: "Manual"
-        for: 3600
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: "{{ trigger.to_state.entity_id }}"
-          option: "Auto"
 
   - alias: "select_manual_thermostat_mode"
     initial_state: true

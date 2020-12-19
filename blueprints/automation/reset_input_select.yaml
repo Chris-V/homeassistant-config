@@ -32,7 +32,7 @@ trigger:
     for: !input delay
 
 variables:
-  entity_id: !input entity_id
+  entity_id: "{{ trigger.to_state.entity_id }}"
   optional_default_option: !input default_option
   default_option: >-
     {% set options = state_attr(entity_id, 'options') %}
@@ -44,5 +44,5 @@ condition:
 action:
   - service: "input_select.select_option"
     data:
-      entity_id: !input entity_id
+      entity_id: "{{ entity_id }}"
       option: "{{ default_option }}"
