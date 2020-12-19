@@ -1,0 +1,125 @@
+# Quirks: https://github.com/dmulcahey/zha-device-handlers/blob/dev/zhaquirks/ikea/fivebtnremote.py#L126
+
+blueprint:
+  name: Master bedroom remote
+  description: Map a 5 buttons IKEA remote to master bedroom actions
+  domain: automation
+  input:
+    color_input_select:
+      name: Color selector
+      description: The input_select pointing the desired lamps color.
+      selector:
+        entity:
+          domain: input_select
+    device_ieee:
+      name: Device IEEE
+    entity_input_select:
+      name: Entity selector
+      description: The input_select pointing the lamp to control.
+      selector:
+        entity:
+          domain: input_select
+
+initial_state: true
+max_exceeded: silent
+mode: "queued"
+
+trigger:
+  - platform: event
+    event_type: "zha_event"
+    event_data:
+      device_ieee: !input device_ieee
+      endpoint_id: 1
+
+variables:
+  entity_input_select: !input entity_input_select
+
+action:
+  choose:
+    # Tap power
+    - conditions: >-
+        {{ {'command': 'toggle', 'cluster_id': 6, 'args': []}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: light.toggle
+          data:
+            entity_id: "{{ states(entity_input_select) }}"
+
+    # Hold power
+    - conditions: >-
+        {{ {'command': 'release', 'cluster_id': 5, 'args': [0]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: light.toggle
+          data:
+            entity_id: light.master_bedroom
+
+    # Tap dim up
+    - conditions: >-
+        {{ {'command': 'step_with_on_off', 'cluster_id': 8, 'args': [0, 43, 5]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: light.turn_on
+          data:
+            entity_id: "{{ states(entity_input_select) }}"
+            brightness_step_pct: 10
+
+    # Hold dim up
+    - conditions: >-
+        {{ {'command': 'move_with_on_off', 'cluster_id': 8, 'args': [0, 83]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: input_select.select_next
+          data:
+            entity_id: !input color_input_select
+
+    # Tap dim down
+    - conditions: >-
+        {{ {'command': 'step', 'cluster_id': 8, 'args': [1, 43, 5]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: light.turn_on
+          data:
+            entity_id: "{{ states(entity_input_select) }}"
+            brightness_step_pct: -10
+
+    # Hold dim down
+    - conditions: >-
+        {{ {'command': 'move', 'cluster_id': 8, 'args': [1, 83]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: input_select.select_previous
+          data:
+            entity_id: !input color_input_select
+
+    # Tap left
+    - conditions: >-
+        {{ {'command': 'press', 'cluster_id': 5, 'args': [257, 13, 0]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: input_select.select_previous
+          data:
+            entity_id: !input entity_input_select
+        - service: script.turn_on
+          entity_id: script.flash_light
+          data:
+            variables:
+              entity_id: "{{ states(entity_input_select) }}"
+
+    # Hold left
+    - conditions: >-
+        {{ {'command': 'hold', 'cluster_id': 5, 'args': [3329, 0]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: script.bedtime
+
+    # Tap right
+    - conditions: >-
+        {{ {'command': 'press', 'cluster_id': 5, 'args': [256, 13, 0]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: input_select.select_next
+          data:
+            entity_id: !input entity_input_select
+        - service: script.turn_on
+          entity_id: script.flash_light
+          data:
+            variables:
+              entity_id: "{{ states(entity_input_select) }}"
+
+    # Hold right
+    - conditions: >-
+        {{ {'command': 'hold', 'cluster_id': 5, 'args': [3328, 0]}.items() <= trigger.event.data.items() }}
+      sequence:
+        - service: script.everything_off

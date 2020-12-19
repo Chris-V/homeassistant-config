@@ -7,16 +7,16 @@ homeassistant:
 input_select:
   karine_remote_entity:
     name: "Entity controlled by Karine's remote"
-    initial: "light.bedside_karine"
+    initial: &default_entity "light.bedside_karine"
     options:
-      - "light.bedside_karine"
+      - *default_entity
       - "light.bedside_chris"
       - "light.master_bedroom_bedsides"
   karine_remote_color:
     name: "Color applied by Karine's remote"
-    initial: "[255, 186, 82]"
+    initial: &default_color "[255, 186, 82]"
     options:
-      - "[255, 186, 82]"
+      - *default_color
       - "[255, 206, 166]"
       - "[243, 242, 255]"
       - "[210, 223, 255]"
@@ -28,15 +28,12 @@ input_select:
 automation:
   - alias: karine_remote_restore_initial_option
     description: "Restore entity selected by Karine's remote after some time"
-    trigger:
-      - platform: template
-        value_template: "{{ states('input_select.karine_remote_entity') != state_attr('input_select.karine_remote_entity', 'options')[0] }}"
-        for: "00:05:00"
-    action:
-      - service: "input_select.select_option"
-        data:
-          entity_id: "input_select.karine_remote_entity"
-          option: "{{ state_attr('input_select.karine_remote_entity', 'options')[0] }}"
+    use_blueprint:
+      path: "reset_input_select.yaml"
+      input:
+        default_option: *default_entity
+        delay: 300
+        entity_id: "input_select.karine_remote_entity"
 
   - alias: karine_remote_apply_color_change
     description: "Turn on and change the color on Karine's remote entity"
@@ -52,101 +49,9 @@ automation:
 
   - alias: karine_remote
     description: Map Karine's remote buttons to useful actions
-    mode: "queued"
-    trigger:
-      - platform: event
-        event_type: "zha_event"
-        event_data:
-          device_ieee: "14:b4:57:ff:fe:7c:23:0e"
-          endpoint_id: 1
-    action:
-      choose:
-        # Quirks: https://github.com/dmulcahey/zha-device-handlers/blob/dev/zhaquirks/ikea/fivebtnremote.py#L126
-
-        # Tap power
-        - conditions: >-
-            {{ {'command': 'toggle', 'cluster_id': 6, 'args': []}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: light.toggle
-              data:
-                entity_id: "{{ states('input_select.karine_remote_entity') }}"
-
-        # Hold power
-        - conditions: >-
-            {{ {'command': 'release', 'cluster_id': 5, 'args': [0]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: light.toggle
-              data:
-                entity_id: light.master_bedroom
-
-        # Tap dim up
-        - conditions: >-
-            {{ {'command': 'step_with_on_off', 'cluster_id': 8, 'args': [0, 43, 5]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: "{{ states('input_select.karine_remote_entity') }}"
-                brightness: "{{ (state_attr('light.bedside_karine', 'brightness') | int + 32)| max(12) | min(255) }}"
-
-        # Hold dim up
-        - conditions: >-
-            {{ {'command': 'move_with_on_off', 'cluster_id': 8, 'args': [0, 83]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: input_select.select_next
-              data:
-                entity_id: input_select.karine_remote_color
-
-        # Tap dim down
-        - conditions: >-
-            {{ {'command': 'step', 'cluster_id': 8, 'args': [1, 43, 5]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: "{{ states('input_select.karine_remote_entity') }}"
-                brightness: "{{ (state_attr('light.bedside_karine', 'brightness') | int - 32)| max(12) | min(255) }}"
-
-        # Hold dim down
-        - conditions: >-
-            {{ {'command': 'move', 'cluster_id': 8, 'args': [1, 83]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: input_select.select_previous
-              data:
-                entity_id: input_select.karine_remote_color
-
-        # Tap left
-        - conditions: >-
-            {{ {'command': 'press', 'cluster_id': 5, 'args': [257, 13, 0]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: input_select.select_previous
-              data:
-                entity_id: input_select.karine_remote_entity
-            - service: script.turn_on
-              entity_id: script.flash_light
-              data:
-                variables:
-                  entity_id: "{{ states('input_select.karine_remote_entity') }}"
-
-        # Hold left
-        - conditions: >-
-            {{ {'command': 'hold', 'cluster_id': 5, 'args': [3329, 0]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: script.bedtime
-
-        # Tap right
-        - conditions: >-
-            {{ {'command': 'press', 'cluster_id': 5, 'args': [256, 13, 0]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: input_select.select_next
-              data:
-                entity_id: input_select.karine_remote_entity
-            - service: script.turn_on
-              entity_id: script.flash_light
-              data:
-                variables:
-                  entity_id: "{{ states('input_select.karine_remote_entity') }}"
-
-        # Hold right
-        - conditions: >-
-            {{ {'command': 'hold', 'cluster_id': 5, 'args': [3328, 0]}.items() <= trigger.event.data.items() }}
-          sequence:
-            - service: script.everything_off
+    use_blueprint:
+      path: "zha/bedside_remote.yaml"
+      input:
+        color_input_select: "input_select.karine_remote_color"
+        device_ieee: "14:b4:57:ff:fe:7c:23:0e"
+        entity_input_select: "input_select.karine_remote_entity"

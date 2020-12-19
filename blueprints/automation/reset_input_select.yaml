@@ -1,0 +1,48 @@
+blueprint:
+  name: Reset input_select
+  description: Reset the selection on a input_select after some time.
+  domain: automation
+  input:
+    default_option:
+      name: The default option.
+      description: The default option to reset to. Defaults to the first one.
+      default: ""
+    delay:
+      name: Delay before resetting
+      description: The delay in seconds before resetting the option.
+      selector:
+        number:
+          min: 1
+          max: 86400
+          unit_of_measurement: seconds
+          mode: box
+    entity_id:
+      name: Entity
+      description: The input_select entity to manage.
+      selector:
+        entity:
+          domain: input_select
+
+initial_state: true
+mode: "single"
+
+trigger:
+  - platform: state
+    entity_id: !input entity_id
+    for: !input delay
+
+variables:
+  entity_id: !input entity_id
+  optional_default_option: !input default_option
+  default_option: >-
+    {% set options = state_attr(entity_id, 'options') %}
+    {{ optional_default_option if optional_default_option in options else options[0] }}
+
+condition:
+  - "{{ trigger.to_state.state != default_option }}"
+
+action:
+  - service: "input_select.select_option"
+    data:
+      entity_id: !input entity_id
+      option: "{{ default_option }}"
