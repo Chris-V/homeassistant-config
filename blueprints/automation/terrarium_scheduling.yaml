@@ -68,7 +68,7 @@ action:
   - choose:
       # Day
       - conditions: >-
-          {% set now = strptime(states('sensor.time'), '%H:%M:%S') %}
+          {% set now = strptime(states('sensor.time'), '%H:%M') %}
           {% set day_time = strptime(states(day_time_entity), '%H:%M:%S') %}
           {% set night_time = strptime(states(night_time_entity), '%H:%M:%S') %}
           {{ day_time <= now < night_time }}
