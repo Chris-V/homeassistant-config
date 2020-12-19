@@ -69,6 +69,26 @@ group:
       - input_number.office_thermostat_comfort_setpoint
       - input_number.studio_thermostat_comfort_setpoint
 
+input_number:
+  climate_override_temperature:
+    name: "Override temperature"
+    unit_of_measurement: "°C"
+    icon: "mdi:temperature-celsius"
+    mode: "box"
+    min: 8
+    max: 25
+    step: 0.5
+
+input_select:
+  climate_override_location:
+    name: "Apply override in"
+    icon: "mdi:floor-plan"
+    options: ["Whole house", "Ground floor", "Basement"]
+  climate_override_mode:
+    name: "Apply override to"
+    icon: "mdi:home-thermometer-outline"
+    options: ["Manual", "Comfort", "Eco"]
+
 sensor:
   - platform: template
     sensors:
@@ -152,6 +172,45 @@ script:
               {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, override_preset)] %}
             {% endfor %}
             {{ "{{\n{}\n}}".format(ns.entries | join(',\n')) | from_json }}
+
+  apply_climate_override:
+    alias: "Apply climate override"
+    icon: "mdi:cloud-check"
+    mode: "single"
+    variables:
+      location: "{{ states('input_select.climate_override_location') }}"
+      mode: "{{ states('input_select.climate_override_mode') }}"
+      temperature: "{{ states('input_number.climate_override_temperature') | round(1) }}"
+      location_configs: >
+        {{ {
+          'Basement': ['basement_bathroom', 'basement_hallway', 'guest_bedroom', 'lounge', 'studio'],
+          'Ground floor': ['dining_room', 'living_room', 'master_bedroom', 'office']
+        } }}
+      mode_configs: >
+        {{ {
+          'Comfort': {'domain': 'input_number', 'suffix': '_thermostat_comfort_setpoint'},
+          'Eco': {'domain': 'input_number', 'suffix': '_thermostat_eco_setpoint'},
+          'Manual': {'domain': 'climate', 'suffix': '_thermostat'},
+        } }}
+    sequence:
+      - service: "{{ 'climate.set_temperature' if mode == 'Manual' else 'input_number.set_value' }}"
+        data:
+          entity_id: >
+            {% set ns = namespace(selection = [], entities = []) %}
+            {% set mode_config = mode_configs[mode] %}
+
+            {% if location == 'Whole house' %}
+              {% set ns.selection = location_configs['Basement'] + location_configs['Ground floor'] %}
+            {% else %}
+              {% set ns.selection = location_configs[location] %}
+            {% endif %}
+
+            {% for location in ns.selection -%}
+              {% set ns.entities = ns.entities + ['{}.{}{}'.format(mode_config.domain, location, mode_config.suffix)] %}
+            {% endfor %}
+
+            {{ ns.entities }}
+          "{{ 'temperature' if mode == 'Manual' else 'value' }}": "{{ temperature }}"
 
   apply_active_climate_preset:
     alias: "Set auto climate mode to active"
