@@ -1,0 +1,117 @@
+sensor:
+  - platform: template
+    sensors:
+      scheduled_climate_preset:
+        unique_id: "sensor.scheduled_climate_preset"
+        friendly_name: "Scheduled climate preset"
+        icon_template: "mdi:thermometer-lines"
+        value_template: >-
+          {% set now = as_local(states.sensor.time.last_changed) %}
+          {% if is_state('group.household', 'home') %}
+            {% set schedule = [
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2330, "preset": "Bedtime"}],
+              [{"time": 100, "preset": "Sleep"}, {"time": 830, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
+            ] %}
+
+            {% set day_index = now.weekday() %}
+            {% set time_index = now.strftime('%H%M') | int %}
+            {% set days = (range(day_index + 1, 7) | list + range(0, day_index) | list) | reverse | list %}
+
+            {% set match = namespace(
+              day = day_index,
+              preset = schedule[day_index] | rejectattr("time", ">", time_index) | map(attribute = "preset") | list | last
+            ) %}
+
+            {% for day in days if match.preset is not defined %}
+            {% set match.day = day %}
+            {% set match.preset = schedule[day] | map(attribute = "preset") | list | last %}
+            {% endfor %}
+
+            {{ match.preset | default('Away') }}
+          {%- else -%}
+            Away
+          {%- endif %}
+
+script:
+  assign_climate_auto_mode:
+    alias: "Assign auto climate mode"
+    mode: "restart"
+    fields:
+      preset:
+        description: "The preset to assign to all entities. Either Eco or Comfort."
+        example: "Comfort"
+      overrides:
+        description: "Dictionary of entities and their preset that do not use the default value."
+        example: "{\"input_select.my_room_thermostat_auto_mode\": \"Comfort\"}"
+    sequence:
+      - service: scene.apply
+        data:
+          entities: >
+            {% set ns = namespace(entries = []) %}
+            {% for entity_id in expand('group.managed_thermostat_auto_modes') | map(attribute = 'entity_id') %}
+              {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, preset)] %}
+            {% endfor %}
+            {% for entity_id, override_preset in (overrides | default({})).items() %}
+              {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, override_preset)] %}
+            {% endfor %}
+            {{ "{{\n{}\n}}".format(ns.entries | join(',\n')) | from_json }}
+
+  apply_active_climate_preset:
+    alias: "Set auto climate mode to active"
+    icon: "mdi:thermometer-lines"
+    mode: "single"
+    sequence:
+      - service: script.assign_climate_auto_mode
+        data:
+          preset: "Comfort"
+
+  apply_away_climate_preset:
+    alias: "Set auto climate mode to away"
+    icon: "mdi:thermometer-lines"
+    mode: "single"
+    sequence:
+      - service: script.assign_climate_auto_mode
+        data:
+          preset: "Eco"
+
+  apply_bedtime_climate_preset:
+    alias: "Set auto climate mode to bedtime"
+    icon: "mdi:thermometer-lines"
+    mode: "single"
+    sequence:
+      - service: script.assign_climate_auto_mode
+        data:
+          preset: "Eco"
+          overrides:
+            input_select.master_bedroom_thermostat_auto_mode: "Comfort"
+
+  apply_sleep_climate_preset:
+    alias: "Set auto climate mode to sleep"
+    icon: "mdi:thermometer-lines"
+    mode: "single"
+    sequence:
+      - service: script.assign_climate_auto_mode
+        data:
+          preset: "Eco"
+
+  apply_scheduled_climate_preset:
+    alias: "Set auto climate modes based on schedule"
+    icon: "mdi:thermometer-lines"
+    mode: "restart"
+    sequence:
+      - service: "script.apply_{{ states('sensor.scheduled_climate_preset') | lower }}_climate_preset"
+
+automation:
+  - alias: "apply_scheduled_climate_preset"
+    initial_state: true
+    mode: "restart"
+    trigger:
+      - platform: state
+        entity_id: "sensor.scheduled_climate_preset"
+    action:
+      - service: script.apply_scheduled_climate_preset
