@@ -1,0 +1,20 @@
+google:
+  client_id: !secret gcal_client_id
+  client_secret: !secret gcal_client_secret
+  track_new_calendar: false
+
+# Sample google_calendars.yaml:
+#   - cal_id: CALENDAR_ID@group.calendar.google.com
+#     entities:
+#       - device_id: "regular_climate_schedule"
+#         name: "Regular climate schedule"
+#         search: "#regular"
+#         ignore_availability: true
+#         track: true
+#         max_results: 100
+#       - device_id: "special_climate_schedule"
+#         name: "Special climate schedule"
+#         search: "#special"
+#         ignore_availability: true
+#         track: true
+#         max_results: 25
