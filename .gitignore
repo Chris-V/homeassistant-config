@@ -4,6 +4,7 @@
 /groups.yaml
 /scenes.yaml
 /scripts.yaml
+/google_calendars.yaml
 
 # Secrets and generated files
 /known_devices.yaml
@@ -14,6 +15,7 @@
 /.custom_storage
 /.secrets
 /.cloud
+/.google.token
 /tts
 /themes/*
 !/themes/blank.yaml
@@ -23,8 +25,6 @@ zwscene.xml
 
 OZW_Log.txt
 pyozw.sqlite
-
-panels/floorplan.html
 
 /custom_components/
 !/custom_components/custom_storage
@@ -44,6 +44,7 @@ __pycache__/
 *.db-shm
 *.db-wal
 *.db-journal
+.pip_progress
 
 *.log
 *.bkp
