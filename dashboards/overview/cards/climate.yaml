@@ -17,12 +17,14 @@ cards:
           hold_action:
             action: more-info
         entity: sensor.scheduled_climate_preset
-        name: Apply schedule
-        label: >
-          [[[ return 'Preset: ' + states['sensor.scheduled_climate_preset'].state; ]]]
+        name: >
+          [[[ return states['sensor.scheduled_climate_preset'].state; ]]]
+        label: Scheduled Preset
         tap_action:
           action: call-service
-          service: script.apply_scheduled_climate_preset
+          service: automation.trigger
+          data:
+            entity_id: automation.apply_scheduled_climate_preset
 
       - <<: *climate_button_card_defaults
         entity: sensor.manual_thermostats_count
