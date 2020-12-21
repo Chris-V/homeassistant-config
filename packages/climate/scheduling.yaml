@@ -6,36 +6,17 @@ sensor:
         friendly_name: "Scheduled climate preset"
         icon_template: "mdi:thermometer-lines"
         value_template: >-
-          {% set now = as_local(states.sensor.time.last_changed) %}
-          {% if is_state('group.household', 'home') %}
-            {% set schedule = [
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-              [{"time": 0, "preset": "Sleep"}, {"time": 730, "preset": "Active"}, {"time": 2330, "preset": "Bedtime"}],
-              [{"time": 100, "preset": "Sleep"}, {"time": 830, "preset": "Active"}, {"time": 2300, "preset": "Bedtime"}],
-            ] %}
+          {% set supported_presets = ['Active', 'Bedtime', 'Sleep', 'Away'] -%}
+          {% set preset = 'Away' -%}
+          {% if is_state('group.household', 'home') -%}
+            {% set preset = 'Active' -%}
+            {% if is_state('calendar.regular_climate_schedule', 'on') -%}
+              {% set scheduled_preset = state_attr('calendar.regular_climate_schedule', 'message').split('#')[0] | trim -%}
+              {% set preset = scheduled_preset if scheduled_preset in supported_presets else preset -%}
+            {% endif -%}
+          {% endif -%}
 
-            {% set day_index = now.weekday() %}
-            {% set time_index = now.strftime('%H%M') | int %}
-            {% set days = (range(day_index + 1, 7) | list + range(0, day_index) | list) | reverse | list %}
-
-            {% set match = namespace(
-              day = day_index,
-              preset = schedule[day_index] | rejectattr("time", ">", time_index) | map(attribute = "preset") | list | last
-            ) %}
-
-            {% for day in days if match.preset is not defined %}
-            {% set match.day = day %}
-            {% set match.preset = schedule[day] | map(attribute = "preset") | list | last %}
-            {% endfor %}
-
-            {{ match.preset | default('Away') }}
-          {%- else -%}
-            Away
-          {%- endif %}
+          {{ preset }}
 
 script:
   assign_climate_auto_mode:
