@@ -1,54 +1,55 @@
 homeassistant:
   customize:
-    plant.rubber_ducky:
-      friendly_name: "Rubber Ducky"
-    sensor.rubber_ducky_battery:
-      friendly_name: "Rubber Ducky's battery"
+    plant.snicket:
+      friendly_name: "Snicket"
+    sensor.snicket_battery:
+      friendly_name: "Snicket's battery"
       battery_type: "CR2032"
       battery_warning_level: 20
-    sensor.rubber_ducky_brightness:
-      friendly_name: "Rubber Ducky's brightness"
-    sensor.rubber_ducky_conductivity:
-      friendly_name: "Rubber Ducky's conductivity"
-    sensor.rubber_ducky_moisture:
-      friendly_name: "Rubber Ducky's moisture"
-    sensor.rubber_ducky_temperature:
-      friendly_name: "Rubber Ducky's temperature"
+    sensor.snicket_brightness:
+      friendly_name: "Snicket's brightness"
+    sensor.snicket_conductivity:
+      friendly_name: "Snicket's conductivity"
+    sensor.snicket_moisture:
+      friendly_name: "Snicket's moisture"
+    sensor.snicket_temperature:
+      friendly_name: "Snicket's temperature"
 
 plant:
-  rubber_ducky:
+  snicket:
     sensors:
-      battery: "sensor.rubber_ducky_battery"
-      brightness: "sensor.rubber_ducky_brightness"
-      conductivity: "sensor.rubber_ducky_conductivity"
-      moisture: "sensor.rubber_ducky_moisture"
-      temperature: "sensor.rubber_ducky_temperature"
+      battery: "sensor.snicket_battery"
+      brightness: "sensor.snicket_brightness"
+      conductivity: "sensor.snicket_conductivity"
+      moisture: "sensor.snicket_moisture"
+      temperature: "sensor.snicket_temperature"
     min_battery: 15
-    min_conductivity: 0  # 50
+    min_conductivity: 0  # 350
     max_conductivity: 9999
-    min_moisture: 7
-    max_moisture: 40
+    min_moisture: 15
+    max_moisture: 60
     min_temperature: 8
+    max_temperature: 35
 
 sensor:
   - platform: template
     sensors:
-      rubber_ducky_problems:
-        unique_id: "sensor.rubber_ducky_problems"
-        friendly_name: "Rubber Ducky"
-        value_template: "{{ state_attr('plant.rubber_ducky', 'problem') or 'none' }}"
+      snicket_problems:
+        unique_id: "sensor.snicket_problems"
+        friendly_name: "Snicket"
+        value_template: "{{ state_attr('plant.snicket', 'problem') or 'none' }}"
 
   - platform: mqtt
-    name: "rubber_ducky_battery"
+    name: "snicket_battery"
     force_update: true
     device_class: "battery"
     unit_of_measurement: "%"
-    state_topic: &state_topic "plants/rubber_ducky"
+    state_topic: &state_topic "plants/snicket"
     value_template: "{{ value_json.battery | int('unknown') }}"
     json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
-    name: "rubber_ducky_brightness"
+    name: "snicket_brightness"
     force_update: true
     device_class: "illuminance"
     unit_of_measurement: "lx"
@@ -57,7 +58,7 @@ sensor:
     json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
-    name: "rubber_ducky_conductivity"
+    name: "snicket_conductivity"
     force_update: true
     unit_of_measurement: "µS/cm"
     icon: "mdi:poop"
@@ -66,7 +67,7 @@ sensor:
     json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
-    name: "rubber_ducky_moisture"
+    name: "snicket_moisture"
     force_update: true
     device_class: "humidity"
     unit_of_measurement: "%"
@@ -75,7 +76,7 @@ sensor:
     json_attributes_topic: *state_topic
     json_attributes_template: "{{ { 'last_update': value_json.timestamp } | tojson }}"
   - platform: mqtt
-    name: "rubber_ducky_temperature"
+    name: "snicket_temperature"
     force_update: true
     device_class: "temperature"
     unit_of_measurement: "°C"
