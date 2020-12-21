@@ -6,17 +6,23 @@ sensor:
         friendly_name: "Scheduled climate preset"
         icon_template: "mdi:thermometer-lines"
         value_template: >-
-          {% set supported_presets = ['Active', 'Away', 'Bedtime', 'Peak Event', 'Sleep'] -%}
-          {% set preset = 'Away' -%}
-          {% if is_state('group.household', 'home') -%}
-            {% set preset = 'Active' -%}
-            {% if is_state('calendar.regular_climate_schedule', 'on') -%}
-              {% set scheduled_preset = state_attr('calendar.regular_climate_schedule', 'message').split('#')[0] | trim -%}
-              {% set preset = scheduled_preset if scheduled_preset in supported_presets else preset -%}
+          {% macro parse_calendar_preset(entity_id, default) -%}
+            {% set supported_presets = ['Active', 'Away', 'Bedtime', 'Peak Event', 'Sleep'] -%}
+            {% if is_state(entity_id, 'on') -%}
+              {% set scheduled_preset = state_attr(entity_id, 'message').split('#')[0] | trim -%}
+              {{ scheduled_preset if scheduled_preset in supported_presets else default }}
+            {% else -%}
+              {{ default }}
             {% endif -%}
+          {% endmacro %}
+
+          {% set preset = 'Away' -%}
+
+          {% if is_state('group.household', 'home') -%}
+            {% set preset = parse_calendar_preset('calendar.regular_climate_schedule', 'Active') -%}
           {% endif -%}
 
-          {{ preset }}
+          {{ parse_calendar_preset('calendar.special_climate_schedule', preset) }}
 
 script:
   assign_climate_auto_mode:
