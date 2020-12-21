@@ -17,7 +17,7 @@ group:
       - sensor.lounge_window_sensor_battery
       - sensor.main_bathroom_multisensor_battery
       - sensor.maitre_doyle_battery
-      - sensor.rubber_ducky_battery
+      - sensor.snicket_battery
       - sensor.spidy_battery
       - sensor.studio_window_sensor_battery
       - sensor.ups_battery_status

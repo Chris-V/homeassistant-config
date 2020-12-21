@@ -119,12 +119,12 @@ recorder:
       - sensor.relay_south_cpu_used
       - sensor.relay_south_cpu_temp
       - sensor.relay_south_ram_used_percent
-      - sensor.rubber_ducky_battery
-      - sensor.rubber_ducky_brightness
-      - sensor.rubber_ducky_conductivity
-      - sensor.rubber_ducky_moisture
-      - sensor.rubber_ducky_problems
-      - sensor.rubber_ducky_temperature
+      - sensor.snicket_battery
+      - sensor.snicket_brightness
+      - sensor.snicket_conductivity
+      - sensor.snicket_moisture
+      - sensor.snicket_problems
+      - sensor.snicket_temperature
       - sensor.scheduled_climate_preset
       - sensor.slinky_power_strip_energy
       - sensor.slinky_power_strip_power

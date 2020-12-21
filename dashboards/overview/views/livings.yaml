@@ -104,9 +104,9 @@
 - !template
   file: ../cards/plant.yaml.j2
   variables:
-    image: /local/plants/jade_plant_card.jpg
-    plant_entity_id: plant.rubber_ducky
-    problems_entity_id: sensor.rubber_ducky_problems
+    image: /local/plants/meyer_lemon_tree_card.jpg
+    plant_entity_id: plant.snicket
+    problems_entity_id: sensor.snicket_problems
 
 - !template
   file: ../cards/plant.yaml.j2
