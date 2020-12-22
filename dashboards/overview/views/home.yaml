@@ -30,13 +30,13 @@
             action: more-info
 
         - type: entity-button
-          entity: script.ambiance
+          entity: script.evening_ambiance
           name: Ambiance
           tap_action:
             action: call-service
             service: script.turn_on
             service_data:
-              entity_id: script.ambiance
+              entity_id: script.evening_ambiance
           hold_action:
             action: none
         - type: entity-button

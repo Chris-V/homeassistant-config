@@ -2,11 +2,12 @@
   title: Settings
   show_header_toggle: false
   entities:
-    - input_boolean.force_guest_mode
-    - input_boolean.automatic_night_theme
-    - input_select.day_theme
-    - input_select.night_theme
-    - input_select.default_theme
+    - entity: input_boolean.force_guest_mode
+    - entity: input_datetime.evening_ambiance_end
+    - entity: input_boolean.automatic_night_theme
+    - entity: input_select.day_theme
+    - entity: input_select.night_theme
+    - entity: input_select.default_theme
 
 - type: entities
   title: Notifications

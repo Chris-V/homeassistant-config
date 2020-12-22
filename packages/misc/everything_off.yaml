@@ -8,7 +8,6 @@ cloud:
         name: "All off"
         aliases:
           - "Everything off"
-          - "Empty house"
 
 script:
   everything_off:
@@ -23,3 +22,18 @@ script:
             - "light.outdoor_lights"
             - "light.ground_floor_lights"
             - "light.basement_lights"
+
+automation:
+  - alias: household_leaves
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: "group.household"
+        from: "home"
+        for: 30
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.guest_mode"
+        state: "off"
+    action:
+      - service: script.everything_off
