@@ -36,6 +36,14 @@ cards:
           service: script.restore_climate_auto_mode
 
   - type: entities
+    style: |
+      ha-card {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath style='fill: %23151A23;' d='M12 3L2 12H5V20H19V12H22L12 3M12 8A1 1 0 0 1 13 9V14.27A2 2 0 0 1 14 16A2 2 0 0 1 12 18A2 2 0 0 1 10 16A2 2 0 0 1 11 14.27V9A1 1 0 0 1 12 8Z'/%3E%3C/svg%3E");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 50%;
+        background-blend-mode: exclusion;
+      }
     entities:
       - input_number.climate_override_temperature
       - input_select.climate_override_location
