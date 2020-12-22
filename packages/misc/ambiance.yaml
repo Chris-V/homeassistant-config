@@ -1,0 +1,118 @@
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "script.evening_ambiance"
+    entity_config:
+      script.evening_ambiance:
+        name: "Evening ambiance"
+        aliases:
+          - "Ambiance"
+
+input_datetime:
+  evening_ambiance_end:
+    name: "End of evening ambiance triggers"
+    icon: "mdi:star-face"
+    has_date: false
+    has_time: true
+
+script:
+  evening_ambiance:
+    alias: "Evening ambiance"
+    icon: "mdi:lamp"
+    mode: restart
+    sequence:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.master_bedroom_bedsides"
+          brightness_pct: 5
+          kelvin: 2200
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.bookshelf"
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.basement_hallway"
+          brightness: 40
+      - service: homeassistant.turn_on
+        data:
+          entity_id: "light.lounge_ambiance"
+          brightness_pct: 30
+          kelvin: 2200
+
+automation:
+  - alias: night_ambiance
+    initial_state: true
+    mode: restart
+    trigger:
+      - platform: numeric_state
+        entity_id: "sun.sun"
+        attribute: "elevation"
+        below: &sun_elevation -3.0
+      - platform: state
+        entity_id: "group.household"
+        to: "home"
+    condition:
+      - condition: time
+        before: "input_datetime.evening_ambiance_end"
+      - condition: numeric_state
+        entity_id: sun.sun
+        attribute: "elevation"
+        below: *sun_elevation
+      - condition: state
+        entity_id: "group.household"
+        state: "home"
+    action:
+      - service: script.evening_ambiance
+      - service: light.turn_on
+        data:
+          entity_id: "light.outdoor_lights"
+
+  - alias: "arrival_lights"
+    initial_state: true
+    mode: "restart"
+    trigger:
+      - platform: state
+        entity_id:
+          - "person.chris"
+          - "person.karine"
+          - "group.guests"
+        to: "home"
+    condition:
+      - condition: numeric_state
+        entity_id: "sun.sun"
+        attribute: "elevation"
+        below: *sun_elevation
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: "light.outdoor_lights"
+
+  - alias: turn_off_outdoor
+    initial_state: true
+    mode: restart
+    trigger:
+      - platform: state
+        entity_id: "light.outdoor_lights"
+        to: "on"
+        for: &min_outdoor_on_time 300
+      - platform: time
+        at: "input_datetime.evening_ambiance_end"
+      - platform: state
+        entity_id: "binary_sensor.guest_mode"
+        to: "off"
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.guest_mode"
+        state: "off"
+      - condition: state
+        entity_id: "light.outdoor_lights"
+        state: "on"
+        for: *min_outdoor_on_time
+      - condition: time
+        after: "input_datetime.evening_ambiance_end"
+        before: "15:00:00"
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: "light.outdoor_lights"
