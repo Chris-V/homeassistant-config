@@ -17,9 +17,13 @@ sensor:
           {% endmacro %}
 
           {% set preset = 'Away' -%}
+          {% set self = 'sensor.scheduled_climate_preset' -%}
 
           {% if is_state('group.household', 'home') -%}
-            {% set preset = parse_calendar_preset('calendar.regular_climate_schedule', 'Active') -%}
+            {% set preset = parse_calendar_preset(
+                'calendar.regular_climate_schedule',
+                (states[self].state if states[self] else 'Active')
+              ) -%}
           {% endif -%}
 
           {{ parse_calendar_preset('calendar.special_climate_schedule', preset) }}
