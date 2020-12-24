@@ -34,6 +34,7 @@ recorder:
       - binary_sensor.carl_requires_attention
       - binary_sensor.guest_bedroom_window
       - binary_sensor.guest_mode
+      - binary_sensor.intrusion
       - binary_sensor.kitchen_door
       - binary_sensor.kitchen_sink_leak
       - binary_sensor.laundry_room_motion
@@ -43,6 +44,7 @@ recorder:
       - binary_sensor.main_bathroom_motion
       - binary_sensor.main_bathroom_presence
       - binary_sensor.minecraft_server_status
+      - binary_sensor.presence_armed
       - binary_sensor.slinky_requires_attention
       - binary_sensor.studio_window
       - binary_sensor.ups_online_status
