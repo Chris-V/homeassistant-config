@@ -1,0 +1,217 @@
+input_boolean:
+  force_presence_armed:
+    name: "Force armed"
+    icon: "mdi:shield-check"
+  silence_alarm:
+    name: "Silence alarm"
+    icon: "mdi:volume-mute"
+    initial: false
+
+binary_sensor:
+  - platform: template
+    sensors:
+      presence_armed:
+        friendly_name: "Armed"
+        icon_template: >-
+          {% if is_state('binary_sensor.presence_armed', 'on') -%}
+            mdi:shield-check
+          {%- else -%}
+            mdi:shield-off
+          {%- endif %}
+        value_template: >-
+          {{
+            is_state('input_boolean.force_presence_armed', 'on')
+              or not is_state('group.household', 'home')
+              and is_state('binary_sensor.guest_mode', 'off')
+          }}
+
+      intrusion:
+        friendly_name: "Intrusion"
+        device_class: "safety"
+        delay_on: 15
+        delay_off: 15
+        attribute_templates:
+          activity: >-
+            {% set armed = states.binary_sensor.presence_armed -%}
+            {% if armed is not none and armed.state == 'on' -%}
+              {% set armed_since = armed.last_changed -%}
+              {% set changed_since_armed = expand('group.all_windows', 'group.all_doors', 'group.all_motions')
+                  | selectattr('last_changed', '>=', armed_since)
+                  | map(attribute = 'entity_id')
+                  | list -%}
+              {% set intrusion_events = state_attr('binary_sensor.intrusion_events', 'entity_id')
+                  | default([], True)
+                  | list -%}
+              {{ (changed_since_armed + intrusion_events) | unique | sort -}}
+            {% else -%}
+              {{ state_attr('binary_sensor.intrusion', 'activity') | default([], True) -}}
+            {% endif %}
+        availability_template: >-
+          {{ states.binary_sensor.presence_armed is not none }}
+        icon_template: >-
+          {%- if is_state('binary_sensor.intrusion', 'on') -%}
+            mdi:shield-alert
+          {%- elif is_state('binary_sensor.presence_armed', 'on') -%}
+            mdi:shield-check
+          {%- else -%}
+            mdi:shield-off
+          {%- endif %}
+        value_template: >-
+          {% set armed = states.binary_sensor.presence_armed -%}
+          {{
+            armed is not none
+              and armed.state == 'on'
+              and (
+                is_state('binary_sensor.intrusion_events', 'on')
+                  or expand('group.all_windows', 'group.all_doors', 'group.all_motions')
+                    | selectattr('last_changed', '>=', armed.last_changed)
+                    | first is defined
+              )
+          }}
+
+  - platform: mqtt
+    name: "intrusion_events"
+    device_class: "safety"
+    state_topic: &actifity_events_topic "home-assistant/intrusion/events"
+    value_template: "{{ value_json.state }}"
+    payload_on: "on"
+    payload_off: "off"
+    json_attributes_topic: *actifity_events_topic
+    json_attributes_template: "{{ value_json.attributes | to_json }}"
+
+automation:
+  - alias: "reset_alarm_states"
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.presence_armed"
+        from: "off"
+        to: "on"
+    action:
+      - service: input_boolean.turn_off
+        entity_id: "input_boolean.silence_alarm"
+      - service: mqtt.publish
+        data:
+          topic: *actifity_events_topic
+          qos: 1
+          retain: false
+          payload: >-
+            {
+              "state": "off",
+              "attributes": { "entity_id": [] }
+            }
+
+  - alias: "armed_switch_paddle_tapped"
+    initial_state: true
+    mode: "parallel"
+
+    trigger:
+      - platform: event
+        event_type: "zwave.scene_activated"
+
+    variables:
+      entity_id: "{{ trigger.event.data.entity_id }}"
+      manufacturer: "{{ state_attr(entity_id, 'manufacturer_name') | lower }}"
+      scene_data: "{{ trigger.event.data.scene_data | int }}"
+
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.presence_armed"
+        state: "on"
+      - condition: or
+        conditions:
+          - "{{ manufacturer == 'homeseer' and scene_data in [0, 7680] }}"
+          - "{{ manufacturer == 'inovelli' and scene_data == 0 }}"
+
+    action:
+      - service: mqtt.publish
+        data:
+          topic: *actifity_events_topic
+          qos: 1
+          retain: false
+          payload_template: >-
+            {% set entities = state_attr('binary_sensor.intrusion_events', 'entity_id') | default([], True) -%}
+            {{ {
+              'state': 'on',
+              'attributes': {
+                'entity_id': entities + [entity_id],
+              }
+            } | to_json }}
+
+  - alias: "notify_intrusion"
+    initial_state: true
+    mode: "restart"
+
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.intrusion"
+        from: "off"
+        to: "on"
+
+    variables:
+      notification_tag: "intrusion_{{ now() | as_timestamp | int }}"
+
+    action:
+      - service: python_script.notify
+        data:
+          <<: &alarm_notification
+            audio: false
+            persistent: true
+            priority: true
+            tag: "{{ notification_tag }}"
+            message: "Activity was detected in: {{ state_attr('binary_sensor.intrusion', 'activity') }}"
+          title: "Intrusion detected"
+          push_target: "household"
+          push_actions:
+            - action: &silence_action "silence_alarm"
+              title: "Silence"
+
+      - repeat:
+          sequence:
+            - service: python_script.notify
+              data:
+                <<: *alarm_notification
+                title: "Intrusion detected"
+            - choose:
+                - conditions:
+                    - condition: state
+                      entity_id: "input_boolean.silence_alarm"
+                      state: "off"
+                  sequence:
+                    - service: script.broadcast_notification
+                      data:
+                        message: "Intrusion detected. Authorities have been notified."
+            - delay: 10
+          until:
+            - condition: state
+              entity_id: "binary_sensor.intrusion"
+              state: "off"
+
+      - service: python_script.notify
+        data:
+          <<: *alarm_notification
+          push_target: "household"
+          title: "Intrusion cleared"
+
+  - alias: "silence_alarm"
+    initial_state: true
+    mode: "single"
+    max_exceeded: "silent"
+
+    trigger:
+      - platform: event
+        event_type:
+          - "html5_notification.clicked"
+          - "mobile_app_notification_action"
+        event_data:
+          action: *silence_action
+
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.intrusion"
+        state: "on"
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: "input_boolean.silence_alarm"

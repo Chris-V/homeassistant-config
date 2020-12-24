@@ -12,8 +12,10 @@ card:
       background-blend-mode: exclusion;
     }
 entities:
-  - fan.main_bathroom
+  - binary_sensor.intrusion
+  - binary_sensor.presence_armed
   - fan.basement_bathroom
+  - fan.main_bathroom
 filter:
   template: >-
     {# Using my own expand because the built-in expand only works on group.* #}

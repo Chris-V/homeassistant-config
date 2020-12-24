@@ -8,6 +8,7 @@ binary_sensor:
           {{
             expand(
               'binary_sensor.all_leaks',
+              'binary_sensor.intrusion',
             ) | selectattr('state', '==', 'on')
               | first is defined
           }}

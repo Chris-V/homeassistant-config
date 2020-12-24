@@ -57,7 +57,8 @@ binary_sensor:
         value_template: >-
           {{
             is_state('input_boolean.force_guest_mode', 'on')
-              or state_attr('sensor.guests_home', 'count') | int | default(0) > 0
+              or is_state('group.household', 'home')
+              and state_attr('sensor.guests_home', 'count') | int | default(0) > 0
           }}
 
 sensor:

@@ -64,16 +64,19 @@
   cards:
     - !include ../cards/household.yaml
     - !include ../cards/guests.yaml
+    - !include ../cards/alarm.yaml
 
-- type: grid
-  square: false
-  columns: 2
+- type: vertical-stack
   cards:
-    - !include ../cards/car.yaml
-    - !include ../cards/livings-overview.yaml
+    - type: grid
+      square: false
+      columns: 2
+      cards:
+        - !include ../cards/car.yaml
+        - !include ../cards/livings-overview.yaml
 
-- type: custom:weather-card
-  entity: weather.quebec
+    - type: custom:weather-card
+      entity: weather.quebec
 
 - type: vertical-stack
   cards:

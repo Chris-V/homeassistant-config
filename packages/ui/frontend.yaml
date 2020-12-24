@@ -15,6 +15,7 @@ lovelace:
     - {type: "module", url: "/hacsfiles/lovelace-gap-card/gap-card.js"}
     - {type: "module", url: "/hacsfiles/lovelace-hui-element/hui-element.js"}
     - {type: "module", url: "/hacsfiles/lovelace-template-entity-row/template-entity-row.js"}
+    - {type: "module", url: "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js"}
     - {type: "module", url: "/hacsfiles/restriction-card/restriction-card.js"}
     - {type: "module", url: "/hacsfiles/simple-thermostat/simple-thermostat.js"}
     - {type: "module", url: "/hacsfiles/text-element/text-element.js"}

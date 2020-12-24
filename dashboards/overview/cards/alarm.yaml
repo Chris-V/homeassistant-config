@@ -1,0 +1,81 @@
+type: entities
+title: Intrusions
+
+footer:
+  type: custom:mini-graph-card
+  aggregate_func: max
+  cache: false
+  group: true
+  height: 70
+  hours_to_show: 72
+  line_width: 2
+  points_per_hour: 24
+  smoothing: false
+  show:
+    name: false
+    icon: false
+    state: false
+    labels: false
+  entities:
+    - entity: binary_sensor.presence_armed
+      color: green
+    - entity: binary_sensor.intrusion
+      color: red
+  state_map:
+    - value: "off"
+      label: "No"
+    - value: "on"
+      label: "Yes"
+  style: |
+    ha-card {
+      --ha-card-background: none;
+    }
+
+entities:
+  - type: "custom:button-card"
+    entity: binary_sensor.intrusion
+    aspect_ratio: 3/1
+    color_type: icon
+    show_name: false
+    styles:
+      card:
+        - "--ha-card-background": none
+        - "--ha-card-box-shadow": none
+        - padding: 0
+    state:
+      - value: "on"
+        color: red
+        styles:
+          card:
+            - animation: blink 2s ease infinite
+    tap_action:
+      action: more-info
+
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.intrusion
+        state: "on"
+    row:
+      entity: input_boolean.silence_alarm
+      name: Silence
+
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.intrusion
+        state: "on"
+    row:
+      type: custom:auto-entities
+      card:
+        type: custom:fold-entity-row
+        open: false
+        padding: 0
+        head:
+          type: section
+          label: Activity
+        group_config:
+          secondary_info: last-changed
+      sort:
+        method: name
+      filter:
+        template: >-
+          {{ state_attr('binary_sensor.intrusion', 'activity') | default([], True) }}
