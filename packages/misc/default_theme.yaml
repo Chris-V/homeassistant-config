@@ -1,3 +1,21 @@
+binary_sensor:
+  - platform: template
+    sensors:
+      use_alarm_theme:
+        friendly_name: "Use alarm theme"
+        icon_template: "mdi:alarm-light"
+        value_template: >-
+          {{
+            expand(
+              'binary_sensor.all_leaks',
+            ) | selectattr('state', '==', 'on')
+              | first is defined
+          }}
+      use_dark_theme:
+        friendly_name: "Use dark theme"
+        icon_template: "mdi:theme-light-dark"
+        value_template: "{{ state_attr('sun.sun', 'elevation') | float < -3 }}"
+
 input_boolean:
   automatic_night_theme:
     name: "Automatic night theme"
@@ -26,30 +44,38 @@ input_select:
     options: *themes
 
 automation:
-  - alias: apply_default_theme
+  - alias: update_backend_theme
     initial_state: true
     mode: "queued"
     trigger:
       - platform: state
-        entity_id: "input_select.default_theme"
+        entity_id:
+          - "input_select.default_theme"
+          - "binary_sensor.use_alarm_theme"
     action:
       - service: frontend.set_theme
         data:
-          name: "{{ states('input_select.default_theme') | default('default') }}"
+          name: >-
+            {% if is_state('binary_sensor.use_alarm_theme', 'on') -%}
+              ios-{{
+                'dark'
+                  if is_state('binary_sensor.use_dark_theme', 'on')
+                  else 'light'
+              }}-mode-red
+            {%- else -%}
+              {{ states('input_select.default_theme') | default('default', True) -}}
+            {% endif %}
 
   - alias: update_default_theme
     initial_state: true
     mode: "restart"
     trigger:
-      - platform: sun
-        event: "sunrise"
-      - platform: sun
-        event: "sunset"
       - platform: state
-        entity_id: "input_boolean.automatic_night_theme"
-        to: "on"
-      - platform: state
-        entity_id: "input_select.day_theme"
+        entity_id:
+          - "binary_sensor.use_dark_theme"
+          - "input_boolean.automatic_night_theme"
+          - "input_select.day_theme"
+          - "input_select.night_theme"
       - platform: homeassistant
         event: "start"
     condition:
@@ -57,26 +83,14 @@ automation:
         entity_id: "input_boolean.automatic_night_theme"
         state: "on"
     action:
-      - choose:
-          - conditions:  # Day
-              - condition: sun
-                after: "sunrise"
-              - condition: sun
-                before: "sunset"
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: "input_select.default_theme"
-                  option: "{{ states('input_select.day_theme') | default('default') }}"
-          - conditions:  # Night
-              - condition: or
-                conditions:
-                  - condition: sun
-                    after: "sunset"
-                  - condition: sun
-                    before: "sunrise"
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: "input_select.default_theme"
-                  option: "{{ states('input_select.night_theme') | default('default') }}"
+      - service: input_select.select_option
+        data:
+          entity_id: "input_select.default_theme"
+          option: >-
+            {{
+              states(
+                'input_select.'
+                ~ ('night' if is_state('binary_sensor.use_dark_theme', 'on') else 'day' )
+                ~ '_theme'
+              ) | default('default')
+            }}
