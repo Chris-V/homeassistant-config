@@ -78,7 +78,8 @@ action:
           - condition: state
             entity_id: !input fan_entity
             state: "off"
-            for: !input runtime
+            for:
+              minutes: !input runtime
         sequence:
           - service: fan.turn_on
             data:
@@ -91,7 +92,8 @@ action:
           - condition: state
             entity_id: !input fan_entity
             state: "on"
-            for: !input runtime
+            for:
+              minutes: !input runtime
         sequence:
           - service: fan.turn_off
             data:
