@@ -58,13 +58,13 @@ automation:
           - "sensor.spidy_problems"
           - "sensor.viny_problems"
     condition:
+      - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
+      - >-
+          {% set state = trigger.to_state.state %}
+          {{ 'unavailable' not in state and state not in ('none', 'battery low') }}
       - condition: state
         entity_id: "input_boolean.notify_plant_problems"
         state: "on"
-      - condition: template
-        value_template: >-
-          {% set state = trigger.to_state.state %}
-          {{ 'unavailable' not in state and state not in ('none', 'battery low') }}
     action:
       - service: python_script.notify
         data:
