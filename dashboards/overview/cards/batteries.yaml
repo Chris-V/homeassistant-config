@@ -16,40 +16,45 @@ entities:
   - entity: binary_sensor.all_batteries
     name: Status
 
-  - type: custom:auto-entities
-    card:
-      type: custom:fold-entity-row
-      open: true
-      head:
-        type: section
-        label: Require attention
-    sort:
-      method: state
-      numeric: true
-    filter:
-      template: >
-        {% set rows = namespace(low = [], others = []) %}
-        {%- for entity in expand('group.all_batteries') %}
-          {% set level = entity.state | int(None) %}
-          {% set battery_type = entity.attributes.battery_type | default %}
-          {% set warning_level = entity.attributes.battery_warning_level | default | int(25) %}
-          {% set row = {
-            'type': 'custom:battery-entity-row',
-            'entity': entity.entity_id,
-            'name': entity.name | replace("'s battery", '') | replace(' battery', ''),
-            'secondary_info': 'battery_type',
-            'warning': warning_level + (warning_level / 4) | round(0, 'floor'),
-            'critical': warning_level,
-          } %}
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.all_batteries
+        state: "on"
+    row:
+      type: custom:auto-entities
+      card:
+        type: custom:fold-entity-row
+        open: true
+        head:
+          type: section
+          label: Require attention
+      sort:
+        method: state
+        numeric: true
+      filter:
+        template: >
+          {% set rows = namespace(low = [], others = []) %}
+          {%- for entity in expand('group.all_batteries') %}
+            {% set level = entity.state | int(None) %}
+            {% set battery_type = entity.attributes.battery_type | default %}
+            {% set warning_level = entity.attributes.battery_warning_level | default | int(25) %}
+            {% set row = {
+              'type': 'custom:battery-entity-row',
+              'entity': entity.entity_id,
+              'name': entity.name | replace("'s battery", '') | replace(' battery', ''),
+              'secondary_info': 'battery_type',
+              'warning': warning_level + (warning_level / 4) | round(0, 'floor'),
+              'critical': warning_level,
+            } %}
 
-          {% if level is not number or level <= warning_level %}
-            {% set rows.low = rows.low + [row] %}
-          {% else %}
-            {% set rows.others = rows.others + [row] %}
-          {% endif %}
-        {%- endfor %}
+            {% if level is not number or level <= warning_level %}
+              {% set rows.low = rows.low + [row] %}
+            {% else %}
+              {% set rows.others = rows.others + [row] %}
+            {% endif %}
+          {%- endfor %}
 
-        {{ rows.low }}
+          {{ rows.low }}
 
   - type: custom:auto-entities
     card:
