@@ -108,7 +108,7 @@ variables:
 action:
   - choose:
       # Tap 1x
-      - conditions: "{{ scene_data == 1 }}"
+      - conditions: "{{ scene_data == 0 }}"
         sequence:
           - choose:
               - conditions: "{{ scene_id == on_button_id }}"
@@ -117,7 +117,7 @@ action:
                 sequence: !input tap_off_1x
 
       # Hold
-      - conditions: "{{ scene_data == 2 }}"
+      - conditions: "{{ scene_data == 1 }}"
         sequence:
           - choose:
               - conditions: "{{ scene_id == on_button_id }}"
