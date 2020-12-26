@@ -11,16 +11,13 @@ automation:
 
     trigger:
       - platform: state
-        entity_id: &entity_id "sensor.chris_moto_g7_last_notification"
+        entity_id: "sensor.chris_moto_g7_last_notification"
 
     variables:
       text: "{{ trigger.to_state.attributes['Android.text'] }}"
 
     condition:
-      - condition: state
-        entity_id: *entity_id
-        attribute: "Package"
-        state: "com.hydroquebec.mf_android"
+      - "{{ trigger.to_state.attributes['Package'] == 'com.hydroquebec.mf_android' }}"
       - "{{ 'Winter Credit Option' in text }}"
 
     action:
