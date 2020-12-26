@@ -49,6 +49,7 @@ automation:
         data:
           audio: true
           persistent: true
+          priority: true
           push_target: "household"
           tag: "water_leak_{{ trigger.to_state.object_id }}"
           url: "/lovelace/settings"
