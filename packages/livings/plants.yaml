@@ -36,7 +36,7 @@ binary_sensor:
               expand('group.all_plants')
                 | selectattr('state', 'eq', 'problem')
                 | map('attr', 'entity_id')
-                | join(', ')
+                | list
             }}
 
 input_boolean:
