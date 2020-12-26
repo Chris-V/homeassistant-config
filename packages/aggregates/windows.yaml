@@ -27,5 +27,5 @@ binary_sensor:
               expand('group.all_windows')
                 | selectattr('state', 'eq', 'on')
                 | map('attr', 'entity_id')
-                | join(', ')
+                | list
             }}

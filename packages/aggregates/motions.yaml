@@ -28,7 +28,7 @@ binary_sensor:
               expand('group.all_motions')
                 | selectattr('state', 'eq', 'on')
                 | map('attr', 'entity_id')
-                | join(', ')
+                | list
             }}
 
 sensor:
