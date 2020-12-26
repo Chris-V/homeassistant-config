@@ -27,15 +27,10 @@ automation:
       - platform: state
         entity_id: "binary_sensor.minecraft_server_status"
     condition:
+      - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
       - condition: state
         entity_id: "input_boolean.notify_minecraft_status"
         state: "on"
-      - condition: template
-        value_template: >-
-          {{
-            trigger.from_state is defined
-              and trigger.from_state.state != trigger.to_state.state
-          }}
     action:
       - service: python_script.notify
         data:

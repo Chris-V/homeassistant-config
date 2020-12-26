@@ -127,6 +127,7 @@ automation:
           - switch.network_relay_north
         for: &server_outage_leeway 45
     condition:
+      - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
       - condition: state
         entity_id: "input_boolean.notify_server_outages"
         state: "on"
