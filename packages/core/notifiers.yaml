@@ -25,6 +25,7 @@ tts:
     profiles:
       - "small-bluetooth-speaker-class-device"
 
+# TODO: Could be replaced with a "queued" script + json + notify.file and preserve atomicity
 custom_storage:
   broadcast_notifications:
     enable_persistence: true
@@ -35,7 +36,10 @@ group:
     icon: "mdi:speaker-multiple"
     all: true
     entities:
-      - media_player.cast_whole_house
+      - media_player.laundry_room_google_home
+      - media_player.living_room_google_home
+      - media_player.lounge_google_home
+      - media_player.master_bedroom_google_home
       - media_player.office_sonos
 
 script:
@@ -52,36 +56,55 @@ script:
       message:
         description: "The message to play on the speakers."
         example: "Today is a fine day. Don't forget to charge your phone."
+      volume_level:
+        description: >
+          The volume level to play this message at.
+          The previous level will be restored individually on each speaker.
+          Defaults to 0.8
+        example: "0.8"
 
     sequence:
       - variables:
-          media_players: "{{ media_players | default('group.broadcast_media_players') }}"
+          media_players: >-
+            {{
+              expand(media_players | default('group.broadcast_media_players', True))
+                | map(attribute = 'entity_id')
+                | list
+            }}
+          volume_level: "{{ volume_level | default(0.8, True) }}"
 
       - service: media_player.turn_on
         data:
           entity_id: "{{ media_players }}"
       - wait_template: >-
-          {{
-            expand(media_players)
-              | selectattr('state', '==', 'off')
-              | first is undefined
-          }}
+          {{ expand(media_players) selectattr('state', '==', 'off') | first is undefined }}
         timeout: 15
         continue_on_timeout: true
+
+      - service: scene.create
+        data:
+          scene_id: "volume_before_broadcast"
+          snapshot_entities: "{{ media_players }}"
+
+      - service: media_player.volume_set
+        data:
+          entity_id: "{{ media_players }}"
+          volume_level: "{{ volume_level }}"
+      - delay: 0.75
 
       - service: tts.google_cloud_say
         data:
           entity_id: "{{ media_players }}"
           message: "{{ message }}"
 
-      - delay: 5
+      - delay: 2.5
       - wait_template: >-
-          {{
-            expand(media_players)
-              | selectattr('state', '==', 'playing')
-              | first is undefined
-          }}
+          {{ expand(media_players) | selectattr('state', '==', 'playing') | first is undefined }}
         timeout: 60
+
+      - service: scene.turn_on
+        data:
+          entity_id: "scene.volume_before_broadcast"
 
 automation:
   - alias: "broadcast_notifications"
