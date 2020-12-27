@@ -77,7 +77,7 @@ script:
         data:
           entity_id: "{{ media_players }}"
       - wait_template: >-
-          {{ expand(media_players) selectattr('state', '==', 'off') | first is undefined }}
+          {{ expand(media_players) | selectattr('state', '==', 'off') | first is undefined }}
         timeout: 15
         continue_on_timeout: true
 
