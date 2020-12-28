@@ -95,7 +95,7 @@ automation:
     use_blueprint:
       path: "zwave/inovelli_nzw30_scene_control.yaml"
       input:
-        zwave_entity: "zwave.master_bedroom_light_switch"
+        node_id: 31
 
         tap_on_2x:
           - service: light.turn_on

@@ -157,7 +157,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.basement_bathroom_fan_switch"
+        node_id: 8
 
         tap_on_2x:
           - service: light.turn_on
@@ -172,7 +172,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.basement_bathroom_vanity_light_dimmer"
+        node_id: 13
 
         tap_on_2x:
           - service: light.turn_on
@@ -197,7 +197,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.basement_bathroom_light_switch"
+        node_id: 7
 
         tap_on_2x:
           - service: light.turn_on

@@ -88,7 +88,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.front_porch_light_switch"
+        node_id: 6
 
         <<: &tap_2x
           tap_on_2x:
@@ -104,12 +104,12 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.side_porch_light_switch"
+        node_id: 2
         <<: *tap_2x
 
   - alias: "shed_outdoor_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.shed_outdoor_light_switch"
+        node_id: 5
         <<: *tap_2x

@@ -98,7 +98,7 @@ automation:
           payload: >-
             {
               "state": "off",
-              "attributes": { "entity_id": [] }
+              "attributes": { "entity_id": [], "node_id": [] }
             }
 
   - alias: "armed_switch_paddle_tapped"
@@ -107,21 +107,28 @@ automation:
 
     trigger:
       - platform: event
-        event_type: "zwave.scene_activated"
+        event_type: "ozw.scene_activated"
 
     variables:
-      entity_id: "{{ trigger.event.data.entity_id }}"
-      manufacturer: "{{ state_attr(entity_id, 'manufacturer_name') | lower }}"
-      scene_data: "{{ trigger.event.data.scene_data | int }}"
+      node_id: "{{ trigger.event.data.node_id | int }}"
+      scene_value_id: "{{ trigger.event.data.scene_value_id | int(None) }}"
+      entity_id: >
+        {{
+          states
+            | selectattr('attributes.node_id', '==', node_id)
+            | selectattr('domain', 'in', ['switch', 'light'])
+            | sort(attribute = 'attributes.friendly_name')
+            | map(attribute = 'entity_id')
+            | first
+            | default('', True)
+        }}
 
     condition:
       - condition: state
         entity_id: "binary_sensor.presence_armed"
         state: "on"
-      - condition: or
-        conditions:
-          - "{{ manufacturer == 'homeseer' and scene_data in [0, 7680] }}"
-          - "{{ manufacturer == 'inovelli' and scene_data == 0 }}"
+        # 0: inactive. This is fired after each scene event by OZW.
+      - "{{ entity_id != '' and scene_value_id == 0 }}"
 
     action:
       - service: mqtt.publish
@@ -131,10 +138,12 @@ automation:
           retain: false
           payload_template: >-
             {% set entities = state_attr('binary_sensor.intrusion_events', 'entity_id') | default([], True) -%}
+            {% set nodes = state_attr('binary_sensor.intrusion_events', 'node_id') | default([], True) -%}
             {{ {
               'state': 'on',
               'attributes': {
                 'entity_id': entities + [entity_id],
+                'node_id': nodes + [node_id],
               }
             } | to_json }}
 
