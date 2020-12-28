@@ -1,0 +1,13 @@
+title: Z-Wave
+
+views:
+  - cards: !include views/settings.yaml
+    icon: mdi:cogs
+    path: settings
+    title: Settings
+
+  - cards: !include views/graph.yaml
+    icon: mdi:z-wave
+    panel: true
+    path: graph
+    title: Graph
