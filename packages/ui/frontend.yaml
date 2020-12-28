@@ -2,8 +2,19 @@ frontend:
   themes: !include_dir_merge_named ../../themes/
 
 lovelace_preprocessor:
+
 lovelace:
   mode: "yaml"
+
+  dashboards:
+    admin-zwave:
+      filename: "dashboards/zwave/zwave.yaml"
+      icon: "mdi:z-wave"
+      mode: "yaml"
+      require_admin: true
+      show_in_sidebar: true
+      title: "Z-Wave"
+
   resources:
     - {type: "module", url: "/hacsfiles/button-card/button-card.js"}
     - {type: "module", url: "/hacsfiles/lovelace-auto-entities/auto-entities.js"}
@@ -16,6 +27,7 @@ lovelace:
     - {type: "module", url: "/hacsfiles/lovelace-hui-element/hui-element.js"}
     - {type: "module", url: "/hacsfiles/lovelace-template-entity-row/template-entity-row.js"}
     - {type: "module", url: "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js"}
+    - {type: "module", url: "/hacsfiles/ozw-network-visualization-card/ozw-network-visualization-card.js"}
     - {type: "module", url: "/hacsfiles/restriction-card/restriction-card.js"}
     - {type: "module", url: "/hacsfiles/simple-thermostat/simple-thermostat.js"}
     - {type: "module", url: "/hacsfiles/text-element/text-element.js"}
