@@ -19,8 +19,6 @@ recorder:
       - remote
       - switch
       - weather
-      - zha
-      - zwave
     entities:
       - binary_sensor.all_batteries
       - binary_sensor.all_doors

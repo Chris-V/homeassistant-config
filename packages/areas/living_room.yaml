@@ -110,7 +110,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.bookshelf_light_switch"
+        node_id: 14
 
         <<: &tap_2x
           tap_on_2x:
@@ -135,7 +135,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.staircase_light_dimmer"
+        node_id: 53
 
         <<: *tap_2x
 

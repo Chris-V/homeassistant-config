@@ -76,7 +76,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.hallway_light_switch"
+        node_id: 32
 
         tap_on_2x:
           - service: light.turn_on

@@ -75,7 +75,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.basement_hallway_light_dimmer"
+        node_id: 16
 
         tap_on_2x:
           - service: light.turn_on
@@ -100,7 +100,7 @@ automation:
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
-        zwave_entity: "zwave.downstairs_light_switch"
+        node_id: 15
 
         tap_on_2x:
           - service: light.turn_on

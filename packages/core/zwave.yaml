@@ -11,6 +11,10 @@ input_number:
     max: 254
     mode: "box"
 
+# TODO: Check that it can trigger on every reboot, otherwise make it so. ie:
+#   - platform: state
+#     entity_id: "binary_sensor.ozw_network_ready"
+#     to: "on"
 binary_sensor:
   - platform: mqtt
     name: "ozw_network_ready"

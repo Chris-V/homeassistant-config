@@ -4,12 +4,14 @@ blueprint:
     Associate actions to scenes from Inovelli's Gen. 1 NZW30 swiches and NZW31 dimmers.
   domain: automation
   input:
-    zwave_entity:
+    node_id:
       name: Z-Wave entity
-      description: Listen to scene events form this Z-Wave entity.
+      description: Listen to scene events from this node ID.
       selector:
-        entity:
-          domain: zwave
+        number:
+          min: 2
+          max: 254
+          mode: box
 
     hold_on:
       name: Hold on paddle
@@ -95,68 +97,68 @@ mode: "queued"
 
 trigger:
   - platform: event
-    event_type: "zwave.scene_activated"
+    event_type: "ozw.scene_activated"
     event_data:
-      entity_id: !input zwave_entity
+      node_id: !input node_id
 
 variables:
-  scene_data: "{{ trigger.event.data.scene_data | int }}"
   scene_id: "{{ trigger.event.data.scene_id | int }}"
-  on_button_id: 2
-  off_button_id: 1
+  scene_value_id: "{{ trigger.event.data.scene_value_id | int }}"
+  on_scene_id: 2
+  off_scene_id: 1
 
 action:
   - choose:
       # Tap 1x
-      - conditions: "{{ scene_data == 0 }}"
+      - conditions: "{{ scene_value_id == 1 }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_button_id }}"
+              - conditions: "{{ scene_id == on_scene_id }}"
                 sequence: !input tap_on_1x
-              - conditions: "{{ scene_id == off_button_id }}"
+              - conditions: "{{ scene_id == off_scene_id }}"
                 sequence: !input tap_off_1x
 
       # Hold
-      - conditions: "{{ scene_data == 1 }}"
+      - conditions: "{{ scene_value_id == 3 }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_button_id }}"
+              - conditions: "{{ scene_id == on_scene_id }}"
                 sequence: !input hold_on
-              - conditions: "{{ scene_id == off_button_id }}"
+              - conditions: "{{ scene_id == off_scene_id }}"
                 sequence: !input hold_off
 
       # Tap 2x
-      - conditions: "{{ scene_data == 3 }}"
+      - conditions: "{{ scene_value_id == 4 }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_button_id }}"
+              - conditions: "{{ scene_id == on_scene_id }}"
                 sequence: !input tap_on_2x
-              - conditions: "{{ scene_id == off_button_id }}"
+              - conditions: "{{ scene_id == off_scene_id }}"
                 sequence: !input tap_off_2x
 
       # Tap 3x
-      - conditions: "{{ scene_data == 4 }}"
+      - conditions: "{{ scene_value_id == 5 }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_button_id }}"
+              - conditions: "{{ scene_id == on_scene_id }}"
                 sequence: !input tap_on_3x
-              - conditions: "{{ scene_id == off_button_id }}"
+              - conditions: "{{ scene_id == off_scene_id }}"
                 sequence: !input tap_off_3x
 
       # Tap 4x
-      - conditions: "{{ scene_data == 5 }}"
+      - conditions: "{{ scene_value_id == 6 }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_button_id }}"
+              - conditions: "{{ scene_id == on_scene_id }}"
                 sequence: !input tap_on_4x
-              - conditions: "{{ scene_id == off_button_id }}"
+              - conditions: "{{ scene_id == off_scene_id }}"
                 sequence: !input tap_off_4x
 
       # Tap 5x
-      - conditions: "{{ scene_data == 6 }}"
+      - conditions: "{{ scene_value_id == 7 }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_button_id }}"
+              - conditions: "{{ scene_id == on_scene_id }}"
                 sequence: !input tap_on_5x
-              - conditions: "{{ scene_id == off_button_id }}"
+              - conditions: "{{ scene_id == off_scene_id }}"
                 sequence: !input tap_off_5x
