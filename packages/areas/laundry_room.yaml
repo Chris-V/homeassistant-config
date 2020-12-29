@@ -19,15 +19,6 @@ cloud:
         aliases:
           - "Laundry room"
 
-binary_sensor:
-  - platform: template
-    sensors:
-      laundry_room_motion:
-        unique_id: "binary_sensor.laundry_room_motion"
-        friendly_name: "Laundry room motion"
-        device_class: "motion"
-        value_template: "{{ is_state('sensor.laundry_motion_sensor_burglar', '8') }}"
-
 sensor:
   - platform: min_max
     name: "laundry_room_temperature"
