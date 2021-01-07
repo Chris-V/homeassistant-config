@@ -141,7 +141,7 @@ automation:
           push_target: "admin"
           tag: "server_{{ trigger.to_state.object_id }}"
           title: "{{ trigger.to_state.name }} server is {{ state }}line"
-          url: "/lovelace/network"
+          url: "/admin-infrastructure/network"
           push_data:
             entity_id: "{{ trigger.entity_id }}"
           push_actions:

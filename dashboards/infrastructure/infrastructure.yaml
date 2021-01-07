@@ -1,0 +1,7 @@
+title: Infrastructure
+
+views:
+  - title: Network
+    path: network
+    icon: mdi:server-network
+    cards: !include views/network.yaml

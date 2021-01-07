@@ -63,7 +63,7 @@ automation:
             push_target: "household"
             tag: "power_outage"
             title: "Power outage"
-            url: "/lovelace/network"
+            url: "/admin-infrastructure/network"
           message: |-
             A power outage is ongoing at home.
             {%- if is_state('group.managed_servers', 'off') -%}

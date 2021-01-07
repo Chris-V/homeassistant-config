@@ -25,10 +25,3 @@ views:
     path: settings
     icon: mdi:cog
     cards: !include views/settings.yaml
-
-  - title: Network
-    path: network
-    icon: mdi:server-network
-    visible:
-      - user: 221fad543e1a4c05af8aaac8c68e985e
-    cards: !include views/network.yaml
