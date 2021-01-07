@@ -36,7 +36,7 @@ script:
       preset:
         description: "The preset to assign to all entities. Either Eco or Comfort."
         example: "Comfort"
-      overrides:
+      exceptions:
         description: "Dictionary of entities and their preset that do not use the default value."
         example: "{\"input_select.my_room_thermostat_auto_mode\": \"Comfort\"}"
     sequence:
@@ -47,69 +47,54 @@ script:
             {% for entity_id in expand('group.managed_thermostat_auto_modes') | map(attribute = 'entity_id') %}
               {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, preset)] %}
             {% endfor %}
-            {% for entity_id, override_preset in (overrides | default({})).items() %}
+            {% for entity_id, override_preset in (exceptions | default({})).items() %}
               {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, override_preset)] %}
             {% endfor %}
             {{ "{{\n{}\n}}".format(ns.entries | join(',\n')) | from_json }}
-
-  apply_active_climate_preset:
-    alias: "Set auto climate mode to active"
-    icon: "mdi:thermometer-lines"
-    mode: "single"
-    sequence:
-      - service: script.assign_climate_auto_mode
-        data:
-          preset: "Comfort"
-
-  apply_away_climate_preset:
-    alias: "Set auto climate mode to away"
-    icon: "mdi:thermometer-lines"
-    mode: "single"
-    sequence:
-      - service: script.assign_climate_auto_mode
-        data:
-          preset: "Eco"
-
-  apply_bedtime_climate_preset:
-    alias: "Set auto climate mode to bedtime"
-    icon: "mdi:thermometer-lines"
-    mode: "single"
-    sequence:
-      - service: script.assign_climate_auto_mode
-        data:
-          preset: "Eco"
-          overrides:
-            input_select.guest_bedroom_thermostat_auto_mode: "Comfort"
-            input_select.master_bedroom_thermostat_auto_mode: "Comfort"
-            input_select.office_thermostat_auto_mode: "Comfort"
-            input_select.studio_thermostat_auto_mode: "Comfort"
-
-  apply_peak_event_climate_preset:
-    alias: "Set auto climate mode to peak event"
-    icon: "mdi:thermometer-lines"
-    mode: "single"
-    sequence:
-      - service: script.assign_climate_auto_mode
-        data:
-          preset: "Eco"
-
-  apply_sleep_climate_preset:
-    alias: "Set auto climate mode to sleep"
-    icon: "mdi:thermometer-lines"
-    mode: "single"
-    sequence:
-      - service: script.assign_climate_auto_mode
-        data:
-          preset: "Eco"
 
   apply_scheduled_climate_preset:
     alias: "Set auto climate modes based on schedule"
     icon: "mdi:thermometer-lines"
     mode: "restart"
     variables:
-      preset: "{{ states('sensor.scheduled_climate_preset') | lower | regex_replace('[^a-z]+', '_') }}"
+      preset: "{{ states('sensor.scheduled_climate_preset') | lower}}"
     sequence:
-      - service: "script.apply_{{ preset }}_climate_preset"
+      - choose:
+          - conditions: "{{ preset == 'active' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  preset: "Comfort"
+          - conditions: "{{ preset == 'away' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  preset: "Eco"
+          - conditions: "{{ preset == 'bedtime' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  preset: "Eco"
+                  exceptions:
+                    input_select.guest_bedroom_thermostat_auto_mode: "Comfort"
+                    input_select.master_bedroom_thermostat_auto_mode: "Comfort"
+                    input_select.office_thermostat_auto_mode: "Comfort"
+                    input_select.studio_thermostat_auto_mode: "Comfort"
+          - conditions: "{{ preset == 'peak event' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  preset: "Eco"
+          - conditions: "{{ preset == 'sleep' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  preset: "Eco"
+        default:
+          - service: "system_log.write"
+            data:
+              level: "warning"
+              message: 'Invalid scheduled climate preset: "{{ preset }}".'
 
 automation:
   - alias: "apply_scheduled_climate_preset"

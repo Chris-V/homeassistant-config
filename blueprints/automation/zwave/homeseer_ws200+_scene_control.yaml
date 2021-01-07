@@ -22,65 +22,65 @@ blueprint:
       description: Action to execute when the on paddle is held.
       default: []
       selector:
-        action:
+        action: {}
     hold_off:
       name: Hold off paddle
       description: Action to execute when the off paddle is held.
       default: []
       selector:
-        action:
+        action: {}
 
     release_on:
       name: Release on paddle
       description: Action to execute when the on paddle is released, typically after a hold event.
       default: []
       selector:
-        action:
+        action: {}
     release_off:
       name: Release off paddle
       description: Action to execute when the off paddle is released, typically after a hold event.
       default: []
       selector:
-        action:
+        action: {}
 
     tap_on_1x:
       name: Tap the on paddle once
       description: Action to run when the on paddle is pressed.
       default: []
       selector:
-        action:
+        action: {}
     tap_off_1x:
       name: Tap the off paddle once
       description: Action to run when the off paddle is pressed.
       default: []
       selector:
-        action:
+        action: {}
 
     tap_on_2x:
       name: Tap the on paddle twice
       description: Action to run when the on paddle is quickly pressed twice.
       default: []
       selector:
-        action:
+        action: {}
     tap_off_2x:
       name: Tap the off paddle twice
       description: Action to run when the off paddle is quickly pressed twice.
       default: []
       selector:
-        action:
+        action: {}
 
     tap_on_3x:
       name: Tap the on paddle 3 times
       description: Action to run when the on paddle is quickly pressed 3 times.
       default: []
       selector:
-        action:
+        action: {}
     tap_off_3x:
       name: Tap the off paddle 3 times
       description: Action to run when the off paddle is quickly pressed 3 times.
       default: []
       selector:
-        action:
+        action: {}
 
     tap_on_4x:
       name: Tap the on paddle 4 times
@@ -89,7 +89,7 @@ blueprint:
         This is only available on 200+ devices.
       default: []
       selector:
-        action:
+        action: {}
     tap_off_4x:
       name: Tap the off paddle 4 times
       description: >
@@ -97,7 +97,7 @@ blueprint:
         This is only available on 200+ devices.
       default: []
       selector:
-        action:
+        action: {}
 
     tap_on_5x:
       name: Tap the on paddle 5 times
@@ -106,7 +106,7 @@ blueprint:
         This is only available on 200+ devices.
       default: []
       selector:
-        action:
+        action: {}
     tap_off_5x:
       name: Tap the off paddle 5 times
       description: >
@@ -114,7 +114,7 @@ blueprint:
         This is only available on 200+ devices.
       default: []
       selector:
-        action:
+        action: {}
 
 initial_state: true
 max_exceeded: silent

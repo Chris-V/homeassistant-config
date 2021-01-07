@@ -7,7 +7,7 @@ homeassistant:
       friendly_name: "Latest version"
       icon: "mdi:arrow-up"
 
-system_health:
+system_health: {}
 
 sensor:
   - platform: websocket_api

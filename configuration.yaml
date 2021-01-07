@@ -14,7 +14,7 @@ homeassistant:
       name: "Authenticator app"
   packages: !include_dir_named packages/
 
-cloud:
+cloud: {}
 
 hacs:
   token: !secret hacs_github_token
