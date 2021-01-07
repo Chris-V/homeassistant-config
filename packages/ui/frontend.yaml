@@ -14,6 +14,13 @@ lovelace:
       require_admin: true
       show_in_sidebar: true
       title: "Z-Wave"
+    admin-infrastructure:
+      filename: "dashboards/infrastructure/infrastructure.yaml"
+      icon: "mdi:server-network"
+      mode: "yaml"
+      require_admin: true
+      show_in_sidebar: true
+      title: "Infrastructure"
 
   resources:
     - {type: "module", url: "/hacsfiles/button-card/button-card.js"}
