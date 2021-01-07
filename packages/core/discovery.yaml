@@ -1,4 +1,6 @@
-discovery:
-ssdp:
+discovery: {}
+
+ssdp: {}
+
 zeroconf:
   default_interface: true

@@ -1,7 +1,12 @@
-config:
+config: {}
+
 automation: !include ../../automations.yaml
+
 homeassistant:
   customize: !include ../../customize.yaml
+
 group: !include ../../groups.yaml
+
 scene: !include ../../scenes.yaml
+
 script: !include ../../scripts.yaml

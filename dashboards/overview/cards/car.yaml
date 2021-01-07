@@ -60,13 +60,13 @@ elements:
             elements:
               - type: state-icon
                 entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
-                title:
+                title: null
                 style:
                   margin: -16px -12px -12px -12px
                   "--mdc-icon-size": 16px
               - type: state-label
                 entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
-                title:
+                title: null
                 style:
                   margin: 2px -8px -8px -8px
                   line-height: 0

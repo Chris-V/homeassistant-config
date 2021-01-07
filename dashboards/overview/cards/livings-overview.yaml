@@ -8,7 +8,7 @@ style: |
 elements:
   - <<: &sensor_image_element_config
       type: image
-      title:
+      title: null
       state_filter:
         "on": sepia() saturate(350%) hue-rotate(-50deg)
         "off": inherit

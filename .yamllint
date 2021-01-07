@@ -1,5 +1,13 @@
 extends: default
 
 rules:
-  document-start: {present: false}
-  line-length: disable
+  document-end:
+    present: false
+  document-start:
+    present: false
+  empty-values: "enable"
+  indentation:
+    check-multi-line-strings: false
+    indent-sequences: true
+    spaces: 2
+  line-length: "disable"

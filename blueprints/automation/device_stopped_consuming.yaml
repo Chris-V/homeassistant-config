@@ -29,7 +29,7 @@ blueprint:
       name: Actions
       description: Actions to perform when consumption stops.
       selector:
-        action:
+        action: {}
 
 initial_state: true
 mode: "restart"

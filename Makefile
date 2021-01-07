@@ -27,4 +27,4 @@ _lint-files: _pull-file-lint
 	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint:$(FILE_LINT_VERSION) file-utf8-bom --text --ignore '$(LINT_IGNORE_PATHS)' --path .
 
 _lint-yaml: _pull-yaml-lint
-	@docker run --rm $$(tty -s && echo "-it" || echo) -v $(CURRENT_DIR):/data cytopia/yamllint:$(YAML_LINT_VERSION) . -s
+	@docker run --rm $$(tty -s && echo "-it" || echo) -v $(CURRENT_DIR):/data cytopia/yamllint:$(YAML_LINT_VERSION) . --strict
