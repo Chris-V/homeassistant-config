@@ -1,13 +1,34 @@
-name: CI
-"on": [push]
+name: "CI"
+
+"on": ["push"]
 
 jobs:
   check:
-    name: Check
-    runs-on: ubuntu-latest
-
+    name: "Static check"
+    runs-on: "ubuntu-latest"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Lint
-        run: make lint
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+      - name: "Lint"
+        run: "make lint"
+
+  validate:
+    name: "Configuration"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Drop custom component blocks"
+        uses: "mikefarah/yq@v4.4.0"
+        with:
+          cmd: |
+            yq eval 'del(.hacs)' configuration.yaml -i &&
+            yq eval 'del(.lovelace_preprocessor)' packages/ui/frontend.yaml -i
+
+      - name: "Validate configuration"
+        uses: "frenck/action-home-assistant@v1"
+        with:
+          path: "./"
+          secrets: "secrets.blank.yaml"
+          version: "stable"
