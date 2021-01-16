@@ -94,7 +94,7 @@ script:
           - service: "system_log.write"
             data:
               level: "warning"
-              message: 'Invalid scheduled climate preset: "{{ preset }}".'
+              message: "Invalid scheduled climate preset: {{ preset }}."
 
 automation:
   - alias: "apply_scheduled_climate_preset"

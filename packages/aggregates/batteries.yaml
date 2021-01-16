@@ -69,7 +69,7 @@ automation:
           {% if state.state in ['unknown', 'unavailable'] -%}
             100
           {%- else -%}
-            {{ state.state | int - state_attr(state.entity_id, 'battery_warning_level') | int(25) }}
+            {{ state.state | int - state.attributes.battery_warning_level | int(25) - 1 }}
           {%- endif %}
         below: 0
     action:
@@ -79,15 +79,15 @@ automation:
           push_target: "household"
           tag: "battery_low_{{ trigger.to_state.object_id }}"
           url: >-
-            {% set battery_type = state_attr(trigger.to_state.entity_id, 'battery_type') %}
-            {% if battery_type is none %}
+            {% set battery_type = trigger.to_state.attributes.battery_type %}
+            {% if battery_type is undefined %}
               "/lovelace/settings"
             {% else %}
               https://www.amazon.ca/s/?field-keywords=battery+{{ battery_type | replace(' ', '+') }}
             {% endif %}
           title: "Replace {{ trigger.to_state.name | lower }}"
           message: >-
-            {% set battery_type = state_attr(trigger.to_state.entity_id, 'battery_type') %}
-            {% if battery_type is not none %}
+            {% set battery_type = trigger.to_state.attributes.battery_type %}
+            {% if battery_type is defined %}
               Search on Amazon for "{{ battery_type }}" batteries.
             {% endif %}
