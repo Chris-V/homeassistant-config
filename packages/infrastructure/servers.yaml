@@ -3,7 +3,7 @@ homeassistant:
     sensor.media_cpu_used:
       friendly_name: "Media's CPU use"
       icon: "mdi:chip"
-    sensor.media_cpu_temp:
+    sensor.media_cpu_temperature:
       friendly_name: "Media's CPU temperature"
       icon: "mdi:fire"
     sensor.media_ram_used_percent:
@@ -12,7 +12,7 @@ homeassistant:
     sensor.relay_south_cpu_used:
       friendly_name: "South relay's CPU use"
       icon: "mdi:chip"
-    sensor.relay_south_cpu_temp:
+    sensor.relay_south_cpu_temperature:
       friendly_name: "South relay's CPU temperature"
       icon: "mdi:fire"
     sensor.relay_south_ram_used_percent:
@@ -21,7 +21,7 @@ homeassistant:
     sensor.relay_north_cpu_used:
       friendly_name: "North relay's CPU use"
       icon: "mdi:chip"
-    sensor.relay_north_cpu_temp:
+    sensor.relay_north_cpu_temperature:
       friendly_name: "North relay's CPU temperature"
       icon: "mdi:fire"
     sensor.relay_north_ram_used_percent:
