@@ -1,5 +1,6 @@
 # Example messages:
 #   `Reminder. Peak demand event - Winter Credit Option: today, Dec. 18, from 6 to 9 a.m.`
+#   `Peak demand event notification - Winter Credit Option: tomorrow, Jan. 19, from 4 to 8 PM`
 
 # This may lead to duplicates. The source notification is sent more than once. Need more
 # data to filter out duplicates.
@@ -14,11 +15,12 @@ automation:
         entity_id: "sensor.chris_moto_g7_last_notification"
 
     variables:
-      text: "{{ trigger.to_state.attributes['Android.text'] }}"
+      text: "{{ trigger.to_state.attributes['android.text'] }}"
 
     condition:
-      - "{{ trigger.to_state.attributes['Package'] == 'com.hydroquebec.mf_android' }}"
-      - "{{ 'Winter Credit Option' in text }}"
+      - "{{ trigger.to_state.attributes.package == 'com.hydroquebec.mf_android' }}"
+      - "{{ 'Winter Credit Option:' in text }}"
+      - "{{ 'Reminder.' not in text }}"
 
     action:
       - variables:
