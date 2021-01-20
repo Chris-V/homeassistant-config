@@ -1,6 +1,7 @@
 # Example messages:
 #   `Reminder. Peak demand event - Winter Credit Option: today, Dec. 18, from 6 to 9 a.m.`
 #   `Peak demand event notification - Winter Credit Option: tomorrow, Jan. 19, from 4 to 8 PM`
+#   `Peak demand event notification - Winter Credit Option: tomorrow, Jan. 21, from 6 to 9 a.m. and from 4 to 8 p.m.`
 
 # This may lead to duplicates. The source notification is sent more than once. Need more
 # data to filter out duplicates.
@@ -25,14 +26,14 @@ automation:
     action:
       - variables:
           text: "{{ text | replace('a.m.', 'AM') | replace('p.m.', 'PM') }}"
-          pattern: '([a-z]+\.? \d{1,2}), from (\d{1,2}(?::\d{2})?)(?: (AM|PM))? to (\d{1,2}(?::\d{2})?)(?: (AM|PM)?)'
+          pattern: '(?:([a-z]+\.? \d{1,2}), )?from (\d{1,2}(?::\d{2})?)(?: (AM|PM))? to (\d{1,2}(?::\d{2})?)(?: (AM|PM)?)'
           count: "{{ (text | regex_replace(pattern, '___MATCH___', ignorecase = True)).count('___MATCH___') }}"
           events: >
-            {% set ns = namespace(events = []) %}
+            {% set ns = namespace(day = undefined, events = []) %}
 
             {% for index in range(count) %}
               {% set match = text | regex_findall_index(pattern, index = index, ignorecase = True) -%}
-              {% set day = strptime(match[0] | regex_replace('[^a-zA-Z0-9 ]', ''), '%b %d') -%}
+              {% set ns.day = strptime(match[0] | regex_replace('[^a-zA-Z0-9 ]', ''), '%b %d') | default(ns.day, True) -%}
               {% set start_hour = strptime(
                   match[1]
                     ~ (':00' if ':' not in match[1])
@@ -44,9 +45,9 @@ automation:
                     ~ ' ' ~ (match[4] or match[2] or 'AM'),
                   '%I:%M %p') -%}
 
-              {% if [day, start_hour, end_hour] | select('string') | first is undefined -%}
-                {%- set start = day.replace(year = now().year, hour = start_hour.hour, minute = start_hour.minute) -%}
-                {%- set end = day.replace(year = now().year, hour = end_hour.hour, minute = end_hour.minute) -%}
+              {% if [ns.day, start_hour, end_hour] | select('string') | first is undefined -%}
+                {%- set start = ns.day.replace(year = now().year, hour = start_hour.hour, minute = start_hour.minute) -%}
+                {%- set end = ns.day.replace(year = now().year, hour = end_hour.hour, minute = end_hour.minute) -%}
                 {% set ns.events = ns.events + [{
                   'start': (start - timedelta(hours = 1, minutes = 30)) | as_timestamp | timestamp_local,
                   'end': start | as_timestamp | timestamp_local,
