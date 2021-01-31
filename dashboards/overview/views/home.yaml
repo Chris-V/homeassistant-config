@@ -75,8 +75,12 @@
         - !include ../cards/car.yaml
         - !include ../cards/livings-overview.yaml
 
-    - type: custom:weather-card
+    - type: weather-forecast
       entity: weather.quebec
+      show_forecast: true
+      secondary_info_attribute: humidity
+      # Sadly, this causes lots of lag on mobile
+      # theme: Animated Weather Card
 
 - type: vertical-stack
   cards:
