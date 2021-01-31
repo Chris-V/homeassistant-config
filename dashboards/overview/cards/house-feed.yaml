@@ -35,6 +35,7 @@ entities: [
   "light.dining_room",
   "light.downstairs",
   "light.guest_bedroom",
+  "light.guest_bedroom_closet",
   "light.hallway",
   "light.kitchen",
   "light.kitchen_sink",

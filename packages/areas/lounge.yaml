@@ -88,9 +88,9 @@ switch:
 automation:
   - alias: "lounge_light_dimmer_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      path: "zwave/inovelli_nzw30_scene_control.yaml"
       input:
-        node_id: 25
+        node_id: 54
 
         tap_on_2x:
           - service: light.turn_on

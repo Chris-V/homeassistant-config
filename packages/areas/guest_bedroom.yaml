@@ -4,7 +4,9 @@ homeassistant:
       friendly_name: "Guest bedroom window"
       device_class: "window"
     light.guest_bedroom:
-      friendly_name: "Guest's bedroom light"
+      friendly_name: "Guest bedroom light"
+    light.guest_bedroom_closet:
+      friendly_name: "Guest bedroom closet light"
     sensor.guest_bedroom_window_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
@@ -14,12 +16,18 @@ cloud:
     filter:
       include_entities:
         - "light.guest_bedroom"
+        - "light.guest_bedroom_closet"
     entity_config:
       light.guest_bedroom:
         room: "Guest's bedroom"
         name: "Guest's bedroom light"
         aliases:
           - "Guest's bedroom"
+      light.guest_bedroom_closet:
+        room: "Guest's bedroom"
+        name: "Guest's bedroom closet light"
+        aliases:
+          - "Guest's bedroom closet"
 
 input_number:
   guest_bedroom_thermostat_eco_setpoint:
@@ -53,11 +61,16 @@ light:
   - platform: group
     name: "Guest bedroom lights"
     entities:
-      - light.guest_bedroom
+      - "light.guest_bedroom"
+      - "light.guest_bedroom_closet"
 
   - platform: switch
     name: "guest_bedroom"
     entity_id: "switch.guest_bedroom_light"
+
+  - platform: switch
+    name: "guest_bedroom_closet"
+    entity_id: "switch.guest_bedroom_closet_light"
 
 sensor:
   - platform: template
