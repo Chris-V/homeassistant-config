@@ -2,8 +2,6 @@ homeassistant:
   customize:
     binary_sensor.washing_machine_leak:
       device_class: "moisture"
-    light.laundry_room:
-      friendly_name: "Laundry room light"
     sensor.laundry_room_temperature:
       friendly_name: "Laundry room temperature"
 
@@ -33,10 +31,6 @@ light:
     name: "Laundry room lights"
     entities:
       - light.laundry_room
-
-  - platform: switch
-    name: laundry_room
-    entity_id: "switch.laundry_room_light"
 
 automation:
   - alias: "laundry_room_auto_lights"
