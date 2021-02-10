@@ -2,7 +2,7 @@
   file: ../cards/area.yaml.j2
   variables:
     name: Common
-    icon: mdi:source-commit-next-local
+    icon: mdi:stairs
     color: 73, 73, 73
     sensors:
       - entity_id: sensor.basement_hallway_temperature
@@ -164,3 +164,6 @@
     switches:
       - entity_id: light.workshop
         name: Light
+      - entity_id: switch.main_water_shut_off_valve
+        name: Main water shut-off valve
+        tap_action: more-info  # Prevents accidental toggles
