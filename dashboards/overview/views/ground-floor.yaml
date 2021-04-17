@@ -54,10 +54,7 @@
         name: Google Home
         icon: mdi:speaker
     climate:
-      entity_id: climate.living_room_thermostat
-      comfort_setpoint_entity_id: input_number.living_room_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.living_room_thermostat_eco_setpoint
-      mode_entity_id: input_select.living_room_thermostat_mode
+      room_key: living_room
 
 - !template
   file: ../cards/area.yaml.j2
@@ -82,10 +79,7 @@
         name: Sink
         icon: mdi:wall-sconce-flat
     climate:  # (same as living_room)
-      entity_id: climate.living_room_thermostat
-      comfort_setpoint_entity_id: input_number.living_room_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.living_room_thermostat_eco_setpoint
-      mode_entity_id: input_select.living_room_thermostat_mode
+      room_key: living_room
 
 - !template
   file: ../cards/area.yaml.j2
@@ -104,10 +98,7 @@
         name: Hallway
         icon: mdi:wall-sconce-flat
     climate:
-      entity_id: climate.dining_room_thermostat
-      comfort_setpoint_entity_id: input_number.dining_room_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.dining_room_thermostat_eco_setpoint
-      mode_entity_id: input_select.dining_room_thermostat_mode
+      room_key: dining_room
 
 - !template
   file: ../cards/area.yaml.j2
@@ -157,10 +148,7 @@
         name: Google Home
         icon: mdi:speaker
     climate:
-      entity_id: climate.master_bedroom_thermostat
-      comfort_setpoint_entity_id: input_number.master_bedroom_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.master_bedroom_thermostat_eco_setpoint
-      mode_entity_id: input_select.master_bedroom_thermostat_mode
+      room_key: master_bedroom
 
 - !template
   file: ../cards/area.yaml.j2
@@ -179,7 +167,4 @@
         name: Sonos
         icon: mdi:speaker
     climate:
-      entity_id: climate.office_thermostat
-      comfort_setpoint_entity_id: input_number.office_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.office_thermostat_eco_setpoint
-      mode_entity_id: input_select.office_thermostat_mode
+      room_key: office

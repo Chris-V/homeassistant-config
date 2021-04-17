@@ -53,16 +53,20 @@ automation:
         entity_id:
           - "input_select.default_theme"
           - "binary_sensor.use_alarm_theme"
+          - "binary_sensor.winter_credit_peak_event"
     action:
       - service: frontend.set_theme
         data:
           name: >-
+            {%
+              set mode = 'dark'
+                if is_state('binary_sensor.use_dark_theme', 'on')
+                else 'light'
+            -%}
             {% if is_state('binary_sensor.use_alarm_theme', 'on') -%}
-              ios-{{
-                'dark'
-                  if is_state('binary_sensor.use_dark_theme', 'on')
-                  else 'light'
-              }}-mode-red
+              ios-{{ mode }}-mode-red
+            {%- elif is_state('binary_sensor.winter_credit_peak_event', 'on') -%}
+              ios-{{ mode }}-mode-light-blue
             {%- else -%}
               {{ states('input_select.default_theme') | default('default', True) -}}
             {% endif %}

@@ -24,26 +24,25 @@ cloud:
 input_number:
   basement_hallway_thermostat_eco_setpoint:
     name: "Basement hallway thermostat eco setpoint"
-    unit_of_measurement: "°C"
-    icon: "mdi:thermometer-lines"
-    mode: "box"
-    min: 8
-    max: 18
-    step: 0.5
+    <<: &setpoint_config
+      unit_of_measurement: "°C"
+      icon: "mdi:thermometer-lines"
+      mode: "box"
+      min: 8
+      max: 25
+      step: 0.5
   basement_hallway_thermostat_comfort_setpoint:
     name: "Basement hallway thermostat comfort setpoint"
-    unit_of_measurement: "°C"
-    icon: "mdi:thermometer-lines"
-    mode: "box"
-    min: 15
-    max: 25
-    step: 0.5
+    <<: *setpoint_config
+  basement_hallway_thermostat_boost_setpoint:
+    name: "Basement hallway thermostat boost setpoint"
+    <<: *setpoint_config
 
 input_select:
   basement_hallway_thermostat_auto_mode:
     name: "Basement hallway thermostat auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Comfort", "Eco"]
+    options: ["Boost", "Comfort", "Eco"]
   basement_hallway_thermostat_mode:
     name: "Basement hallway thermostat mode"
     icon: mdi:home-thermometer-outline

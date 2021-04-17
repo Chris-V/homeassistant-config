@@ -6,8 +6,17 @@ sensor:
         friendly_name: "Scheduled climate preset"
         icon_template: "mdi:thermometer-lines"
         value_template: >-
+          {% set supported_presets = [
+            'Active',
+            'Away',
+            'Boost',
+            'Bedtime',
+            'Sleep',
+            'Winter Credit: Cool',
+            'Winter Credit: Heat',
+            'Winter Credit: Peak Event',
+          ] -%}
           {% macro parse_calendar_preset(entity_id, default) -%}
-            {% set supported_presets = ['Active', 'Away', 'Bedtime', 'Peak Event', 'Sleep'] -%}
             {% if is_state(entity_id, 'on') -%}
               {% set scheduled_preset = state_attr(entity_id, 'message').split('#')[0] | trim -%}
               {{ scheduled_preset if scheduled_preset in supported_presets else default }}
@@ -16,10 +25,13 @@ sensor:
             {% endif -%}
           {% endmacro %}
 
-          {% set preset = 'Away' -%}
           {% set self = 'sensor.scheduled_climate_preset' -%}
+          {% set preset = 'Away' -%}
+          {% set winter_credit_baseline_preset = states('sensor.winter_credit_baseline_climate_preset') -%}
 
-          {% if is_state('group.household', 'home') -%}
+          {% if winter_credit_baseline_preset in supported_presets %}
+            {% set preset = winter_credit_baseline_preset %}
+          {% elif is_state('group.household', 'home') -%}
             {% set preset = parse_calendar_preset(
                 'calendar.regular_climate_schedule',
                 (states[self].state if states[self] else 'Active')
@@ -33,12 +45,12 @@ script:
     alias: "Assign auto climate mode"
     mode: "restart"
     fields:
-      preset:
-        description: "The preset to assign to all entities. Either Eco or Comfort."
+      mode:
+        description: "The setpoint mode to assign to all thermostat. One of Boost, Comfort or Eco."
         example: "Comfort"
       exceptions:
-        description: "Dictionary of entities and their preset that do not use the default value."
-        example: "{\"input_select.my_room_thermostat_auto_mode\": \"Comfort\"}"
+        description: "Dictionary of room IDs with their setpoint mode that differ from the default mode."
+        example: "{\"my_room\": \"Boost\"}"
     sequence:
       - service: scene.apply
         data:
@@ -48,7 +60,7 @@ script:
               {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, preset)] %}
             {% endfor %}
             {% for entity_id, override_preset in (exceptions | default({})).items() %}
-              {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, override_preset)] %}
+              {% set ns.entries = ns.entries + ['"input_select.{}_thermostat_auto_mode": "{}"'.format(entity_id, override_preset)] %}
             {% endfor %}
             {{ "{{\n{}\n}}".format(ns.entries | join(',\n')) | from_json }}
 
@@ -57,44 +69,64 @@ script:
     icon: "mdi:thermometer-lines"
     mode: "restart"
     variables:
-      preset: "{{ states('sensor.scheduled_climate_preset') | lower}}"
+      preset: "{{ states('sensor.scheduled_climate_preset') | lower }}"
     sequence:
       - choose:
           - conditions: "{{ preset == 'active' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
-                  preset: "Comfort"
+                  mode: "Comfort"
           - conditions: "{{ preset == 'away' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
-                  preset: "Eco"
+                  mode: "Eco"
+                  exceptions:
+                    studio: "Comfort"
           - conditions: "{{ preset == 'bedtime' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
-                  preset: "Eco"
+                  mode: "Eco"
                   exceptions:
-                    input_select.guest_bedroom_thermostat_auto_mode: "Comfort"
-                    input_select.master_bedroom_thermostat_auto_mode: "Comfort"
-                    input_select.office_thermostat_auto_mode: "Comfort"
-                    input_select.studio_thermostat_auto_mode: "Comfort"
-          - conditions: "{{ preset == 'peak event' }}"
+                    guest_bedroom: "Comfort"
+                    master_bedroom: "Comfort"
+                    office: "Comfort"
+                    studio: "Comfort"
+          - conditions: "{{ preset == 'boost' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
-                  preset: "Eco"
+                  mode: "Boost"
           - conditions: "{{ preset == 'sleep' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
-                  preset: "Eco"
+                  mode: "Eco"
+
+          # Winter Credit presets
+          - conditions: "{{ preset == 'winter credit: cool' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  mode: "Eco"
+          - conditions: "{{ preset == 'winter credit: heat' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  mode: "Boost"
+          - conditions: "{{ preset == 'winter credit: peak event' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  mode: "Eco"
+
         default:
           - service: "system_log.write"
             data:
               level: "warning"
-              message: "Invalid scheduled climate preset: {{ preset }}."
+              message: "Invalid scheduled climate preset: '{{ preset }}'."
 
 automation:
   - alias: "apply_scheduled_climate_preset"

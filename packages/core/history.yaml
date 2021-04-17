@@ -48,6 +48,7 @@ recorder:
       - binary_sensor.ups_online_status
       - binary_sensor.washing_machine_leak
       - binary_sensor.water_heater_leak
+      - binary_sensor.winter_credit_peak_event
       - binary_sensor.workshop_motion
       - sensor.basement_bathroom_door_sensor_battery
       - sensor.basement_bathroom_humidity

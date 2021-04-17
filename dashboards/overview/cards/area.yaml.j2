@@ -15,10 +15,7 @@
  #     * icon: (optional) That entity's icon
  #     * tap_action: (optional) object. Override for the tap_action
  #   * climate: (optional) object
- #     * entity_id: The climate entity id
- #     * comfort_setpoint_entity_id:
- #     * eco_setpoint_entity_id:
- #     * mode_entity_id:
+ #     * room_key: The room key used to prefix climate and setpoint entity IDs
  #}
 
 {% set sensors = sensors | default([]) | list %}
@@ -219,15 +216,17 @@ elements:
                 style: |
                   ha-card .card-content { padding: 0; }
                 entities:
-                  - entity: {{ climate.mode_entity_id }}
+                  - entity: input_select.{{ climate.room_key }}_thermostat_mode
                     name: Mode
-                  - entity: {{ climate.comfort_setpoint_entity_id }}
-                    name: Comfort
-                  - entity: {{ climate.eco_setpoint_entity_id }}
+                  - entity: input_number.{{ climate.room_key }}_thermostat_eco_setpoint
                     name: Eco
+                  - entity: input_number.{{ climate.room_key }}_thermostat_comfort_setpoint
+                    name: Comfort
+                  - entity: input_number.{{ climate.room_key }}_thermostat_boost_setpoint
+                    name: Boost
 
               - type: custom:simple-thermostat
-                entity: {{ climate.entity_id }}
+                entity: climate.{{ climate.room_key }}_thermostat
                 name: false
                 hide:
                   temperature: true

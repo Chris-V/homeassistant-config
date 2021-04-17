@@ -26,3 +26,11 @@ sensor:
     command: "cat /sys/class/thermal/thermal_zone0/temp"
     value_template: "{{ value|multiply(0.001)|round(1) }}"
     unit_of_measurement: "°C"
+
+  - platform: template
+    sensors:
+      hour:
+        unique_id: "sensor.hour"
+        friendly_name: "Hour"
+        icon_template: "mdi:clock"
+        value_template: "{{ sensor.time.last_changed.hour }}"

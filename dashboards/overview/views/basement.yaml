@@ -15,10 +15,7 @@
         name: Downstairs
         icon: mdi:lightbulb
     climate:
-      entity_id: climate.basement_hallway_thermostat
-      comfort_setpoint_entity_id: input_number.basement_hallway_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.basement_hallway_thermostat_eco_setpoint
-      mode_entity_id: input_select.basement_hallway_thermostat_mode
+      room_key: basement_hallway
 
 - !template
   file: ../cards/area.yaml.j2
@@ -48,10 +45,7 @@
         name: Google Home
         icon: mdi:speaker
     climate:
-      entity_id: climate.lounge_thermostat
-      comfort_setpoint_entity_id: input_number.lounge_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.lounge_thermostat_eco_setpoint
-      mode_entity_id: input_select.lounge_thermostat_mode
+      room_key: lounge
 
 - !template
   file: ../cards/area.yaml.j2
@@ -79,10 +73,7 @@
       - entity_id: fan.basement_bathroom
         name: Fan
     climate:
-      entity_id: climate.basement_bathroom_thermostat
-      comfort_setpoint_entity_id: input_number.basement_bathroom_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.basement_bathroom_thermostat_eco_setpoint
-      mode_entity_id: input_select.basement_bathroom_thermostat_mode
+      room_key: basement_bathroom
 
 - !template
   file: ../cards/area.yaml.j2
@@ -102,10 +93,7 @@
         name: Closet light
         icon: mdi:wardrobe
     climate:
-      entity_id: climate.guest_bedroom_thermostat
-      comfort_setpoint_entity_id: input_number.guest_bedroom_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.guest_bedroom_thermostat_eco_setpoint
-      mode_entity_id: input_select.guest_bedroom_thermostat_mode
+      room_key: guest_bedroom
 
 - !template
   file: ../cards/area.yaml.j2
@@ -122,10 +110,7 @@
       - entity_id: light.studio
         name: Light
     climate:
-      entity_id: climate.studio_thermostat
-      comfort_setpoint_entity_id: input_number.studio_thermostat_comfort_setpoint
-      eco_setpoint_entity_id: input_number.studio_thermostat_eco_setpoint
-      mode_entity_id: input_select.studio_thermostat_mode
+      room_key: studio
 
 - !template
   file: ../cards/area.yaml.j2

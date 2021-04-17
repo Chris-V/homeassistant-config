@@ -35,26 +35,25 @@ cloud:
 input_number:
   lounge_thermostat_eco_setpoint:
     name: "Lounge thermostat eco setpoint"
-    unit_of_measurement: "°C"
-    icon: "mdi:thermometer-lines"
-    mode: "box"
-    min: 8
-    max: 18
-    step: 0.5
+    <<: &setpoint_config
+      unit_of_measurement: "°C"
+      icon: "mdi:thermometer-lines"
+      mode: "box"
+      min: 8
+      max: 25
+      step: 0.5
   lounge_thermostat_comfort_setpoint:
     name: "Lounge thermostat comfort setpoint"
-    unit_of_measurement: "°C"
-    icon: "mdi:thermometer-lines"
-    mode: "box"
-    min: 15
-    max: 25
-    step: 0.5
+    <<: *setpoint_config
+  lounge_thermostat_boost_setpoint:
+    name: "Lounge thermostat boost setpoint"
+    <<: *setpoint_config
 
 input_select:
   lounge_thermostat_auto_mode:
     name: "Lounge thermostat auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Comfort", "Eco"]
+    options: ["Boost", "Comfort", "Eco"]
   lounge_thermostat_mode:
     name: "Lounge thermostat mode"
     icon: mdi:home-thermometer-outline
