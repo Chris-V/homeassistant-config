@@ -43,7 +43,7 @@ group:
 
   managed_thermostat_eco_setpoints:
     name: "Managed thermostat eco setpoints"
-    icon: "mdi:thermometer-chevron-down"
+    icon: "mdi:thermometer-lines"
     entities: &managed_thermostat_eco_setpoints
       - input_number.basement_bathroom_thermostat_eco_setpoint
       - input_number.basement_hallway_thermostat_eco_setpoint
@@ -57,7 +57,7 @@ group:
 
   managed_thermostat_comfort_setpoints:
     name: "Managed thermostat comfort setpoints"
-    icon: "mdi:thermometer-chevron-up"
+    icon: "mdi:thermometer-lines"
     entities: &managed_thermostat_comfort_setpoints
       - input_number.basement_bathroom_thermostat_comfort_setpoint
       - input_number.basement_hallway_thermostat_comfort_setpoint
@@ -68,6 +68,20 @@ group:
       - input_number.master_bedroom_thermostat_comfort_setpoint
       - input_number.office_thermostat_comfort_setpoint
       - input_number.studio_thermostat_comfort_setpoint
+
+  managed_thermostat_boost_setpoints:
+    name: "Managed thermostat boost setpoints"
+    icon: "mdi:thermometer-lines"
+    entities: &managed_thermostat_boost_setpoints
+      - input_number.basement_bathroom_thermostat_boost_setpoint
+      - input_number.basement_hallway_thermostat_boost_setpoint
+      - input_number.dining_room_thermostat_boost_setpoint
+      - input_number.guest_bedroom_thermostat_boost_setpoint
+      - input_number.living_room_thermostat_boost_setpoint
+      - input_number.lounge_thermostat_boost_setpoint
+      - input_number.master_bedroom_thermostat_boost_setpoint
+      - input_number.office_thermostat_boost_setpoint
+      - input_number.studio_thermostat_boost_setpoint
 
 sensor:
   - platform: template
@@ -133,8 +147,9 @@ automation:
             trigger.to_state.object_id
               | replace('_auto_mode', '')
               | replace('_mode', '')
-              | replace('_eco_setpoint', '')
+              | replace('_boost_setpoint', '')
               | replace('_comfort_setpoint', '')
+              | replace('_eco_setpoint', '')
           }}
         auto_mode: "{{ states('input_select.{}_auto_mode'.format(thermostat_name)) | default('Eco') }}"
         mode: "{{ states('input_select.{}_mode'.format(thermostat_name)) | default('Auto') }}"
@@ -160,6 +175,9 @@ automation:
         to: "Auto"
       - platform: state
         entity_id: *managed_thermostat_auto_modes
+      - platform: state
+        entity_id: *managed_thermostat_boost_setpoints
+        for: 5
       - platform: state
         entity_id: *managed_thermostat_comfort_setpoints
         for: 5
