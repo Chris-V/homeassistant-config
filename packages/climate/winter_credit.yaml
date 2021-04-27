@@ -12,6 +12,7 @@ binary_sensor:
           {{
             date_sensor is not none
               and date_sensor.last_changed.month <= 3
+              or date_sensor.last_changed.month == 12
           }}
       winter_credit_peak_event:
         value_template: >-
