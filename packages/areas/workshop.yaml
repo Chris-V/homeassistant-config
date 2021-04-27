@@ -31,7 +31,8 @@ light:
     entity_id: "switch.workshop_light"
 
 automation:
-  - alias: "workshop_auto_lights"
+  - id: "2289c205-a0ae-47a3-bdfe-7ea55a437db6"
+    alias: "workshop_auto_lights"
     use_blueprint:
       path: "presence_light.yaml"
       input:

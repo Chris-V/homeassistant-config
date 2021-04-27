@@ -42,7 +42,8 @@ group:
       - "switch.network_media"
 
 automation:
-  - alias: power_outage_management
+  - id: "5cdf949f-e2e8-48b2-88c1-59f2c2f4fad2"
+    alias: power_outage_management
     initial_state: true
     mode: "restart"
 
@@ -125,7 +126,8 @@ automation:
           <<: *outage_notification_options
           message: "A power outage is ongoing at home. Auxiliary servers have been shutdown."
 
-  - alias: notify_power_restored
+  - id: "37c346a4-c34f-40bf-9ad9-d34407afc29c"
+    alias: notify_power_restored
     initial_state: true
     mode: "restart"
 

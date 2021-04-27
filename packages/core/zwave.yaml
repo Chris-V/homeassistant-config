@@ -55,7 +55,8 @@ script:
             {{ { 'node': states('input_number.ozw_node_id') | int | string } | to_json }}
 
 automation:
-  - alias: "Refresh OZW node list"
+  - id: "3e51e815-b33f-460a-9062-241d93fd6e93"
+    alias: "Refresh OZW node list"
     initial_state: true
     mode: "single"
     max_exceeded: silent
@@ -84,7 +85,8 @@ automation:
 
             {{ ns.options if ns.options | length else ['No nodes available. Add a node and refresh.'] }}
 
-  - alias: "Select OZW node ID"
+  - id: "e396b9c7-8cd1-4d12-80bf-46ff5911bd07"
+    alias: "Select OZW node ID"
     initial_state: true
     mode: "queued"
     trigger:
@@ -98,7 +100,8 @@ automation:
             {% set option = trigger.to_state.state | default('', True) -%}
             {{ option.split('.')[0] | int(0) }}
 
-  - alias: "Notify Z-Wave dead nodes"
+  - id: "9e5fd44c-71b9-4172-83a5-178cf24f0aeb"
+    alias: "Notify Z-Wave dead nodes"
     mode: "single"
     trigger:
       - platform: state

@@ -71,7 +71,8 @@ sensor:
         value_template: "{{ states('sensor.dining_room_thermostat_temperature') | round(1) }}"
 
 automation:
-  - alias: "hallway_light_switch_zwave_scenes"
+  - id: "7a81bc8a-fc13-426e-b324-e2c76c1142d7"
+    alias: "hallway_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:

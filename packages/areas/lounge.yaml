@@ -85,7 +85,8 @@ switch:
         command_off: "JgBYAAABKZITERQRFDUXDhUQFBEUEBUQFDYTNhUQFTQUNhQ1FTUUNRQRFBEUEBQ2FRESERQRFBEUNRQ2FDUUERQ1EzcUNRQ2FAAFIgABKEkUAAxPAAEoSBQADQU="
 
 automation:
-  - alias: "lounge_light_dimmer_zwave_scenes"
+  - id: "75e713fa-34ef-400f-afb0-1f88c6811aa8"
+    alias: "lounge_light_dimmer_zwave_scenes"
     use_blueprint:
       path: "zwave/inovelli_nzw30_scene_control.yaml"
       input:

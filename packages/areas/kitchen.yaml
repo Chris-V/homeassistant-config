@@ -56,7 +56,8 @@ sensor:
         value_template: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
 
 automation:
-  - alias: "kitchen_light_switch_zwave_scenes"
+  - id: "ab8460a3-e7b3-4cef-989e-11a65da297f9"
+    alias: "kitchen_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
@@ -80,7 +81,8 @@ automation:
             data:
               entity_id: "light.kitchen_lights"
 
-  - alias: "kitchen_sink_light_switch_zwave_scenes"
+  - id: "3353147e-584b-4a98-8a1f-6a46bda78960"
+    alias: "kitchen_sink_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/inovelli_nzw30_scene_control.yaml"
       input:

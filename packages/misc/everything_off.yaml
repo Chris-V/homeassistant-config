@@ -24,7 +24,8 @@ script:
             - "light.basement_lights"
 
 automation:
-  - alias: household_leaves
+  - id: "54655af9-ddc7-491d-9200-41aaaddbb21a"
+    alias: household_leaves
     initial_state: true
     trigger:
       - platform: state

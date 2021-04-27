@@ -47,7 +47,8 @@ sensor:
           {{ ns.preset }}
 
 automation:
-  - alias: "schedule_hydro_peak_event"
+  - id: "dc44848a-cdb1-4b0b-bd76-711a2f81e4b2"
+    alias: "schedule_hydro_peak_event"
     initial_state: true
     mode: "parallel"
 

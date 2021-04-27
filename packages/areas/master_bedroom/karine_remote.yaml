@@ -26,7 +26,8 @@ input_select:
       - "[0, 255, 0]"
 
 automation:
-  - alias: karine_remote_restore_initial_option
+  - id: "686ea290-b4ee-4220-ad02-e233771483b7"
+    alias: karine_remote_restore_initial_option
     description: "Restore entity selected by Karine's remote after some time"
     use_blueprint:
       path: "reset_input_select.yaml"
@@ -35,7 +36,8 @@ automation:
         delay: 300
         entity_id: "input_select.karine_remote_entity"
 
-  - alias: karine_remote_apply_color_change
+  - id: "3ff136d3-b8cb-4016-bf56-c9b0a4b65e09"
+    alias: karine_remote_apply_color_change
     description: "Turn on and change the color on Karine's remote entity"
     mode: "queued"
     trigger:
@@ -47,7 +49,8 @@ automation:
           entity_id: "{{ states('input_select.karine_remote_entity') }}"
           rgb_color: "{{ trigger.to_state.state }}"
 
-  - alias: karine_remote
+  - id: "b214c9a3-937d-4391-9915-98185b7cb152"
+    alias: karine_remote
     description: Map Karine's remote buttons to useful actions
     use_blueprint:
       path: "zha/bedside_remote.yaml"

@@ -80,7 +80,8 @@ binary_sensor:
     json_attributes_template: "{{ value_json.attributes | to_json }}"
 
 automation:
-  - alias: "reset_alarm_states"
+  - id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
+    alias: "reset_alarm_states"
     initial_state: true
     trigger:
       - platform: state
@@ -101,7 +102,8 @@ automation:
               "attributes": { "entity_id": [], "node_id": [] }
             }
 
-  - alias: "armed_switch_paddle_tapped"
+  - id: "6edc94d0-d9f9-44eb-bad1-6873523ae9e8"
+    alias: "armed_switch_paddle_tapped"
     initial_state: true
     mode: "parallel"
 
@@ -147,7 +149,8 @@ automation:
               }
             } | to_json }}
 
-  - alias: "notify_intrusion"
+  - id: "b0045b02-1756-4635-bc2c-4344de74d0b6"
+    alias: "notify_intrusion"
     initial_state: true
     mode: "restart"
 
@@ -202,7 +205,8 @@ automation:
           push_target: "household"
           title: "Intrusion cleared"
 
-  - alias: "silence_alarm"
+  - id: "65383759-a03c-4c81-9965-7154e83626fd"
+    alias: "silence_alarm"
     initial_state: true
     mode: "single"
     max_exceeded: "silent"

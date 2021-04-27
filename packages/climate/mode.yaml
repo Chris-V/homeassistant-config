@@ -119,7 +119,8 @@ script:
           option: "Auto"
 
 automation:
-  - alias: "revert_manual_thermostat_mode"
+  - id: "5c387ec4-b18b-4ec6-9174-8d844e7e88e9"
+    alias: "revert_manual_thermostat_mode"
     mode: "parallel"
     max: 9
     use_blueprint:
@@ -129,7 +130,8 @@ automation:
         delay: 3600
         entity_id: *managed_thermostat_modes
 
-  - alias: "select_manual_thermostat_mode"
+  - id: "a8b031db-937a-4b34-bd64-a30f51900ed0"
+    alias: "select_manual_thermostat_mode"
     initial_state: true
     mode: "parallel"
     max: 9
@@ -164,7 +166,8 @@ automation:
           entity_id: "input_select.{{ thermostat_name }}_mode"
           option: "Manual"
 
-  - alias: "update_thermostat_setpoint"
+  - id: "0954c8e4-8429-4777-a8ba-4a1c99853ea2"
+    alias: "update_thermostat_setpoint"
     initial_state: true
     mode: "queued"
     max: 9

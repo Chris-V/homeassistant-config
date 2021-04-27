@@ -24,7 +24,3 @@ logger:
   logs:
     homeassistant.bootstrap: "info"
     homeassistant.setup: "info"
-    homeassistant.components.glances: "fatal"
-    glances: "fatal"
-    homeassistant.components.mychevy: "fatal"
-    mychevy: "fatal"

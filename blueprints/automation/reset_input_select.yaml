@@ -7,6 +7,8 @@ blueprint:
       name: The default option.
       description: The default option to reset to. Defaults to the first one.
       default: ""
+      selector:
+        text: {}
     delay:
       name: Delay before resetting
       description: The delay in seconds before resetting the option.

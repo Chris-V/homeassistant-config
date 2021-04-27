@@ -20,7 +20,8 @@ input_boolean:
     icon: mdi:minecraft
 
 automation:
-  - alias: notify_minecraft_status
+  - id: "9a2523ee-12c0-4c23-b016-75b2c6d4c045"
+    alias: notify_minecraft_status
     initial_state: true
     mode: "queued"
     trigger:
@@ -39,7 +40,8 @@ automation:
           title: "Minecraft status"
           message: "Minecraft server has gone {{ trigger.to_state.state }}line."
 
-  - alias: notify_minecraft_update
+  - id: "53d9d5dc-0aba-4ec9-ac37-5db952727af0"
+    alias: notify_minecraft_update
     initial_state: true
     mode: "parallel"
     trigger:
@@ -69,7 +71,8 @@ automation:
             from {{ states('sensor.minecraft_server_version') }}
             to {{ states('sensor.minecraft_latest_version') }}.
 
-  - alias: notify_minecraft_player_changes
+  - id: "b2052723-8459-49af-8400-a0f087445caa"
+    alias: notify_minecraft_player_changes
     initial_state: true
     mode: "restart"
     trigger:

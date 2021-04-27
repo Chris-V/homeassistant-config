@@ -70,7 +70,8 @@ sensor:
         value_template: "0.0"
 
 automation:
-  - alias: carl_scheduling
+  - id: "b61cbb0c-2aa9-4094-959e-a5eb20037f52"
+    alias: carl_scheduling
     use_blueprint:
       path: "terrarium_scheduling.yaml"
       input:
@@ -81,7 +82,8 @@ automation:
         heater_switch: "switch.carl_heater"
         uv_light_switch: "switch.carl_uv_light"
 
-  - alias: carl_uv_burned_out
+  - id: "c43cd149-6639-4204-9c02-700970076d35"
+    alias: carl_uv_burned_out
     use_blueprint:
       path: "device_stopped_consuming.yaml"
       input:
@@ -100,7 +102,8 @@ automation:
               title: "Check Carl's UV Light"
               message: "It appears that Carl's UV light has burned out."
 
-  - alias: carl_heat_bulb_burned_out
+  - id: "4769e5aa-adfe-4c64-a411-e9e219386dae"
+    alias: carl_heat_bulb_burned_out
     use_blueprint:
       path: "device_stopped_consuming.yaml"
       input:
@@ -115,7 +118,8 @@ automation:
               title: "Check Carl's Heat Bulb"
               message: "It appears that Carl's heat bulb has burned out."
 
-  - alias: carl_heater_burned_out
+  - id: "f033f9a3-9d6c-4bd8-8392-fbf2eeb33e9c"
+    alias: carl_heater_burned_out
     use_blueprint:
       path: "device_stopped_consuming.yaml"
       input:

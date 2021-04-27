@@ -50,7 +50,8 @@ binary_sensor:
           {% endif %}
 
 automation:
-  - alias: notify_recommended_bolt_ev_recharge
+  - id: "38b66e01-1e27-4614-9bb1-2758a22a1e49"
+    alias: notify_recommended_bolt_ev_recharge
     initial_state: true
     mode: "single"
     trigger:

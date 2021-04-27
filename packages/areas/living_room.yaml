@@ -105,7 +105,8 @@ sensor:
         value_template: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
 
 automation:
-  - alias: "bookshelf_light_switch_zwave_scenes"
+  - id: "00a013b0-caf0-4046-b701-21975ffbfe3f"
+    alias: "bookshelf_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
@@ -130,7 +131,8 @@ automation:
             data:
               entity_id: "light.staircase"
 
-  - alias: "staircase_light_dimmer_zwave_scenes"
+  - id: "38d50352-7c79-4dd5-aad7-c334af4bfd9f"
+    alias: "staircase_light_dimmer_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:

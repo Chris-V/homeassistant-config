@@ -84,7 +84,8 @@ sensor:
         availability_template: "{{ not is_state('sensor.weather_quebec_forecast', 'unavailable') }}"
 
 automation:
-  - alias: "front_porch_light_switch_zwave_scenes"
+  - id: "abe8645a-9131-4822-8877-631f62b3e716"
+    alias: "front_porch_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
@@ -100,14 +101,16 @@ automation:
               data:
                 entity_id: "light.outdoor_lights"
 
-  - alias: "side_porch_light_switch_zwave_scenes"
+  - id: "bc0ae565-8522-4e0c-b0d3-f0e46b109f04"
+    alias: "side_porch_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
         node_id: 2
         <<: *tap_2x
 
-  - alias: "shed_outdoor_light_switch_zwave_scenes"
+  - id: "a503f433-fcce-4763-9930-a2c7b7679426"
+    alias: "shed_outdoor_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:

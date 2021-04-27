@@ -45,7 +45,8 @@ input_select:
     options: *themes
 
 automation:
-  - alias: update_backend_theme
+  - id: "1ff64444-5414-49d5-b314-b0a3a82075c5"
+    alias: update_backend_theme
     initial_state: true
     mode: "queued"
     trigger:
@@ -71,7 +72,8 @@ automation:
               {{ states('input_select.default_theme') | default('default', True) -}}
             {% endif %}
 
-  - alias: update_default_theme
+  - id: "a87a26c7-b1d4-4080-842b-4ee8a6e5b6f5"
+    alias: update_default_theme
     initial_state: true
     mode: "restart"
     trigger:

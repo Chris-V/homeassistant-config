@@ -59,7 +59,8 @@ binary_sensor:
             {{ ns.entities }}
 
 automation:
-  - alias: "Notify low batteries"
+  - id: "88b9562c-a5bf-4be6-bd7b-d3dfe109a816"
+    alias: "Notify low batteries"
     initial_state: true
     mode: "parallel"
     trigger:
