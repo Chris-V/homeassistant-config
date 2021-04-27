@@ -129,7 +129,8 @@ script:
               message: "Invalid scheduled climate preset: '{{ preset }}'."
 
 automation:
-  - alias: "apply_scheduled_climate_preset"
+  - id: "fd33012e-1f9a-4205-8c29-3639015bd2ad"
+    alias: "apply_scheduled_climate_preset"
     initial_state: true
     mode: "restart"
     trigger:

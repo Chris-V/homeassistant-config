@@ -87,7 +87,8 @@ sensor:
             }}
 
 automation:
-  - alias: notify_guest_arrives
+  - id: "91bb52da-440a-4082-a6f3-4e58253a51c8"
+    alias: notify_guest_arrives
     initial_state: true
     mode: "parallel"
     trigger:
@@ -108,7 +109,8 @@ automation:
           title: "{{ trigger.to_state.name }} is here"
           message: "{{ state_attr('sensor.guests_home', 'count') }} guests are home."
 
-  - alias: notify_household_person_arrives
+  - id: "33ae901e-24b8-4576-b876-4d2a87a7bd3b"
+    alias: notify_household_person_arrives
     initial_state: true
     mode: "parallel"
     trigger:
@@ -127,7 +129,8 @@ automation:
           title: "{{ trigger.to_state.name }} arrived home."
           message: "Household is {{ states('group.household') }}."
 
-  - alias: notify_household_person_leaves
+  - id: "b3882bea-08d5-4c54-a076-092754457354"
+    alias: notify_household_person_leaves
     initial_state: true
     mode: "parallel"
     trigger:

@@ -74,9 +74,7 @@ fan:
         friendly_name: "Basement bathroom fan"
         value_template: "{% if is_state('switch.basement_bathroom_fan', 'on') %}on{% else %}off{% endif %}"
         availability_template: "{{ not is_state('switch.basement_bathroom_fan', 'unavailable') }}"
-        speed_template: "Normal"
-        speeds:
-          - "Normal"
+        speed_count: 1
         turn_on:
           service: "switch.turn_on"
           data:
@@ -125,14 +123,16 @@ light:
     entity_id: "switch.basement_bathroom_light"
 
 automation:
-  - alias: "basement_bathroom_auto_fan"
+  - id: "13a8923b-8f42-4a1f-9d21-91980a400c75"
+    alias: "basement_bathroom_auto_fan"
     use_blueprint:
       path: "exhaust_fan.yaml"
       input:
         fan_entity: "fan.basement_bathroom"
         humidity_entity: "sensor.basement_bathroom_humidity"
 
-  - alias: "basement_bathroom_auto_lights"
+  - id: "334efc56-2a2f-49f6-961b-57dcc1a07bc7"
+    alias: "basement_bathroom_auto_lights"
     use_blueprint:
       path: "presence_light.yaml"
       input:
@@ -146,7 +146,8 @@ automation:
           {%- else -%} 50
           {%- endif -%}
 
-  - alias: "basement_bathroom_fan_switch_zwave_scenes"
+  - id: "28830f28-ec7e-4c19-9508-355e16978c13"
+    alias: "basement_bathroom_fan_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
@@ -161,7 +162,8 @@ automation:
             data:
               entity_id: "fan.basement_bathroom"
 
-  - alias: "basement_bathroom_vanity_light_dimmer_zwave_scenes"
+  - id: "6821f60b-2e78-4610-9e7b-9dbb33cb4f79"
+    alias: "basement_bathroom_vanity_light_dimmer_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
@@ -186,7 +188,8 @@ automation:
               data:
                 entity_id: "light.basement_bathroom_lights"
 
-  - alias: "basement_bathroom_light_switch_zwave_scenes"
+  - id: "41427797-3a24-4db7-8c6b-d919cd6bd415"
+    alias: "basement_bathroom_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:

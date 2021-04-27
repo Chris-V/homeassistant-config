@@ -79,9 +79,7 @@ fan:
         friendly_name: "Main bathroom fan"
         value_template: "{% if is_state('switch.main_bathroom_fan', 'on') %}on{% else %}off{% endif %}"
         availability_template: "{{ not is_state('switch.main_bathroom_fan', 'unavailable') }}"
-        speed_template: "Normal"
-        speeds:
-          - "Normal"
+        speed_count: 1
         turn_on:
           service: "switch.turn_on"
           data:
@@ -103,14 +101,16 @@ light:
     entity_id: "switch.main_bathroom_vanity_light"
 
 automation:
-  - alias: "main_bathroom_auto_fan"
+  - id: "8a017369-65d4-4e9b-87dc-0f172fc44594"
+    alias: "main_bathroom_auto_fan"
     use_blueprint:
       path: "exhaust_fan.yaml"
       input:
         fan_entity: "fan.main_bathroom"
         humidity_entity: "sensor.main_bathroom_humidity"
 
-  - alias: "main_bathroom_auto_lights"
+  - id: "5bfe8db2-3329-4320-a8b8-7f07cd12430e"
+    alias: "main_bathroom_auto_lights"
     use_blueprint:
       path: "presence_light.yaml"
       input:
@@ -124,7 +124,8 @@ automation:
           {%- else -%} 50
           {%- endif -%}
 
-  - alias: "main_bathroom_fan_switch_zwave_scenes"
+  - id: "3285fa23-169e-43ff-94e7-29a79d1223d4"
+    alias: "main_bathroom_fan_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
@@ -139,7 +140,8 @@ automation:
             data:
               entity_id: "fan.main_bathroom"
 
-  - alias: "main_bathroom_vanity_light_switch_zwave_scenes"
+  - id: "2078788e-2376-431a-9d53-b6fe0c3badb7"
+    alias: "main_bathroom_vanity_light_switch_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:
@@ -164,7 +166,8 @@ automation:
               data:
                 entity_id: "light.main_bathroom_lights"
 
-  - alias: "main_bathroom_light_dimmer_zwave_scenes"
+  - id: "39927953-3f47-4286-8ef4-4cbad509d510"
+    alias: "main_bathroom_light_dimmer_zwave_scenes"
     use_blueprint:
       path: "zwave/homeseer_ws200+_scene_control.yaml"
       input:

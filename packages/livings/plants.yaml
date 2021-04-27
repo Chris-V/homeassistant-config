@@ -45,7 +45,8 @@ input_boolean:
     icon: 'mdi:message-cog'
 
 automation:
-  - alias: notify_plant_problems
+  - id: "994eba31-84de-4769-8958-f24b5346111a"
+    alias: notify_plant_problems
     initial_state: true
     mode: "parallel"
     trigger:

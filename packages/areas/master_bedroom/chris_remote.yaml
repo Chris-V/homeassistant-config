@@ -26,7 +26,8 @@ input_select:
       - "[0, 255, 0]"
 
 automation:
-  - alias: chris_remote_restore_initial_option
+  - id: "e50d2e13-9c88-4b02-89af-e863a7d763d5"
+    alias: chris_remote_restore_initial_option
     description: "Restore entity selected by Chris' remote after some time"
     use_blueprint:
       path: "reset_input_select.yaml"
@@ -35,7 +36,8 @@ automation:
         delay: 300
         entity_id: "input_select.chris_remote_entity"
 
-  - alias: chris_remote_apply_color_change
+  - id: "ff872bdf-a0af-4e30-9aa3-449d7ff4367b"
+    alias: chris_remote_apply_color_change
     description: "Turn on and change the color on Chris' remote entity"
     initial_state: true
     max_exceeded: silent
@@ -49,7 +51,8 @@ automation:
           entity_id: "{{ states('input_select.chris_remote_entity') }}"
           rgb_color: "{{ trigger.to_state.state }}"
 
-  - alias: chris_remote
+  - id: "abf7b09f-0e7b-4b0c-b6ef-85631f25c63e"
+    alias: chris_remote
     description: Map Chris' remote buttons to useful actions
     use_blueprint:
       path: "zha/bedside_remote.yaml"

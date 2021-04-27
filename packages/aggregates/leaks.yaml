@@ -37,7 +37,8 @@ binary_sensor:
             }}
 
 automation:
-  - alias: "Notify water leaks"
+  - id: "106d9d0a-8a2b-4713-8c3f-3341a24cc9b9"
+    alias: "Notify water leaks"
     initial_state: true
     mode: "parallel"
     trigger:

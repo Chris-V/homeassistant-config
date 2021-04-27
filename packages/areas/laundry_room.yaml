@@ -33,7 +33,8 @@ light:
       - light.laundry_room
 
 automation:
-  - alias: "laundry_room_auto_lights"
+  - id: "e78350bc-d991-4fab-8c9a-658c242e60ab"
+    alias: "laundry_room_auto_lights"
     use_blueprint:
       path: "presence_light.yaml"
       input:

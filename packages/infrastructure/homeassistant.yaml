@@ -19,7 +19,8 @@ sensor:
     source: "local"
 
 automation:
-  - alias: notify_update_available
+  - id: "6ea34d47-1181-4c94-9ab6-43fe4c0b42cc"
+    alias: notify_update_available
     initial_state: true
     mode: "parallel"
     trigger:
@@ -40,7 +41,8 @@ automation:
           title: "Home Assistant Update"
           message: "Home Assistant {{ trigger.to_state.state }} is available."
 
-  - alias: notify_failed_login_attempt
+  - id: "0c595e90-4186-4152-b80e-41a491749dde"
+    alias: notify_failed_login_attempt
     initial_state: true
     mode: "parallel"
     trigger:
@@ -58,7 +60,8 @@ automation:
           title: "{{ trigger.event.data.service_data.title }}"
           message: "{{ trigger.event.data.service_data.message }}"
 
-  - alias: Notify HA startup
+  - id: "673d5462-19e1-4a63-ad41-75c0690dcaa2"
+    alias: Notify HA startup
     trigger:
       - platform: homeassistant
         event: "start"
@@ -68,7 +71,8 @@ automation:
           message: Home-Assistant has started.
           data: &ha_status_data
             tag: "homeassistant-status"
-  - alias: Notify HA shutdown
+  - id: "df1650ff-20b4-46e0-976f-319ceb444f8d"
+    alias: Notify HA shutdown
     trigger:
       - platform: homeassistant
         event: "shutdown"

@@ -70,7 +70,8 @@ sensor:
         value_template: "0.0"
 
 automation:
-  - alias: slinky_scheduling
+  - id: "ca115276-80d4-4a82-bd6e-b575f6483b64"
+    alias: slinky_scheduling
     use_blueprint:
       path: "terrarium_scheduling.yaml"
       input:
@@ -81,7 +82,8 @@ automation:
         heater_switch: "switch.slinky_heater"
         uv_light_switch: "switch.slinky_uv_light"
 
-  - alias: slinky_uv_burned_out
+  - id: "bb248f37-e829-45dc-99f3-f21bf86dea5c"
+    alias: slinky_uv_burned_out
     use_blueprint:
       path: "device_stopped_consuming.yaml"
       input:
@@ -100,7 +102,8 @@ automation:
               title: "Check Slinky's UV Light"
               message: "It appears that Slinky's UV light has burned out."
 
-  - alias: slinky_heat_bulb_burned_out
+  - id: "99bb793a-f44c-4f8a-99e4-079c59056d51"
+    alias: slinky_heat_bulb_burned_out
     use_blueprint:
       path: "device_stopped_consuming.yaml"
       input:
@@ -115,7 +118,8 @@ automation:
               title: "Check Slinky's Heat Bulb"
               message: "It appears that Slinky's heat bulb has burned out."
 
-  - alias: slinky_heater_burned_out
+  - id: "97c82da0-9eed-462c-a2d5-46da5209ffb3"
+    alias: slinky_heater_burned_out
     use_blueprint:
       path: "device_stopped_consuming.yaml"
       input:

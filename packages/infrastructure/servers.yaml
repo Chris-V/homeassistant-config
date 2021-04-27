@@ -102,7 +102,8 @@ switch:
             server_key: "relay_south"
 
 automation:
-  - alias: notify_new_network_device
+  - id: "a179c0b0-9c03-4be6-9437-c2bd6c58e9b7"
+    alias: notify_new_network_device
     initial_state: true
     mode: "parallel"
     trigger:
@@ -116,9 +117,11 @@ automation:
           title: "New device detected on network"
           message: "Device data: {{ trigger.event.data | tojson }}"
 
-  - alias: notify_server_state_change
+  - id: "778a17bc-898a-43ca-a457-b42c5c32b193"
+    alias: notify_server_state_change
     initial_state: true
     mode: "parallel"
+
     trigger:
       - platform: state
         entity_id:
@@ -126,16 +129,19 @@ automation:
           - switch.network_relay_south
           - switch.network_relay_north
         for: &server_outage_leeway 45
+
+    variables:
+      # Normalize state to only on/off
+      state: "{% if trigger.to_state.state == 'on' %}on{% else %}off{% endif %}"
+      state_action: "{% if state == 'on' %}off{% else %}on{% endif %}"
+
     condition:
       - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
       - condition: state
         entity_id: "input_boolean.notify_server_outages"
         state: "on"
+
     action:
-      - variables:
-          # Normalize state to only on/off
-          state: "{% if trigger.to_state.state == 'on' %}on{% else %}off{% endif %}"
-          state_action: "{% if state == 'on' %}off{% else %}on{% endif %}"
       - service: python_script.notify
         data:
           push_target: "admin"
@@ -149,7 +155,8 @@ automation:
               title: "Power {{ state_action }}"
               icon: "/local/icons/power-plug-{{ state_action }}.png"
 
-  - alias: power_on_server
+  - id: "ed45f4fc-3c90-456d-b499-516f568adf4e"
+    alias: power_on_server
     initial_state: true
     mode: "parallel"
     trigger:
@@ -164,7 +171,8 @@ automation:
         data:
           entity_id: "{{ trigger.event.data.data.entity_id }}"
 
-  - alias: power_off_server
+  - id: "c4358eec-8328-4049-ba29-25438eb44fa6"
+    alias: power_off_server
     initial_state: true
     mode: "parallel"
     trigger:

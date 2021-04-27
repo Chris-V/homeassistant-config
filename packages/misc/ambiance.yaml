@@ -41,7 +41,8 @@ script:
           kelvin: 2200
 
 automation:
-  - alias: night_ambiance
+  - id: "a4fe52e0-99f0-449d-9bc7-50378d9d6df8"
+    alias: night_ambiance
     initial_state: true
     mode: restart
     trigger:
@@ -68,7 +69,8 @@ automation:
         data:
           entity_id: "light.outdoor_lights"
 
-  - alias: "arrival_lights"
+  - id: "2c48ecbc-7b65-4938-af37-dcda12952465"
+    alias: "arrival_lights"
     initial_state: true
     mode: "restart"
     trigger:
@@ -88,7 +90,8 @@ automation:
         data:
           entity_id: "light.outdoor_lights"
 
-  - alias: turn_off_outdoor
+  - id: "a109af89-0910-45b2-9a0e-11d3ae43ec7c"
+    alias: turn_off_outdoor
     initial_state: true
     mode: restart
     trigger:

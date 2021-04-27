@@ -107,7 +107,8 @@ script:
           entity_id: "scene.volume_before_broadcast"
 
 automation:
-  - alias: "broadcast_notifications"
+  - id: "36afcfe6-d475-447c-b089-d33aec62a774"
+    alias: "broadcast_notifications"
     initial_state: true
     mode: "queued"
     max: 25
