@@ -70,7 +70,7 @@ automation:
           {% if state.state in ['unknown', 'unavailable'] -%}
             100
           {%- else -%}
-            {{ state.state | int - state.attributes.battery_warning_level | int(25) - 1 }}
+            {{ state.state | int - state.attributes.battery_warning_level | default | int(25) - 1 }}
           {%- endif %}
         below: 0
     action:

@@ -168,7 +168,7 @@ elements:
           background-color: rgba(0, 0, 0, 0.45)
           color: "#D3D3D3"
         elements:
-{% for switch in switches | default([]) | selectattr("show_in_footer") %}
+{% for switch in switches | default([]) | selectattr('show_in_footer', 'true') %}
 {% set object_id = switch.entity_id.split('.')[1] %}
           - type: custom:button-card
             name: {{ switch.name }}
