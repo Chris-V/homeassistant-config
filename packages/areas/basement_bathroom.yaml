@@ -55,7 +55,6 @@ sensor:
     round_digits: 1
     entity_ids:
       - "sensor.basement_bathroom_multisensor_temperature"
-      - "sensor.basement_bathroom_thermostat_temperature"
 
   - platform: template
     sensors:
