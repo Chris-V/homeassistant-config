@@ -33,4 +33,4 @@ sensor:
         unique_id: "sensor.hour"
         friendly_name: "Hour"
         icon_template: "mdi:clock"
-        value_template: "{{ sensor.time.last_changed.hour }}"
+        value_template: "{{ states.sensor.time.last_changed.hour }}"
