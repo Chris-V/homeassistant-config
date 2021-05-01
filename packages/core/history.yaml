@@ -54,7 +54,6 @@ recorder:
       - sensor.basement_bathroom_humidity
       - sensor.basement_bathroom_multisensor_battery
       - sensor.basement_bathroom_temperature
-      - sensor.basement_bathroom_thermostat_temperature
       - sensor.basement_hallway_temperature
       - sensor.basement_hallway_thermostat_temperature
       - sensor.carl_power_strip_energy
