@@ -16,9 +16,12 @@
 /.secrets
 /.cloud
 /.google.token
+/image
 /tts
 /themes/*
 !/themes/blank.yaml
+
+mqtt_dump.txt
 
 zwcfg_*.xml
 zwscene.xml
@@ -33,7 +36,7 @@ pyozw.sqlite
 /www/custom_ui/floorplan/lib/
 /www/github/
 /www/community/
-/www/rooms/*
+/www/rooms/
 !/www/rooms/placeholder.webp
 /www/secrets/
 
