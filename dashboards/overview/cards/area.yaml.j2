@@ -227,12 +227,17 @@ elements:
 
               - type: custom:simple-thermostat
                 entity: climate.{{ climate.room_key }}_thermostat
-                name: false
+                control: []
+                decimals: 1
+                header: false
                 hide:
                   temperature: true
                   state: true
+                layout:
+                  step: column
                 step_size: 0.5
-                control: []
+                setpoints:
+                  temperature: {}
 {% endif %}
 
       - type: custom:container-element  # Footer
