@@ -2,7 +2,7 @@
  #   * badges_position: (end | start)
  #   * color: [light (default) | dark]
  #   * image: The URL of the image to display in background.
- #   * plant_entity_id: The URL of the image to display in background.
+ #   * plant_entity_id: The `plant.*` entity ID.
  #   * problems_entity_id: Entity representing problems for this plant
  #}
 
@@ -73,7 +73,7 @@ elements:
       justify-content: "flex-{{ badges_position | default("start") }}"
     elements:
 {% for sensor_type in ('moisture', 'temperature', 'conductivity', 'brightness') -%}
-{% set entity_id = (state_attr(plant_entity_id, 'sensors') | default({}))[sensor_type] %}
+{% set entity_id = 'sensor.{}_{}'.format(plant_entity_id | replace('plant.', ''), sensor_type) %}
       - type: custom:button-card
         triggers_update:
           - {{ entity_id }}
