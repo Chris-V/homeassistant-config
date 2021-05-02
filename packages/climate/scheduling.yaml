@@ -57,7 +57,7 @@ script:
           entities: >
             {% set ns = namespace(entries = []) %}
             {% for entity_id in expand('group.managed_thermostat_auto_modes') | map(attribute = 'entity_id') %}
-              {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, preset)] %}
+              {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, mode)] %}
             {% endfor %}
             {% for entity_id, override_preset in (exceptions | default({})).items() %}
               {% set ns.entries = ns.entries + ['"input_select.{}_thermostat_auto_mode": "{}"'.format(entity_id, override_preset)] %}
