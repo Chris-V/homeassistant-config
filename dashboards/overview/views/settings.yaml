@@ -58,15 +58,20 @@
           <<: &aggregate_row_options
             type: custom:template-entity-row
             active: "{{ is_state('this.entity_id', 'on') }}"
-            secondary: "{{ relative_time(states['this.entity_id'].last_changed) }} ago"
+            secondary: "{% if states['this.entity_id'] %}{{ relative_time(states['this.entity_id'].last_changed) }} ago{% endif %}"
             state: >-
-              {% set state = states['this.entity_id'] %}
+              {% set state = states['this.entity_id'] | default({"state": "unavailable"}, True) %}
               {% if state.state in ['on', 'off'] -%}
                 _(component.binary_sensor.state.{{ state.attributes.device_class }}.{{ state.state }})
               {%- else -%}
                 _(state.default.{{ state.state }})
               {%- endif %}
-          name: "{{ states['this.entity_id'].name | replace(' door', '') }}"
+          name: >-
+            {% if states['this.entity_id'] -%}
+              {{ states['this.entity_id'].name | replace(' door', '') }}
+            {%- else -%}
+              this.entity_id
+            {%- endif %}
 
 - type: custom:auto-entities
   card:
@@ -88,7 +93,12 @@
       - group: group.all_windows
         options:
           <<: *aggregate_row_options
-          name: "{{ states['this.entity_id'].name | replace(' window', '') }}"
+          name: >-
+            {% if states['this.entity_id'] -%}
+              {{ states['this.entity_id'].name | replace(' window', '') }}
+            {%- else -%}
+              this.entity_id
+            {%- endif %}
 
 - type: custom:auto-entities
   card:
@@ -110,7 +120,12 @@
       - group: group.all_leaks
         options:
           <<: *aggregate_row_options
-          name: "{{ states['this.entity_id'].name | replace(' leak', '') }}"
+          name: >-
+            {% if states['this.entity_id'] -%}
+              {{ states['this.entity_id'].name | replace(' leak', '') }}
+            {%- else -%}
+              this.entity_id
+            {%- endif %}
 
 - type: custom:auto-entities
   card:
@@ -132,6 +147,11 @@
       - group: group.all_motions
         options:
           <<: *aggregate_row_options
-          name: "{{ states['this.entity_id'].name | replace(' motion', '') }}"
+          name: >-
+            {% if states['this.entity_id'] -%}
+              {{ states['this.entity_id'].name | replace(' motion', '') }}
+            {%- else -%}
+              this.entity_id
+            {%- endif %}
 
 - !include ../cards/batteries.yaml
