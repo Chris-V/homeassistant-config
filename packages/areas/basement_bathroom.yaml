@@ -3,9 +3,13 @@ homeassistant:
     binary_sensor.basement_bathroom_door:
       friendly_name: "Basement bathroom door"
       device_class: "door"
+    binary_sensor.basement_bathroom_presence:
+      friendly_name: "Basement bathroom presence"
     sensor.basement_bathroom_door_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
+    sensor.basement_bathroom_humidity:
+      friendly_name: "Basement bathroom humidity"
     sensor.basement_bathroom_multisensor_battery:
       battery_type: "CR123A"
       battery_warning_level: 40
@@ -34,19 +38,24 @@ cloud:
         room: "Basement bathroom"
         name: "Basement bathroom fan"
 
-binary_sensor:
-  - platform: template
-    sensors:
-      basement_bathroom_presence:
-        unique_id: "binary_sensor.basement_bathroom_presence"
-        friendly_name: "Basement bathroom presence"
-        device_class: "presence"
-        value_template: >-
-          {{
-            is_state('binary_sensor.basement_bathroom_motion', 'on')
-              or is_state('binary_sensor.basement_bathroom_door', 'off')
-          }}
-        delay_off: 15
+template:
+  binary_sensor:
+    - unique_id: "binary_sensor.basement_bathroom_presence"
+      name: "basement_bathroom_presence"
+      device_class: "presence"
+      state: >-
+        {{
+          is_state('binary_sensor.basement_bathroom_motion', 'on')
+            or is_state('binary_sensor.basement_bathroom_door', 'off')
+        }}
+      delay_off: 15
+
+  sensor:
+    - unique_id: "sensor.basement_bathroom_humidity"
+      name: "basement_bathroom_humidity"
+      device_class: "humidity"
+      unit_of_measurement: "%"
+      state: "{{ states('sensor.basement_bathroom_multisensor_relative_humidity') | round }}"
 
 sensor:
   - platform: min_max
@@ -55,15 +64,6 @@ sensor:
     round_digits: 1
     entity_ids:
       - "sensor.basement_bathroom_multisensor_temperature"
-
-  - platform: template
-    sensors:
-      basement_bathroom_humidity:
-        unique_id: "sensor.basement_bathroom_humidity"
-        friendly_name: "Basement bathroom humidity"
-        device_class: "humidity"
-        unit_of_measurement: "%"
-        value_template: "{{ states('sensor.basement_bathroom_multisensor_relative_humidity') | round }}"
 
 fan:
   - platform: template

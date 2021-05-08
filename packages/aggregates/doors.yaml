@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    binary_sensor.all_doors:
+      friendly_name: "All doors"
+
 group:
   all_doors:
     name: "All doors"
@@ -6,25 +11,23 @@ group:
       - binary_sensor.kitchen_door
       - binary_sensor.living_room_door
 
-binary_sensor:
-  - platform: template
-    sensors:
-      all_doors:
-        unique_id: "binary_sensor.all_doors"
-        friendly_name: "All doors"
-        device_class: "door"
-        value_template: >-
+template:
+  binary_sensor:
+    - unique_id: "binary_sensor.all_doors"
+      name: "all_doors"
+      device_class: "door"
+      state: >-
+        {{
+          expand('group.all_doors')
+            | selectattr('state', 'eq', 'on')
+            | list
+            | length != 0
+        }}
+      attributes:
+        entity_id: >-
           {{
             expand('group.all_doors')
               | selectattr('state', 'eq', 'on')
+              | map('attr', 'entity_id')
               | list
-              | length != 0
           }}
-        attribute_templates:
-          entity_id: >-
-            {{
-              expand('group.all_doors')
-                | selectattr('state', 'eq', 'on')
-                | map('attr', 'entity_id')
-                | list
-            }}

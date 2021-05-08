@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    binary_sensor.all_windows:
+      friendly_name: "All windows"
+
 group:
   all_windows:
     name: "All windows"
@@ -7,25 +12,23 @@ group:
       - binary_sensor.studio_window
       - binary_sensor.lounge_window
 
-binary_sensor:
-  - platform: template
-    sensors:
-      all_windows:
-        unique_id: "binary_sensor.all_windows"
-        friendly_name: "All windows"
-        device_class: "window"
-        value_template: >-
+template:
+  binary_sensor:
+    - unique_id: "binary_sensor.all_windows"
+      name: "all_windows"
+      device_class: "window"
+      state: >-
+        {{
+          expand('group.all_windows')
+            | selectattr('state', 'eq', 'on')
+            | list
+            | length != 0
+        }}
+      attributes:
+        entity_id: >-
           {{
             expand('group.all_windows')
               | selectattr('state', 'eq', 'on')
+              | map('attr', 'entity_id')
               | list
-              | length != 0
           }}
-        attribute_templates:
-          entity_id: >-
-            {{
-              expand('group.all_windows')
-                | selectattr('state', 'eq', 'on')
-                | map('attr', 'entity_id')
-                | list
-            }}

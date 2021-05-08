@@ -1,44 +1,47 @@
-sensor:
-  - platform: template
-    sensors:
-      scheduled_climate_preset:
-        unique_id: "sensor.scheduled_climate_preset"
-        friendly_name: "Scheduled climate preset"
-        icon_template: "mdi:thermometer-lines"
-        value_template: >-
-          {% set supported_presets = [
-            'Active',
-            'Away',
-            'Boost',
-            'Bedtime',
-            'Sleep',
-            'Winter Credit: Cool',
-            'Winter Credit: Heat',
-            'Winter Credit: Peak Event',
-          ] -%}
-          {% macro parse_calendar_preset(entity_id, default) -%}
-            {% if is_state(entity_id, 'on') -%}
-              {% set scheduled_preset = state_attr(entity_id, 'message').split('#')[0] | trim -%}
-              {{ scheduled_preset if scheduled_preset in supported_presets else default }}
-            {% else -%}
-              {{ default }}
-            {% endif -%}
-          {% endmacro %}
+homeassistant:
+  customize:
+    sensor.scheduled_climate_preset:
+      friendly_name: "Scheduled climate preset"
 
-          {% set self = 'sensor.scheduled_climate_preset' -%}
-          {% set preset = 'Away' -%}
-          {% set winter_credit_baseline_preset = states('sensor.winter_credit_baseline_climate_preset') -%}
-
-          {% if winter_credit_baseline_preset in supported_presets %}
-            {% set preset = winter_credit_baseline_preset %}
-          {% elif is_state('group.household', 'home') -%}
-            {% set preset = parse_calendar_preset(
-                'calendar.regular_climate_schedule',
-                (states[self].state if states[self] else 'Active')
-              ) -%}
+template:
+  sensor:
+    - unique_id: "sensor.scheduled_climate_preset"
+      name: "scheduled_climate_preset"
+      icon: "mdi:thermometer-lines"
+      state: >-
+        {% set supported_presets = [
+          'Active',
+          'Away',
+          'Boost',
+          'Bedtime',
+          'Sleep',
+          'Winter Credit: Cool',
+          'Winter Credit: Heat',
+          'Winter Credit: Peak Event',
+        ] -%}
+        {% macro parse_calendar_preset(entity_id, default) -%}
+          {% if is_state(entity_id, 'on') -%}
+            {% set scheduled_preset = state_attr(entity_id, 'message').split('#')[0] | trim -%}
+            {{ scheduled_preset if scheduled_preset in supported_presets else default }}
+          {% else -%}
+            {{ default }}
           {% endif -%}
+        {% endmacro %}
 
-          {{ parse_calendar_preset('calendar.special_climate_schedule', preset) }}
+        {% set self = 'sensor.scheduled_climate_preset' -%}
+        {% set preset = 'Away' -%}
+        {% set winter_credit_baseline_preset = states('sensor.winter_credit_baseline_climate_preset') -%}
+
+        {% if winter_credit_baseline_preset in supported_presets %}
+          {% set preset = winter_credit_baseline_preset %}
+        {% elif is_state('group.household', 'home') -%}
+          {% set preset = parse_calendar_preset(
+              'calendar.regular_climate_schedule',
+              (states[self].state if states[self] else 'Active')
+            ) -%}
+        {% endif -%}
+
+        {{ parse_calendar_preset('calendar.special_climate_schedule', preset) }}
 
 script:
   assign_climate_auto_mode:

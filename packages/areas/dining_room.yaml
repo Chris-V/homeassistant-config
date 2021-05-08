@@ -2,6 +2,8 @@ homeassistant:
   customize:
     light.hallway:
       friendly_name: "Hallway light"
+    sensor.dining_room_temperature:
+      friendly_name: "Dining room temperature"
 
 cloud:
   google_actions:
@@ -56,19 +58,18 @@ light:
     entities:
       - light.dining_room
       - light.hallway
+
   - platform: switch
     name: hallway
     entity_id: "switch.hallway_light"
 
-sensor:
-  - platform: template
-    sensors:
-      dining_room_temperature:
-        unique_id: "sensor.dining_room_temperature"
-        friendly_name: "Dining room temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "{{ states('sensor.dining_room_thermostat_temperature') | round(1) }}"
+template:
+  sensor:
+    - unique_id: "sensor.dining_room_temperature"
+      name: "dining_room_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: "{{ states('sensor.dining_room_thermostat_temperature') | round(1) }}"
 
 automation:
   - id: "7a81bc8a-fc13-426e-b324-e2c76c1142d7"

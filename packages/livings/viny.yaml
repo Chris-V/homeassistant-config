@@ -2,6 +2,8 @@ homeassistant:
   customize:
     plant.viny:
       friendly_name: "Viny"
+    sensor.viny_problems:
+      friendly_name: "Viny"
     sensor.viny_battery:
       friendly_name: "Viny's battery"
       battery_type: "CR2032"
@@ -30,14 +32,13 @@ plant:
     max_moisture: 60
     min_temperature: 15
 
-sensor:
-  - platform: template
-    sensors:
-      viny_problems:
-        unique_id: "sensor.viny_problems"
-        friendly_name: "Viny"
-        value_template: "{{ state_attr('plant.viny', 'problem') or 'none' }}"
+template:
+  sensor:
+    - unique_id: "sensor.viny_problems"
+      name: "viny_problems"
+      state: "{{ state_attr('plant.viny', 'problem') or 'none' }}"
 
+sensor:
   - platform: mqtt
     name: "viny_battery"
     force_update: true

@@ -1,5 +1,13 @@
 homeassistant:
   customize:
+    binary_sensor.carl_requires_attention:
+      friendly_name: "Carl requires attention"
+    sensor.carl_basking_temperature:
+      friendly_name: "Carl's basking spot temperature"
+    sensor.carl_temperature:
+      friendly_name: "Carl's terrarium temperature"
+    sensor.carl_humidity:
+      friendly_name: "Carl's terrarium humidity"
     switch.carl_heat_bulb:
       icon: "mdi:spotlight-beam"
     switch.carl_heater:
@@ -26,48 +34,40 @@ input_datetime:
     has_date: false
     has_time: true
 
-binary_sensor:
-  - platform: template
-    sensors:
-      carl_requires_attention:
-        unique_id: "binary_sensor.carl_requires_attention"
-        friendly_name: "Carl requires attention"
-        device_class: "problem"
-        entity_picture_template: "/local/animals/carl_avatar.jpg"
-        attribute_templates:
-          scheduling: "{{ is_state('input_boolean.carl_scheduled_lights', 'on') }}"
-          heat_bulb: "{{ is_state('switch.carl_heat_bulb', 'off') or states('sensor.carl_heat_bulb_power') | float > 1 }}"
-          heater: "{{ is_state('switch.carl_heater', 'off') or states('sensor.carl_heater_power') | float > 1 }}"
-          uv_light: "{{ is_state('switch.carl_uv_light', 'off') or states('sensor.carl_uv_light_power') | float > 1 }}"
-        value_template: >-
-          {{ is_state('input_boolean.carl_scheduled_lights', 'off')
-              or (is_state('switch.carl_heat_bulb', 'on') and states('sensor.carl_heat_bulb_power') | float < 1)
-              or (is_state('switch.carl_heater', 'on') and states('sensor.carl_heater_power') | float < 1)
-              or (is_state('switch.carl_uv_light', 'on') and states('sensor.carl_uv_light_power') | float < 1)
-          }}
+template:
+  binary_sensor:
+    - unique_id: "binary_sensor.carl_requires_attention"
+      name: "carl_requires_attention"
+      device_class: "problem"
+      picture: "/local/animals/carl_avatar.jpg"
+      attributes:
+        scheduling: "{{ is_state('input_boolean.carl_scheduled_lights', 'on') }}"
+        heat_bulb: "{{ is_state('switch.carl_heat_bulb', 'off') or states('sensor.carl_heat_bulb_power') | float > 1 }}"
+        heater: "{{ is_state('switch.carl_heater', 'off') or states('sensor.carl_heater_power') | float > 1 }}"
+        uv_light: "{{ is_state('switch.carl_uv_light', 'off') or states('sensor.carl_uv_light_power') | float > 1 }}"
+      state: >-
+        {{ is_state('input_boolean.carl_scheduled_lights', 'off')
+            or (is_state('switch.carl_heat_bulb', 'on') and states('sensor.carl_heat_bulb_power') | float < 1)
+            or (is_state('switch.carl_heater', 'on') and states('sensor.carl_heater_power') | float < 1)
+            or (is_state('switch.carl_uv_light', 'on') and states('sensor.carl_uv_light_power') | float < 1)
+        }}
 
-# Fake sensors until everything is ready
-sensor:
-  - platform: template
-    sensors:
-      carl_basking_temperature:
-        unique_id: "sensor.carl_basking_temperature"
-        friendly_name: "Carl's basking spot temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "0.0"
-      carl_temperature:
-        unique_id: "sensor.carl_temperature"
-        friendly_name: "Carl's terrarium temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "0.0"
-      carl_humidity:
-        unique_id: "sensor.carl_humidity"
-        friendly_name: "Carl's terrarium humidity"
-        device_class: "humidity"
-        unit_of_measurement: "%"
-        value_template: "0.0"
+  sensor:  # Fake sensors until everything is ready
+    - unique_id: "sensor.carl_basking_temperature"
+      name: "carl_basking_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: "0.0"
+    - unique_id: "sensor.carl_temperature"
+      name: "carl_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: "0.0"
+    - unique_id: "sensor.carl_humidity"
+      name: "carl_humidity"
+      device_class: "humidity"
+      unit_of_measurement: "%"
+      state: "0.0"
 
 automation:
   - id: "b61cbb0c-2aa9-4094-959e-a5eb20037f52"

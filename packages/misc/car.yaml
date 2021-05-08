@@ -1,5 +1,9 @@
 homeassistant:
   customize:
+    binary_sensor.bolt_ev_network_link:
+      friendly_name: "Bolt EV network link"
+    binary_sensor.bolt_ev_recharge_recommended:
+      friendly_name: "Bolt EV recharge recommended"
     sensor.mychevy_2019_chevrolet_bolt_ev_electric_range:
       unit_of_measurement: "km"
     sensor.mychevy_2019_chevrolet_bolt_ev_mileage:
@@ -15,39 +19,36 @@ input_boolean:
     name: "Notify car problems"
     icon: "mdi:message-cog"
 
-binary_sensor:
-  - platform: template
-    sensors:
-      bolt_ev_network_link:
-        unique_id: "binary_sensor.bolt_ev_network_link"
-        friendly_name: "Bolt EV network link"
-        device_class: "connectivity"
-        value_template: "{{ is_state('sensor.mychevy_status', 'success') }}"
-        icon_template: >-
-          {% if is_state('sensor.mychevy_status', 'success') %}
-            mdi:car-connected
-          {% else %}
-            mdi:network-strength-off
-          {% endif %}
-      bolt_ev_recharge_recommended:
-        unique_id: "binary_sensor.bolt_ev_recharge_recommended"
-        friendly_name: "Bolt EV recharge recommended"
-        value_template: >-
-          {{
-            is_state('binary_sensor.bolt_ev_network_link', 'on')
-              and states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int(100) <= 75
-              and is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'off')
-          }}
-        icon_template: >-
-          {% if is_state('binary_sensor.bolt_ev_network_link', 'off') %}
-            mdi:help-circle
-          {% elif is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'on') %}
-            mdi:flash
-          {% elif states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int <= 75 %}
-            mdi:flash-alert
-          {% else %}
-            mdi:flash-off
-          {% endif %}
+template:
+  binary_sensor:
+    - unique_id: "binary_sensor.bolt_ev_network_link"
+      name: "bolt_ev_network_link"
+      device_class: "connectivity"
+      state: "{{ is_state('sensor.mychevy_status', 'success') }}"
+      icon: >-
+        {% if is_state('sensor.mychevy_status', 'success') %}
+          mdi:car-connected
+        {% else %}
+          mdi:network-strength-off
+        {% endif %}
+    - unique_id: "binary_sensor.bolt_ev_recharge_recommended"
+      name: "bolt_ev_recharge_recommended"
+      state: >-
+        {{
+          is_state('binary_sensor.bolt_ev_network_link', 'on')
+            and states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int(100) <= 75
+            and is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'off')
+        }}
+      icon: >-
+        {% if is_state('binary_sensor.bolt_ev_network_link', 'off') %}
+          mdi:help-circle
+        {% elif is_state('binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in', 'on') %}
+          mdi:flash
+        {% elif states('sensor.mychevy_2019_chevrolet_bolt_ev_electric_range') | int <= 75 %}
+          mdi:flash-alert
+        {% else %}
+          mdi:flash-off
+        {% endif %}
 
 automation:
   - id: "38b66e01-1e27-4614-9bb1-2758a22a1e49"

@@ -3,6 +3,7 @@ homeassistant:
     sensor.ups_battery_status:
       battery_type: "APC BR1500G RS 1500 12V"
       battery_warning_level: 0
+      friendly_name: "UPS battery status"
 
 apcupsd:
   host: !secret ups_host
@@ -20,15 +21,15 @@ sensor:
       - status
       - timeleft  # Time Left on Battery
       - tonbatt  # Time on Battery
-  - platform: template
-    sensors:
-      ups_battery_status:
-        unique_id: "sensor.ups_battery_status"
-        friendly_name: "UPS battery status"
-        device_class: "battery"
-        unit_of_measurement: "%"
-        value_template: >-
-          {% if 'REPLACEBATT' in states('sensor.ups_status') %}0{% else %}100{% endif %}
+
+template:
+  sensor:
+    - unique_id: "sensor.ups_battery_status"
+      name: "ups_battery_status"
+      device_class: "battery"
+      unit_of_measurement: "%"
+      state: >-
+        {% if 'REPLACEBATT' in states('sensor.ups_status') %}0{% else %}100{% endif %}
 
 input_boolean:
   power_outage_manage_devices:

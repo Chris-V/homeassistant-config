@@ -10,6 +10,8 @@ homeassistant:
     sensor.guest_bedroom_window_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
+    sensor.guest_bedroom_temperature:
+      friendly_name: "Guest bedroom temperature"
 
 cloud:
   google_actions:
@@ -71,12 +73,10 @@ light:
     name: "guest_bedroom_closet"
     entity_id: "switch.guest_bedroom_closet_light"
 
-sensor:
-  - platform: template
-    sensors:
-      guest_bedroom_temperature:
-        unique_id: "sensor.guest_bedroom_temperature"
-        friendly_name: "Guest bedroom temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "{{ states('sensor.guest_bedroom_thermostat_temperature') | round(1) }}"
+template:
+  sensor:
+    - unique_id: "sensor.guest_bedroom_temperature"
+      name: "guest_bedroom_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: "{{ states('sensor.guest_bedroom_thermostat_temperature') | round(1) }}"

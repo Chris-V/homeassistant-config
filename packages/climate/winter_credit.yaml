@@ -3,48 +3,51 @@
 #   `Peak demand event notification - Winter Credit Option: tomorrow, Jan. 19, from 4 to 8 p.m.`
 #   `Peak demand event notification - Winter Credit Option: tomorrow, Jan. 21, from 6 to 9 a.m. and from 4 to 8 p.m.`
 
-binary_sensor:
-  - platform: template
-    sensors:
-      winter_credit_enabled:
-        value_template: >-
-          {% set date_sensor = states.sensor.date -%}
-          {{
-            date_sensor is not none
-              and date_sensor.last_changed.month <= 3
-              or date_sensor.last_changed.month == 12
-          }}
-      winter_credit_peak_event:
-        value_template: >-
-          {% set special_schedule = state_attr('calendar.special_climate_schedule', 'message') | default('', True) -%}
-          {{ 'Winter Credit: Peak Event' in special_schedule }}
+homeassistant:
+  customize:
+    sensor.winter_credit_baseline_climate_preset:
+      friendly_name: "Winter credit: baseline climate preset"
 
-sensor:
-  - platform: template
-    sensors:
-      winter_credit_baseline_climate_preset:
-        unique_id: "sensor.winter_credit_baseline_climate_preset"
-        friendly_name: "Winter credit: baseline climate preset"
-        icon_template: "mdi:thermometer-lines"
-        value_template: >-
-          {# TODO: work with actual date-time ranges #}
-          {% set delta = 3 %}
-          {% set peak_events = [range(6, 9), range(16, 20)] %}
+template:
+  binary_sensor:
+    - unique_id: "4ff23e99-f31f-4b96-9cb8-dd53b3796354"
+      name: "winter_credit_enabled"
+      state: >-
+        {% set date_sensor = states.sensor.date -%}
+        {{
+          date_sensor is not none
+            and date_sensor.last_changed.month <= 3
+            or date_sensor.last_changed.month == 12
+        }}
+    - unique_id: "42ce95f4-91ce-41dd-8d33-61fba466e7f6"
+      name: "winter_credit_peak_event"
+      state: >-
+        {% set special_schedule = state_attr('calendar.special_climate_schedule', 'message') | default('', True) -%}
+        {{ 'Winter Credit: Peak Event' in special_schedule }}
 
-          {% set hour = states('sensor.hour') | int %}
-          {% set ns = namespace(preset = '') %}
+  sensor:
+    - unique_id: "sensor.winter_credit_baseline_climate_preset"
+      name: "winter_credit_baseline_climate_preset"
+      icon: "mdi:thermometer-lines"
+      # TODO: work with actual date-time ranges
+      state: >-
+        {% set delta = 3 %}
+        {% set peak_events = [range(6, 9), range(16, 20)] %}
 
-          {% if is_state('binary_sensor.winter_credit_enabled', 'on') %}
-            {% for event in peak_events if not ns.preset %}
-              {% if hour in event %}
-                {% set ns.preset = 'Winter Credit: Heat' %}
-              {% elif hour in range(event[0] - delta, event[0]) %}
-                {% set ns.preset = 'Winter Credit: Cool' %}
-              {% endif %}
-            {% endfor %}
-          {% endif %}
+        {% set hour = states('sensor.hour') | int %}
+        {% set ns = namespace(preset = '') %}
 
-          {{ ns.preset }}
+        {% if is_state('binary_sensor.winter_credit_enabled', 'on') %}
+          {% for event in peak_events if not ns.preset %}
+            {% if hour in event %}
+              {% set ns.preset = 'Winter Credit: Heat' %}
+            {% elif hour in range(event[0] - delta, event[0]) %}
+              {% set ns.preset = 'Winter Credit: Cool' %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        {{ ns.preset }}
 
 automation:
   - id: "dc44848a-cdb1-4b0b-bd76-711a2f81e4b2"

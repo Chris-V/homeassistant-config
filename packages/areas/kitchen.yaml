@@ -9,6 +9,8 @@ homeassistant:
     sensor.kitchen_sink_leak_sensor_battery:
       battery_type: "ER14250 3.6V"
       battery_warning_level: 25
+    sensor.kitchen_temperature:
+      friendly_name: "Kitchen temperature"
     light.kitchen:
       friendly_name: "Kitchen light"
     light.kitchen_sink:
@@ -44,16 +46,14 @@ light:
     name: kitchen_sink
     entity_id: "switch.kitchen_sink_light"
 
-sensor:
-  - platform: template
-    sensors:
-      kitchen_temperature:
-        unique_id: "sensor.kitchen_temperature"
-        friendly_name: "Kitchen temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        # Living room and Kitchen thermostat are the same
-        value_template: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
+template:
+  sensor:
+    - unique_id: "sensor.kitchen_temperature"
+      name: "kitchen_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      # Living room and Kitchen thermostat are the same
+      state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
 
 automation:
   - id: "ab8460a3-e7b3-4cef-989e-11a65da297f9"

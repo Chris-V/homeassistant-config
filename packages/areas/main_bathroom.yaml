@@ -1,8 +1,16 @@
 homeassistant:
   customize:
+    binary_sensor.main_bathroom_door:
+      friendly_name: "Main bathroom door"
+    binary_sensor.main_bathroom_presence:
+      friendly_name: "Main bathroom presence"
     sensor.main_bathroom_multisensor_battery:
       battery_type: "CR123A"
       battery_warning_level: 40
+    sensor.main_bathroom_humidity:
+      friendly_name: "Main bathroom humidity"
+    sensor.main_bathroom_temperature:
+      friendly_name: "Main bathroom temperature"
     light.main_bathroom_vanity:
       friendly_name: "Main bathroom vanity light"
 
@@ -34,42 +42,35 @@ cloud:
         aliases:
           - "Main bathroom fan"
 
-binary_sensor:
-  - platform: template
-    sensors:
-      main_bathroom_door:
-        unique_id: "binary_sensor.main_bathroom_door"
-        friendly_name: "Main bathroom door"
-        device_class: "door"
-        value_template: true
+template:
+  binary_sensor:
+    - unique_id: "binary_sensor.main_bathroom_door"
+      name: "main_bathroom_door"
+      device_class: "door"
+      state: true
 
-      main_bathroom_presence:
-        unique_id: "binary_sensor.main_bathroom_presence"
-        friendly_name: "Main bathroom presence"
-        device_class: "presence"
-        value_template: >-
-          {{
-            is_state('binary_sensor.main_bathroom_motion', 'on')
-              or is_state('binary_sensor.main_bathroom_door', 'off')
-          }}
-        delay_off: 15
+    - unique_id: "binary_sensor.main_bathroom_presence"
+      name: "main_bathroom_presence"
+      device_class: "presence"
+      state: >-
+        {{
+          is_state('binary_sensor.main_bathroom_motion', 'on')
+            or is_state('binary_sensor.main_bathroom_door', 'off')
+        }}
+      delay_off: 15
 
-sensor:
-  - platform: template
-    sensors:
-      main_bathroom_humidity:
-        unique_id: "sensor.main_bathroom_humidity"
-        friendly_name: "Main bathroom humidity"
-        device_class: "humidity"
-        unit_of_measurement: "%"
-        value_template: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | round }}"
+  sensor:
+    - unique_id: "sensor.main_bathroom_humidity"
+      name: "main_bathroom_humidity"
+      device_class: "humidity"
+      unit_of_measurement: "%"
+      state: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | round }}"
 
-      main_bathroom_temperature:
-        unique_id: "sensor.main_bathroom_temperature"
-        friendly_name: "Main bathroom temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "{{ states('sensor.main_bathroom_multisensor_temperature') | round(1) }}"
+    - unique_id: "sensor.main_bathroom_temperature"
+      name: "main_bathroom_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: "{{ states('sensor.main_bathroom_multisensor_temperature') | round(1) }}"
 
 fan:
   - platform: template
