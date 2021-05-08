@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    sensor.manual_thermostats_count:
+      friendly_name: "Thermostats in manual mode"
+
 group:
   managed_thermostats:
     name: "Managed thermostats"
@@ -77,28 +82,26 @@ group:
       - input_number.office_thermostat_boost_setpoint
       - input_number.studio_thermostat_boost_setpoint
 
-sensor:
-  - platform: template
-    sensors:
-      manual_thermostats_count:
-        unique_id: "sensor.manual_thermostats_count"
-        friendly_name: "Thermostats in manual mode"
-        icon_template: "mdi:thermometer-alert"
-        value_template: |
+template:
+  sensor:
+    - unique_id: "sensor.manual_thermostats_count"
+      name: "manual_thermostats_count"
+      icon: "mdi:thermometer-alert"
+      state: |
+        {{
+          expand('group.managed_thermostat_modes')
+            | selectattr('state', 'eq', 'Manual')
+            | list
+            | count
+        }}
+      attributes:
+        entity_id: |
           {{
             expand('group.managed_thermostat_modes')
               | selectattr('state', 'eq', 'Manual')
+              | map('attr', 'entity_id')
               | list
-              | count
           }}
-        attribute_templates:
-          entity_id: |
-            {{
-              expand('group.managed_thermostat_modes')
-                | selectattr('state', 'eq', 'Manual')
-                | map('attr', 'entity_id')
-                | list
-            }}
 
 script:
   restore_climate_auto_mode:

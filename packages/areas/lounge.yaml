@@ -6,6 +6,8 @@ homeassistant:
     sensor.lounge_window_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
+    sensor.lounge_temperature:
+      friendly_name: "Lounge temperature"
     switch.lounge_tv:
       friendly_name: "Living room TV"
 
@@ -66,15 +68,13 @@ light:
       - light.lounge
       - light.lounge_ambiance
 
-sensor:
-  - platform: template
-    sensors:
-      lounge_temperature:
-        unique_id: "sensor.lounge_temperature"
-        friendly_name: "Lounge temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "{{ states('sensor.lounge_thermostat_temperature') | round(1) }}"
+template:
+  sensor:
+    - unique_id: "sensor.lounge_temperature"
+      name: "lounge_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: "{{ states('sensor.lounge_thermostat_temperature') | round(1) }}"
 
 switch:
   - platform: broadlink

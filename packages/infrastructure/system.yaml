@@ -9,6 +9,8 @@ homeassistant:
     sensor.memory_use_percent:
       friendly_name: "Memory use"
       icon: "mdi:memory"
+    sensor.hour:
+      friendly_name: "Hour"
 
 sensor:
   - platform: time_date
@@ -27,10 +29,9 @@ sensor:
     value_template: "{{ value|multiply(0.001)|round(1) }}"
     unit_of_measurement: "°C"
 
-  - platform: template
-    sensors:
-      hour:
-        unique_id: "sensor.hour"
-        friendly_name: "Hour"
-        icon_template: "mdi:clock"
-        value_template: "{{ states.sensor.time.last_changed.hour }}"
+template:
+  sensor:
+    - unique_id: "sensor.hour"
+      name: "hour"
+      icon: "mdi:clock"
+      state: "{{ states.sensor.time.last_changed.hour }}"

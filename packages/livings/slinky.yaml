@@ -1,5 +1,13 @@
 homeassistant:
   customize:
+    binary_sensor.slinky_requires_attention:
+      friendly_name: "Slinky requires attention"
+    sensor.slinky_basking_temperature:
+      friendly_name: "Slinky's basking spot temperature"
+    sensor.slinky_temperature:
+      friendly_name: "Slinky's terrarium temperature"
+    sensor.slinky_humidity:
+      friendly_name: "Slinky's terrarium humidity"
     switch.slinky_heat_bulb:
       icon: "mdi:spotlight-beam"
     switch.slinky_heater:
@@ -26,48 +34,40 @@ input_datetime:
     has_date: false
     has_time: true
 
-binary_sensor:
-  - platform: template
-    sensors:
-      slinky_requires_attention:
-        unique_id: "binary_sensor.slinky_requires_attention"
-        friendly_name: "Slinky requires attention"
-        device_class: "problem"
-        entity_picture_template: "/local/animals/slinky_avatar.jpg"
-        attribute_templates:
-          scheduling: "{{ is_state('input_boolean.slinky_scheduled_lights', 'on') }}"
-          heat_bulb: "{{ is_state('switch.slinky_heat_bulb', 'off') or states('sensor.slinky_heat_bulb_power') | float > 1 }}"
-          heater: "{{ is_state('switch.slinky_heater', 'off') or states('sensor.slinky_heater_power') | float > 1 }}"
-          uv_light: "{{ is_state('switch.slinky_uv_light', 'off') or states('sensor.slinky_uv_light_power') | float > 1 }}"
-        value_template: >-
-          {{ is_state('input_boolean.slinky_scheduled_lights', 'off')
-              or (is_state('switch.slinky_heat_bulb', 'on') and states('sensor.slinky_heat_bulb_power') | float < 1)
-              or (is_state('switch.slinky_heater', 'on') and states('sensor.slinky_heater_power') | float < 1)
-              or (is_state('switch.slinky_uv_light', 'on') and states('sensor.slinky_uv_light_power') | float < 1)
-          }}
+template:
+  binary_sensor:
+    - unique_id: "binary_sensor.slinky_requires_attention"
+      name: "slinky_requires_attention"
+      device_class: "problem"
+      picture: "/local/animals/slinky_avatar.jpg"
+      attributes:
+        scheduling: "{{ is_state('input_boolean.slinky_scheduled_lights', 'on') }}"
+        heat_bulb: "{{ is_state('switch.slinky_heat_bulb', 'off') or states('sensor.slinky_heat_bulb_power') | float > 1 }}"
+        heater: "{{ is_state('switch.slinky_heater', 'off') or states('sensor.slinky_heater_power') | float > 1 }}"
+        uv_light: "{{ is_state('switch.slinky_uv_light', 'off') or states('sensor.slinky_uv_light_power') | float > 1 }}"
+      state: >-
+        {{ is_state('input_boolean.slinky_scheduled_lights', 'off')
+            or (is_state('switch.slinky_heat_bulb', 'on') and states('sensor.slinky_heat_bulb_power') | float < 1)
+            or (is_state('switch.slinky_heater', 'on') and states('sensor.slinky_heater_power') | float < 1)
+            or (is_state('switch.slinky_uv_light', 'on') and states('sensor.slinky_uv_light_power') | float < 1)
+        }}
 
-# Fake sensors until everything is ready
-sensor:
-  - platform: template
-    sensors:
-      slinky_basking_temperature:
-        unique_id: "sensor.slinky_basking_temperature"
-        friendly_name: "Slinky's basking spot temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "0.0"
-      slinky_temperature:
-        unique_id: "sensor.slinky_temperature"
-        friendly_name: "Slinky's terrarium temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        value_template: "0.0"
-      slinky_humidity:
-        unique_id: "sensor.slinky_humidity"
-        friendly_name: "Slinky's terrarium humidity"
-        device_class: "humidity"
-        unit_of_measurement: "%"
-        value_template: "0.0"
+  sensor:  # Fake sensors until everything is ready
+    - unique_id: "sensor.slinky_basking_temperature"
+      name: "slinky_basking_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: "0.0"
+    - unique_id: "sensor.slinky_temperature"
+      name: "slinky_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: "0.0"
+    - unique_id: "sensor.slinky_humidity"
+      name: "slinky_humidity"
+      device_class: "humidity"
+      unit_of_measurement: "%"
+      state: "0.0"
 
 automation:
   - id: "ca115276-80d4-4a82-bd6e-b575f6483b64"

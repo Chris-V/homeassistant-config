@@ -1,9 +1,13 @@
 homeassistant:
   customize:
+    binary_sensor.guest_mode:
+      friendly_name: "Guest mode"
     person.chris:
-      entity_picture: /local/secrets/chris.webp
+      entity_picture: "/local/secrets/chris.webp"
     person.karine:
-      entity_picture: /local/secrets/karine.webp
+      entity_picture: "/local/secrets/karine.webp"
+    sensor.guests_home:
+      friendly_name: "Guests at home"
 
 person:
   - id: "chris"
@@ -47,44 +51,39 @@ input_boolean:
     name: "Notify individual guest arrivals"
     icon: "mdi:message-cog"
 
-binary_sensor:
-  - platform: template
-    sensors:
-      guest_mode:
-        unique_id: "binary_sensor.guest_mode"
-        friendly_name: "Guest mode"
-        icon_template: "mdi:human-greeting"
-        value_template: >-
-          {{
-            is_state('input_boolean.force_guest_mode', 'on')
-              or is_state('group.household', 'home')
-              and state_attr('sensor.guests_home', 'count') | int | default(0) > 0
-          }}
+template:
+  binary_sensor:
+    - unique_id: "binary_sensor.guest_mode"
+      name: "guest_mode"
+      icon: "mdi:human-greeting"
+      state: >-
+        {{
+          is_state('input_boolean.force_guest_mode', 'on')
+            or is_state('group.household', 'home')
+            and state_attr('sensor.guests_home', 'count') | int | default(0) > 0
+        }}
 
-sensor:
-  - platform: template
-    sensors:
-      guests_home:
-        unique_id: "sensor.guests_home"
-        friendly_name: "Guests at home"
-        icon_template: "mdi:account-star"
-        value_template: >-
+  sensor:
+    - unique_id: "sensor.guests_home"
+      name: "guests_home"
+      icon: "mdi:account-star"
+      state: >-
+        {{
+          expand('group.guests')
+            | selectattr('state', 'eq', 'home')
+            | map('attr', 'name')
+            | sort
+            | join(', ')
+            | default('Nobody', true)
+        }}
+      attributes:
+        count: >-
           {{
             expand('group.guests')
               | selectattr('state', 'eq', 'home')
-              | map('attr', 'name')
-              | sort
-              | join(', ')
-              | default('Nobody', true)
+              | list
+              | count
           }}
-        attribute_templates:
-          count: >-
-            {{
-              expand('group.guests')
-                | selectattr('state', 'eq', 'home')
-                | list
-                | count
-            }}
 
 automation:
   - id: "91bb52da-440a-4082-a6f3-4e58253a51c8"
