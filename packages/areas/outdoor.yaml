@@ -4,8 +4,8 @@ homeassistant:
       friendly_name: "Front porch light"
     light.front_porch:
       friendly_name: "Side porch light"
-    light.shed:
-      friendly_name: "Shed door light"
+    light.shed_outdoor:
+      friendly_name: "Shed outdoor light"
     sensor.outdoor_humidity:
       friendly_name: "Outdoor humidity"
     sensor.outdoor_temperature:
@@ -19,7 +19,7 @@ cloud:
       include_entities:
         - "light.side_porch"
         - "light.front_porch"
-        - "light.shed"
+        - "light.shed_outdoor"
     entity_config:
       light.side_porch:
         room: "Outdoor"
@@ -34,12 +34,15 @@ cloud:
         aliases:
           - "Front porch"
           - "Front"
-      light.shed:
+      light.shed_outdoor:
         room: "Outdoor"
-        name: "Shed light"
+        name: "Shed outdoor light"
         aliases:
-          - "Shed"
-          - "Garage"
+          - "Shed outdoor"
+          - "Shed door light"
+          - "Shed door"
+          - "Garage door"
+          - "Garage door light"
 
 light:
   - platform: group
@@ -47,7 +50,7 @@ light:
     entities:
       - light.side_porch
       - light.front_porch
-      - light.shed
+      - light.shed_outdoor
 
   - platform: switch
     name: side_porch
@@ -56,8 +59,8 @@ light:
     name: front_porch
     entity_id: "switch.front_porch_light"
   - platform: switch
-    name: shed
-    entity_id: "switch.shed_light"
+    name: shed_outdoor
+    entity_id: "switch.shed_outdoor_light"
 
 template:
   sensor:
