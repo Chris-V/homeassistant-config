@@ -16,7 +16,7 @@
       - entity_id: light.front_porch
         name: Front porch
         icon: mdi:outdoor-lamp
-      - entity_id: light.shed
+      - entity_id: light.shed_outdoor
         name: Shed
         icon: mdi:garage
 
