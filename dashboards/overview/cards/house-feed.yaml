@@ -1,97 +1,51 @@
-type: logbook
-title: House feed
-hours_to_show: 24
-style: |
-  ha-card {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath style='fill: %2322222240;' d='M6.18,15.64A2.18,2.18 0 0,1 8.36,17.82C8.36,19 7.38,20 6.18,20C5,20 4,19 4,17.82A2.18,2.18 0 0,1 6.18,15.64M4,4.44A15.56,15.56 0 0,1 19.56,20H16.73A12.73,12.73 0 0,0 4,7.27V4.44M4,10.1A9.9,9.9 0 0,1 13.9,20H11.07A7.07,7.07 0 0,0 4,12.93V10.1Z'/%3E%3C/svg%3E");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 75%;
-    background-blend-mode: exclusion;
-  }
-entities: [
-  "binary_sensor.basement_bathroom_motion",
-  "binary_sensor.guest_bedroom_window",
-  "binary_sensor.intrusion",
-  "binary_sensor.kitchen_door",
-  "binary_sensor.kitchen_sink_leak",
-  "binary_sensor.laundry_room_motion",
-  "binary_sensor.living_room_door",
-  "binary_sensor.lounge_window",
-  "binary_sensor.main_bathroom_motion",
-  "binary_sensor.presence_armed",
-  "binary_sensor.studio_window",
-  "binary_sensor.washing_machine_leak",
-  "binary_sensor.water_heater_leak",
-  "binary_sensor.workshop_motion",
-  "fan.basement_bathroom",
-  "fan.main_bathroom",
-  "light.basement_bathroom",
-  "light.basement_bathroom_vanity",
-  "light.basement_hallway",
-  "light.bedside_chris",
-  "light.bedside_karine",
-  "light.bookshelf",
-  "light.dining_room",
-  "light.downstairs",
-  "light.guest_bedroom",
-  "light.guest_bedroom_closet",
-  "light.hallway",
-  "light.kitchen",
-  "light.kitchen_sink",
-  "light.laundry_room",
-  "light.living_room_ambiance",
-  "light.lounge",
-  "light.lounge_ambiance",
-  "light.main_bathroom_spots",
-  "light.main_bathroom_vanity",
-  "light.master_bedroom",
-  "light.office",
-  "light.studio",
-  "light.workshop",
-  "person.chris",
-  "person.guest_cava",
-  "person.guest_gipa",
-  "person.guest_laboro",
-  "person.guest_stfr",
-  "person.guest_syvi",
-  "person.karine"
-]
+type: custom:auto-entities
+card:
+  type: logbook
+  title: House feed
+  hours_to_show: 24
+  style: |
+    ha-card {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath style='fill: %2322222240;' d='M6.18,15.64A2.18,2.18 0 0,1 8.36,17.82C8.36,19 7.38,20 6.18,20C5,20 4,19 4,17.82A2.18,2.18 0 0,1 6.18,15.64M4,4.44A15.56,15.56 0 0,1 19.56,20H16.73A12.73,12.73 0 0,0 4,7.27V4.44M4,10.1A9.9,9.9 0 0,1 13.9,20H11.07A7.07,7.07 0 0,0 4,12.93V10.1Z'/%3E%3C/svg%3E");
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 75%;
+      background-blend-mode: exclusion;
+    }
+filter:
+  template: >-
+    {# Using a custom expand because the built-in expand only works on `group.*` #}
+    {% macro expand_ids(entity_id, include_groups = False) %}
+      {%- set ns = namespace(entity_ids = []) %}
+      {%- set entity = states[entity_id] %}
+      {%- if entity %}
+        {%- set children = entity.attributes.entity_id | default %}
+        {%- if children %}
+          {%- for entity_id in children -%}
+            {% set ns.entity_ids = ns.entity_ids + [expand_ids(entity_id, include_groups)] %}
+          {%- endfor %}
+          {%- if include_groups %}
+            {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+          {%- endif %}
+        {%- else %}
+          {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+        {%- endif -%}
+        {{ ns.entity_ids | join(',') }}
+      {%- endif %}
+    {%- endmacro %}
 
-# Template to generate list. Not using auto-entities because it has issues working with logbook
-# {# Using a custom expand because the built-in expand only works on `group.*` #}
-# {% macro expand_ids(entity_id, include_groups = False) %}
-#   {%- set ns = namespace(entity_ids = []) %}
-#   {%- set entity = states[entity_id] %}
-#   {%- if entity %}
-#     {%- set children = entity.attributes.entity_id %}
-#     {%- if children %}
-#       {%- for entity_id in children -%}
-#         {% set ns.entity_ids = ns.entity_ids + [expand_ids(entity_id, include_groups)] %}
-#       {%- endfor %}
-#       {%- if include_groups %}
-#         {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
-#       {%- endif %}
-#     {%- else %}
-#       {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
-#     {%- endif -%}
-#     {{ ns.entity_ids | join(',') }}
-#   {%- endif %}
-# {%- endmacro %}
-#
-# {{ ([
-#       'binary_sensor.intrusion',
-#       'binary_sensor.presence_armed',
-#       'fan.basement_bathroom',
-#       'fan.main_bathroom',
-#     ] + expand_ids('light.basement_lights').split(',')
-#       + expand_ids('light.ground_floor_lights').split(',')
-#       + expand_ids('group.all_doors').split(',')
-#       + expand_ids('group.all_leaks').split(',')
-#       + expand_ids('group.all_motions').split(',')
-#       + expand_ids('group.all_windows').split(',')
-#       + expand_ids('group.household').split(',')
-#       + expand_ids('group.guests').split(',')
-#     ) | reject('eq', '')
-#       | sort
-# }}
+    {{ ([
+          'binary_sensor.intrusion',
+          'binary_sensor.presence_armed',
+          'fan.basement_bathroom',
+          'fan.main_bathroom',
+        ] + expand_ids('light.basement_lights').split(',')
+          + expand_ids('light.ground_floor_lights').split(',')
+          + expand_ids('group.all_doors').split(',')
+          + expand_ids('group.all_leaks').split(',')
+          + expand_ids('group.all_motions').split(',')
+          + expand_ids('group.all_windows').split(',')
+          + expand_ids('group.household').split(',')
+          + expand_ids('group.guests').split(',')
+        ) | reject('eq', '')
+          | sort
+    }}
