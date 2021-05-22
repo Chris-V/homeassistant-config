@@ -9,8 +9,6 @@ homeassistant:
     sensor.memory_use_percent:
       friendly_name: "Memory use"
       icon: "mdi:memory"
-    sensor.hour:
-      friendly_name: "Hour"
 
 sensor:
   - platform: time_date
@@ -35,3 +33,5 @@ template:
       name: "hour"
       icon: "mdi:clock"
       state: "{{ states.sensor.time.last_changed.hour }}"
+      attributes:
+        friendly_name: "Hour"

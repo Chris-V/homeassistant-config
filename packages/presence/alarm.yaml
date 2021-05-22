@@ -1,10 +1,3 @@
-homeassistant:
-  customize:
-    binary_sensor.presence_armed:
-      friendly_name: "Armed"
-    binary_sensor.intrusion:
-      friendly_name: "Intrusion"
-
 input_boolean:
   force_presence_armed:
     name: "Force armed"
@@ -30,6 +23,8 @@ template:
             or not is_state('group.household', 'home')
             and is_state('binary_sensor.guest_mode', 'off')
         }}
+      attributes:
+        friendly_name: "Armed"
 
     - unique_id: "ccc872ad-92f9-4b3e-87a5-452292b6b118"
       name: "intrusion"
@@ -37,6 +32,7 @@ template:
       delay_on: 15
       delay_off: 15
       attributes:
+        friendly_name: "Intrusion"
         activity: >-
           {% set armed = states.binary_sensor.presence_armed -%}
           {% if armed is not none and armed.state == 'on' -%}

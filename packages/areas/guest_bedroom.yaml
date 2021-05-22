@@ -1,7 +1,6 @@
 homeassistant:
   customize:
     binary_sensor.guest_bedroom_window:
-      friendly_name: "Guest bedroom window"
       device_class: "window"
     light.guest_bedroom:
       friendly_name: "Guest bedroom light"
@@ -10,8 +9,6 @@ homeassistant:
     sensor.guest_bedroom_window_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
-    sensor.guest_bedroom_temperature:
-      friendly_name: "Guest bedroom temperature"
 
 cloud:
   google_actions:
@@ -80,3 +77,5 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "{{ states('sensor.guest_bedroom_thermostat_temperature') | round(1) }}"
+      attributes:
+        friendly_name: "Guest bedroom temperature"

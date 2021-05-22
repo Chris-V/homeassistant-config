@@ -2,8 +2,6 @@ homeassistant:
   customize:
     plant.spidy:
       friendly_name: "Spidy"
-    sensor.spidy_problems:
-      friendly_name: "Spidy"
     sensor.spidy_battery:
       friendly_name: "Spidy's battery"
       battery_type: "CR2032"
@@ -37,6 +35,8 @@ template:
     - unique_id: "sensor.spidy_problems"
       name: "spidy_problems"
       state: "{{ state_attr('plant.spidy', 'problem') or 'none' }}"
+      attributes:
+        friendly_name: "Spidy"
 
 sensor:
   - platform: mqtt

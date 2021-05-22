@@ -1,10 +1,3 @@
-homeassistant:
-  customize:
-    sensor.ups_battery_status:
-      battery_type: "APC BR1500G RS 1500 12V"
-      battery_warning_level: 0
-      friendly_name: "UPS battery status"
-
 apcupsd:
   host: !secret ups_host
   port: !secret ups_port
@@ -30,6 +23,10 @@ template:
       unit_of_measurement: "%"
       state: >-
         {% if 'REPLACEBATT' in states('sensor.ups_status') %}0{% else %}100{% endif %}
+      attributes:
+        battery_type: "APC BR1500G RS 1500 12V"
+        battery_warning_level: 0
+        friendly_name: "UPS battery status"
 
 input_boolean:
   power_outage_manage_devices:

@@ -1,13 +1,9 @@
 homeassistant:
   customize:
-    binary_sensor.guest_mode:
-      friendly_name: "Guest mode"
     person.chris:
       entity_picture: "/local/secrets/chris.webp"
     person.karine:
       entity_picture: "/local/secrets/karine.webp"
-    sensor.guests_home:
-      friendly_name: "Guests at home"
 
 person:
   - id: "chris"
@@ -62,6 +58,8 @@ template:
             or is_state('group.household', 'home')
             and state_attr('sensor.guests_home', 'count') | int | default(0) > 0
         }}
+      attributes:
+        friendly_name: "Guest mode"
 
   sensor:
     - unique_id: "sensor.guests_home"
@@ -77,6 +75,7 @@ template:
             | default('Nobody', true)
         }}
       attributes:
+        friendly_name: "Guests at home"
         count: >-
           {{
             expand('group.guests')

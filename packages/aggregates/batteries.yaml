@@ -1,8 +1,3 @@
-homeassistant:
-  customize:
-    binary_sensor.all_batteries:
-      friendly_name: "All batteries"
-
 group:
   all_batteries:
     name: "Batteries"
@@ -48,6 +43,7 @@ template:
 
         {{ n.entities | length != 0 }}
       attributes:
+        friendly_name: "All batteries"
         entity_id: >-
           {% set ns = namespace(entities = []) %}
 

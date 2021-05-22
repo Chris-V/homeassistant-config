@@ -1,10 +1,3 @@
-homeassistant:
-  customize:
-    binary_sensor.all_motions:
-      friendly_name: "All motions"
-    sensor.last_motion:
-      friendly_name: "Last motion"
-
 group:
   all_motions:
     name: "All motions"
@@ -28,6 +21,7 @@ template:
             | length != 0
         }}
       attributes:
+        friendly_name: "All motions"
         entity_id: >-
           {{
             expand('group.all_motions')
@@ -48,3 +42,5 @@ template:
             | first
             | replace(' motion', '')
         }}
+      attributes:
+        friendly_name: "Last motion"

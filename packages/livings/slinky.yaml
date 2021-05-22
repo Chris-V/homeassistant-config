@@ -1,13 +1,5 @@
 homeassistant:
   customize:
-    binary_sensor.slinky_requires_attention:
-      friendly_name: "Slinky requires attention"
-    sensor.slinky_basking_temperature:
-      friendly_name: "Slinky's basking spot temperature"
-    sensor.slinky_temperature:
-      friendly_name: "Slinky's terrarium temperature"
-    sensor.slinky_humidity:
-      friendly_name: "Slinky's terrarium humidity"
     switch.slinky_heat_bulb:
       icon: "mdi:spotlight-beam"
     switch.slinky_heater:
@@ -41,6 +33,7 @@ template:
       device_class: "problem"
       picture: "/local/animals/slinky_avatar.jpg"
       attributes:
+        friendly_name: "Slinky requires attention"
         scheduling: "{{ is_state('input_boolean.slinky_scheduled_lights', 'on') }}"
         heat_bulb: "{{ is_state('switch.slinky_heat_bulb', 'off') or states('sensor.slinky_heat_bulb_power') | float > 1 }}"
         heater: "{{ is_state('switch.slinky_heater', 'off') or states('sensor.slinky_heater_power') | float > 1 }}"
@@ -58,16 +51,22 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "0.0"
+      attributes:
+        friendly_name: "Slinky's basking spot temperature"
     - unique_id: "sensor.slinky_temperature"
       name: "slinky_temperature"
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "0.0"
+      attributes:
+        friendly_name: "Slinky's terrarium temperature"
     - unique_id: "sensor.slinky_humidity"
       name: "slinky_humidity"
       device_class: "humidity"
       unit_of_measurement: "%"
       state: "0.0"
+      attributes:
+        friendly_name: "Slinky's terrarium humidity"
 
 automation:
   - id: "ca115276-80d4-4a82-bd6e-b575f6483b64"
