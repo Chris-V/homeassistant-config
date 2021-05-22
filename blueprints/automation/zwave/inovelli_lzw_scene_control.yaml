@@ -1,7 +1,7 @@
 blueprint:
-  name: Scene control for Inovelli's Gen. 1 NZW30 and NZW31.
+  name: Inovelli Red Series (LZW-SN) scene control
   description: >
-    Associate actions to scenes from Inovelli's Gen. 1 NZW30 swiches and NZW31 dimmers.
+    Associate actions to scenes from Inovelli's Red Series LZW30-SN swiches and LZW31-SN dimmers.
   domain: automation
   input:
     node_id:
@@ -22,6 +22,26 @@ blueprint:
     hold_off:
       name: Hold off paddle
       description: Action to execute when the off paddle is held.
+      default: []
+      selector:
+        action: {}
+
+    release_on:
+      name: Release on paddle
+      description: Action to execute when the on paddle is released, typically after a hold event.
+      default: []
+      selector:
+        action: {}
+    release_off:
+      name: Release off paddle
+      description: Action to execute when the off paddle is released, typically after a hold event.
+      default: []
+      selector:
+        action: {}
+
+    tap_favorite:
+      name: Tap the favorite button
+      description: Action to run when the favorite button is pressed.
       default: []
       selector:
         action: {}
@@ -97,68 +117,81 @@ mode: "queued"
 
 trigger:
   - platform: event
-    event_type: "ozw.scene_activated"
+    event_type: "zwave_js_value_notification"
     event_data:
       node_id: !input node_id
 
 variables:
-  scene_id: "{{ trigger.event.data.scene_id | int }}"
-  scene_value_id: "{{ trigger.event.data.scene_value_id | int }}"
-  on_scene_id: 2
-  off_scene_id: 1
+  action_type: "{{ trigger.event.data.value }}"
+  button: "{{ trigger.event.data.property_key }}"
+
+  favorite_button: "003"
+  off_button: "001"
+  on_button: "002"
 
 action:
   - choose:
       # Tap 1x
-      - conditions: "{{ scene_value_id == 1 }}"
+      - conditions: "{{ action_type == 'KeyPressed' }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_scene_id }}"
+              - conditions: "{{ button == on_button }}"
                 sequence: !input tap_on_1x
-              - conditions: "{{ scene_id == off_scene_id }}"
+              - conditions: "{{ button == off_button }}"
                 sequence: !input tap_off_1x
+              - conditions: "{{ button == favorite_button }}"
+                sequence: !input tap_favorite
 
       # Hold
-      - conditions: "{{ scene_value_id == 3 }}"
+      - conditions: "{{ action_type == 'KeyHeldDown' }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_scene_id }}"
+              - conditions: "{{ button == on_button }}"
                 sequence: !input hold_on
-              - conditions: "{{ scene_id == off_scene_id }}"
+              - conditions: "{{ button == off_button }}"
                 sequence: !input hold_off
 
-      # Tap 2x
-      - conditions: "{{ scene_value_id == 4 }}"
+      # Release
+      - conditions: "{{ action_type == 'KeyReleased' }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_scene_id }}"
+              - conditions: "{{ button == on_button }}"
+                sequence: !input release_on
+              - conditions: "{{ button == off_button }}"
+                sequence: !input release_off
+
+      # Tap 2x
+      - conditions: "{{ action_type == 'KeyPressed2x' }}"
+        sequence:
+          - choose:
+              - conditions: "{{ button == on_button }}"
                 sequence: !input tap_on_2x
-              - conditions: "{{ scene_id == off_scene_id }}"
+              - conditions: "{{ button == off_button }}"
                 sequence: !input tap_off_2x
 
       # Tap 3x
-      - conditions: "{{ scene_value_id == 5 }}"
+      - conditions: "{{ action_type == 'KeyPressed3x' }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_scene_id }}"
+              - conditions: "{{ button == on_button }}"
                 sequence: !input tap_on_3x
-              - conditions: "{{ scene_id == off_scene_id }}"
+              - conditions: "{{ button == off_button }}"
                 sequence: !input tap_off_3x
 
       # Tap 4x
-      - conditions: "{{ scene_value_id == 6 }}"
+      - conditions: "{{ action_type == 'KeyPressed4x' }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_scene_id }}"
+              - conditions: "{{ button == on_button }}"
                 sequence: !input tap_on_4x
-              - conditions: "{{ scene_id == off_scene_id }}"
+              - conditions: "{{ button == off_button }}"
                 sequence: !input tap_off_4x
 
       # Tap 5x
-      - conditions: "{{ scene_value_id == 7 }}"
+      - conditions: "{{ action_type == 'KeyPressed5x' }}"
         sequence:
           - choose:
-              - conditions: "{{ scene_id == on_scene_id }}"
+              - conditions: "{{ button == on_button }}"
                 sequence: !input tap_on_5x
-              - conditions: "{{ scene_id == off_scene_id }}"
+              - conditions: "{{ button == off_button }}"
                 sequence: !input tap_off_5x

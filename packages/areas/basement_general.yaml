@@ -73,7 +73,7 @@ automation:
   - id: "a2df600b-4450-4a6f-8c3d-ad3f4ea5773c"
     alias: "basement_hallway_light_dimmer_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 16
 
@@ -99,7 +99,7 @@ automation:
   - id: "f0425412-92de-4251-9265-f9901c8b0a4e"
     alias: "downstairs_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 15
 

@@ -75,7 +75,7 @@ automation:
   - id: "7a81bc8a-fc13-426e-b324-e2c76c1142d7"
     alias: "hallway_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 32
 

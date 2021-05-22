@@ -93,7 +93,7 @@ automation:
   - id: "650fdbf6-2f22-4bd0-b430-c8a1c29d3217"
     alias: "master_bedroom_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/inovelli_nzw30_scene_control.yaml"
+      path: "zwave/inovelli_nzw_scene_control.yaml"
       input:
         node_id: 31
 
