@@ -1,16 +1,8 @@
 homeassistant:
   customize:
-    binary_sensor.main_bathroom_door:
-      friendly_name: "Main bathroom door"
-    binary_sensor.main_bathroom_presence:
-      friendly_name: "Main bathroom presence"
     sensor.main_bathroom_multisensor_battery:
       battery_type: "CR123A"
       battery_warning_level: 40
-    sensor.main_bathroom_humidity:
-      friendly_name: "Main bathroom humidity"
-    sensor.main_bathroom_temperature:
-      friendly_name: "Main bathroom temperature"
     light.main_bathroom_vanity:
       friendly_name: "Main bathroom vanity light"
 
@@ -48,6 +40,8 @@ template:
       name: "main_bathroom_door"
       device_class: "door"
       state: true
+      attributes:
+        friendly_name: "Main bathroom door"
 
     - unique_id: "binary_sensor.main_bathroom_presence"
       name: "main_bathroom_presence"
@@ -58,6 +52,8 @@ template:
             or is_state('binary_sensor.main_bathroom_door', 'off')
         }}
       delay_off: 15
+      attributes:
+        friendly_name: "Main bathroom presence"
 
   sensor:
     - unique_id: "sensor.main_bathroom_humidity"
@@ -65,12 +61,16 @@ template:
       device_class: "humidity"
       unit_of_measurement: "%"
       state: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | round }}"
+      attributes:
+        friendly_name: "Main bathroom humidity"
 
     - unique_id: "sensor.main_bathroom_temperature"
       name: "main_bathroom_temperature"
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "{{ states('sensor.main_bathroom_multisensor_temperature') | round(1) }}"
+      attributes:
+        friendly_name: "Main bathroom temperature"
 
 fan:
   - platform: template

@@ -1,9 +1,5 @@
 homeassistant:
   customize:
-    binary_sensor.bolt_ev_network_link:
-      friendly_name: "Bolt EV network link"
-    binary_sensor.bolt_ev_recharge_recommended:
-      friendly_name: "Bolt EV recharge recommended"
     sensor.mychevy_2019_chevrolet_bolt_ev_electric_range:
       unit_of_measurement: "km"
     sensor.mychevy_2019_chevrolet_bolt_ev_mileage:
@@ -31,6 +27,8 @@ template:
         {% else %}
           mdi:network-strength-off
         {% endif %}
+      attributes:
+        friendly_name: "Bolt EV network link"
     - unique_id: "binary_sensor.bolt_ev_recharge_recommended"
       name: "bolt_ev_recharge_recommended"
       state: >-
@@ -49,6 +47,8 @@ template:
         {% else %}
           mdi:flash-off
         {% endif %}
+      attributes:
+        friendly_name: "Bolt EV recharge recommended"
 
 automation:
   - id: "38b66e01-1e27-4614-9bb1-2758a22a1e49"
