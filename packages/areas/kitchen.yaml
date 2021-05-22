@@ -58,7 +58,7 @@ automation:
   - id: "ab8460a3-e7b3-4cef-989e-11a65da297f9"
     alias: "kitchen_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 3
 
@@ -83,7 +83,7 @@ automation:
   - id: "3353147e-584b-4a98-8a1f-6a46bda78960"
     alias: "kitchen_sink_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/inovelli_nzw30_scene_control.yaml"
+      path: "zwave/inovelli_nzw_scene_control.yaml"
       input:
         node_id: 50
 

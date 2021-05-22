@@ -128,7 +128,7 @@ automation:
   - id: "3285fa23-169e-43ff-94e7-29a79d1223d4"
     alias: "main_bathroom_fan_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 11
 
@@ -144,7 +144,7 @@ automation:
   - id: "2078788e-2376-431a-9d53-b6fe0c3badb7"
     alias: "main_bathroom_vanity_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 10
 
@@ -170,7 +170,7 @@ automation:
   - id: "39927953-3f47-4286-8ef4-4cbad509d510"
     alias: "main_bathroom_light_dimmer_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_ws200+_scene_control.yaml"
+      path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 9
 

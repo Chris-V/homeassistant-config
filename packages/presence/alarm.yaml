@@ -112,11 +112,11 @@ automation:
 
     trigger:
       - platform: event
-        event_type: "ozw.scene_activated"
+        event_type: "zwave_js_value_notification"
 
     variables:
-      node_id: "{{ trigger.event.data.node_id | int }}"
-      scene_value_id: "{{ trigger.event.data.scene_value_id | int(None) }}"
+      node_id: "{{ trigger.event.data.node_id | default | int }}"
+      action_type: "{{ trigger.event.data.value | default | string }}"
       entity_id: >
         {{
           states
@@ -125,15 +125,18 @@ automation:
             | sort(attribute = 'attributes.friendly_name')
             | map(attribute = 'entity_id')
             | first
-            | default('', True)
+            | default('Device ' ~ trigger.event.data.device_id, True)
         }}
 
     condition:
       - condition: state
         entity_id: "binary_sensor.presence_armed"
         state: "on"
-        # 0: inactive. This is fired after each scene event by OZW.
-      - "{{ entity_id != '' and scene_value_id == 0 }}"
+      - >-
+          {{
+            action_type.startswith('KeyPressed')
+              or action_type == 'KeyReleased'
+          }}
 
     action:
       - service: mqtt.publish
