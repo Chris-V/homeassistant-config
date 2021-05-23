@@ -87,3 +87,12 @@ automation:
           - service: light.turn_off
             data:
               entity_id: "light.dining_room"
+
+        tap_on_3x:
+          - service: light.turn_on
+            data:
+              entity_id: "light.kitchen"
+        tap_off_3x:
+          - service: light.turn_off
+            data:
+              entity_id: "light.kitchen"

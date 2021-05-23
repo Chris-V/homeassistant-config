@@ -96,7 +96,7 @@ automation:
       input:
         node_id: 6
 
-        <<: &tap_2x
+        <<: &all_outdoor_on_off
           tap_on_2x:
             - service: light.turn_on
               data:
@@ -112,7 +112,7 @@ automation:
       path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 2
-        <<: *tap_2x
+        <<: *all_outdoor_on_off
 
   - id: "a503f433-fcce-4763-9930-a2c7b7679426"
     alias: "shed_outdoor_light_switch_zwave_scenes"
@@ -120,4 +120,4 @@ automation:
       path: "zwave/homeseer_100_series_scene_control.yaml"
       input:
         node_id: 5
-        <<: *tap_2x
+        <<: *all_outdoor_on_off
