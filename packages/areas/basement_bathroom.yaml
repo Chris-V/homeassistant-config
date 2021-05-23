@@ -151,14 +151,15 @@ automation:
       input:
         node_id: 8
 
-        tap_on_2x:
-          - service: light.turn_on
-            data:
-              entity_id: "fan.basement_bathroom"
-        tap_off_2x:
-          - service: light.turn_off
-            data:
-              entity_id: "fan.basement_bathroom"
+        <<: &all_on_off
+          tap_on_3x:
+            - service: light.turn_on
+              data:
+                entity_id: "light.basement_bathroom_lights"
+          tap_off_3x:
+            - service: light.turn_off
+              data:
+                entity_id: "light.basement_bathroom_lights"
 
   - id: "6821f60b-2e78-4610-9e7b-9dbb33cb4f79"
     alias: "basement_bathroom_vanity_light_dimmer_zwave_scenes"
@@ -176,15 +177,8 @@ automation:
             data:
               entity_id: "light.basement_bathroom"
 
-        <<: &tap_3x
-          tap_on_3x:
-            - service: light.turn_on
-              data:
-                entity_id: "light.basement_bathroom_lights"
-          tap_off_3x:
-            - service: light.turn_off
-              data:
-                entity_id: "light.basement_bathroom_lights"
+        <<: *all_on_off
+
 
   - id: "41427797-3a24-4db7-8c6b-d919cd6bd415"
     alias: "basement_bathroom_light_switch_zwave_scenes"
@@ -202,4 +196,4 @@ automation:
             data:
               entity_id: "light.basement_bathroom_vanity"
 
-        <<: *tap_3x
+        <<: *all_on_off

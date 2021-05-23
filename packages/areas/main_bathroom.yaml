@@ -132,32 +132,7 @@ automation:
       input:
         node_id: 11
 
-        tap_on_2x:
-          - service: light.turn_on
-            data:
-              entity_id: "fan.main_bathroom"
-        tap_off_2x:
-          - service: light.turn_off
-            data:
-              entity_id: "fan.main_bathroom"
-
-  - id: "2078788e-2376-431a-9d53-b6fe0c3badb7"
-    alias: "main_bathroom_vanity_light_switch_zwave_scenes"
-    use_blueprint:
-      path: "zwave/homeseer_100_series_scene_control.yaml"
-      input:
-        node_id: 10
-
-        tap_on_2x:
-          - service: light.turn_on
-            data:
-              entity_id: "light.main_bathroom_vanity"
-        tap_off_2x:
-          - service: light.turn_off
-            data:
-              entity_id: "light.main_bathroom_vanity"
-
-        <<: &tap_3x
+        <<: &all_on_off
           tap_on_3x:
             - service: light.turn_on
               data:
@@ -167,6 +142,15 @@ automation:
               data:
                 entity_id: "light.main_bathroom_lights"
 
+  - id: "2078788e-2376-431a-9d53-b6fe0c3badb7"
+    alias: "main_bathroom_vanity_light_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/homeseer_100_series_scene_control.yaml"
+      input:
+        node_id: 10
+
+        <<: *all_on_off
+
   - id: "39927953-3f47-4286-8ef4-4cbad509d510"
     alias: "main_bathroom_light_dimmer_zwave_scenes"
     use_blueprint:
@@ -174,13 +158,4 @@ automation:
       input:
         node_id: 9
 
-        tap_on_2x:
-          - service: light.turn_on
-            data:
-              entity_id: "light.main_bathroom_spots"
-        tap_off_2x:
-          - service: light.turn_off
-            data:
-              entity_id: "light.main_bathroom_spots"
-
-        <<: *tap_3x
+        <<: *all_on_off

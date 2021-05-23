@@ -87,15 +87,11 @@ automation:
   - id: "75e713fa-34ef-400f-afb0-1f88c6811aa8"
     alias: "lounge_light_dimmer_zwave_scenes"
     use_blueprint:
-      path: "zwave/inovelli_nzw_scene_control.yaml"
+      path: "zwave/inovelli_lzw_scene_control.yaml"
       input:
         node_id: 54
 
-        tap_on_2x:
-          - service: light.turn_on
-            data:
-              entity_id: "light.lounge_ambiance"
-        tap_off_2x:
-          - service: light.turn_off
+        tap_favorite:
+          - service: light.toggle
             data:
               entity_id: "light.lounge_ambiance"

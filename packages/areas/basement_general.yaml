@@ -86,7 +86,7 @@ automation:
             data:
               entity_id: "light.staircase"
 
-        tap_3x: &tap_3x
+        <<: &basement_on_off
           tap_on_3x:
             - service: light.turn_on
               data:
@@ -112,4 +112,4 @@ automation:
             data:
               entity_id: "light.staircase"
 
-        <<: *tap_3x
+        <<: *basement_on_off
