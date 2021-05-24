@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    sensor.scheduled_climate_preset:
+      friendly_name: "Scheduled climate preset"
+
 template:
   sensor:
     - unique_id: "sensor.scheduled_climate_preset"
@@ -37,8 +42,6 @@ template:
         {% endif -%}
 
         {{ parse_calendar_preset('calendar.special_climate_schedule', preset) }}
-      attributes:
-        friendly_name: "Scheduled climate preset"
 
 script:
   assign_climate_auto_mode:

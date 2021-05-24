@@ -1,5 +1,13 @@
 homeassistant:
   customize:
+    binary_sensor.carl_requires_attention:
+      friendly_name: "Carl requires attention"
+    sensor.carl_basking_temperature:
+      friendly_name: "Carl's basking spot temperature"
+    sensor.carl_temperature:
+      friendly_name: "Carl's terrarium temperature"
+    sensor.carl_humidity:
+      friendly_name: "Carl's terrarium humidity"
     switch.carl_heat_bulb:
       icon: "mdi:spotlight-beam"
     switch.carl_heater:
@@ -33,7 +41,6 @@ template:
       device_class: "problem"
       picture: "/local/animals/carl_avatar.jpg"
       attributes:
-        friendly_name: "Carl requires attention"
         scheduling: "{{ is_state('input_boolean.carl_scheduled_lights', 'on') }}"
         heat_bulb: "{{ is_state('switch.carl_heat_bulb', 'off') or states('sensor.carl_heat_bulb_power') | float > 1 }}"
         heater: "{{ is_state('switch.carl_heater', 'off') or states('sensor.carl_heater_power') | float > 1 }}"
@@ -51,22 +58,16 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "0.0"
-      attributes:
-        friendly_name: "Carl's basking spot temperature"
     - unique_id: "sensor.carl_temperature"
       name: "carl_temperature"
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "0.0"
-      attributes:
-        friendly_name: "Carl's terrarium temperature"
     - unique_id: "sensor.carl_humidity"
       name: "carl_humidity"
       device_class: "humidity"
       unit_of_measurement: "%"
       state: "0.0"
-      attributes:
-        friendly_name: "Carl's terrarium humidity"
 
 automation:
   - id: "b61cbb0c-2aa9-4094-959e-a5eb20037f52"

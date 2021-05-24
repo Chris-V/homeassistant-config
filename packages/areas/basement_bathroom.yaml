@@ -1,10 +1,15 @@
 homeassistant:
   customize:
     binary_sensor.basement_bathroom_door:
+      friendly_name: "Basement bathroom door"
       device_class: "door"
+    binary_sensor.basement_bathroom_presence:
+      friendly_name: "Basement bathroom presence"
     sensor.basement_bathroom_door_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
+    sensor.basement_bathroom_humidity:
+      friendly_name: "Basement bathroom humidity"
     sensor.basement_bathroom_multisensor_battery:
       battery_type: "CR123A"
       battery_warning_level: 40
@@ -44,8 +49,6 @@ template:
             or is_state('binary_sensor.basement_bathroom_door', 'off')
         }}
       delay_off: 15
-      attributes:
-        friendly_name: "Basement bathroom presence"
 
   sensor:
     - unique_id: "sensor.basement_bathroom_humidity"
@@ -53,8 +56,6 @@ template:
       device_class: "humidity"
       unit_of_measurement: "%"
       state: "{{ states('sensor.basement_bathroom_multisensor_relative_humidity') | round }}"
-      attributes:
-        friendly_name: "Basement bathroom humidity"
 
 sensor:
   - platform: min_max

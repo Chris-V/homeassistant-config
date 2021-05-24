@@ -3,6 +3,11 @@
 #   `Peak demand event notification - Winter Credit Option: tomorrow, Jan. 19, from 4 to 8 p.m.`
 #   `Peak demand event notification - Winter Credit Option: tomorrow, Jan. 21, from 6 to 9 a.m. and from 4 to 8 p.m.`
 
+homeassistant:
+  customize:
+    sensor.winter_credit_baseline_climate_preset:
+      friendly_name: "Winter credit: baseline climate preset"
+
 template:
   binary_sensor:
     - unique_id: "4ff23e99-f31f-4b96-9cb8-dd53b3796354"
@@ -14,15 +19,11 @@ template:
             and date_sensor.last_changed.month <= 3
             or date_sensor.last_changed.month == 12
         }}
-      attributes:
-        friendly_name: "Winter credit enabled"
     - unique_id: "42ce95f4-91ce-41dd-8d33-61fba466e7f6"
       name: "winter_credit_peak_event"
       state: >-
         {% set special_schedule = state_attr('calendar.special_climate_schedule', 'message') | default('', True) -%}
         {{ 'Winter Credit: Peak Event' in special_schedule }}
-      attributes:
-        friendly_name: "Ongoing winter credit peak event"
 
   sensor:
     - unique_id: "sensor.winter_credit_baseline_climate_preset"
@@ -47,8 +48,6 @@ template:
         {% endif %}
 
         {{ ns.preset }}
-      attributes:
-        friendly_name: "Winter credit: baseline climate preset"
 
 automation:
   - id: "dc44848a-cdb1-4b0b-bd76-711a2f81e4b2"

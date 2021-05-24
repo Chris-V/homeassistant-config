@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    sensor.manual_thermostats_count:
+      friendly_name: "Thermostats in manual mode"
+
 group:
   managed_thermostats:
     name: "Managed thermostats"
@@ -90,7 +95,6 @@ template:
             | count
         }}
       attributes:
-        friendly_name: "Thermostats in manual mode"
         entity_id: |
           {{
             expand('group.managed_thermostat_modes')

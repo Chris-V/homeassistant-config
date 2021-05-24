@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    binary_sensor.all_doors:
+      friendly_name: "All doors"
+
 group:
   all_doors:
     name: "All doors"
@@ -19,7 +24,6 @@ template:
             | length != 0
         }}
       attributes:
-        friendly_name: "All doors"
         entity_id: >-
           {{
             expand('group.all_doors')

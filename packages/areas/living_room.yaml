@@ -1,6 +1,7 @@
 homeassistant:
   customize:
     binary_sensor.living_room_door:
+      friendly_name: "Living room door"
       device_class: "door"
     light.living_room_ambiance:
       friendly_name: "Living room ambiance"
@@ -9,6 +10,8 @@ homeassistant:
     sensor.living_room_door_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
+    sensor.living_room_temperature:
+      friendly_name: "Living room temperature"
     switch.bookshelf_outlet:
       friendly_name: "Bookshelf outlet"
     switch.living_room_ambiance:
@@ -100,8 +103,6 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
-      attributes:
-        friendly_name: "Living room temperature"
 
 automation:
   - id: "00a013b0-caf0-4046-b701-21975ffbfe3f"

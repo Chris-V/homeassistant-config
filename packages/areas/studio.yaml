@@ -1,12 +1,15 @@
 homeassistant:
   customize:
     binary_Sensor.studio_window:
+      friendly_name: "Studio window"
       device_class: "window"
     light.studio:
       friendly_name: "Studio light"
     sensor.studio_window_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
+    sensor.studio_temperature:
+      friendly_name: "Studio temperature"
 
 cloud:
   google_actions:
@@ -64,5 +67,3 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "{{ states('sensor.studio_thermostat_temperature') | round(1) }}"
-      attributes:
-        friendly_name: "Studio temperature"

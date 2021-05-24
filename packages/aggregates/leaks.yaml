@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    binary_sensor.all_leaks:
+      friendly_name: "All leaks"
+
 group:
   all_leaks:
     name: "All leaks"
@@ -26,7 +31,6 @@ template:
             | length != 0
         }}
       attributes:
-        friendly_name: "All leaks"
         entity_id: >-
           {{
             expand('group.all_leaks')

@@ -1,3 +1,10 @@
+homeassistant:
+  customize:
+    binary_sensor.use_alarm_theme:
+      friendly_name: "Use alarm theme"
+    binary_sensor.use_dark_theme:
+      friendly_name: "Use dark theme"
+
 template:
   binary_sensor:
     - unique_id: "d15e4446-af81-4000-aed1-98a0fe3c8702"
@@ -11,14 +18,10 @@ template:
           ) | selectattr('state', '==', 'on')
             | first is defined
         }}
-      attributes:
-        friendly_name: "Use alarm theme"
     - unique_id: "db252c59-897b-4bd9-94a8-d5d17f48ed68"
       name: "use_dark_theme"
       icon: "mdi:theme-light-dark"
       state: "{{ state_attr('sun.sun', 'elevation') | float < -3 }}"
-      attributes:
-        friendly_name: "Use dark theme"
 
 input_boolean:
   automatic_night_theme:
