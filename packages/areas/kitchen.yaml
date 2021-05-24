@@ -1,6 +1,7 @@
 homeassistant:
   customize:
     binary_sensor.kitchen_door:
+      friendly_name: "Kitchen door"
       device_class: "door"
     sensor.kitchen_door_sensor_battery:
       battery_type: "Sensative Strip"
@@ -8,6 +9,8 @@ homeassistant:
     sensor.kitchen_sink_leak_sensor_battery:
       battery_type: "ER14250 3.6V"
       battery_warning_level: 25
+    sensor.kitchen_temperature:
+      friendly_name: "Kitchen temperature"
     light.kitchen:
       friendly_name: "Kitchen light"
     light.kitchen_sink:
@@ -51,8 +54,6 @@ template:
       unit_of_measurement: "°C"
       # Living room and Kitchen thermostat are the same
       state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
-      attributes:
-        friendly_name: "Kitchen temperature"
 
 automation:
   - id: "ab8460a3-e7b3-4cef-989e-11a65da297f9"

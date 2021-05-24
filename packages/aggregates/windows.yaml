@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    binary_sensor.all_windows:
+      friendly_name: "All windows"
+
 group:
   all_windows:
     name: "All windows"
@@ -20,7 +25,6 @@ template:
             | length != 0
         }}
       attributes:
-        friendly_name: "All windows"
         entity_id: >-
           {{
             expand('group.all_windows')

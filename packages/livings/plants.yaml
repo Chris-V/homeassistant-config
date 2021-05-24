@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    binary_sensor.all_plants:
+      friendly_name: "All plants"
+
 group:
   all_plants:
     name: "All plants"
@@ -29,7 +34,6 @@ template:
             | length != 0
         }}
       attributes:
-        friendly_name: "All plants"
         entity_id: >-
           {{
             expand('group.all_plants')

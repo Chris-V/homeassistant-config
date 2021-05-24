@@ -1,5 +1,7 @@
 homeassistant:
   customize:
+    sensor.basement_hallway_temperature:
+      friendly_name: "Basement hallway temperature"
     light.downstairs:
       friendly_name: "Downstairs light"
 
@@ -66,8 +68,6 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "{{ states('sensor.basement_hallway_thermostat_temperature') | round(1) }}"
-      attributes:
-        friendly_name: "Basement hallway temperature"
 
 automation:
   - id: "a2df600b-4450-4a6f-8c3d-ad3f4ea5773c"

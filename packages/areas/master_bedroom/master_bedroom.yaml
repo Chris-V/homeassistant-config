@@ -4,6 +4,8 @@ homeassistant:
       friendly_name: "Master bedroom's bedside lamps"
     light.master_bedroom:
       friendly_name: "Master bedroom light"
+    sensor.master_bedroom_temperature:
+      friendly_name: "Master bedroom temperature"
 
 cloud:
   google_actions:
@@ -86,8 +88,6 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "{{ states('sensor.master_bedroom_thermostat_temperature') | round(1) }}"
-      attributes:
-        friendly_name: "Master bedroom temperature"
 
 automation:
   - id: "650fdbf6-2f22-4bd0-b430-c8a1c29d3217"
