@@ -1,0 +1,57 @@
+type: grid
+square: false
+columns: 3
+cards:
+  - type: entity-button
+    entity: light.outdoor_lights
+    name: Outdoor
+    icon: mdi:tree
+    tap_action:
+      action: toggle
+    hold_action:
+      action: more-info
+  - type: entity-button
+    entity: light.ground_floor_lights
+    name: Main
+    icon: mdi:arrow-up-thick
+    tap_action:
+      action: toggle
+    hold_action:
+      action: more-info
+  - type: entity-button
+    entity: light.basement_lights
+    name: Basement
+    icon: mdi:arrow-down-thick
+    tap_action:
+      action: toggle
+    hold_action:
+      action: more-info
+
+  - type: entity-button
+    entity: script.evening_ambiance
+    name: Ambiance
+    tap_action:
+      action: call-service
+      service: script.turn_on
+      service_data:
+        entity_id: script.evening_ambiance
+    hold_action:
+      action: none
+  - type: entity-button
+    entity: script.bedtime
+    tap_action:
+      action: call-service
+      service: script.turn_on
+      service_data:
+        entity_id: script.bedtime
+    hold_action:
+      action: none
+  - type: entity-button
+    entity: script.everything_off
+    tap_action:
+      action: call-service
+      service: script.turn_on
+      service_data:
+        entity_id: script.everything_off
+    hold_action:
+      action: none

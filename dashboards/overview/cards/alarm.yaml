@@ -6,9 +6,9 @@ footer:
   aggregate_func: max
   cache: false
   group: true
-  height: 70
+  height: 40
   hours_to_show: 72
-  line_width: 2
+  line_width: 1
   points_per_hour: 24
   smoothing: false
   show:
@@ -16,9 +16,13 @@ footer:
     icon: false
     state: false
     labels: false
+    labels_secondary: false
+    legend: false
+    points: false
   entities:
     - entity: binary_sensor.presence_armed
       color: green
+      y_axis: secondary
     - entity: binary_sensor.intrusion
       color: red
   state_map:
