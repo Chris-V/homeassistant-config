@@ -96,4 +96,7 @@
         - entity: binary_sensor.all_windows
         - entity: binary_sensor.all_leaks
 
+        - entity: binary_sensor.kitchen_door_lock_jammed
+        - entity: switch.main_water_shut_off_valve
+
     - !include ../cards/house-feed.yaml

@@ -69,6 +69,9 @@
       - entity_id: binary_sensor.kitchen_door
         name: Door
         alert_if_on: true
+      - entity_id: binary_sensor.kitchen_door_lock_jammed
+        name: Door lock jammed
+        alert_if_on: true
       - entity_id: sensor.kitchen_temperature
         name: Temperature
     switches:
@@ -78,6 +81,8 @@
       - entity_id: light.kitchen_sink
         name: Sink
         icon: mdi:wall-sconce-flat
+      - entity_id: lock.kitchen_door
+        name: Door lock
     climate:  # (same as living_room)
       room_key: living_room
 

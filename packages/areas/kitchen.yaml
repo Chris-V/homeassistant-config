@@ -3,6 +3,12 @@ homeassistant:
     binary_sensor.kitchen_door:
       friendly_name: "Kitchen door"
       device_class: "door"
+    binary_sensor.kitchen_door_lock_jammed:
+      device_class: "problem"
+      icon: "mdi:lock-alert"
+    sensor.kitchen_door_lock_battery:
+      baterry_type: "AA (4)"
+      battery_warning_level: 40
     sensor.kitchen_door_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20

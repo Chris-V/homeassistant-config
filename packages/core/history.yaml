@@ -13,6 +13,7 @@ recorder:
       - input_select
       - input_text
       - light
+      - lock
       - media_player
       - person
       - plant
@@ -34,6 +35,7 @@ recorder:
       - binary_sensor.guest_mode
       - binary_sensor.intrusion
       - binary_sensor.kitchen_door
+      - binary_sensor.kitchen_door_lock_jammed
       - binary_sensor.kitchen_sink_leak
       - binary_sensor.laundry_room_motion
       - binary_sensor.living_room_door
@@ -80,6 +82,7 @@ recorder:
       - sensor.guest_bedroom_thermostat_temperature
       - sensor.guests_home
       - sensor.kitchen_temperature
+      - sensor.kitchen_door_lock_battery
       - sensor.last_motion
       - sensor.latest_home_assistant_version
       - sensor.laundry_motion_sensor_battery
