@@ -54,6 +54,8 @@ template:
       unit_of_measurement: "°C"
       # Living room and Kitchen thermostat are the same
       state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
+      attributes:
+        heating: "{{ is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') }}"
 
 automation:
   - id: "ab8460a3-e7b3-4cef-989e-11a65da297f9"

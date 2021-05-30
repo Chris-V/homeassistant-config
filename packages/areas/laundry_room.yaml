@@ -17,20 +17,32 @@ cloud:
         aliases:
           - "Laundry room"
 
-sensor:
-  - platform: min_max
-    name: "laundry_room_temperature"
-    type: "mean"
-    round_digits: 1
-    entity_ids:
-      - "sensor.basement_hallway_thermostat_temperature"
-      - "sensor.washing_machine_leak_temperature"
-
 light:
   - platform: group
     name: "Laundry room lights"
     entities:
       - light.laundry_room
+
+template:
+  sensor:
+    - unique_id: "sensor.laundry_room_temperature"
+      name: "laundry_room_temperature"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+      state: >
+        {%
+          set temperatures = expand([
+            'sensor.basement_hallway_thermostat_temperature',
+            'sensor.washing_machine_leak_temperature',
+          ])
+            | map(attribute = 'state')
+            | map('float')
+            | list
+        %}
+        {% set length = temperatures | count %}
+        {{ 'unavailable' if length == 0 else (temperatures | sum / length) | round(1) }}
+      attributes:
+        heating: "{{ is_state_attr('climate.basement_hallway_thermostat', 'hvac_action', 'heating') }}"
 
 automation:
   - id: "e78350bc-d991-4fab-8c9a-658c242e60ab"
