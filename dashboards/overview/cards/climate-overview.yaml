@@ -19,7 +19,7 @@ cards:
         entity: sensor.scheduled_climate_preset
         name: >
           [[[ return states['sensor.scheduled_climate_preset'].state; ]]]
-        label: Scheduled Preset
+        label: Climate Preset
         tap_action:
           action: call-service
           service: automation.trigger

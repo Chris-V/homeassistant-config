@@ -1,70 +1,24 @@
 - type: vertical-stack
   cards:
-    - type: grid
-      square: true
+    - !include ../cards/quick-actions.yaml
+    - type: glance
       columns: 3
-      cards:
-        - type: entity-button
-          entity: light.outdoor_lights
-          name: Outdoor
-          icon: mdi:tree
-          tap_action:
-            action: toggle
-          hold_action:
-            action: more-info
-        - type: entity-button
-          entity: light.ground_floor_lights
-          name: Main
-          icon: mdi:arrow-up-thick
-          tap_action:
-            action: toggle
-          hold_action:
-            action: more-info
-        - type: entity-button
-          entity: light.basement_lights
-          name: Basement
-          icon: mdi:arrow-down-thick
-          tap_action:
-            action: toggle
-          hold_action:
-            action: more-info
-
-        - type: entity-button
-          entity: script.evening_ambiance
-          name: Ambiance
-          tap_action:
-            action: call-service
-            service: script.turn_on
-            service_data:
-              entity_id: script.evening_ambiance
-          hold_action:
-            action: none
-        - type: entity-button
-          entity: script.bedtime
-          tap_action:
-            action: call-service
-            service: script.turn_on
-            service_data:
-              entity_id: script.bedtime
-          hold_action:
-            action: none
-        - type: entity-button
-          entity: script.everything_off
-          tap_action:
-            action: call-service
-            service: script.turn_on
-            service_data:
-              entity_id: script.everything_off
-          hold_action:
-            action: none
-
-    - !include ../cards/climate-overview.yaml
+      show_name: false
+      entities:
+        - entity: binary_sensor.all_motions
+        - entity: sensor.last_motion
+        - entity: binary_sensor.all_batteries
+        - entity: binary_sensor.all_doors
+        - entity: binary_sensor.all_windows
+        - entity: binary_sensor.all_leaks
+        - entity: binary_sensor.kitchen_door_lock_jammed
+        - entity: switch.main_water_shut_off_valve
+    - !include ../cards/alarm.yaml
 
 - type: vertical-stack
   cards:
     - !include ../cards/household.yaml
     - !include ../cards/guests.yaml
-    - !include ../cards/alarm.yaml
 
 - type: vertical-stack
   cards:
@@ -74,29 +28,14 @@
       cards:
         - !include ../cards/car.yaml
         - !include ../cards/livings-overview.yaml
+    - !include ../cards/house-feed.yaml
 
+- type: vertical-stack
+  cards:
     - type: weather-forecast
       entity: weather.quebec
       show_forecast: true
       secondary_info_attribute: humidity
       # Sadly, animated icons cause a lot of lag on mobile
       # theme: Animated Weather Card
-
-- type: vertical-stack
-  cards:
-    - type: glance
-      columns: 3
-      show_name: false
-      entities:
-        - entity: binary_sensor.all_motions
-        - entity: sensor.last_motion
-        - entity: binary_sensor.all_batteries
-
-        - entity: binary_sensor.all_doors
-        - entity: binary_sensor.all_windows
-        - entity: binary_sensor.all_leaks
-
-        - entity: binary_sensor.kitchen_door_lock_jammed
-        - entity: switch.main_water_shut_off_valve
-
-    - !include ../cards/house-feed.yaml
+    - !include ../cards/climate-overview.yaml
