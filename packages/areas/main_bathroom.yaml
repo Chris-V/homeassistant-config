@@ -71,6 +71,8 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "{{ states('sensor.main_bathroom_multisensor_temperature') | round(1) }}"
+      attributes:
+        heating: false
 
 fan:
   - platform: template

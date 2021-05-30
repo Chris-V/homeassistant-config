@@ -58,32 +58,42 @@
 {% endmacro %}
 
 {% macro sensor_element(sensor_config) %}
-- type: custom:container-element
-  style:
-    height: 100%
-    margin: 0 3px
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-content: flex-end
-  elements:
-    - type: state-icon
-      entity: {{ sensor_config.entity_id }}
-      title: {{ sensor_config.name }}
-      {% if sensor_config.icon is defined -%}
-      icon: {{ sensor_config.icon }}
-      {% endif %}
-      tap_action:
-        action: more-info
-      style:
-        margin: -6px -3px
-    - type: state-label
-      entity: {{ sensor_config.entity_id }}
-      title: {{ sensor_config.name }}
-      tap_action:
-        action: more-info
-      style:
-        margin: -8px
+- type: custom:mod-card
+  card_mod:
+    style: |
+      {{ "{% if is_state_attr('" ~ sensor_config.entity_id ~ "', 'heating', True) %}" }}
+      ha-card {
+        --primary-text-color: var(--paper-item-icon-active-color);
+        --paper-item-icon-color: var(--paper-item-icon-active-color);
+      }
+      {{ "{% endif %}" }}
+  card:
+    type: custom:container-element
+    style:
+      height: 100%
+      margin: 0 3px
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: flex-end
+    elements:
+      - type: state-icon
+        entity: {{ sensor_config.entity_id }}
+        title: {{ sensor_config.name }}
+        {% if sensor_config.icon is defined -%}
+        icon: {{ sensor_config.icon }}
+        {% endif %}
+        tap_action:
+          action: more-info
+        style:
+          margin: -6px -3px
+      - type: state-label
+        entity: {{ sensor_config.entity_id }}
+        title: {{ sensor_config.name }}
+        tap_action:
+          action: more-info
+        style:
+          margin: -8px
 {% endmacro %}
 
 type: picture-elements
@@ -121,6 +131,7 @@ elements:
       "--paper-item-icon-color": "#DADADB"
       "--mdc-icon-size": 40px
       "--ha-card-background": rgba(0, 0, 0, 0)
+      "--ha-card-border-radius": 0
       "--ha-card-box-shadow": none
     elements:
       - type: custom:container-element  # Header

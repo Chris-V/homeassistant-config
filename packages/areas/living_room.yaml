@@ -103,6 +103,8 @@ template:
       device_class: "temperature"
       unit_of_measurement: "°C"
       state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
+      attributes:
+        heating: "{{ is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') }}"
 
 automation:
   - id: "00a013b0-caf0-4046-b701-21975ffbfe3f"
