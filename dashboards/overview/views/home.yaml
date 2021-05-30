@@ -58,7 +58,7 @@
           hold_action:
             action: none
 
-    - !include ../cards/climate.yaml
+    - !include ../cards/climate-overview.yaml
 
 - type: vertical-stack
   cards:
@@ -79,7 +79,7 @@
       entity: weather.quebec
       show_forecast: true
       secondary_info_attribute: humidity
-      # Sadly, this causes lots of lag on mobile
+      # Sadly, animated icons cause a lot of lag on mobile
       # theme: Animated Weather Card
 
 - type: vertical-stack
