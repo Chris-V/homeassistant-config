@@ -1,0 +1,15 @@
+{# Parameters:
+ #   * background_size: Optional. Default: 50%
+ #   * css: Optional.
+ #   * svg_path:
+ #}
+
+{{ css | default('') }}
+
+ha-card {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath style='fill: %2322222240;' d='{{ svg_path }}'/%3E%3C/svg%3E");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: {{ background_size | default("50%") }};
+  background-blend-mode: exclusion;
+}
