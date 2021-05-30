@@ -1,6 +1,28 @@
 type: entities
 title: Intrusions
 
+style:
+  .: |
+    .header {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 12px 12px 0 0;
+      --mdc-icon-size: 24px;
+    }
+  "hui-buttons-header-footer$hui-buttons-base$state-badge$": |
+    ha-icon[data-domain="lock"][data-state="unlocked"] {
+      color: var(--paper-item-icon-color) !important;
+    }
+    ha-icon[data-domain="lock"][data-state="locked"] {
+      color: var(--paper-item-icon-active-color) !important;
+    }
+
+header:
+  type: buttons
+  entities:
+    - lock.kitchen_door
+
 footer:
   type: custom:mini-graph-card
   aggregate_func: max
