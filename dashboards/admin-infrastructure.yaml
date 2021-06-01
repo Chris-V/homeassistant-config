@@ -5,3 +5,8 @@ views:
     path: network
     icon: mdi:server-network
     cards: !include views/network.yaml
+
+  - title: Settings
+    path: settings
+    icon: mdi:cog
+    cards: !include views/network-settings.yaml

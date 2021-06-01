@@ -1,0 +1,12 @@
+title: Details
+
+views:
+  - title: Sensors
+    path: sensors
+    icon: mdi:eye
+    cards: !include views/sensors.yaml
+
+  - title: Settings
+    path: settings
+    icon: mdi:cog
+    cards: !include views/general-settings.yaml

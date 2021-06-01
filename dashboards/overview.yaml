@@ -20,8 +20,3 @@ views:
     path: livings
     icon: mdi:leaf
     cards: !include views/livings.yaml
-
-  - title: Settings
-    path: settings
-    icon: mdi:cog
-    cards: !include views/settings.yaml
