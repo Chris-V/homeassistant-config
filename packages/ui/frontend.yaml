@@ -7,8 +7,15 @@ lovelace:
   mode: "yaml"
 
   dashboards:
+    overview-details:
+      filename: "dashboards/overview-details.yaml"
+      icon: "mdi:eye"
+      mode: "yaml"
+      require_admin: false
+      show_in_sidebar: true
+      title: "Details"
     admin-infrastructure:
-      filename: "dashboards/infrastructure/infrastructure.yaml"
+      filename: "dashboards/admin-infrastructure.yaml"
       icon: "mdi:server-network"
       mode: "yaml"
       require_admin: true
