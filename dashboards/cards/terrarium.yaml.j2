@@ -11,6 +11,9 @@
  #   * sensors[]: array
  #       * entity_id: Entity to be used
  #       * name: Visible name of the entity
+ #   * settings[]: array
+ #       * entity_id: Entity to be used
+ #       * name: Visible name of the entity
  #}
 
 {% macro detailed_switch(switch, aspect_ratio) %}
@@ -155,6 +158,18 @@ elements:
 {{ detailed_switch(switch, "1.2/1") }}
 {% endfor %}
 {%- endfilter %}
+
+          - type: custom:hui-element  # Settings
+            card_type: entities
+            show_header_toggle: false
+            style:
+              <<: *content_slide_style
+              background-color: rgba(0, 0, 0, 0.45)
+            entities:
+{%- for setting in (settings | default([]) | list) %}
+              - entity: {{ setting.entity_id }}
+                name: {{ setting.name }}
+{%- endfor %}
 
       - type: custom:container-element  # Footer
         style:

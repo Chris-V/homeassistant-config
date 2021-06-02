@@ -42,6 +42,11 @@
         name: Basking temperature
       - entity_id: sensor.carl_humidity
         name: Humidity
+    settings:
+      - entity_id: input_datetime.carl_day_time
+        name: Day starts at
+      - entity_id: input_datetime.carl_night_time
+        name: Night starts at
 
 - !template
   file: ../cards/terrarium.yaml.j2
@@ -85,6 +90,11 @@
         name: Basking temperature
       - entity_id: sensor.slinky_humidity
         name: Humidity
+    settings:
+      - entity_id: input_datetime.slinky_day_time
+        name: Day starts at
+      - entity_id: input_datetime.slinky_night_time
+        name: Night starts at
 
 - !template
   file: ../cards/plant.yaml.j2
