@@ -4,7 +4,12 @@ views:
   - title: Sensors
     path: sensors
     icon: mdi:eye
-    cards: !include views/sensors.yaml
+    cards: !include views/sensor-details.yaml
+
+  - title: Media
+    path: media
+    icon: mdi:play-pause
+    cards: !include views/media-details.yaml
 
   - title: Settings
     path: settings

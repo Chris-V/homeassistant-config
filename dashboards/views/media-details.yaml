@@ -1,0 +1,82 @@
+- type: vertical-stack
+  title: Speakers
+  cards:
+    - type: media-control
+      entity: media_player.laundry_room_google_home
+      name: Laundry
+    - type: media-control
+      entity: media_player.living_room_google_home
+      name: Living room
+    - type: media-control
+      entity: media_player.lounge_google_home
+      name: Lounge
+    - type: media-control
+      entity: media_player.master_bedroom_google_home
+      name: Master bedroom
+    - type: media-control
+      entity: media_player.office_sonos
+      name: Office
+
+- type: vertical-stack
+  title: TVs
+  cards:
+    - type: media-control
+      entity: media_player.living_room_tv
+      name: Living room
+    - type: media-control
+      entity: media_player.lounge_chromecast
+      name: Lounge
+
+- type: vertical-stack
+  title: Groups
+  cards:
+    - type: media-control
+      entity: media_player.cast_basement
+      name: Basement
+    - type: media-control
+      entity: media_player.cast_whole_house
+      name: Whole house
+
+- type: vertical-stack
+  title: Broadcast
+  cards:
+    - type: entities
+      entities:
+        - type: custom:lovelace-multiline-text-input-card
+          entity: input_text.broadcast_message
+          title: Broadcast custom message
+          placeholder_text: Message
+          show_success_messages: false
+          max_length: 255
+          buttons: false
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+            }
+            ha-card .card-content {
+              padding: 0;
+            }
+            ha-card .card-header, #serviceMessage {
+              display: none;
+            }
+        - type: buttons
+          entities:
+            - entity: script.broadcast_manual_message
+              name: Send
+              tap_action:
+                action: call-service
+                service: script.turn_on
+                service_data:
+                  entity_id: script.broadcast_manual_message
+
+    - type: entity
+      entity: custom_storage.broadcast_notifications
+      name: Broadcast queue
+      icon: mdi:counter
+
+    - type: entity
+      entity: custom_storage.broadcast_notifications
+      attribute: item_0_data
+      name: Next broadcast
+      icon: mdi:message-text
