@@ -42,10 +42,29 @@ group:
       - media_player.master_bedroom_google_home
       - media_player.office_sonos
 
+input_text:
+  broadcast_message:
+    name: "Broadcast message"
+    icon: "mdi:message-text"
+    max: 255
+    initial: ""
+
 script:
+  broadcast_manual_message:
+    alias: "Broadcast manual message"
+    description: "Broadcast a custom message."
+    icon: "mdi:broadcast"
+    mode: "queued"
+    sequence:
+      - service: "python_script.notify"
+        data:
+          audio: true
+          title: "{{ states('input_text.broadcast_message') }}"
+
   broadcast_notification:
     alias: "Broadcast notification"
     description: "Synchronize media players and broadcast an audio message."
+    icon: "mdi:broadcast"
     mode: "queued"
     max: 25
 
