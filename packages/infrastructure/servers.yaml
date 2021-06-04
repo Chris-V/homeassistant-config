@@ -33,20 +33,6 @@ input_boolean:
     name: "Notify server outages"
     icon: "mdi:message-cog"
 
-glances:
-  - host: !secret media_glances_host
-    port: !secret media_glances_port
-    name: "media"
-    version: 3
-  - host: !secret relay_south_glances_host
-    port: !secret relay_south_glances_port
-    name: "relay_south"
-    version: 3
-  - host: !secret relay_north_glances_host
-    port: !secret relay_north_glances_port
-    name: "relay_north"
-    version: 3
-
 shell_command:
   turn_off_server: >-
     /usr/bin/ssh -F /config/.secrets/ssh_config {{ server_key }} "sudo poweroff"
