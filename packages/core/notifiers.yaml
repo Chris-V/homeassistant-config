@@ -1,3 +1,9 @@
+homeassistant:
+  customize:
+    custom_storage.broadcast_notifications:
+      friendly_name: "Broadcast queue"
+      icon: "mdi:counter"
+
 notify:
   - platform: html5
     name: "html5"
