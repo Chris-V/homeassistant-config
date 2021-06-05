@@ -13,6 +13,7 @@
         - entity: binary_sensor.all_leaks
         - entity: binary_sensor.kitchen_door_lock_jammed
         - entity: switch.main_water_shut_off_valve
+        - entity: custom_storage.broadcast_notifications
     - !include ../cards/alarm.yaml
 
 - type: vertical-stack

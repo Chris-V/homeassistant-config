@@ -1,6 +1,7 @@
 discovery: {}
 
+network: {}
+
 ssdp: {}
 
-zeroconf:
-  default_interface: true
+zeroconf: {}

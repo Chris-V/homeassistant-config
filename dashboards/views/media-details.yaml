@@ -72,8 +72,6 @@
 
     - type: entity
       entity: custom_storage.broadcast_notifications
-      name: Broadcast queue
-      icon: mdi:counter
 
     - type: entity
       entity: custom_storage.broadcast_notifications
