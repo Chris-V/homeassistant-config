@@ -4,6 +4,8 @@ homeassistant:
       friendly_name: "Front porch light"
     light.front_porch:
       friendly_name: "Side porch light"
+    light.shed:
+      friendly_name: "Shed light"
     light.shed_outdoor:
       friendly_name: "Shed outdoor light"
     sensor.outdoor_humidity:
@@ -51,6 +53,10 @@ light:
       - light.side_porch
       - light.front_porch
       - light.shed_outdoor
+
+  - platform: switch
+    name: "shed"
+    entity_id: "switch.shed_light"
 
   - platform: switch
     name: side_porch
