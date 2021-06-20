@@ -18,10 +18,11 @@ script:
       - service: homeassistant.turn_off
         data:
           entity_id:
-            - "remote.living_room_tv"
-            - "light.outdoor_lights"
-            - "light.ground_floor_lights"
             - "light.basement_lights"
+            - "light.ground_floor_lights"
+            - "light.outdoor_lights"
+            - "light.shed"
+            - "remote.living_room_tv"
 
 automation:
   - id: "54655af9-ddc7-491d-9200-41aaaddbb21a"

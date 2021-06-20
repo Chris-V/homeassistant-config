@@ -3,8 +3,6 @@ homeassistant:
     binary_sensor.guest_bedroom_window:
       friendly_name: "Guest bedroom window"
       device_class: "window"
-    light.guest_bedroom:
-      friendly_name: "Guest bedroom light"
     light.guest_bedroom_closet:
       friendly_name: "Guest bedroom closet light"
     sensor.guest_bedroom_window_sensor_battery:
@@ -64,10 +62,6 @@ light:
     entities:
       - "light.guest_bedroom"
       - "light.guest_bedroom_closet"
-
-  - platform: switch
-    name: "guest_bedroom"
-    entity_id: "switch.guest_bedroom_light"
 
   - platform: switch
     name: "guest_bedroom_closet"

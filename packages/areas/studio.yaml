@@ -3,8 +3,6 @@ homeassistant:
     binary_Sensor.studio_window:
       friendly_name: "Studio window"
       device_class: "window"
-    light.studio:
-      friendly_name: "Studio light"
     sensor.studio_window_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
@@ -54,11 +52,7 @@ light:
   - platform: group
     name: "Studio lights"
     entities:
-      - light.studio
-
-  - platform: switch
-    name: "studio"
-    entity_id: "switch.studio_light"
+      - "light.studio"
 
 template:
   sensor:
