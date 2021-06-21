@@ -2,6 +2,9 @@ switch:
   - platform: broadlink
     mac: !secret broadlink_mac
     switches:
+      - name: "unused_rf_1"
+        command_on: "svAyABMHBhMTBwYTBhMHExMHBxMTBwYTEwcHExMHBxMTBwYTBxMTBxMHBxMHExMHEwcGvwYTAAAA"
+        command_off: "ssoyAAYUEggGFBIIBhQGFAYUEggGFRIIBhQSCAYUEggGFBMHBhQGFBIIEggTCBIIBhQGFAbAAAAA"
       - name: "unused_rf_3"
         command_on: "sggyAAYUEggGFBIIBhQGFAYUEggGFBMHBhQTBwYUEggSCBIIBhQGFAYUBhQGFAYUEgcSCAa/AAAA"
         command_off: "sgoyAAYUEggGFBIIBhQGFAYUEggGFBIHBhQSBwYUEggTBxIIBhQGFAYUBhQSCBIIBhQGFAa/AAAA"
