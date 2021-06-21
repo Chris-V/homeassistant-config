@@ -4,7 +4,7 @@ homeassistant:
       friendly_name: "Living room door"
       device_class: "door"
     light.living_room_ambiance:
-      friendly_name: "Living room ambiance"
+      friendly_name: "Living room ambiance light"
     light.bookshelf:
       friendly_name: "Bookshelf light"
     sensor.living_room_door_sensor_battery:
@@ -14,8 +14,6 @@ homeassistant:
       friendly_name: "Living room temperature"
     switch.bookshelf_outlet:
       friendly_name: "Bookshelf outlet"
-    switch.living_room_ambiance:
-      friendly_name: "Ambiance outlet"
 
 cloud:
   google_actions:
@@ -47,9 +45,6 @@ switch:
   - platform: broadlink
     mac: !secret broadlink_mac
     switches:
-      - name: "living_room_ambiance"
-        command_on: "svAyABMHBhMTBwYTBhMHExMHBxMTBwYTEwcHExMHBxMTBwYTBxMTBxMHBxMHExMHEwcGvwYTAAAA"
-        command_off: "ssoyAAYUEggGFBIIBhQGFAYUEggGFRIIBhQSCAYUEggGFBMHBhQGFBIIEggTCBIIBhQGFAbAAAAA"
       - name: "bookshelf_outlet"
         command_on: "sggyAAYUEggGFBMIBhQGFAYUEgcGFBIIBhQSCAYUEggGFBIIEwcSCAYUBhQGFAcUEggSCAa/AAAA"
         command_off: "sgkyAAYUEgcGFBIHBhQGFAYUEgcGFBIHBhQSCAYUEggGFBIHEggSCAYUBhQSBxMHBhQGFAa/AAAA"
@@ -90,7 +85,7 @@ light:
 
   - platform: switch
     name: living_room_ambiance
-    entity_id: "switch.living_room_ambiance"
+    entity_id: "switch.living_room_ambiance_light"
 
   - platform: switch
     name: bookshelf
