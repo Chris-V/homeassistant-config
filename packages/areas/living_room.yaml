@@ -10,6 +10,9 @@ homeassistant:
     sensor.living_room_door_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
+    sensor.living_room_remote_battery:
+      battery_type: "CR2032"
+      battery_warning_level: 25
     sensor.living_room_temperature:
       friendly_name: "Living room temperature"
     switch.bookshelf_outlet:
@@ -102,6 +105,22 @@ template:
         heating: "{{ is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') }}"
 
 automation:
+  - id: "automation.living_room_remote"
+    alias: "living_room_remote_zwave_scenes"
+    use_blueprint:
+      path: "zwave/jasco_2_button_remote.yaml"
+      input:
+        node_id: 61
+
+        tap_on_1x:
+          - service: light.toggle
+            data:
+              entity_id: "light.living_room_ambiance"
+        tap_off_1x:
+          - service: remote.toggle
+            data:
+              entity_id: "remote.living_room_tv"
+
   - id: "00a013b0-caf0-4046-b701-21975ffbfe3f"
     alias: "bookshelf_light_switch_zwave_scenes"
     use_blueprint:
