@@ -1,4 +1,5 @@
 ATTR_AUDIO = 'audio'
+ATTR_DISMISSIBLE = 'dismissible'
 ATTR_MESSAGE = 'message'
 ATTR_PERSISTENT = 'persistent'
 ATTR_PRIORITY = 'priority'
@@ -18,6 +19,7 @@ PUSH_GROUPS = {
 }
 
 audio = data.get(ATTR_AUDIO, False)
+dismissible = data.get(ATTR_DISMISSIBLE, True)
 message = data.get(ATTR_MESSAGE, '')
 persistent = data.get(ATTR_PERSISTENT, False)
 priority = data.get(ATTR_PRIORITY, False)
@@ -41,6 +43,10 @@ if push_target and push_target not in PUSH_GROUPS:
             push_target))
     push_target = None
 
+if not dismissible and not tag:
+    logger.error('Non-dismissible notifications must have a tag.')
+    dismissible = True
+
 if not title:
     logger.error(
         'Missing {}. Expected a non-empty string.'
@@ -52,6 +58,9 @@ else:
         for k, v in push_data.items():
             payload['data'][k] = v
 
+        if not dismissible:
+            payload['data']['persistent'] = True
+            payload['data']['sticky'] = True
         if tag:
             payload['data']['tag'] = tag
         if url:
@@ -60,7 +69,9 @@ else:
         if priority:
             payload['data']['color'] = '#960000'
             payload['data']['priority'] = 'high'
+            payload['data']['ttl'] = 0
             payload['data']['requireInteraction'] = True
+            payload['data']['channel'] = 'alarm_stream'
         if push_actions:
             payload['data']['actions'] = push_actions
 
