@@ -13,12 +13,15 @@
       - entity_id: light.side_porch
         name: Side porch
         icon: mdi:outdoor-lamp
+        icon_tag: mdi:fridge
       - entity_id: light.front_porch
         name: Front porch
         icon: mdi:outdoor-lamp
+        icon_tag: mdi:sofa
       - entity_id: light.shed_outdoor
         name: Shed door
-        icon: mdi:garage
+        icon: mdi:outdoor-lamp
+        icon_tag: mdi:garage
       - entity_id: light.shed
         name: Shed
         icon: mdi:garage
