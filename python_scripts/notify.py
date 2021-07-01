@@ -1,4 +1,5 @@
 ATTR_AUDIO = 'audio'
+ATTR_DISMISS = 'dismiss'
 ATTR_DISMISSIBLE = 'dismissible'
 ATTR_MESSAGE = 'message'
 ATTR_PERSISTENT = 'persistent'
@@ -18,7 +19,11 @@ PUSH_GROUPS = {
     ATTR_HOUSEHOLD_TARGET: 'household',
 }
 
+HTML_PARAGRAPH_FORMAT = '<p>{}</p>'
+
 audio = data.get(ATTR_AUDIO, False)
+dismiss = data.get(ATTR_DISMISS, False)
+dismiss = data.get(ATTR_DISMISS, False)
 dismissible = data.get(ATTR_DISMISSIBLE, True)
 message = data.get(ATTR_MESSAGE, '')
 persistent = data.get(ATTR_PERSISTENT, False)
@@ -51,52 +56,65 @@ if not title:
     logger.error(
         'Missing {}. Expected a non-empty string.'
             .format(ATTR_TITLE))
+elif dismiss and not tag:
+    logger.error('Must provide a tag to dismiss a notification.')
 else:
     if push_target:
-        payload = {'title': title, 'message': message, 'data': {}}
+        payload = {'data': {}}
+
+        if tag:
+            payload['data']['tag'] = tag
+
+        if dismiss:
+            payload['message'] = 'clear_notification'
+        else:
+            payload['title'] = title
+            payload['message'] = message
+
+            if not dismissible:
+                payload['data']['persistent'] = True
+                payload['data']['sticky'] = True
+            if url:
+                payload['data']['url'] = url # Web
+                payload['data']['clickAction'] = url # Mobile App
+            if priority:
+                payload['data']['color'] = '#960000'
+                payload['data']['priority'] = 'high'
+                payload['data']['ttl'] = 0
+                payload['data']['requireInteraction'] = True
+                payload['data']['channel'] = 'alarm_stream'
+            if push_actions:
+                payload['data']['actions'] = push_actions
 
         for k, v in push_data.items():
             payload['data'][k] = v
 
-        if not dismissible:
-            payload['data']['persistent'] = True
-            payload['data']['sticky'] = True
-        if tag:
-            payload['data']['tag'] = tag
-        if url:
-            payload['data']['url'] = url # Web
-            payload['data']['clickAction'] = url # Mobile App
-        if priority:
-            payload['data']['color'] = '#960000'
-            payload['data']['priority'] = 'high'
-            payload['data']['ttl'] = 0
-            payload['data']['requireInteraction'] = True
-            payload['data']['channel'] = 'alarm_stream'
-        if push_actions:
-            payload['data']['actions'] = push_actions
-
         hass.services.call('notify', PUSH_GROUPS[push_target], payload)
 
     if persistent:
-        payload = {}
-        message_parts = []
-
-        if message:
-            payload['title'] = title
-            message_parts.append(message)
+        if dismiss:
+            payload = {'notification_id': tag}
+            hass.services.call('persistent_notification', 'dismiss', payload)
         else:
-            message_parts.append(title)
+            payload = {}
+            message_parts = []
 
-        if url:
-            message_parts.append(
-                '<a href="{}"> More details here.</a>'.format(url))
+            if message:
+                payload['title'] = title
+                message_parts.append(HTML_PARAGRAPH_FORMAT.format(message))
+            else:
+                message_parts.append(HTML_PARAGRAPH_FORMAT.format(title))
 
-        if tag:
-            payload['notification_id'] = tag
+            if url:
+                anchor = '<a href="{}">More details here.</a>'.format(url)
+                message_parts.append(HTML_PARAGRAPH_FORMAT.format(anchor))
 
-        payload['message'] = "\n\n".join(message_parts)
+            if tag:
+                payload['notification_id'] = tag
 
-        hass.services.call('persistent_notification', 'create', payload)
+            payload['message'] = '\n'.join(message_parts)
+
+            hass.services.call('persistent_notification', 'create', payload)
 
     if audio:
         if priority:
@@ -105,6 +123,8 @@ else:
             }
             hass.services.call('script', 'broadcast_notification', payload)
         else:
+            # TODO: Support dismiss in audio queue
+            #  and migrate custom_storage to something more flexible
             payload = {
                 'object_id': 'broadcast_notifications',
                 'data': message or title
