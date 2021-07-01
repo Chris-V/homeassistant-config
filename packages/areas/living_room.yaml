@@ -116,10 +116,27 @@ automation:
           - service: light.toggle
             data:
               entity_id: "light.living_room_ambiance"
+        tap_on_2x:
+          - service: light.turn_off
+            data:
+              entity_id:
+                - "light.bookshelf"
+                - "light.dining_room_lights"
+                - "light.kitchen_lights"
         tap_off_1x:
           - service: remote.toggle
             data:
               entity_id: "remote.living_room_tv"
+        tap_off_2x:
+          - service: media_player.select_source
+            data:
+              entity_id: "media_player.living_room_tv"
+              source: "Jellyfin"
+        tap_off_3x:
+          - service: media_player.select_source
+            data:
+              entity_id: "media_player.living_room_tv"
+              source: "Nintendo Switch"
 
   - id: "00a013b0-caf0-4046-b701-21975ffbfe3f"
     alias: "bookshelf_light_switch_zwave_scenes"
