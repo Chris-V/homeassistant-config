@@ -61,44 +61,59 @@ automation:
           - "sensor.snicket_problems"
           - "sensor.spidy_problems"
           - "sensor.viny_problems"
+
+    variables:
+      name: "{{ trigger.to_state.name }}"
+      tag: "plant_{{ trigger.to_state.object_id }}"
+      issues: >-
+        {{
+          (trigger.to_state.state
+            | lower
+            | replace('unavailable', '')
+            | replace('unknown', '')
+            | replace('moisture low', 'thirsty')
+            | replace('moisture high', 'drowning')
+            | replace('temperature low', 'cold')
+            | replace('temperature high', 'hot')
+            | replace('brightness low', '')
+            | replace('brightness high', '')
+            | replace('conductivity low', 'hungry')
+            | replace('conductivity high', '')
+            | replace('battery low', '')
+          ).split(', ')
+          | reject('equalto', '')
+          | sort
+          | list
+        }}
+
     condition:
-      - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
-      - >-
-          {% set state = trigger.to_state.state %}
-          {{ 'unavailable' not in state and state not in ('none', 'battery low') }}
       - condition: state
         entity_id: "input_boolean.notify_plant_problems"
         state: "on"
+      - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
+
     action:
-      - service: python_script.notify
-        data:
-          audio: true
-          persistent: true
-          push_target: "household"
-          tag: "plant_{{ trigger.to_state.object_id }}"
-          url: "/lovelace/livings"
-          title: "Check {{ trigger.to_state.name }}"
-          message: >-
-            {%
-            set issues = (
-              trigger.to_state.state
-                | lower
-                | replace('moisture low', 'thirsty')
-                | replace('moisture high', 'drowning')
-                | replace('temperature low', 'cold')
-                | replace('temperature high', 'hot')
-                | replace('brightness low', 'afraid')
-                | replace('brightness high', 'blinded')
-                | replace('conductivity low', 'hungry')
-                | replace('conductivity high', 'bursting')
-                | replace('battery low', 'in need of a new battery')
-              ).split(', ')
-              | reject('equalto', '')
-              | sort
-              | list
-            %}
-            {% for issue in issues -%}
-              {%- if loop.first %}{{ trigger.to_state.name }} is {% elif loop.last %} and {% else %}, {% endif -%}
-              {{ issue }}
-              {%- if loop.last %}.{% endif %}
-            {%- endfor %}
+      - choose:
+          conditions: "{{ issues | length == 0 }}"
+          sequence:
+            - service: python_script.notify
+              data:
+                dismiss: true
+                <<: &notification_options
+                  audio: true
+                  persistent: true
+                  push_target: "household"
+                  tag: "{{ tag }}"
+
+        default:
+          - service: python_script.notify
+            data:
+              <<: *notification_options
+              url: "/lovelace/livings"
+              title: "Check {{ name }}"
+              message: >-
+                {% for issue in issues -%}
+                  {%- if loop.first %}{{ name }} is {% elif loop.last %} and {% else %}, {% endif -%}
+                  {{ issue }}
+                  {%- if loop.last %}.{% endif %}
+                {%- endfor %}
