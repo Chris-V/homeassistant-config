@@ -26,21 +26,40 @@ script:
                   "Night! Night!",
                   "Don\'t let the bed bugs bite!",
                 ] | random }}
+
       - service: light.turn_on
         data:
           entity_id: "light.master_bedroom_bedsides"
           brightness_pct: 5
           kelvin: 2200
 
+      - service: lock.lock
+        data:
+          entity_id: "lock.kitchen_door"
+
       - service: light.turn_off
         data:
           entity_id:
             - "light.master_bedroom"
             - "light.kitchen_lights"
-            - "light.living_room_lights"
+            - "light.bookshelf"
             - "light.common_basement_lights"
             - "light.lounge_lights"
             - "light.office_lights"
+
+      - choose:
+          conditions:
+            - condition: not
+              conditions:
+                - condition: state
+                  entity_id: "media_player.living_room_tv"
+                  state: "on"  # on => a source other than home is on display
+          sequence:
+            - service: homeassistant.turn_off
+              data:
+                entity_id:
+                  - "light.living_room_ambiance"
+                  - "media_player.living_room_tv"
 
       - choose:
           conditions:
