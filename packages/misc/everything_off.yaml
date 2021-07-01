@@ -39,3 +39,6 @@ automation:
         state: "off"
     action:
       - service: script.everything_off
+      - service: lock.lock
+        data:
+          entity_id: "lock.kitchen_door"
