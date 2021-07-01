@@ -171,7 +171,7 @@ automation:
         to: "on"
 
     variables:
-      notification_tag: "intrusion_{{ now() | as_timestamp | int }}"
+      notification_tag: "intrusion_{{ context.id }}"
 
     action:
       - service: python_script.notify
@@ -181,8 +181,9 @@ automation:
             persistent: true
             priority: true
             tag: "{{ notification_tag }}"
-            message: "Activity was detected in: {{ state_attr('binary_sensor.intrusion', 'activity') }}"
+            message: "Activity detected in: {{ state_attr('binary_sensor.intrusion', 'activity') }}"
           title: "Intrusion detected"
+          dismissible: false
           push_target: "household"
           push_actions:
             - action: &silence_action "silence_alarm"
@@ -212,8 +213,9 @@ automation:
       - service: python_script.notify
         data:
           <<: *alarm_notification
-          push_target: "household"
           title: "Intrusion cleared"
+          dismissible: true
+          push_target: "household"
 
   - id: "65383759-a03c-4c81-9965-7154e83626fd"
     alias: "silence_alarm"
