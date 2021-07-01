@@ -13,6 +13,7 @@
  #     * entity_id: An entity to to control in the footer
  #     * name: That entity's name
  #     * icon: (optional) That entity's icon
+ #     * icon_tag: (optional) That entity's icon tag
  #     * tap_action: (optional) object. Override for the tap_action
  #   * climate: (optional) object
  #     * room_key: The room key used to prefix climate and setpoint entity IDs
@@ -94,6 +95,56 @@
           action: more-info
         style:
           margin: -8px
+{% endmacro %}
+
+{% macro switch_element(switch_config, style) %}
+{% if switch_config.icon_tag is defined -%}
+{% set switch_icon_config = {
+  'entity_id': switch_config.entity_id,
+  'name': switch_config.name | default(undefined),
+  'icon': switch_config.icon | default(undefined),
+  'tap_action': switch_config.tap_action | default(undefined),
+} %}
+{% set switch_tag_config = {
+  'entity_id': switch_config.entity_id,
+  'name': switch_config.name | default(undefined),
+  'icon': switch_config.icon_tag,
+  'tap_action': switch_config.tap_action | default(undefined),
+} %}
+- type: custom:container-element
+  elements:
+{% filter indent(4) -%}
+    {{ switch_element(switch_icon_config) }}
+    {{ switch_element(switch_tag_config, style = {
+          'margin': 0,
+          '--mdc-icon-size': '16px',
+          'position': 'absolute',
+          'top': '-10px',
+          'right': '-8px',
+        })
+    }}
+{% endfilter %}
+{% else -%}
+- type: state-icon
+  entity: {{ switch_config.entity_id }}
+  title: {{ switch_config.name }}
+  {% if switch_config.icon is defined -%}
+  icon: {{ switch_config.icon }}
+  {% endif %}
+  style:
+{% if style is defined %}
+    {{ style | to_json }}
+{% else %}
+    margin: 0 6px
+    "--mdc-icon-size": 32px
+{% endif %}
+  tap_action:
+{% if switch_config.tap_action is defined %}
+    {{ switch_config.tap_action | tojson }}
+{% else %}
+    action: {% if switch_config.entity_id.startswith('media_player.') %}more-info{% else %}toggle{% endif %}
+{% endif %}
+{%- endif %}
 {% endmacro %}
 
 type: picture-elements
@@ -272,20 +323,8 @@ elements:
           height: unset
           min-height: 1.75em
         elements:
-{% for switch_config in switches %}
-          - type: state-icon
-            entity: {{ switch_config.entity_id }}
-            title: {{ switch_config.name }}
-            {% if switch_config.icon is defined -%}
-            icon: {{ switch_config.icon }}
-            {% endif %}
-            style:
-              margin: 0 6px
-              "--mdc-icon-size": 32px
-            tap_action:
-{% if switch_config.tap_action is defined %}
-              {{ switch_config.tap_action | tojson }}
-{% else %}
-              action: {% if switch_config.entity_id.startswith('media_player.') %}more-info{% else %}toggle{% endif %}
-{% endif %}
+{% filter indent(10) -%}
+{% for switch_config in switches -%}
+{{ switch_element(switch_config) }}
 {% endfor %}
+{%- endfilter %}
