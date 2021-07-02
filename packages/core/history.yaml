@@ -30,26 +30,34 @@ recorder:
       - binary_sensor.basement_bathroom_door
       - binary_sensor.basement_bathroom_motion
       - binary_sensor.basement_bathroom_presence
+      - binary_sensor.bolt_ev_network_link
+      - binary_sensor.bolt_ev_recharge_recommended
+      - binary_sensor.carl_power_strip_overload
       - binary_sensor.carl_requires_attention
       - binary_sensor.guest_bedroom_window
       - binary_sensor.guest_mode
       - binary_sensor.intrusion
+      - binary_sensor.intrusion_events
       - binary_sensor.kitchen_door
       - binary_sensor.kitchen_door_lock_jammed
       - binary_sensor.kitchen_sink_leak
       - binary_sensor.laundry_room_motion
+      - binary_sensor.living_room_couch_outlets_overload
       - binary_sensor.living_room_door
       - binary_sensor.lounge_window
       - binary_sensor.main_bathroom_door
       - binary_sensor.main_bathroom_motion
       - binary_sensor.main_bathroom_presence
       - binary_sensor.minecraft_server_status
+      - binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in
       - binary_sensor.presence_armed
+      - binary_sensor.slinky_power_strip_overload
       - binary_sensor.slinky_requires_attention
       - binary_sensor.studio_window
       - binary_sensor.ups_online_status
       - binary_sensor.washing_machine_leak
       - binary_sensor.water_heater_leak
+      - binary_sensor.winter_credit_enabled
       - binary_sensor.winter_credit_peak_event
       - binary_sensor.workshop_motion
       - sensor.basement_bathroom_door_sensor_battery
@@ -58,12 +66,18 @@ recorder:
       - sensor.basement_bathroom_temperature
       - sensor.basement_hallway_temperature
       - sensor.basement_hallway_thermostat_temperature
-      - sensor.carl_power_strip_energy
-      - sensor.carl_power_strip_power
-      - sensor.carl_uv_light_power
-      - sensor.carl_heater_power
+      - sensor.carl_basking_temperature
       - sensor.carl_heat_bulb_power
+      - sensor.carl_heater_power
+      - sensor.carl_humidity
+      - sensor.carl_outlet_4_power
+      - sensor.carl_outlet_5_power
+      - sensor.carl_power_strip_power
+      - sensor.carl_temperature
+      - sensor.carl_uv_light_power
       - sensor.chris_bedside_remote_battery
+      - sensor.chris_moto_g7_battery_level
+      - sensor.chris_moto_g7_wifi_connection
       - sensor.connected_clients
       - sensor.current_home_assistant_version
       - sensor.dining_room_temperature
@@ -74,15 +88,23 @@ recorder:
       - sensor.dollorama_moisture
       - sensor.dollorama_problems
       - sensor.dollorama_temperature
-      - sensor.karine_bedside_remote_battery
-      - sensor.kitchen_door_sensor_battery
-      - sensor.kitchen_sink_leak_sensor_battery
-      - sensor.guest_bedroom_window_sensor_battery
+      - sensor.drake_battery
+      - sensor.drake_brightness
+      - sensor.drake_conductivity
+      - sensor.drake_moisture
+      - sensor.drake_problems
+      - sensor.drake_temperature
       - sensor.guest_bedroom_temperature
       - sensor.guest_bedroom_thermostat_temperature
+      - sensor.guest_bedroom_window_sensor_battery
       - sensor.guests_home
-      - sensor.kitchen_temperature
+      - sensor.karine_bedside_remote_battery
+      - sensor.karine_pixel_1_battery_level
+      - sensor.karine_pixel_1_wifi_connection
       - sensor.kitchen_door_lock_battery
+      - sensor.kitchen_door_sensor_battery
+      - sensor.kitchen_sink_leak_sensor_battery
+      - sensor.kitchen_temperature
       - sensor.last_motion
       - sensor.latest_home_assistant_version
       - sensor.laundry_motion_sensor_battery
@@ -93,11 +115,10 @@ recorder:
       - sensor.living_room_thermostat_temperature
       - sensor.lounge_temperature
       - sensor.lounge_thermostat_temperature
+      - sensor.lounge_window_sensor_battery
       - sensor.main_bathroom_humidity
       - sensor.main_bathroom_multisensor_battery
       - sensor.main_bathroom_temperature
-      - sensor.master_bedroom_temperature
-      - sensor.master_bedroom_thermostat_temperature
       - sensor.maitre_doyle_battery
       - sensor.maitre_doyle_brightness
       - sensor.maitre_doyle_conductivity
@@ -105,53 +126,59 @@ recorder:
       - sensor.maitre_doyle_problems
       - sensor.maitre_doyle_temperature
       - sensor.manual_thermostats_count
+      - sensor.master_bedroom_temperature
+      - sensor.master_bedroom_thermostat_temperature
+      - sensor.media_cpu_temperature
       - sensor.media_cpu_used
-      - sensor.media_cpu_temp
       - sensor.media_ram_used_percent
       - sensor.memory_use_percent
       - sensor.minecraft_latest_version
       - sensor.minecraft_server_latency_time
       - sensor.minecraft_server_players_online
       - sensor.minecraft_server_version
+      - sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
+      - sensor.mychevy_2019_chevrolet_bolt_ev_charge_mode
+      - sensor.mychevy_2019_chevrolet_bolt_ev_charged_by
+      - sensor.mychevy_2019_chevrolet_bolt_ev_electric_range
+      - sensor.mychevy_2019_chevrolet_bolt_ev_mileage
+      - sensor.mychevy_status
       - sensor.office_temperature
       - sensor.office_thermostat_temperature
       - sensor.outdoor_humidity
       - sensor.outdoor_temperature
       - sensor.processor_temperature
       - sensor.processor_use
+      - sensor.relay_north_cpu_temperature
       - sensor.relay_north_cpu_used
-      - sensor.relay_north_cpu_temp
       - sensor.relay_north_ram_used_percent
+      - sensor.relay_south_cpu_temperature
       - sensor.relay_south_cpu_used
-      - sensor.relay_south_cpu_temp
       - sensor.relay_south_ram_used_percent
+      - sensor.scheduled_climate_preset
+      - sensor.slinky_basking_temperature
+      - sensor.slinky_heat_bulb_power
+      - sensor.slinky_heater_power
+      - sensor.slinky_humidity
+      - sensor.slinky_outlet_4_power
+      - sensor.slinky_outlet_5_power
+      - sensor.slinky_power_strip_power
+      - sensor.slinky_temperature
+      - sensor.slinky_uv_light_power
       - sensor.snicket_battery
       - sensor.snicket_brightness
       - sensor.snicket_conductivity
       - sensor.snicket_moisture
       - sensor.snicket_problems
       - sensor.snicket_temperature
-      - sensor.scheduled_climate_preset
-      - sensor.slinky_power_strip_energy
-      - sensor.slinky_power_strip_power
-      - sensor.slinky_uv_light_power
-      - sensor.slinky_heater_power
-      - sensor.slinky_heat_bulb_power
       - sensor.spidy_battery
       - sensor.spidy_brightness
       - sensor.spidy_conductivity
       - sensor.spidy_moisture
       - sensor.spidy_problems
       - sensor.spidy_temperature
-      - sensor.studio_window_sensor_battery
       - sensor.studio_temperature
       - sensor.studio_thermostat_temperature
-      - sensor.drake_battery
-      - sensor.drake_brightness
-      - sensor.drake_conductivity
-      - sensor.drake_moisture
-      - sensor.drake_problems
-      - sensor.drake_temperature
+      - sensor.studio_window_sensor_battery
       - sensor.ups_battery
       - sensor.ups_battery_status
       - sensor.ups_input_voltage
@@ -168,24 +195,8 @@ recorder:
       - sensor.washing_machine_leak_temperature
       - sensor.water_heater_leak_sensor_battery
       - sensor.weather_summary
+      - sensor.winter_credit_baseline_climate_preset
       - sensor.workshop_motion_sensor_battery
-
-      # Car
-      - binary_sensor.bolt_ev_network_link
-      - binary_sensor.bolt_ev_recharge_recommended
-      - binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in
-      - sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
-      - sensor.mychevy_2019_chevrolet_bolt_ev_charge_mode
-      - sensor.mychevy_2019_chevrolet_bolt_ev_charged_by
-      - sensor.mychevy_2019_chevrolet_bolt_ev_electric_range
-      - sensor.mychevy_2019_chevrolet_bolt_ev_mileage
-      - sensor.mychevy_status
-
-      # Person
-      - sensor.chris_moto_g7_battery_level
-      - sensor.chris_moto_g7_wifi_connection
-      - sensor.karine_pixel_1_battery_level
-      - sensor.karine_pixel_1_wifi_connection
 
 history:
   include: *recorder_inclusion
