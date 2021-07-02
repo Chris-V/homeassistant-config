@@ -70,6 +70,7 @@ automation:
     action:
       - variables:
           text: "{{ text | replace('a.m.', 'AM') | replace('p.m.', 'PM') }}"
+          # yamllint disable-line rule:quoted-strings
           pattern: '(?:([a-z]+\.? \d{1,2}), )?from (\d{1,2}(?::\d{2})?)(?: (AM|PM))? to (\d{1,2}(?::\d{2})?)(?: (AM|PM)?)'
           count: "{{ (text | regex_replace(pattern, '___MATCH___', ignorecase = True)).count('___MATCH___') }}"
           events: >

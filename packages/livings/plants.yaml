@@ -45,7 +45,7 @@ template:
 input_boolean:
   notify_plant_problems:
     name: "Notify plant problems"
-    icon: 'mdi:message-cog'
+    icon: "mdi:message-cog"
 
 automation:
   - id: "994eba31-84de-4769-8958-f24b5346111a"
