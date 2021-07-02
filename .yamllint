@@ -1,6 +1,15 @@
-extends: default
+extends: "default"
+
+ignore: |
+  known_devices.yaml
 
 rules:
+  braces:
+    forbid: false
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+    min-spaces-inside-empty: 0
+    max-spaces-inside-empty: 0
   document-end:
     present: false
   document-start:
@@ -11,3 +20,8 @@ rules:
     indent-sequences: true
     spaces: 2
   line-length: "disable"
+  quoted-strings:
+    quote-type: "double"
+    required: false
+    extra-required: []
+    extra-allowed: []
