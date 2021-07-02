@@ -10,12 +10,6 @@ cloud:
     filter:
       include_entities:
         - "light.laundry_room"
-    entity_config:
-      light.laundry_room:
-        room: "Laundry room"
-        name: "Laundry room light"
-        aliases:
-          - "Laundry room"
 
 light:
   - platform: group

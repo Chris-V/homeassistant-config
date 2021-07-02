@@ -13,12 +13,6 @@ cloud:
     filter:
       include_entities:
         - "light.workshop"
-    entity_config:
-      light.workshop:
-        room: "Workshop"
-        name: "Workshop light"
-        aliases:
-          - "Workshop"
 
 light:
   - platform: group

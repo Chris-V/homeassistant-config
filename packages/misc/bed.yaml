@@ -5,9 +5,8 @@ cloud:
         - "script.bedtime"
     entity_config:
       script.bedtime:
-        name: "Bedtime"
         aliases:
-          - Prepare to sleep
+          - "Sleep time"
 
 script:
   bedtime:

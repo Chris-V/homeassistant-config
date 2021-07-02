@@ -17,17 +17,6 @@ cloud:
       include_entities:
         - "light.guest_bedroom"
         - "light.guest_bedroom_closet"
-    entity_config:
-      light.guest_bedroom:
-        room: "Guest's bedroom"
-        name: "Guest's bedroom light"
-        aliases:
-          - "Guest's bedroom"
-      light.guest_bedroom_closet:
-        room: "Guest's bedroom"
-        name: "Guest's bedroom closet light"
-        aliases:
-          - "Guest's bedroom closet"
 
 input_number:
   guest_bedroom_thermostat_eco_setpoint:

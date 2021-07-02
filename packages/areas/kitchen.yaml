@@ -26,18 +26,9 @@ cloud:
   google_actions:
     filter:
       include_entities:
+        - "lock.kitchen_door"
         - "light.kitchen"
-    entity_config:
-      light.kitchen:
-        room: "Kitchen"
-        name: "Kitchen light"
-        aliases:
-          - "Kitchen"
-      light.kitchen_sink:
-        room: "Kitchen"
-        name: "Kitchen sink light"
-        aliases:
-          - "Kitchen sink"
+        - "light.kitchen_sink"
 
 light:
   - platform: group

@@ -25,18 +25,6 @@ cloud:
         - "light.basement_bathroom"
         - "light.basement_bathroom_vanity"
         - "fan.basement_bathroom"
-    entity_config:
-      light.basement_bathroom:
-        room: "Basement bathroom"
-        name: "Basement bathroom light"
-      light.basement_bathroom_vanity:
-        room: "Basement bathroom"
-        name: "Basement bathroom vanity light"
-        aliases:
-          - "Basement bathroom vanity"
-      fan.basement_bathroom:
-        room: "Basement bathroom"
-        name: "Basement bathroom fan"
 
 template:
   binary_sensor:

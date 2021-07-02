@@ -11,17 +11,6 @@ cloud:
       include_entities:
         - "light.basement_hallway"
         - "light.downstairs"
-    entity_config:
-      light.basement_hallway:
-        room: "Lounge"
-        name: "Basement hallway"
-        aliases:
-          - "Basement hallway light"
-      light.downstairs:
-        room: "Lounge"
-        name: "Downstairs"
-        aliases:
-          - "Downstairs light"
 
 input_number:
   basement_hallway_thermostat_eco_setpoint:

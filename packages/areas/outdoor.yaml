@@ -19,31 +19,14 @@ cloud:
   google_actions:
     filter:
       include_entities:
-        - "light.side_porch"
         - "light.front_porch"
+        - "light.shed"
         - "light.shed_outdoor"
+        - "light.side_porch"
     entity_config:
-      light.side_porch:
-        room: "Outdoor"
-        name: "Side porch light"
-        aliases:
-          - "Side porch"
-          - "Porch"
-          - "Side"
-      light.front_porch:
-        room: "Outdoor"
-        name: "Front porch light"
-        aliases:
-          - "Front porch"
-          - "Front"
       light.shed_outdoor:
-        room: "Outdoor"
-        name: "Shed outdoor light"
         aliases:
-          - "Shed outdoor"
           - "Shed door light"
-          - "Shed door"
-          - "Garage door"
           - "Garage door light"
 
 light:
