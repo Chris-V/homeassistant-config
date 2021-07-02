@@ -3,7 +3,6 @@
  #   * color: [light (default) | dark]
  #   * image: The URL of the image to display in background.
  #   * plant_entity_id: The `plant.*` entity ID.
- #   * problems_entity_id: Entity representing problems for this plant
  #}
 
 {% set name_color = '#3B4049' if color == 'dark' else '#E0E0E0' %}
@@ -45,13 +44,13 @@ elements:
 
   - type: conditional
     conditions:
-      - entity: "{{ problems_entity_id }}"
-        state_not: "none"
+      - entity: "{{ plant_entity_id }}"
+        state: "problem"
     elements:
       - type: icon
         icon: mdi:alert-circle
         title: Problems
-        entity: "{{ problems_entity_id }}"
+        entity: "{{ plant_entity_id }}"
         tap_action:
           action: more-info
         style:
@@ -77,7 +76,7 @@ elements:
       - type: custom:button-card
         triggers_update:
           - {{ entity_id }}
-          - {{ problems_entity_id }}
+          - {{ plant_entity_id }}
 
         custom_fields:
           badge:
@@ -106,7 +105,7 @@ elements:
               - overflow: visible
               - --label-badge-red: |
                   [[[
-                    return states["{{ problems_entity_id }}"].state.indexOf("{{ sensor_type }}") === -1
+                    return states["{{ plant_entity_id }}"].attributes.problem.indexOf("{{ sensor_type }}") === -1
                       ? "#363941"
                       : "var(--error-color)"
                   ]]]

@@ -2,8 +2,6 @@ homeassistant:
   customize:
     plant.drake:
       friendly_name: "Drake"
-    sensor.drake_problems:
-      friendly_name: "Drake"
     sensor.drake_battery:
       friendly_name: "Drake's battery"
       battery_type: "CR2032"
@@ -32,12 +30,6 @@ plant:
     max_moisture: 60
     min_temperature: 10
     max_temperature: 35
-
-template:
-  sensor:
-    - unique_id: "sensor.drake_problems"
-      name: "drake_problems"
-      state: "{{ state_attr('plant.drake', 'problem') or 'none' }}"
 
 sensor:
   - platform: mqtt

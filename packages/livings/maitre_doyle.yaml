@@ -2,8 +2,6 @@ homeassistant:
   customize:
     plant.maitre_doyle:
       friendly_name: "Maître Doyle"
-    sensor.maitre_doyle_problems:
-      friendly_name: "Maître Doyle"
     sensor.maitre_doyle_battery:
       friendly_name: "Maître Doyle's battery"
       battery_type: "CR2032"
@@ -31,12 +29,6 @@ plant:
     min_moisture: 15
     max_moisture: 50
     min_temperature: 15
-
-template:
-  sensor:
-    - unique_id: "sensor.maitre_doyle_problems"
-      name: "maitre_doyle_problems"
-      state: "{{ state_attr('plant.maitre_doyle', 'problem') or 'none' }}"
 
 sensor:
   - platform: mqtt
