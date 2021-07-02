@@ -2,8 +2,6 @@ homeassistant:
   customize:
     plant.snicket:
       friendly_name: "Snicket"
-    sensor.snicket_problems:
-      friendly_name: "Snicket"
     sensor.snicket_battery:
       friendly_name: "Snicket's battery"
       battery_type: "CR2032"
@@ -32,12 +30,6 @@ plant:
     max_moisture: 60
     min_temperature: 8
     max_temperature: 35
-
-template:
-  sensor:
-    - unique_id: "sensor.snicket_problems"
-      name: "snicket_problems"
-      state: "{{ state_attr('plant.snicket', 'problem') or 'none' }}"
 
 sensor:
   - platform: mqtt

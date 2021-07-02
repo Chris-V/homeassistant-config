@@ -102,21 +102,18 @@
     badges_position: "end"
     image: /local/plants/money_tree_card.jpg
     plant_entity_id: plant.dollorama
-    problems_entity_id: sensor.dollorama_problems
 
 - !template
   file: ../cards/plant.yaml.j2
   variables:
     image: /local/plants/avocado_hall_card.jpg
     plant_entity_id: plant.maitre_doyle
-    problems_entity_id: sensor.maitre_doyle_problems
 
 - !template
   file: ../cards/plant.yaml.j2
   variables:
     image: /local/plants/meyer_lemon_tree_card.jpg
     plant_entity_id: plant.snicket
-    problems_entity_id: sensor.snicket_problems
 
 - !template
   file: ../cards/plant.yaml.j2
@@ -124,7 +121,6 @@
     badges_position: "end"
     image: /local/plants/spider_plant_card.jpg
     plant_entity_id: plant.spidy
-    problems_entity_id: sensor.spidy_problems
 
 - !template
   file: ../cards/plant.yaml.j2
@@ -133,11 +129,9 @@
     color: dark
     image: /local/plants/devils_ivy_card.jpg
     plant_entity_id: plant.viny
-    problems_entity_id: sensor.viny_problems
 
 - !template
   file: ../cards/plant.yaml.j2
   variables:
     image: /local/plants/dracaena_fragrans_card.jpg
     plant_entity_id: plant.drake
-    problems_entity_id: sensor.drake_problems

@@ -2,8 +2,6 @@ homeassistant:
   customize:
     plant.dollorama:
       friendly_name: "Dollorama"
-    sensor.dollorama_problems:
-      friendly_name: "Dollorama"
     sensor.dollorama_battery:
       friendly_name: "Dollorama's battery"
       battery_type: "CR2032"
@@ -31,12 +29,6 @@ plant:
     min_moisture: 10
     max_moisture: 60
     min_temperature: 10
-
-template:
-  sensor:
-    - unique_id: "sensor.dollorama_problems"
-      name: "dollorama_problems"
-      state: "{{ state_attr('plant.dollorama', 'problem') or 'none' }}"
 
 sensor:
   - platform: mqtt
