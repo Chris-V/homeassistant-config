@@ -5,7 +5,6 @@ cloud:
         - "script.everything_off"
     entity_config:
       script.everything_off:
-        name: "All off"
         aliases:
           - "Everything off"
 

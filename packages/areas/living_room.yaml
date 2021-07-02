@@ -22,27 +22,17 @@ cloud:
   google_actions:
     filter:
       include_entities:
-        - "light.living_room_ambiance"
         - "light.bookshelf"
+        - "light.living_room_ambiance"
+        - "light.staircase"
         - "switch.bookshelf_outlet"
     entity_config:
       light.living_room_ambiance:
-        room: "Living room"
-        name: "Ambiance"
         aliases:
           - "Living room light"
-          - "Living room"
-      light.bookshelf:
-        room: "Living room"
-        name: "Bookshelf light"
-        aliases:
-          - "Bookshelf"
       switch.bookshelf_outlet:
-        room: "Living room"
-        name: "Bookshelf outlet"
         aliases:
           - "Christmas tree"
-          - "Xmas tree"
 
 switch:
   - platform: broadlink

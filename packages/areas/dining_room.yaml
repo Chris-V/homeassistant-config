@@ -13,17 +13,8 @@ cloud:
         - "light.hallway"
     entity_config:
       light.dining_room:
-        room: "Dining room"
-        name: "Dining room light"
         aliases:
-          - "Dining room"
           - "Table light"
-          - "Table"
-      light.hallway:
-        room: "Dining room"
-        name: "Hallway light"
-        aliases:
-          - "Hallway"
 
 input_number:
   dining_room_thermostat_eco_setpoint:

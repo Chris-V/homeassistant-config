@@ -14,12 +14,6 @@ cloud:
     filter:
       include_entities:
         - "light.studio"
-    entity_config:
-      light.studio:
-        room: "Studio"
-        name: "Studio light"
-        aliases:
-          - "Studio"
 
 input_number:
   studio_thermostat_eco_setpoint:

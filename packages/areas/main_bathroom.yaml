@@ -23,24 +23,16 @@ cloud:
         - "fan.main_bathroom"
     entity_config:
       light.main_bathroom_spots:
-        room: "Main bathroom"
-        name: "Bathroom spots"
         aliases:
           - "Bathroom light"
           - "Main bathroom light"
-          - "Main bathroom spots"
       light.main_bathroom_vanity:
-        room: "Main bathroom"
-        name: "Vanity light"
         aliases:
-          - "Vanity"
+          - "Vanity light"
           - "Bathroom vanity light"
-          - "Main bathroom vanity light"
       fan.main_bathroom:
-        room: "Main bathroom"
-        name: "Bathroom fan"
         aliases:
-          - "Main bathroom fan"
+          - "Bathroom fan"
 
 template:
   binary_sensor:

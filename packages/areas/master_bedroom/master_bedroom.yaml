@@ -17,25 +17,11 @@ cloud:
         - "light.bedside_karine"
     entity_config:
       light.master_bedroom:
-        room: "Master bedroom"
-        name: "Master bedroom light"
         aliases:
           - "Bedroom light"
       light.master_bedroom_bedsides:
-        room: "Master bedroom"
-        name: "Master bedroom's bedside lamps"
         aliases:
           - "Bedside lamps"
-      light.bedside_chris:
-        room: "Master bedroom"
-        name: "Chris' bedside lamp"
-        aliases:
-          - "Chris' bedside"
-      light.bedside_karine:
-        room: "Master bedroom"
-        name: "Karine's bedside lamp"
-        aliases:
-          - "Karine's bedside"
 
 input_number:
   master_bedroom_thermostat_eco_setpoint:

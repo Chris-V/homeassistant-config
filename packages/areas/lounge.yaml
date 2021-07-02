@@ -9,7 +9,7 @@ homeassistant:
     sensor.lounge_temperature:
       friendly_name: "Lounge temperature"
     switch.lounge_tv:
-      friendly_name: "Living room TV"
+      friendly_name: "Lounge TV"
 
 cloud:
   google_actions:
@@ -18,21 +18,6 @@ cloud:
         - "switch.lounge_tv"
         - "light.lounge"
         - "light.lounge_ambiance"
-    entity_config:
-      switch.lounge_tv:
-        room: "Lounge"
-        name: "Lounge TV"
-      light.lounge:
-        room: "Lounge"
-        name: "Lounge spots"
-        aliases:
-          - "Lounge light"
-          - "Lounge"
-      light.lounge_ambiance:
-        room: "Lounge"
-        name: "Lounge ambiance"
-        aliases:
-          - "Lounge ambiance light"
 
 input_number:
   lounge_thermostat_eco_setpoint:

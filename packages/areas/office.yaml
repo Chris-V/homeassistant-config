@@ -8,12 +8,6 @@ cloud:
     filter:
       include_entities:
         - "light.office"
-    entity_config:
-      light.office:
-        room: "Office"
-        name: "Office light"
-        aliases:
-          - "Office"
 
 input_number:
   office_thermostat_eco_setpoint:

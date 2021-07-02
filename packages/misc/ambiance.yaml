@@ -5,7 +5,6 @@ cloud:
         - "script.evening_ambiance"
     entity_config:
       script.evening_ambiance:
-        name: "Evening ambiance"
         aliases:
           - "Ambiance"
 
