@@ -70,11 +70,11 @@
                 service_data:
                   entity_id: script.broadcast_manual_message
 
-    - type: entity
-      entity: custom_storage.broadcast_notifications
-
-    - type: entity
-      entity: custom_storage.broadcast_notifications
-      attribute: item_0_data
-      name: Next broadcast
-      icon: mdi:message-text
+    - type: markdown
+      title: Queued broadcasts
+      content: |
+        {% set items = state_attr('sensor.broadcast_queue', 'items') | default([]) | list %}
+        {% if items | length == 0 %}No pending broadcasts.{% endif %}
+        {%- for item in items %}
+        1. (`{{ item.tag }}`) {{ item.data.message }}
+        {%- endfor %}

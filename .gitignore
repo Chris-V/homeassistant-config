@@ -30,7 +30,6 @@ OZW_Log.txt
 pyozw.sqlite
 
 /custom_components/
-!/custom_components/custom_storage
 
 /www/custom_ui/floorplan/ha-floorplan.html
 /www/custom_ui/floorplan/lib/

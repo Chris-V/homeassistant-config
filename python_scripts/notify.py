@@ -117,16 +117,18 @@ else:
             hass.services.call('persistent_notification', 'create', payload)
 
     if audio:
-        if priority:
-            payload = {
-                'message': 'Alert. {}'.format(message or title)
-            }
-            hass.services.call('script', 'broadcast_notification', payload)
+        if dismiss:
+            payload = {'action': 'pop', 'tag': tag}
+            hass.services.call('script', 'manage_broadcast_queue', payload)
         else:
-            # TODO: Support dismiss in audio queue
-            #  and migrate custom_storage to something more flexible
-            payload = {
-                'object_id': 'broadcast_notifications',
-                'data': message or title
-            }
-            hass.services.call('custom_storage', 'add', payload)
+            if priority:
+                payload = {
+                    'message': 'Alert. {}'.format(message or title)
+                }
+                hass.services.call('script', 'broadcast_notification', payload)
+            else:
+                payload = {'action': 'add', 'message': message or title}
+                if tag:
+                    payload['tag'] = tag
+
+                hass.services.call('script', 'manage_broadcast_queue', payload)

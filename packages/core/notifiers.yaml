@@ -1,8 +1,7 @@
 homeassistant:
   customize:
-    custom_storage.broadcast_notifications:
+    sensor.broadcast_queue:
       friendly_name: "Broadcast queue"
-      icon: "mdi:counter"
 
 notify:
   - platform: html5
@@ -31,11 +30,6 @@ tts:
     profiles:
       - "small-bluetooth-speaker-class-device"
 
-# TODO: Could be replaced with a "queued" script + json + notify.file and preserve atomicity
-custom_storage:
-  broadcast_notifications:
-    enable_persistence: true
-
 group:
   broadcast_media_players:
     name: "Broadcast enabled media players"
@@ -54,6 +48,19 @@ input_text:
     icon: "mdi:message-text"
     max: 255
     initial: ""
+
+sensor:
+  - platform: "mqtt"
+    unique_id: "mqtt_broadcast_queue"
+    name: "broadcast_queue"
+    icon: "mdi:bullhorn"
+    state_topic: &broadcast_queue_topic "home-assistant/broadcast/queue"
+    value_template: >
+      {{ value_json | default([], True) | length }}
+    json_attributes_topic: *broadcast_queue_topic
+    json_attributes_template: >
+      {% set items = value_json | default([], True) %}
+      {{ { "items": items } | tojson }}
 
 script:
   broadcast_manual_message:
@@ -131,6 +138,99 @@ script:
         data:
           entity_id: "scene.volume_before_broadcast"
 
+  manage_broadcast_queue:
+    alias: "Manage the broadcast queue"
+    description: "Manage items in the broadcast queue. Operations are executed in order."
+    icon: "mdi:bullhorn"
+    mode: "queued"
+    max: 25
+
+    fields:
+      action:
+        name: "Action"
+        description: "Action to perform on this queue."
+        required: true
+        selector:
+          select:
+            options:
+              - "Add"
+              - "Clear"
+              - "Pop"
+      message:
+        name: "Message"
+        description: "The message to enqueue when action is `add`."
+        selector:
+          text: null
+      tag:
+        name: "Tag"
+        description: |
+          A tag to uniquely identify this message.
+          With `action: add`, if a message with the same tag exists, then it will be updated.
+          With `action: pop`, if tag is specified, then the corresponding message will be removed. Otherwise the first message will be removed.
+        selector:
+          text: null
+
+    sequence:
+      - variables:
+          action: "{{ action | lower }}"
+          tag: "{{ tag | default | string | trim }}"
+          message: "{{ message | default | string | trim }}"
+          items: "{{ state_attr('sensor.broadcast_queue', 'items') | default([], True) | list }}"
+
+      - choose:
+          - conditions: "{{ action == 'add' }}"
+            sequence:
+              - choose:
+                  - conditions: "{{ message | length > 0 }}"
+                    sequence:
+                      - service: "mqtt.publish"
+                        data:
+                          topic: *broadcast_queue_topic
+                          retain: true
+                          payload_template: >
+                            {%
+                              set new_item = {
+                                "timestamp": now().isoformat(),
+                                "tag": tag or context.id,
+                                "data": {
+                                  "message": message
+                                }
+                              }
+                            %}
+                            {{ (items | rejectattr('tag', '==', tag) | list + [new_item]) | to_json }}
+                default:
+                  - service: "system_log.write"
+                    data:
+                      level: "error"
+                      message: >
+                        `script.manage_broadcast_queue` called with `action: add` but `message` is absent.
+
+          - conditions: "{{ action == 'clear' }}"
+            sequence:
+              - service: "mqtt.publish"
+                data:
+                  topic: *broadcast_queue_topic
+                  retain: true
+                  payload: "[]"
+
+          - conditions: "{{ action == 'pop' }}"
+            sequence:
+              - service: "mqtt.publish"
+                data:
+                  topic: *broadcast_queue_topic
+                  retain: true
+                  payload_template: >
+                    {% if items | length %}
+                      {% if tag %}
+                        {{ items | rejectattr('tag', '==', tag) | list | to_json }}
+                      {% else %}
+                        {% set popped = items.pop(0) %}
+                        {{ items | to_json }}
+                      {% endif %}
+                    {% else %}
+                      []
+                    {% endif %}
+
 automation:
   - id: "36afcfe6-d475-447c-b089-d33aec62a774"
     alias: "broadcast_notifications"
@@ -142,7 +242,8 @@ automation:
       - platform: homeassistant
         event: start
       - platform: state
-        entity_id: "custom_storage.broadcast_notifications"
+        entity_id: "sensor.broadcast_queue"
+        attribute: "items"
       - platform: state
         entity_id: "group.household"
         to: "home"
@@ -152,10 +253,11 @@ automation:
           - &week_trigger_time "08:00:00"
           - &weekend_trigger_time "09:30:00"
 
+    variables:
+      item: "{{ state_attr('sensor.broadcast_queue', 'items') | default([], True) | first | default }}"
+
     condition:
-      - condition: numeric_state
-        entity_id: "custom_storage.broadcast_notifications"
-        above: 0
+      - "{{ item is mapping }}"
       - condition: state
         entity_id: "group.household"
         state: "home"
@@ -181,10 +283,10 @@ automation:
     action:
       - service: script.broadcast_notification
         data:
-          message: "Attention. {{ state_attr('custom_storage.broadcast_notifications', 'item_0_data') }}"
+          message: "Attention. {{ item.data.message }}"
       - wait_template: "{{ is_state('script.broadcast_notification', 'off') }}"
 
-      - service: custom_storage.remove
+      - service: script.manage_broadcast_queue
         data:
-          object_id: "broadcast_notifications"
-          id: "{{ state_attr('custom_storage.broadcast_notifications', 'item_0_id') }}"
+          action: "pop"
+          tag: "{{ item.tag }}"
