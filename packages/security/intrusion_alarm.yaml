@@ -5,14 +5,36 @@ homeassistant:
     binary_sensor.intrusion:
       friendly_name: "Intrusion"
 
+notify:
+  - platform: "file"
+    name: "intrusion_log"
+    filename: "/config/notifications/intrusion.log"
+    timestamp: true
+
 input_boolean:
   force_presence_armed:
     name: "Force armed"
     icon: "mdi:shield-check"
-  silence_alarm:
+  silence_intrusion_alarm:
     name: "Silence alarm"
     icon: "mdi:volume-mute"
     initial: false
+
+input_text:
+  intrusion_id:
+    name: "Intrusion ID"
+    icon: "mdi:shield-alert"
+
+binary_sensor:
+  - platform: mqtt
+    name: "intrusion_events"
+    device_class: "safety"
+    state_topic: &actifity_events_topic "home-assistant/intrusion/events"
+    value_template: "{{ value_json.state }}"
+    payload_on: "on"
+    payload_off: "off"
+    json_attributes_topic: *actifity_events_topic
+    json_attributes_template: "{{ value_json.attributes | to_json }}"
 
 template:
   binary_sensor:
@@ -45,9 +67,11 @@ template:
                 | selectattr('last_changed', '>=', armed_since)
                 | map(attribute = 'entity_id')
                 | list -%}
-            {% set intrusion_events = state_attr('binary_sensor.intrusion_events', 'entity_id')
+            {%
+              set intrusion_events = state_attr('binary_sensor.intrusion_events', 'entity_id')
                 | default([], True)
-                | list -%}
+                | list
+            -%}
             {{ (changed_since_armed + intrusion_events) | unique | sort -}}
           {% else -%}
             {{ state_attr('binary_sensor.intrusion', 'activity') | default([], True) -}}
@@ -75,17 +99,6 @@ template:
             )
         }}
 
-binary_sensor:
-  - platform: mqtt
-    name: "intrusion_events"
-    device_class: "safety"
-    state_topic: &actifity_events_topic "home-assistant/intrusion/events"
-    value_template: "{{ value_json.state }}"
-    payload_on: "on"
-    payload_off: "off"
-    json_attributes_topic: *actifity_events_topic
-    json_attributes_template: "{{ value_json.attributes | to_json }}"
-
 automation:
   - id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
     alias: "reset_alarm_states"
@@ -97,13 +110,17 @@ automation:
         to: "on"
     action:
       - service: input_boolean.turn_off
-        entity_id: "input_boolean.silence_alarm"
+        entity_id: "input_boolean.silence_intrusion_alarm"
+      - service: input_text.set_value
+        entity_id: "input_text.intrusion_id"
+        data:
+          value: "intrusion_{{ context.id }}"
       - service: mqtt.publish
         data:
           topic: *actifity_events_topic
           qos: 1
           retain: false
-          payload: >-
+          payload_template: >-
             {
               "state": "off",
               "attributes": { "entity_id": [], "node_id": [] }
@@ -151,54 +168,33 @@ automation:
           payload_template: >-
             {% set entities = state_attr('binary_sensor.intrusion_events', 'entity_id') | default([], True) -%}
             {% set nodes = state_attr('binary_sensor.intrusion_events', 'node_id') | default([], True) -%}
-            {{ {
-              'state': 'on',
-              'attributes': {
-                'entity_id': entities + [entity_id],
-                'node_id': nodes + [node_id],
-              }
-            } | to_json }}
+            {{
+              {
+                'state': 'on',
+                'attributes': {
+                  'entity_id': entities + [entity_id],
+                  'node_id': nodes + [node_id],
+                }
+              } | to_json
+            }}
 
-  - id: "b0045b02-1756-4635-bc2c-4344de74d0b6"
-    alias: "notify_intrusion"
+  - id: "2b123148-0e89-4722-8a31-8547d7876033"
+    alias: "alarm_intrusion"
     initial_state: true
     mode: "restart"
 
     trigger:
       - platform: state
         entity_id: "binary_sensor.intrusion"
-        from: "off"
         to: "on"
 
-    variables:
-      notification_tag: "intrusion_{{ context.id }}"
-
     action:
-      - service: python_script.notify
-        data:
-          <<: &alarm_notification
-            audio: false
-            persistent: true
-            priority: true
-            tag: "{{ notification_tag }}"
-            message: "Activity detected in: {{ state_attr('binary_sensor.intrusion', 'activity') }}"
-          title: "Intrusion detected"
-          dismissible: false
-          push_target: "household"
-          push_actions:
-            - action: &silence_action "silence_alarm"
-              title: "Silence"
-
       - repeat:
           sequence:
-            - service: python_script.notify
-              data:
-                <<: *alarm_notification
-                title: "Intrusion detected"
             - choose:
                 - conditions:
                     - condition: state
-                      entity_id: "input_boolean.silence_alarm"
+                      entity_id: "input_boolean.silence_intrusion_alarm"
                       state: "off"
                   sequence:
                     - service: script.broadcast_notification
@@ -210,15 +206,54 @@ automation:
               entity_id: "binary_sensor.intrusion"
               state: "off"
 
+  - id: "b0045b02-1756-4635-bc2c-4344de74d0b6"
+    alias: "notify_intrusion"
+    initial_state: true
+    mode: "restart"
+
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.intrusion"
+        to: "on"
+
+    action:
+      - variables:
+          intrusion_id: "{{ states('input_text.intrusion_id') }}"
+
+      - repeat:
+          sequence:
+            - service: python_script.notify
+              data:
+                <<: &alarm_notification
+                  audio: false
+                  persistent: true
+                  push_target: "household"
+                  priority: true
+                  tag: "{{ intrusion_id }}"
+                  message: >
+                    {% set count = state_attr('binary_sensor.intrusion', 'activity') | length %}
+                    {{ count }} activity {{ 'event was' if count == 1 else 'events were' }} detected.
+                title: "Intrusion detected"
+                dismissible: false
+                push_actions:
+                  - action: "{{ intrusion_id }}_silence"
+                    title: "Silence"
+            - wait_for_trigger:
+                - platform: "state"
+                  entity_id: "binary_sensor.intrusion"
+          until:
+            - condition: state
+              entity_id: "binary_sensor.intrusion"
+              state: "off"
+
       - service: python_script.notify
         data:
           <<: *alarm_notification
-          title: "Intrusion cleared"
+          title: "Intrusion detected"
           dismissible: true
-          push_target: "household"
 
   - id: "65383759-a03c-4c81-9965-7154e83626fd"
-    alias: "silence_alarm"
+    alias: "silence_intrusion_alarm"
     initial_state: true
     mode: "single"
     max_exceeded: "silent"
@@ -228,15 +263,14 @@ automation:
         event_type:
           - "html5_notification.clicked"
           - "mobile_app_notification_action"
-        event_data:
-          action: *silence_action
 
     condition:
       - condition: state
         entity_id: "binary_sensor.intrusion"
         state: "on"
+      - "{{ trigger.event.data.action == states('input_text.intrusion_id') ~ '_silence' }}"
 
     action:
       - service: input_boolean.turn_on
         data:
-          entity_id: "input_boolean.silence_alarm"
+          entity_id: "input_boolean.silence_intrusion_alarm"

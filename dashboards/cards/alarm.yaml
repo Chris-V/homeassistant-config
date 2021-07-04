@@ -82,7 +82,7 @@ entities:
       - entity: binary_sensor.intrusion
         state: "on"
     row:
-      entity: input_boolean.silence_alarm
+      entity: input_boolean.silence_intrusion_alarm
       name: Silence
 
   - type: conditional

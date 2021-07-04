@@ -3,33 +3,6 @@ homeassistant:
     sensor.broadcast_queue:
       friendly_name: "Broadcast queue"
 
-notify:
-  - platform: html5
-    name: "html5"
-    vapid_email: !secret notifier_vapid_email
-    vapid_pub_key: !secret notifier_vapid_public_key
-    vapid_prv_key: !secret notifier_vapid_private_key
-
-  - platform: group
-    name: "admin"
-    services:
-      - service: mobile_app_chris_moto_g7
-      - service: html5_chris_aero_arch_chrome
-
-  - platform: group
-    name: "household"
-    services:
-      - service: admin
-      - service: mobile_app_karine_pixel_1
-
-tts:
-  - platform: google_cloud
-    key_file: ".secrets/gcp.json"
-    service_name: google_cloud_say
-    voice: "en-US-Wavenet-D"  # https://cloud.google.com/text-to-speech/docs/voices
-    profiles:
-      - "small-bluetooth-speaker-class-device"
-
 group:
   broadcast_media_players:
     name: "Broadcast enabled media players"
