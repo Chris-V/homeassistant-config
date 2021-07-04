@@ -20,6 +20,12 @@ input_boolean:
     icon: "mdi:volume-mute"
     initial: false
 
+input_datetime:
+  presence_armed_since:
+    name: "Presence armed since"
+    has_date: true
+    has_time: true
+
 input_text:
   presence_armed_id:
     name: "Presence armed ID"
@@ -62,7 +68,16 @@ template:
         activity: >-
           {% set armed = states.binary_sensor.presence_armed -%}
           {% if armed is not none and armed.state == 'on' -%}
-            {% set armed_since = armed.last_changed -%}
+            {%
+              set armed_since = strptime(
+                state_attr('input_datetime.presence_armed_since', 'timestamp')
+                  | int
+                  | timestamp_local,
+                '%Y-%m-%d %H:%M:%S',
+              )
+                | as_local
+                | max(armed.last_changed)
+            -%}
             {% set changed_since_armed = expand('group.all_windows', 'group.all_doors', 'group.all_motions')
                 | selectattr('last_changed', '>=', armed_since)
                 | map(attribute = 'entity_id')
@@ -88,16 +103,26 @@ template:
         {%- endif %}
       state: >-
         {% set armed = states.binary_sensor.presence_armed -%}
-        {{
-          armed is not none
-            and armed.state == 'on'
-            and (
-              is_state('binary_sensor.intrusion_events', 'on')
-                or expand('group.all_windows', 'group.all_doors', 'group.all_motions')
-                  | selectattr('last_changed', '>=', armed.last_changed)
-                  | first is defined
+        {% if armed is not none and armed.state == 'on' -%}
+          {%
+            set armed_since = strptime(
+              state_attr('input_datetime.presence_armed_since', 'timestamp')
+                | int
+                | timestamp_local,
+              '%Y-%m-%d %H:%M:%S',
             )
-        }}
+              | as_local
+              | max(armed.last_changed)
+          -%}
+          {{
+            is_state('binary_sensor.intrusion_events', 'on')
+              or expand('group.all_windows', 'group.all_doors', 'group.all_motions')
+                | selectattr('last_changed', '>=', armed_since)
+                | first is defined
+          -}}
+        {% else -%}
+          {{ False -}}
+        {% endif %}
 
 automation:
   - id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
@@ -115,6 +140,10 @@ automation:
         entity_id: "input_text.presence_armed_id"
         data:
           value: "{{ arming_id }}"
+      - service: input_datetime.set_datetime
+        entity_id: "input_datetime.presence_armed_since"
+        data:
+          timestamp: "{{ now().timestamp() }}"
       - service: mqtt.publish
         data:
           topic: *actifity_events_topic
