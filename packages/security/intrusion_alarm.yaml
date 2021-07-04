@@ -8,7 +8,7 @@ homeassistant:
 notify:
   - platform: "file"
     name: "intrusion_log"
-    filename: "/config/notifications/intrusion.log"
+    filename: "/config/intrusion.log"
     timestamp: true
 
 input_boolean:
@@ -109,22 +109,40 @@ automation:
         from: "off"
         to: "on"
     action:
-      - service: input_boolean.turn_off
-        entity_id: "input_boolean.silence_intrusion_alarm"
+      - variables:
+          intrusion_id: "{{ context.id }}"
       - service: input_text.set_value
         entity_id: "input_text.intrusion_id"
         data:
-          value: "intrusion_{{ context.id }}"
+          value: "{{ intrusion_id }}"
       - service: mqtt.publish
         data:
           topic: *actifity_events_topic
           qos: 1
-          retain: false
+          retain: true
           payload_template: >-
             {
               "state": "off",
               "attributes": { "entity_id": [], "node_id": [] }
             }
+      - service: input_boolean.turn_off
+        entity_id: "input_boolean.silence_intrusion_alarm"
+      - service: notify.intrusion_log
+        data:
+          message: "({{ intrusion_id }}) Intrusion alarm armed."
+
+  - id: "64ef04c6-d94c-4d70-a116-d50ab1b295a5"
+    alias: "log_alarm_disarmed"
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.presence_armed"
+        from: "on"
+        to: "off"
+    action:
+      - service: notify.intrusion_log
+        data:
+          message: "({{ states('input_text.intrusion_id') }}) Intrusion alarm disarmed."
 
   - id: "6edc94d0-d9f9-44eb-bad1-6873523ae9e8"
     alias: "armed_switch_paddle_tapped"
@@ -164,7 +182,7 @@ automation:
         data:
           topic: *actifity_events_topic
           qos: 1
-          retain: false
+          retain: true
           payload_template: >-
             {% set entities = state_attr('binary_sensor.intrusion_events', 'entity_id') | default([], True) -%}
             {% set nodes = state_attr('binary_sensor.intrusion_events', 'node_id') | default([], True) -%}
@@ -181,7 +199,8 @@ automation:
   - id: "2b123148-0e89-4722-8a31-8547d7876033"
     alias: "alarm_intrusion"
     initial_state: true
-    mode: "restart"
+    mode: "single"
+    max_exceeded: "silent"
 
     trigger:
       - platform: state
@@ -209,7 +228,8 @@ automation:
   - id: "b0045b02-1756-4635-bc2c-4344de74d0b6"
     alias: "notify_intrusion"
     initial_state: true
-    mode: "restart"
+    mode: "single"
+    max_exceeded: "silent"
 
     trigger:
       - platform: state
@@ -238,6 +258,11 @@ automation:
                 push_actions:
                   - action: "{{ intrusion_id }}_silence"
                     title: "Silence"
+
+            - service: notify.intrusion_log
+              data:
+                message: "({{ intrusion_id }}) Intrusion activity: `{{ state_attr('binary_sensor.intrusion', 'activity') | to_json }}`"
+
             - wait_for_trigger:
                 - platform: "state"
                   entity_id: "binary_sensor.intrusion"
@@ -249,8 +274,11 @@ automation:
       - service: python_script.notify
         data:
           <<: *alarm_notification
-          title: "Intrusion detected"
+          title: "Intrusion cleared"
           dismissible: true
+      - service: notify.intrusion_log
+        data:
+          message: "({{ intrusion_id }}) Intrusion cleared."
 
   - id: "65383759-a03c-4c81-9965-7154e83626fd"
     alias: "silence_intrusion_alarm"
@@ -274,3 +302,6 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: "input_boolean.silence_intrusion_alarm"
+      - service: notify.intrusion_log
+        data:
+          message: "({{ intrusion_id }}) Intrusion alarm silenced."
