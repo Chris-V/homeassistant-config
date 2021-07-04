@@ -124,16 +124,11 @@ template:
           {{ False -}}
         {% endif %}
 
-automation:
-  - id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
-    alias: "reset_alarm_states"
-    initial_state: true
-    trigger:
-      - platform: state
-        entity_id: "binary_sensor.presence_armed"
-        from: "off"
-        to: "on"
-    action:
+script:
+  initialize_alarm_states:
+    alias: "Reset presence alarm states"
+    mode: "single"
+    sequence:
       - variables:
           arming_id: "{{ context.id }}"
       - service: input_text.set_value
@@ -158,10 +153,25 @@ automation:
         entity_id: "input_boolean.silence_intrusion_alarm"
       - service: notify.intrusion_log
         data:
-          message: "({{ arming_id }}) Intrusion alarm armed."
+          message: "({{ arming_id }}) Intrusion alarm initialized."
+
+automation:
+  - id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
+    alias: "presence_alarm_armed"
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.presence_armed"
+        from: "off"
+        to: "on"
+    action:
+      - service: notify.intrusion_log
+        data:
+          message: "Intrusion alarm armed."
+      - service: "script.initialize_alarm_states"
 
   - id: "64ef04c6-d94c-4d70-a116-d50ab1b295a5"
-    alias: "log_alarm_disarmed"
+    alias: "presence_alarm_disarmed"
     initial_state: true
     trigger:
       - platform: state
@@ -287,6 +297,8 @@ automation:
                 push_actions:
                   - action: "{{ arming_id }}_silence"
                     title: "Silence"
+                  - action: "{{ arming_id }}_clear"
+                    title: "Clear"
 
             - service: notify.intrusion_log
               data:
@@ -337,3 +349,30 @@ automation:
       - service: notify.intrusion_log
         data:
           message: "({{ arming_id }}) Intrusion alarm silenced."
+
+  - id: "f1d67201-6a81-4214-a528-8a5afff919c0"
+    alias: "clear_intrusion_alarm"
+    initial_state: true
+    mode: "single"
+    max_exceeded: "silent"
+
+    trigger:
+      - platform: event
+        event_type:
+          - "html5_notification.clicked"
+          - "mobile_app_notification_action"
+
+    variables:
+      arming_id: "{{ states('input_text.presence_armed_id') }}"
+
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.intrusion"
+        state: "on"
+      - "{{ trigger.event.data.action == arming_id ~ '_clear' }}"
+
+    action:
+      - service: notify.intrusion_log
+        data:
+          message: "({{ arming_id }}) Intrusion alarm cleared."
+      - service: "script.initialize_alarm_states"
