@@ -21,8 +21,8 @@ input_boolean:
     initial: false
 
 input_text:
-  intrusion_id:
-    name: "Intrusion ID"
+  presence_armed_id:
+    name: "Presence armed ID"
     icon: "mdi:shield-alert"
 
 binary_sensor:
@@ -110,11 +110,11 @@ automation:
         to: "on"
     action:
       - variables:
-          intrusion_id: "{{ context.id }}"
+          arming_id: "{{ context.id }}"
       - service: input_text.set_value
-        entity_id: "input_text.intrusion_id"
+        entity_id: "input_text.presence_armed_id"
         data:
-          value: "{{ intrusion_id }}"
+          value: "{{ arming_id }}"
       - service: mqtt.publish
         data:
           topic: *actifity_events_topic
@@ -129,7 +129,7 @@ automation:
         entity_id: "input_boolean.silence_intrusion_alarm"
       - service: notify.intrusion_log
         data:
-          message: "({{ intrusion_id }}) Intrusion alarm armed."
+          message: "({{ arming_id }}) Intrusion alarm armed."
 
   - id: "64ef04c6-d94c-4d70-a116-d50ab1b295a5"
     alias: "log_alarm_disarmed"
@@ -142,7 +142,7 @@ automation:
     action:
       - service: notify.intrusion_log
         data:
-          message: "({{ states('input_text.intrusion_id') }}) Intrusion alarm disarmed."
+          message: "({{ states('input_text.presence_armed_id') }}) Intrusion alarm disarmed."
 
   - id: "6edc94d0-d9f9-44eb-bad1-6873523ae9e8"
     alias: "armed_switch_paddle_tapped"
@@ -238,7 +238,7 @@ automation:
 
     action:
       - variables:
-          intrusion_id: "{{ states('input_text.intrusion_id') }}"
+          arming_id: "{{ states('input_text.presence_armed_id') }}"
 
       - repeat:
           sequence:
@@ -249,19 +249,19 @@ automation:
                   persistent: true
                   push_target: "household"
                   priority: true
-                  tag: "{{ intrusion_id }}"
+                  tag: "{{ arming_id }}"
                   message: >
                     {% set count = state_attr('binary_sensor.intrusion', 'activity') | length %}
                     {{ count }} activity {{ 'event was' if count == 1 else 'events were' }} detected.
                 title: "Intrusion detected"
                 dismissible: false
                 push_actions:
-                  - action: "{{ intrusion_id }}_silence"
+                  - action: "{{ arming_id }}_silence"
                     title: "Silence"
 
             - service: notify.intrusion_log
               data:
-                message: "({{ intrusion_id }}) Intrusion activity: `{{ state_attr('binary_sensor.intrusion', 'activity') | to_json }}`"
+                message: "({{ arming_id }}) Intrusion activity: `{{ state_attr('binary_sensor.intrusion', 'activity') | to_json }}`"
 
             - wait_for_trigger:
                 - platform: "state"
@@ -278,7 +278,7 @@ automation:
           dismissible: true
       - service: notify.intrusion_log
         data:
-          message: "({{ intrusion_id }}) Intrusion cleared."
+          message: "({{ arming_id }}) Intrusion cleared."
 
   - id: "65383759-a03c-4c81-9965-7154e83626fd"
     alias: "silence_intrusion_alarm"
@@ -292,11 +292,14 @@ automation:
           - "html5_notification.clicked"
           - "mobile_app_notification_action"
 
+    variables:
+      arming_id: "{{ states('input_text.presence_armed_id') }}"
+
     condition:
       - condition: state
         entity_id: "binary_sensor.intrusion"
         state: "on"
-      - "{{ trigger.event.data.action == states('input_text.intrusion_id') ~ '_silence' }}"
+      - "{{ trigger.event.data.action == arming_id ~ '_silence' }}"
 
     action:
       - service: input_boolean.turn_on
@@ -304,4 +307,4 @@ automation:
           entity_id: "input_boolean.silence_intrusion_alarm"
       - service: notify.intrusion_log
         data:
-          message: "({{ intrusion_id }}) Intrusion alarm silenced."
+          message: "({{ arming_id }}) Intrusion alarm silenced."
