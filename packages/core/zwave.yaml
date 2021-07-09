@@ -76,7 +76,7 @@ template:
       state: >-
         {{
           expand('group.zwave_nodes')
-            | selectattr('state', '==', 'dead')
+            | selectattr('state', 'in', ['dead', 'unavailable'])
             | list
             | count
         }}
@@ -84,7 +84,7 @@ template:
         entity_id: >-
           {{
             expand('group.zwave_nodes')
-              | selectattr('state', '==', 'dead')
+            | selectattr('state', 'in', ['dead', 'unavailable'])
               | map(attribute = 'entity_id')
               | sort
           }}
@@ -98,11 +98,15 @@ automation:
       - platform: "state"
         id: "died"
         entity_id: *zwave_nodes
-        to: "dead"
+        to:
+          - "dead"
+          - "unavailable"
       - platform: "state"
         id: "revived"
         entity_id: *zwave_nodes
-        from: "dead"
+        from:
+          - "dead"
+          - "unavailable"
 
     condition:
       - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
