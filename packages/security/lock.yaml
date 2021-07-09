@@ -8,9 +8,12 @@ automation:
       - platform: state
         entity_id: "binary_sensor.kitchen_door_lock_jammed"
 
+    variables:
+      is_jammed: "{{ trigger.to_state.state }}"
+
     action:
       - choose:
-          - conditions: "{{ trigger.to_state.state == 'on' }}"
+          - conditions: "{{ is_jammed == 'on' }}"
             sequence:
               - service: python_script.notify
                 data:
@@ -21,7 +24,7 @@ automation:
                     persistent: true
                     push_target: "household"
                     priority: true
-          - conditions: "{{ trigger.to_state.state == 'off' }}"
+          - conditions: "{{ is_jammed == 'off' }}"
             sequence:
               - service: python_script.notify
                 data:

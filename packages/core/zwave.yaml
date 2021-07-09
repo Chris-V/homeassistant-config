@@ -1,0 +1,131 @@
+# Regenerate list with:
+# {% for e in states.sensor
+#     | map(attribute = 'entity_id')
+#     | select('match', '.+_node_status')
+#     | sort
+#     | list -%}
+# - {{ e }}
+# {% endfor %}
+
+group:
+  zwave_nodes:
+    name: "Z-Wave nodes"
+    icon: "mdi:z-wave"
+    entities: &zwave_nodes
+      - "sensor.basement_bathroom_door_sensor_node_status"
+      - "sensor.basement_bathroom_fan_switch_node_status"
+      - "sensor.basement_bathroom_light_switch_node_status"
+      - "sensor.basement_bathroom_multisensor_node_status"
+      - "sensor.basement_bathroom_vanity_dimmer_node_status"
+      - "sensor.basement_hallway_dimmer_node_status"
+      - "sensor.basement_hallway_thermostat_node_status"
+      - "sensor.bookshelf_light_switch_node_status"
+      - "sensor.carl_power_strip_node_status"
+      - "sensor.dining_room_dimmer_node_status"
+      - "sensor.dining_room_thermostat_node_status"
+      - "sensor.downstairs_light_switch_node_status"
+      - "sensor.front_porch_light_switch_node_status"
+      - "sensor.guest_bedroom_closet_light_switch_node_status"
+      - "sensor.guest_bedroom_dimmer_node_status"
+      - "sensor.guest_bedroom_thermostat_node_status"
+      - "sensor.guest_bedroom_window_sensor_node_status"
+      - "sensor.hallway_light_switch_node_status"
+      - "sensor.kitchen_door_lock_node_status"
+      - "sensor.kitchen_door_sensor_node_status"
+      - "sensor.kitchen_light_sink_switch_node_status"
+      - "sensor.kitchen_light_switch_node_status"
+      - "sensor.kitchen_sink_leak_sensor_node_status"
+      - "sensor.laundry_dimmer_node_status"
+      - "sensor.laundry_motion_sensor_node_status"
+      - "sensor.living_room_couch_outlet_node_status"
+      - "sensor.living_room_door_sensor_node_status"
+      - "sensor.living_room_remote_node_status"
+      - "sensor.living_room_thermostat_node_status"
+      - "sensor.lounge_dimmer_node_status"
+      - "sensor.lounge_thermostat_node_status"
+      - "sensor.lounge_window_sensor_node_status"
+      - "sensor.main_bathroom_dimmer_node_status"
+      - "sensor.main_bathroom_fan_switch_node_status"
+      - "sensor.main_bathroom_multisensor_node_status"
+      - "sensor.main_bathroom_vanity_light_switch_node_status"
+      - "sensor.main_water_shut_off_valve_node_status"
+      - "sensor.master_bedroom_light_switch_node_status"
+      - "sensor.master_bedroom_thermostat_node_status"
+      - "sensor.office_dimmer_node_status"
+      - "sensor.office_thermostat_node_status"
+      - "sensor.shed_light_switch_node_status"
+      - "sensor.shed_outdoor_light_switch_node_status"
+      - "sensor.side_porch_light_switch_node_status"
+      - "sensor.slinky_power_strip_node_status"
+      - "sensor.staircase_dimmer_node_status"
+      - "sensor.studio_dimmer_node_status"
+      - "sensor.studio_thermostat_node_status"
+      - "sensor.studio_window_sensor_node_status"
+      - "sensor.washing_machine_leak_sensor_node_status"
+      - "sensor.water_heater_leak_sensor_node_status"
+      - "sensor.water_heater_switch_node_status"
+      - "sensor.workshop_light_switch_node_status"
+      - "sensor.workshop_motion_sensor_node_status"
+      - "sensor.z_wave_controller_node_status"
+
+template:
+  sensor:
+    - unique_id: "sensor.dead_zwave_nodes"
+      name: "Dead Z-Wave Nodes"
+      icon: "mdi:robot-dead"
+      state: >-
+        {{
+          expand('group.zwave_nodes')
+            | selectattr('state', '==', 'dead')
+            | list
+            | count
+        }}
+      attributes:
+        entity_id: >-
+          {{
+            expand('group.zwave_nodes')
+              | selectattr('state', '==', 'dead')
+              | map(attribute = 'entity_id')
+              | sort
+          }}
+
+automation:
+  - id: "automation.detect_dead_zwave_nodes"
+    alias: "detect_dead_zwave_nodes"
+    initial_state: true
+
+    trigger:
+      - platform: "state"
+        id: "died"
+        entity_id: *zwave_nodes
+        to: "dead"
+      - platform: "state"
+        id: "revived"
+        entity_id: *zwave_nodes
+        from: "dead"
+
+    condition:
+      - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
+
+    action:
+      - choose:
+          - conditions:
+              - condition: "trigger"
+                id: "died"
+            sequence:
+              - service: "python_script.notify"
+                data:
+                  push_target: "admin"
+                  persistent: true
+                  tag: "{{ trigger.to_state.entity_id }}"
+                  title: "☠️ {{ trigger.to_state.name | lower | replace(': node status', '') | title }} is dead "
+          - conditions:
+              - condition: "trigger"
+                id: "revived"
+            sequence:
+              - service: "python_script.notify"
+                data:
+                  push_target: "admin"
+                  persistent: true
+                  dismiss: true
+                  tag: "{{ trigger.to_state.entity_id }}"
