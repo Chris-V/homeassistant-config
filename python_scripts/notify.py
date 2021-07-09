@@ -23,7 +23,6 @@ HTML_PARAGRAPH_FORMAT = '<p>{}</p>'
 
 audio = data.get(ATTR_AUDIO, False)
 dismiss = data.get(ATTR_DISMISS, False)
-dismiss = data.get(ATTR_DISMISS, False)
 dismissible = data.get(ATTR_DISMISSIBLE, True)
 message = data.get(ATTR_MESSAGE, '')
 persistent = data.get(ATTR_PERSISTENT, False)
@@ -52,7 +51,7 @@ if not dismissible and not tag:
     logger.error('Non-dismissible notifications must have a tag.')
     dismissible = True
 
-if not title:
+if not dismiss and not title:
     logger.error(
         'Missing {}. Expected a non-empty string.'
             .format(ATTR_TITLE))

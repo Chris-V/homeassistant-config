@@ -11,6 +11,11 @@ views:
     icon: mdi:play-pause
     cards: !include views/media-details.yaml
 
+  - title: Z-Wave
+    path: zwave
+    icon: mdi:z-wave
+    cards: !include views/zwave-details.yaml
+
   - title: Settings
     path: settings
     icon: mdi:cog
