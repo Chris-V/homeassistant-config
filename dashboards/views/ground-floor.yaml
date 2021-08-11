@@ -1,3 +1,11 @@
+- type: thermostat
+  entity: climate.heat_pump
+  name: " "
+  style: |
+    #info {
+      padding-bottom: 6px
+    }
+
 - !template
   file: ../cards/area.yaml.j2
   variables:
