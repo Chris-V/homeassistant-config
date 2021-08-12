@@ -13,7 +13,8 @@ cloud:
 
 light:
   - platform: group
-    name: "Laundry room lights"
+    unique_id: "laundry_lights"
+    name: "Laundry lights"
     entities:
       - light.laundry_room
 
@@ -45,5 +46,5 @@ automation:
       path: "presence_light.yaml"
       input:
         light_entity: "light.laundry_room"
-        light_off_entity: "light.laundry_room_lights"
+        light_off_entity: "light.laundry_lights"
         presence_entity: "binary_sensor.laundry_room_motion"
