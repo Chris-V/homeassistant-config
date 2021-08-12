@@ -101,6 +101,7 @@ recorder:
       - "sensor.karine_pixel_1_wifi_connection"
       - "sensor.kitchen_door_lock_battery"
       - "sensor.kitchen_door_sensor_battery"
+      - "sensor.kitchen_door_unlock_user"
       - "sensor.kitchen_sink_leak_sensor_battery"
       - "sensor.kitchen_temperature"
       - "sensor.last_motion"
