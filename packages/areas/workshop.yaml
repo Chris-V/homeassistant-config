@@ -16,6 +16,7 @@ cloud:
 
 light:
   - platform: group
+    unique_id: "workshop_lights"
     name: "Workshop lights"
     entities:
       - light.workshop

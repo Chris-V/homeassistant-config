@@ -31,6 +31,7 @@ cloud:
 
 light:
   - platform: group
+    unique_id: "outdoor_lights"
     name: "Outdoor lights"
     entities:
       - light.side_porch

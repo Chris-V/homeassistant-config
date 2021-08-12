@@ -1,15 +1,17 @@
 light:
   - platform: group
+    unique_id: "basement_lights"
     name: "Basement lights"
     entities:
       - light.basement_bathroom_lights
       - light.common_basement_lights
       - light.guest_bedroom_lights
-      - light.laundry_room_lights
+      - light.laundry_lights
       - light.lounge_lights
       - light.studio_lights
       - light.workshop_lights
   - platform: group
+    unique_id: "ground_floor_lights"
     name: "Ground floor lights"
     entities:
       - light.dining_room_lights

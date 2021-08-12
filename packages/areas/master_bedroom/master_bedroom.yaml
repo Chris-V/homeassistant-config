@@ -52,13 +52,15 @@ input_select:
 
 light:
   - platform: group
+    unique_id: "master_bedroom_lights"
     name: "Master bedroom lights"
     entities:
       - light.master_bedroom
       - light.bedside_chris
       - light.bedside_karine
   - platform: group
-    name: "master_bedroom_bedsides"
+    unique_id: "master_bedroom_bedsides"
+    name: "Master bedroom bedsides"
     entities:
       - light.bedside_chris
       - light.bedside_karine

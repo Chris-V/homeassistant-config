@@ -86,6 +86,7 @@ fan:
 
 light:
   - platform: group
+    unique_id: "main_bathroom_lights"
     name: "Main bathroom lights"
     entities:
       - light.main_bathroom_spots
