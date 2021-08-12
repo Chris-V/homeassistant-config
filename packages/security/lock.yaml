@@ -31,29 +31,26 @@ automation:
                   dismiss: true
                   <<: *notification_options
 
-# TODO: Sadly the new `template:` syntax cannot be merged, except if everything is a dict.
-#  I would need to move everything outside of packages to use it as an array and use trigger sensors.
-#  See: https://community.home-assistant.io/t/allow-integration-template-in-packages/305865
-# template:
-#   - unique_id: "kitchen_door_unlock"
-#     trigger:
-#       - platform: event
-#         event_type: "zwave_js_notification"
-#         event_data:
-#           node_id: 57
-#           command_class: 113
-#           type: 6
-#           event: 6
-#     sensor:
-#       - unique_id: "user"
-#         name: "kitchen_door_unlock_user"
-#         state: >-
-#           {% set user_id = trigger.event.data.parameters.userId | int(-1) %}
-#           {% set users = {
-#                 0: 'Master',
-#                 1: 'Chris',
-#                 2: 'Karine',
-#               } %}
-#           {{ users[user_id] | default('Unknown') }}
-#         attributes:
-#           user_id: "{{ trigger.event.data.parameters.userId }}"
+template:
+  - unique_id: "kitchen_door_unlock"
+    trigger:
+      - platform: event
+        event_type: "zwave_js_notification"
+        event_data:
+          node_id: 57
+          command_class: 113
+          type: 6
+          event: 6
+    sensor:
+      - unique_id: "user"
+        name: "Kitchen door unlocks"
+        state: >-
+          {% set user_id = trigger.event.data.parameters.userId | int(-1) %}
+          {% set users = {
+                0: 'Master',
+                1: 'Chris',
+                2: 'Karine',
+              } %}
+          {{ users[user_id] | default('Code #' ~ user_id) }}
+        attributes:
+          user_id: "{{ trigger.event.data.parameters.userId }}"
