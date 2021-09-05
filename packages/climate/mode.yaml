@@ -83,25 +83,25 @@ group:
       - input_number.studio_thermostat_boost_setpoint
 
 template:
-  sensor:
-    - unique_id: "sensor.manual_thermostats_count"
-      name: "manual_thermostats_count"
-      icon: "mdi:thermometer-alert"
-      state: |
-        {{
-          expand('group.managed_thermostat_modes')
-            | selectattr('state', 'eq', 'Manual')
-            | list
-            | count
-        }}
-      attributes:
-        entity_id: |
+  - sensor:
+      - unique_id: "sensor.manual_thermostats_count"
+        name: "manual_thermostats_count"
+        icon: "mdi:thermometer-alert"
+        state: |
           {{
             expand('group.managed_thermostat_modes')
               | selectattr('state', 'eq', 'Manual')
-              | map('attr', 'entity_id')
               | list
+              | count
           }}
+        attributes:
+          entity_id: |
+            {{
+              expand('group.managed_thermostat_modes')
+                | selectattr('state', 'eq', 'Manual')
+                | map('attr', 'entity_id')
+                | list
+            }}
 
 script:
   restore_climate_auto_mode:

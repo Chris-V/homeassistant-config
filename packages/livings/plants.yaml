@@ -16,31 +16,31 @@ group:
       - "plant.viny"
 
 template:
-  binary_sensor:
-    - unique_id: "binary_sensor.all_plants"
-      name: "all_plants"
-      device_class: "problem"
-      icon: >-
-        {% set active = expand('group.all_plants')
-            | selectattr('state', 'eq', 'problem')
-            | list
-            | length != 0 %}
-        mdi:leaf{% if active %}-off{% endif %}
-      state: >-
-        {{
-          expand('group.all_plants')
-            | selectattr('state', 'eq', 'problem')
-            | list
-            | length != 0
-        }}
-      attributes:
-        entity_id: >-
+  - binary_sensor:
+      - unique_id: "binary_sensor.all_plants"
+        name: "all_plants"
+        device_class: "problem"
+        icon: >-
+          {% set active = expand('group.all_plants')
+              | selectattr('state', 'eq', 'problem')
+              | list
+              | length != 0 %}
+          mdi:leaf{% if active %}-off{% endif %}
+        state: >-
           {{
             expand('group.all_plants')
               | selectattr('state', 'eq', 'problem')
-              | map('attr', 'entity_id')
               | list
+              | length != 0
           }}
+        attributes:
+          entity_id: >-
+            {{
+              expand('group.all_plants')
+                | selectattr('state', 'eq', 'problem')
+                | map('attr', 'entity_id')
+                | list
+            }}
 
 input_boolean:
   notify_plant_problems:

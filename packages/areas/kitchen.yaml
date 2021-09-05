@@ -45,15 +45,15 @@ light:
     entity_id: "switch.kitchen_sink_light"
 
 template:
-  sensor:
-    - unique_id: "sensor.kitchen_temperature"
-      name: "kitchen_temperature"
-      device_class: "temperature"
-      unit_of_measurement: "°C"
-      # Living room and Kitchen thermostat are the same
-      state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
-      attributes:
-        heating: "{{ is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') }}"
+  - sensor:
+      - unique_id: "sensor.kitchen_temperature"
+        name: "kitchen_temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        # Living room and Kitchen thermostat are the same
+        state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
+        attributes:
+          heating: "{{ is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') }}"
 
 automation:
   - id: "ab8460a3-e7b3-4cef-989e-11a65da297f9"

@@ -12,22 +12,22 @@ group:
       - binary_sensor.living_room_door
 
 template:
-  binary_sensor:
-    - unique_id: "binary_sensor.all_doors"
-      name: "all_doors"
-      device_class: "door"
-      state: >-
-        {{
-          expand('group.all_doors')
-            | selectattr('state', 'eq', 'on')
-            | list
-            | length != 0
-        }}
-      attributes:
-        entity_id: >-
+  - binary_sensor:
+      - unique_id: "binary_sensor.all_doors"
+        name: "all_doors"
+        device_class: "door"
+        state: >-
           {{
             expand('group.all_doors')
               | selectattr('state', 'eq', 'on')
-              | map('attr', 'entity_id')
               | list
+              | length != 0
           }}
+        attributes:
+          entity_id: >-
+            {{
+              expand('group.all_doors')
+                | selectattr('state', 'eq', 'on')
+                | map('attr', 'entity_id')
+                | list
+            }}

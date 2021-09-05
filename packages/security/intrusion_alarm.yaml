@@ -43,29 +43,67 @@ binary_sensor:
     json_attributes_template: "{{ value_json.attributes | to_json }}"
 
 template:
-  binary_sensor:
-    - unique_id: "449f4beb-83a1-43d2-a7ba-64de0a305960"
-      name: "presence_armed"
-      icon: >-
-        {% if is_state('binary_sensor.presence_armed', 'on') -%}
-          mdi:shield-check
-        {%- else -%}
-          mdi:shield-off
-        {%- endif %}
-      state: >-
-        {{
-          is_state('input_boolean.force_presence_armed', 'on')
-            or not is_state('group.household', 'home')
-            and is_state('binary_sensor.guest_mode', 'off')
-        }}
+  - binary_sensor:
+      - unique_id: "449f4beb-83a1-43d2-a7ba-64de0a305960"
+        name: "presence_armed"
+        icon: >-
+          {% if is_state('binary_sensor.presence_armed', 'on') -%}
+            mdi:shield-check
+          {%- else -%}
+            mdi:shield-off
+          {%- endif %}
+        state: >-
+          {{
+            is_state('input_boolean.force_presence_armed', 'on')
+              or not is_state('group.household', 'home')
+              and is_state('binary_sensor.guest_mode', 'off')
+          }}
 
-    - unique_id: "ccc872ad-92f9-4b3e-87a5-452292b6b118"
-      name: "intrusion"
-      device_class: "safety"
-      delay_on: 15
-      delay_off: 15
-      attributes:
-        activity: >-
+      - unique_id: "ccc872ad-92f9-4b3e-87a5-452292b6b118"
+        name: "intrusion"
+        device_class: "safety"
+        delay_on: 15
+        delay_off: 15
+        attributes:
+          activity: >-
+            {% set armed = states.binary_sensor.presence_armed -%}
+            {% if armed is not none and armed.state == 'on' -%}
+              {%
+                set armed_since = states('input_datetime.presence_armed_since')
+                  | as_datetime
+                  | as_local
+                  | max(armed.last_changed)
+              -%}
+              {% set changed_since_armed = expand('group.all_windows', 'group.all_doors', 'group.all_motions')
+                  | selectattr('last_changed', '>=', armed_since)
+                  | map(attribute = 'name')
+                  | list -%}
+
+              {%
+                set intrusion_events_devices = state_attr('binary_sensor.intrusion_events', 'devices')
+                  | default([], True)
+                  | list
+              -%}
+              {% set ns = namespace(device_names = []) -%}
+              {% for d in intrusion_events_devices -%}
+                {% set ns.device_names = ns.device_names + [device_attr(d, 'name')] -%}
+              {% endfor -%}
+
+              {{ (changed_since_armed + devices) | unique | sort -}}
+            {% else -%}
+              {{ state_attr('binary_sensor.intrusion', 'activity') | default([], True) -}}
+            {% endif %}
+        availability: >-
+          {{ states.binary_sensor.presence_armed is not none }}
+        icon: >-
+          {%- if is_state('binary_sensor.intrusion', 'on') -%}
+            mdi:shield-alert
+          {%- elif is_state('binary_sensor.presence_armed', 'on') -%}
+            mdi:shield-check
+          {%- else -%}
+            mdi:shield-off
+          {%- endif %}
+        state: >-
           {% set armed = states.binary_sensor.presence_armed -%}
           {% if armed is not none and armed.state == 'on' -%}
             {%
@@ -74,53 +112,15 @@ template:
                 | as_local
                 | max(armed.last_changed)
             -%}
-            {% set changed_since_armed = expand('group.all_windows', 'group.all_doors', 'group.all_motions')
-                | selectattr('last_changed', '>=', armed_since)
-                | map(attribute = 'name')
-                | list -%}
-
-            {%
-              set intrusion_events_devices = state_attr('binary_sensor.intrusion_events', 'devices')
-                | default([], True)
-                | list
-            -%}
-            {% set ns = namespace(device_names = []) -%}
-            {% for d in intrusion_events_devices -%}
-              {% set ns.device_names = ns.device_names + [device_attr(d, 'name')] -%}
-            {% endfor -%}
-
-            {{ (changed_since_armed + devices) | unique | sort -}}
+            {{
+              is_state('binary_sensor.intrusion_events', 'on')
+                or expand('group.all_windows', 'group.all_doors', 'group.all_motions')
+                  | selectattr('last_changed', '>=', armed_since)
+                  | first is defined
+            -}}
           {% else -%}
-            {{ state_attr('binary_sensor.intrusion', 'activity') | default([], True) -}}
+            {{ False -}}
           {% endif %}
-      availability: >-
-        {{ states.binary_sensor.presence_armed is not none }}
-      icon: >-
-        {%- if is_state('binary_sensor.intrusion', 'on') -%}
-          mdi:shield-alert
-        {%- elif is_state('binary_sensor.presence_armed', 'on') -%}
-          mdi:shield-check
-        {%- else -%}
-          mdi:shield-off
-        {%- endif %}
-      state: >-
-        {% set armed = states.binary_sensor.presence_armed -%}
-        {% if armed is not none and armed.state == 'on' -%}
-          {%
-            set armed_since = states('input_datetime.presence_armed_since')
-              | as_datetime
-              | as_local
-              | max(armed.last_changed)
-          -%}
-          {{
-            is_state('binary_sensor.intrusion_events', 'on')
-              or expand('group.all_windows', 'group.all_doors', 'group.all_motions')
-                | selectattr('last_changed', '>=', armed_since)
-                | first is defined
-          -}}
-        {% else -%}
-          {{ False -}}
-        {% endif %}
 
 script:
   initialize_alarm_states:

@@ -86,14 +86,14 @@ light:
     entity_id: "switch.bookshelf_light"
 
 template:
-  sensor:
-    - unique_id: "sensor.living_room_temperature"
-      name: "living_room_temperature"
-      device_class: "temperature"
-      unit_of_measurement: "°C"
-      state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
-      attributes:
-        heating: "{{ is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') }}"
+  - sensor:
+      - unique_id: "sensor.living_room_temperature"
+        name: "living_room_temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        state: "{{ states('sensor.living_room_thermostat_temperature') | round(1) }}"
+        attributes:
+          heating: "{{ is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') }}"
 
 automation:
   - id: "automation.living_room_remote"

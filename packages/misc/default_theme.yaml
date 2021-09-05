@@ -6,32 +6,32 @@ homeassistant:
       friendly_name: "Use dark theme"
 
 template:
-  binary_sensor:
-    - unique_id: "d15e4446-af81-4000-aed1-98a0fe3c8702"
-      name: "use_alarm_theme"
-      icon: "mdi:alarm-light"
-      state: >-
-        {{
-          (
-            expand(
-              'binary_sensor.all_leaks',
-              'binary_sensor.intrusion',
-              'binary_sensor.kitchen_door_lock_jammed',
+  - binary_sensor:
+      - unique_id: "d15e4446-af81-4000-aed1-98a0fe3c8702"
+        name: "use_alarm_theme"
+        icon: "mdi:alarm-light"
+        state: >-
+          {{
+            (
+              expand(
+                'binary_sensor.all_leaks',
+                'binary_sensor.intrusion',
+                'binary_sensor.kitchen_door_lock_jammed',
+              )
+                | selectattr('state', '==', 'on')
+                | first is defined
+            ) or (
+              expand(
+                'switch.main_water_shut_off_valve',
+              )
+                | selectattr('state', '==', 'off')
+                | first is defined
             )
-              | selectattr('state', '==', 'on')
-              | first is defined
-          ) or (
-            expand(
-              'switch.main_water_shut_off_valve',
-            )
-              | selectattr('state', '==', 'off')
-              | first is defined
-          )
-        }}
-    - unique_id: "db252c59-897b-4bd9-94a8-d5d17f48ed68"
-      name: "use_dark_theme"
-      icon: "mdi:theme-light-dark"
-      state: "{{ state_attr('sun.sun', 'elevation') | float < -3 }}"
+          }}
+      - unique_id: "db252c59-897b-4bd9-94a8-d5d17f48ed68"
+        name: "use_dark_theme"
+        icon: "mdi:theme-light-dark"
+        state: "{{ state_attr('sun.sun', 'elevation') | float < -3 }}"
 
 input_boolean:
   automatic_night_theme:
