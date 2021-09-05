@@ -45,7 +45,7 @@ footer:
     - entity: binary_sensor.presence_armed
       color: green
       y_axis: secondary
-    - entity: binary_sensor.intrusion
+    - entity: binary_sensor.intrusion_activity
       color: red
   state_map:
     - value: "off"
@@ -59,7 +59,7 @@ footer:
 
 entities:
   - type: "custom:button-card"
-    entity: binary_sensor.intrusion
+    entity: binary_sensor.intrusion_activity
     aspect_ratio: 3/1
     color_type: icon
     show_name: false
@@ -76,32 +76,3 @@ entities:
             - animation: blink 2s ease infinite
     tap_action:
       action: more-info
-
-  - type: conditional
-    conditions:
-      - entity: binary_sensor.intrusion
-        state: "on"
-    row:
-      entity: input_boolean.silence_intrusion_alarm
-      name: Silence
-
-  - type: conditional
-    conditions:
-      - entity: binary_sensor.intrusion
-        state: "on"
-    row:
-      type: custom:auto-entities
-      card:
-        type: custom:fold-entity-row
-        open: false
-        padding: 0
-        head:
-          type: section
-          label: Activity
-        group_config:
-          secondary_info: last-changed
-      sort:
-        method: name
-      filter:
-        template: >-
-          {{ state_attr('binary_sensor.intrusion', 'activity') | default([], True) }}

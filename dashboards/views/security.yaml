@@ -1,0 +1,87 @@
+- type: "vertical-stack"
+  title: Controls
+  cards:
+    - !include ../cards/alarm.yaml
+
+    - type: "entities"
+      title: "Settings"
+      show_header_toggle: false
+      state_color: true
+      entities:
+        - name: "Arm"
+          entity: "input_boolean.force_presence_armed"
+        - name: "Guest mode"
+          entity: "input_boolean.force_guest_mode"
+        - type: conditional
+          conditions: &intrusion_detected
+            - entity: "binary_sensor.intrusion_activity"
+              state: "on"
+          row:
+            name: "Silence"
+            entity: "input_boolean.silence_intrusion_alarm"
+        - type: "conditional"
+          conditions: *intrusion_detected
+          row:
+            name: "Reset"
+            entity: "script.initialize_alarm_states"
+            action_name: "Clear current activity"
+
+- type: "vertical-stack"
+  title: "Session"
+  cards:
+    - type: "markdown"
+      content: |
+        {%
+          set devices =
+            state_attr('sensor.intrusion_events', 'devices') | default([], True) | list
+              + state_attr('binary_sensor.intrusion_events', 'devices') | default([], True) | list
+        -%}
+        {%
+          set entities =
+            state_attr('sensor.intrusion_events', 'entities') | default([], True) | list
+              + state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) | list
+        -%}
+        {% set count = (devices + entities) | length -%}
+        {% set areas = (devices + entities) | map('area_name') | select('string') | sort | unique | list -%}
+
+        <ha-icon icon="mdi:identifier"></ha-icon> {{ states('input_text.presence_armed_id') }}
+
+        <ha-icon icon="mdi:calendar-clock"></ha-icon> {{ states('input_datetime.presence_armed_since') | as_timestamp | timestamp_custom('%c') }}
+
+        {%- if count > 0 %}
+
+          <ha-icon icon="mdi:shield-alert"></ha-icon> {{ count }} event{% if count > 0 %}s{% endif %} detected{% if areas | count > 0 %} in:{% else %}.{% endif %}
+
+          {% for area_id in areas -%}
+            * [{{ area_name(area_id) }}](/config/areas/area/{{ area_id }})
+          {% endfor %}
+        {%- endif %}
+
+    - type: "markdown"
+      title: "Devices"
+      content: |
+        {%
+          set devices = (
+            state_attr('sensor.intrusion_events', 'devices') | default([], True)
+              + state_attr('binary_sensor.intrusion_events', 'devices') | default([], True)
+          ) | unique
+        -%}
+        {% for device_id in devices -%}
+          * [{{ device_attr(device_id, 'name') }}](/config/devices/device/{{ device_id }})
+        {%- endfor %}
+
+    - type: "custom:auto-entities"
+      card:
+        type: "entities"
+        title: "Entities"
+        show_header_toggle: false
+      sort:
+        method: "name"
+      filter:
+        template: >-
+          {{
+            (
+              state_attr('sensor.intrusion_events', 'entities') | default([], True)
+                + state_attr('binary_sensor.intrusion_events', 'entities') | default([], True)
+            ) | unique
+          }}

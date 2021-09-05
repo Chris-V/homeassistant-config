@@ -11,10 +11,8 @@ google:
 #         search: "#regular"
 #         ignore_availability: true
 #         track: true
-#         max_results: 100
 #       - device_id: "special_climate_schedule"
 #         name: "Special climate schedule"
 #         search: "#special"
 #         ignore_availability: true
 #         track: true
-#         max_results: 25

@@ -15,7 +15,7 @@ template:
             (
               expand(
                 'binary_sensor.all_leaks',
-                'binary_sensor.intrusion',
+                'binary_sensor.intrusion_activity',
                 'binary_sensor.kitchen_door_lock_jammed',
               )
                 | selectattr('state', '==', 'on')
