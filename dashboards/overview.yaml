@@ -6,6 +6,16 @@ views:
     icon: mdi:home
     cards: !include views/home.yaml
 
+  - title: Home Security
+    path: security
+    icon: mdi:shield-home
+    cards: !include views/security.yaml
+
+  - title: Livings
+    path: livings
+    icon: mdi:leaf
+    cards: !include views/livings.yaml
+
   - title: Ground Floor
     path: ground
     icon: mdi:home-floor-g
@@ -15,8 +25,3 @@ views:
     path: basement
     icon: mdi:home-floor-b
     cards: !include views/basement.yaml
-
-  - title: Livings
-    path: livings
-    icon: mdi:leaf
-    cards: !include views/livings.yaml

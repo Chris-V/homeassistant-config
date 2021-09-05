@@ -2,7 +2,7 @@ homeassistant:
   customize:
     binary_sensor.presence_armed:
       friendly_name: "Armed"
-    binary_sensor.intrusion:
+    binary_sensor.intrusion_activity:
       friendly_name: "Intrusion"
 
 notify:
@@ -60,49 +60,53 @@ template:
           }}
 
       - unique_id: "ccc872ad-92f9-4b3e-87a5-452292b6b118"
-        name: "intrusion"
+        name: "intrusion_activity"
         device_class: "safety"
         delay_on: 15
         delay_off: 15
         attributes:
           activity: >-
-            {% set armed = states.binary_sensor.presence_armed -%}
-            {% if armed is not none and armed.state == 'on' -%}
+            {% if is_state('binary_sensor.presence_armed', 'on') -%}
               {%
-                set armed_since = states('input_datetime.presence_armed_since')
-                  | as_datetime
-                  | as_local
-                  | max(armed.last_changed)
+                set devices =
+                  (state_attr('sensor.intrusion_events', 'devices') | default([], True) | list)
+                    + (state_attr('binary_sensor.intrusion_events', 'devices') | default([], True) | list)
               -%}
-              {% set changed_since_armed = expand('group.all_windows', 'group.all_doors', 'group.all_motions')
-                  | selectattr('last_changed', '>=', armed_since)
-                  | map(attribute = 'name')
-                  | list -%}
+              {%
+                set entities =
+                  (state_attr('sensor.intrusion_events', 'entities') | default([], True) | list)
+                    + (state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) | list)
+              -%}
 
-              {%
-                set intrusion_events_devices = state_attr('binary_sensor.intrusion_events', 'devices')
-                  | default([], True)
-                  | list
-              -%}
               {% set ns = namespace(device_names = []) -%}
-              {% for d in intrusion_events_devices -%}
-                {% set ns.device_names = ns.device_names + [device_attr(d, 'name')] -%}
+              {% for device in intrusion_devices -%}
+                {% set ns.device_names = ns.device_names + [device_attr(device, 'name')] -%}
               {% endfor -%}
 
-              {{ (changed_since_armed + devices) | unique | sort -}}
+              {{ (entities | map(attribute = 'name') + ns.device_names) | unique | sort -}}
             {% else -%}
-              {{ state_attr('binary_sensor.intrusion', 'activity') | default([], True) -}}
+              {{ state_attr('binary_sensor.intrusion_activity', 'activity') | default([], True) -}}
             {% endif %}
         availability: >-
           {{ states.binary_sensor.presence_armed is not none }}
         icon: >-
-          {%- if is_state('binary_sensor.intrusion', 'on') -%}
+          {%- if is_state('binary_sensor.intrusion_activity', 'on') -%}
             mdi:shield-alert
           {%- elif is_state('binary_sensor.presence_armed', 'on') -%}
             mdi:shield-check
           {%- else -%}
             mdi:shield-off
           {%- endif %}
+        state: >-
+          {{
+            is_state('binary_sensor.presence_armed', 'on')
+              and is_state('binary_sensor.intrusion_events', 'on')
+              or states('sensor.intrusion_events') | default | int > 0
+          }}
+
+    sensor:
+      - unique_id: "0d5d4c9c-bcb3-4e21-b7b5-74e67b2aae6a"
+        name: "intrusion_events"
         state: >-
           {% set armed = states.binary_sensor.presence_armed -%}
           {% if armed is not none and armed.state == 'on' -%}
@@ -113,14 +117,36 @@ template:
                 | max(armed.last_changed)
             -%}
             {{
-              is_state('binary_sensor.intrusion_events', 'on')
-                or expand('group.all_windows', 'group.all_doors', 'group.all_motions')
-                  | selectattr('last_changed', '>=', armed_since)
-                  | first is defined
-            -}}
-          {% else -%}
-            {{ False -}}
-          {% endif %}
+              expand(
+                'group.all_windows',
+                'group.all_doors',
+                'group.all_motions',
+              ) | selectattr('last_changed', '>=', armed_since) | length
+            }}
+          {%- else -%}
+            0
+          {%- endif %}
+        attributes:
+          entities: >-
+            {% set ns = namespace(entities = []) -%}
+            {% set armed = states.binary_sensor.presence_armed -%}
+            {% if armed is not none and armed.state == 'on' -%}
+              {%
+                set armed_since = states('input_datetime.presence_armed_since')
+                  | as_datetime
+                  | as_local
+                  | max(armed.last_changed)
+              -%}
+              {%
+                set ns.entities = expand(
+                  'group.all_windows',
+                  'group.all_doors',
+                  'group.all_motions',
+                ) | selectattr('last_changed', '>=', armed_since)
+              -%}
+            {%- endif -%}
+
+            {{ ns.entities | map(attribute = 'entity_id') | list }}
 
 script:
   initialize_alarm_states:
@@ -145,7 +171,7 @@ script:
           payload_template: >-
             {
               "state": "off",
-              "attributes": { "devices": [], "entities": [], "nodes": [] }
+              "attributes": { "devices": [], "entities": [] }
             }
       - service: input_boolean.turn_off
         entity_id: "input_boolean.silence_intrusion_alarm"
@@ -156,6 +182,7 @@ script:
 automation:
   - id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
     alias: "presence_alarm_armed"
+    description: "Initialize home alarm states when arming is enabled."
     initial_state: true
     trigger:
       - platform: state
@@ -170,6 +197,7 @@ automation:
 
   - id: "64ef04c6-d94c-4d70-a116-d50ab1b295a5"
     alias: "presence_alarm_disarmed"
+    description: "Log end of home alarm arming."
     initial_state: true
     trigger:
       - platform: state
@@ -183,6 +211,7 @@ automation:
 
   - id: "6edc94d0-d9f9-44eb-bad1-6873523ae9e8"
     alias: "armed_switch_paddle_tapped"
+    description: "Detect tapped paddle switches when home is armed."
     initial_state: true
     mode: "parallel"
 
@@ -192,18 +221,13 @@ automation:
 
     variables:
       device_id: "{{ trigger.event.data.device_id }}"
-      node_id: "{{ trigger.event.data.node_id | default | int }}"
       action_type: "{{ trigger.event.data.value | default | string }}"
 
     condition:
       - condition: state
         entity_id: "binary_sensor.presence_armed"
         state: "on"
-      - >-
-          {{
-            action_type.startswith('KeyPressed')
-              or action_type == 'KeyReleased'
-          }}
+      - "{{ action_type.startswith('KeyPressed') or action_type == 'KeyReleased' }}"
 
     action:
       - service: mqtt.publish
@@ -213,27 +237,35 @@ automation:
           retain: true
           payload_template: >-
             {% set devices = state_attr('binary_sensor.intrusion_events', 'devices') | default([], True) -%}
-            {% set nodes = state_attr('binary_sensor.intrusion_events', 'nodes') | default([], True) -%}
+            {% set entities = state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) -%}
             {{
               {
                 'state': 'on',
                 'attributes': {
                   'devices': (devices + [device_id]) | unique | list,
-                  'nodes': (nodes + [node_id]) | unique | list,
+                  'entities': entities,
                 }
               } | to_json
             }}
 
   - id: "2b123148-0e89-4722-8a31-8547d7876033"
-    alias: "alarm_intrusion"
+    alias: "sound_intrusion_alarm"
+    description: "Play the intrusion alarm audio while the intrusion is active."
     initial_state: true
     mode: "single"
     max_exceeded: "silent"
 
     trigger:
+      - platform: homeassistant
+        event: "start"
       - platform: state
-        entity_id: "binary_sensor.intrusion"
+        entity_id: "binary_sensor.intrusion_activity"
         to: "on"
+
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.intrusion_activity"
+        state: "on"
 
     action:
       - repeat:
@@ -250,19 +282,27 @@ automation:
             - delay: 10
           until:
             - condition: state
-              entity_id: "binary_sensor.intrusion"
+              entity_id: "binary_sensor.intrusion_activity"
               state: "off"
 
   - id: "b0045b02-1756-4635-bc2c-4344de74d0b6"
-    alias: "notify_intrusion"
+    alias: "notify_intrusion_alarm"
+    description: "Send and update the intrusion notification to owners."
     initial_state: true
     mode: "single"
     max_exceeded: "silent"
 
     trigger:
+      - platform: homeassistant
+        event: "start"
       - platform: state
-        entity_id: "binary_sensor.intrusion"
+        entity_id: "binary_sensor.intrusion_activity"
         to: "on"
+
+    condition:
+      - condition: state
+        entity_id: "binary_sensor.intrusion_activity"
+        state: "on"
 
     action:
       - variables:
@@ -276,37 +316,38 @@ automation:
                   audio: false
                   persistent: true
                   push_target: "household"
+                  url: "/lovelace/security"
                   priority: true
                   tag: "{{ arming_id }}"
                   message: >
                     {%
-                      set areas = state_attr('binary_sensor.intrusion', 'activity')
+                      set areas = state_attr('binary_sensor.intrusion_activity', 'activity')
                         | map('area_name')
                         | select('string')
                         | sort
                         | unique
                         | list
                     %}
-                    {% set count = state_attr('binary_sensor.intrusion', 'activity') | length %}
+                    {% set count = state_attr('binary_sensor.intrusion_activity', 'activity') | length %}
                     {{ count }} events detected{% if areas | count > 0 %} in {{ areas[:-1] | join(', ') }}{% if areas | count > 1 %} and {% endif %}{{ areas[-1] }}{% endif %}.
                 title: "Intrusion detected"
                 dismissible: false
                 push_actions:
-                  - action: "{{ arming_id }}_silence"
+                  - action: "silence_{{ arming_id }}"
                     title: "Silence"
-                  - action: "{{ arming_id }}_clear"
-                    title: "Clear"
+                  - action: "reset_{{ arming_id }}"
+                    title: "Reset"
 
             - service: notify.intrusion_log
               data:
-                message: "({{ arming_id }}) Intrusion activity: `{{ state_attr('binary_sensor.intrusion', 'activity') | to_json }}`"
+                message: "({{ arming_id }}) Intrusion activity: `{{ state_attr('binary_sensor.intrusion_activity', 'activity') | to_json }}`"
 
             - wait_for_trigger:
                 - platform: "state"
-                  entity_id: "binary_sensor.intrusion"
+                  entity_id: "binary_sensor.intrusion_activity"
           until:
             - condition: state
-              entity_id: "binary_sensor.intrusion"
+              entity_id: "binary_sensor.intrusion_activity"
               state: "off"
 
       - service: python_script.notify
@@ -320,6 +361,7 @@ automation:
 
   - id: "65383759-a03c-4c81-9965-7154e83626fd"
     alias: "silence_intrusion_alarm"
+    description: "Silence the home alarm audio when requested."
     initial_state: true
     mode: "single"
     max_exceeded: "silent"
@@ -335,9 +377,9 @@ automation:
 
     condition:
       - condition: state
-        entity_id: "binary_sensor.intrusion"
+        entity_id: "binary_sensor.intrusion_activity"
         state: "on"
-      - "{{ trigger.event.data.action == arming_id ~ '_silence' }}"
+      - "{{ trigger.event.data.action == 'silence_' ~ arming_id }}"
 
     action:
       - service: input_boolean.turn_on
@@ -348,7 +390,8 @@ automation:
           message: "({{ arming_id }}) Intrusion alarm silenced."
 
   - id: "f1d67201-6a81-4214-a528-8a5afff919c0"
-    alias: "clear_intrusion_alarm"
+    alias: "reset_intrusion_alarm"
+    description: "Reinitialize the home alarm when requested."
     initial_state: true
     mode: "single"
     max_exceeded: "silent"
@@ -364,9 +407,9 @@ automation:
 
     condition:
       - condition: state
-        entity_id: "binary_sensor.intrusion"
+        entity_id: "binary_sensor.intrusion_activity"
         state: "on"
-      - "{{ trigger.event.data.action == arming_id ~ '_clear' }}"
+      - "{{ trigger.event.data.action == 'reset_' ~ arming_id }}"
 
     action:
       - service: notify.intrusion_log

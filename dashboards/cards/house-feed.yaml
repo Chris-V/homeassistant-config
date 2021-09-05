@@ -32,7 +32,7 @@ filter:
     {%- endmacro %}
 
     {{ ([
-          'binary_sensor.intrusion',
+          'binary_sensor.intrusion_activity',
           'binary_sensor.presence_armed',
           'fan.basement_bathroom',
           'fan.main_bathroom',
