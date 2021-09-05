@@ -218,7 +218,7 @@ automation:
               {
                 'state': 'on',
                 'attributes': {
-                  'devices': (devices + [device_id]) | unique | list
+                  'devices': (devices + [device_id]) | unique | list,
                   'nodes': (nodes + [node_id]) | unique | list,
                 }
               } | to_json
