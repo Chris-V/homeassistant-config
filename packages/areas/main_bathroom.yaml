@@ -35,36 +35,36 @@ cloud:
           - "Bathroom fan"
 
 template:
-  binary_sensor:
-    - unique_id: "binary_sensor.main_bathroom_door"
-      name: "main_bathroom_door"
-      device_class: "door"
-      state: true
+  - binary_sensor:
+      - unique_id: "binary_sensor.main_bathroom_door"
+        name: "main_bathroom_door"
+        device_class: "door"
+        state: true
 
-    - unique_id: "binary_sensor.main_bathroom_presence"
-      name: "main_bathroom_presence"
-      device_class: "presence"
-      state: >-
-        {{
-          is_state('binary_sensor.main_bathroom_motion', 'on')
-            or is_state('binary_sensor.main_bathroom_door', 'off')
-        }}
-      delay_off: 15
+      - unique_id: "binary_sensor.main_bathroom_presence"
+        name: "main_bathroom_presence"
+        device_class: "presence"
+        state: >-
+          {{
+            is_state('binary_sensor.main_bathroom_motion', 'on')
+              or is_state('binary_sensor.main_bathroom_door', 'off')
+          }}
+        delay_off: 15
 
-  sensor:
-    - unique_id: "sensor.main_bathroom_humidity"
-      name: "main_bathroom_humidity"
-      device_class: "humidity"
-      unit_of_measurement: "%"
-      state: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | round }}"
+    sensor:
+      - unique_id: "sensor.main_bathroom_humidity"
+        name: "main_bathroom_humidity"
+        device_class: "humidity"
+        unit_of_measurement: "%"
+        state: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | round }}"
 
-    - unique_id: "sensor.main_bathroom_temperature"
-      name: "main_bathroom_temperature"
-      device_class: "temperature"
-      unit_of_measurement: "°C"
-      state: "{{ states('sensor.main_bathroom_multisensor_temperature') | round(1) }}"
-      attributes:
-        heating: false
+      - unique_id: "sensor.main_bathroom_temperature"
+        name: "main_bathroom_temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        state: "{{ states('sensor.main_bathroom_multisensor_temperature') | round(1) }}"
+        attributes:
+          heating: false
 
 fan:
   - platform: template

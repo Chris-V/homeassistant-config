@@ -53,30 +53,30 @@ light:
     entity_id: "switch.shed_outdoor_light"
 
 template:
-  sensor:
-    - unique_id: "sensor.outdoor_humidity"
-      name: "outdoor_humidity"
-      device_class: "humidity"
-      unit_of_measurement: "%"
-      state: "{{ states('sensor.weather_quebec_humidity') }}"
-      availability: "{{ not is_state('sensor.weather_quebec_humidity', 'unavailable') }}"
-    - unique_id: "sensor.outdoor_temperature"
-      name: "outdoor_temperature"
-      device_class: "temperature"
-      unit_of_measurement: "°C"
-      state: "{{ states('sensor.weather_quebec_temperature') }}"
-      availability: "{{ not is_state('sensor.weather_quebec_temperature', 'unavailable') }}"
-    - unique_id: "sensor.weather_summary"
-      name: "weather_summary"
-      state: "{{ states('sensor.weather_quebec_forecast') }}"
-      icon: >
-        {% set state_icon = states('weather.quebec')
-          | replace('partlycloudy', 'partly-cloudy')
-          | replace('unknown', '')
-          | replace('undefined','')
-          | replace('exceptional', '') %}
-        mdi:{% if state_icon %}weather-{{ state_icon }}{% else %}help-circle{% endif %}
-      availability: "{{ not is_state('sensor.weather_quebec_forecast', 'unavailable') }}"
+  - sensor:
+      - unique_id: "sensor.outdoor_humidity"
+        name: "outdoor_humidity"
+        device_class: "humidity"
+        unit_of_measurement: "%"
+        state: "{{ states('sensor.weather_quebec_humidity') }}"
+        availability: "{{ not is_state('sensor.weather_quebec_humidity', 'unavailable') }}"
+      - unique_id: "sensor.outdoor_temperature"
+        name: "outdoor_temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        state: "{{ states('sensor.weather_quebec_temperature') }}"
+        availability: "{{ not is_state('sensor.weather_quebec_temperature', 'unavailable') }}"
+      - unique_id: "sensor.weather_summary"
+        name: "weather_summary"
+        state: "{{ states('sensor.weather_quebec_forecast') }}"
+        icon: >
+          {% set state_icon = states('weather.quebec')
+            | replace('partlycloudy', 'partly-cloudy')
+            | replace('unknown', '')
+            | replace('undefined','')
+            | replace('exceptional', '') %}
+          mdi:{% if state_icon %}weather-{{ state_icon }}{% else %}help-circle{% endif %}
+        availability: "{{ not is_state('sensor.weather_quebec_forecast', 'unavailable') }}"
 
 automation:
   - id: "abe8645a-9131-4822-8877-631f62b3e716"

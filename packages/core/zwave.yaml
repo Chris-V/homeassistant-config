@@ -69,25 +69,25 @@ group:
       - "sensor.z_wave_controller_node_status"
 
 template:
-  sensor:
-    - unique_id: "sensor.dead_zwave_nodes"
-      name: "Dead Z-Wave Nodes"
-      icon: "mdi:robot-dead"
-      state: >-
-        {{
-          expand('group.zwave_nodes')
-            | selectattr('state', 'in', ['dead', 'unavailable'])
-            | list
-            | count
-        }}
-      attributes:
-        entity_id: >-
+  - sensor:
+      - unique_id: "sensor.dead_zwave_nodes"
+        name: "Dead Z-Wave Nodes"
+        icon: "mdi:robot-dead"
+        state: >-
           {{
             expand('group.zwave_nodes')
-            | selectattr('state', 'in', ['dead', 'unavailable'])
-              | map(attribute = 'entity_id')
-              | sort
+              | selectattr('state', 'in', ['dead', 'unavailable'])
+              | list
+              | count
           }}
+        attributes:
+          entity_id: >-
+            {{
+              expand('group.zwave_nodes')
+              | selectattr('state', 'in', ['dead', 'unavailable'])
+                | map(attribute = 'entity_id')
+                | sort
+            }}
 
 automation:
   - id: "automation.detect_dead_zwave_nodes"

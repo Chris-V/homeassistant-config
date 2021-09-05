@@ -13,31 +13,31 @@ group:
       - binary_sensor.water_heater_leak
 
 template:
-  binary_sensor:
-    - unique_id: "binary_sensor.all_leaks"
-      name: "all_leaks"
-      device_class: "moisture"
-      icon: >-
-        {% set active = expand('group.all_leaks')
-            | selectattr('state', 'eq', 'on')
-            | list
-            | length != 0 %}
-        mdi:pipe{% if active %}-leak{% endif %}
-      state: >-
-        {{
-          expand('group.all_leaks')
-            | selectattr('state', 'eq', 'on')
-            | list
-            | length != 0
-        }}
-      attributes:
-        entity_id: >-
+  - binary_sensor:
+      - unique_id: "binary_sensor.all_leaks"
+        name: "all_leaks"
+        device_class: "moisture"
+        icon: >-
+          {% set active = expand('group.all_leaks')
+              | selectattr('state', 'eq', 'on')
+              | list
+              | length != 0 %}
+          mdi:pipe{% if active %}-leak{% endif %}
+        state: >-
           {{
             expand('group.all_leaks')
               | selectattr('state', 'eq', 'on')
-              | map('attr', 'entity_id')
               | list
+              | length != 0
           }}
+        attributes:
+          entity_id: >-
+            {{
+              expand('group.all_leaks')
+                | selectattr('state', 'eq', 'on')
+                | map('attr', 'entity_id')
+                | list
+            }}
 
 automation:
   - id: "106d9d0a-8a2b-4713-8c3f-3341a24cc9b9"

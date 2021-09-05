@@ -50,11 +50,11 @@ light:
       - "light.studio"
 
 template:
-  sensor:
-    - unique_id: "sensor.studio_temperature"
-      name: "studio_temperature"
-      device_class: "temperature"
-      unit_of_measurement: "°C"
-      state: "{{ states('sensor.studio_thermostat_temperature') | round(1) }}"
-      attributes:
-        heating: "{{ is_state_attr('climate.studio_thermostat', 'hvac_action', 'heating') }}"
+  - sensor:
+      - unique_id: "sensor.studio_temperature"
+        name: "studio_temperature"
+        device_class: "temperature"
+        unit_of_measurement: "°C"
+        state: "{{ states('sensor.studio_thermostat_temperature') | round(1) }}"
+        attributes:
+          heating: "{{ is_state_attr('climate.studio_thermostat', 'hvac_action', 'heating') }}"

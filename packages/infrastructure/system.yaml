@@ -30,8 +30,8 @@ sensor:
     unit_of_measurement: "°C"
 
 template:
-  sensor:
-    - unique_id: "sensor.hour"
-      name: "hour"
-      icon: "mdi:clock"
-      state: "{{ states.sensor.time.last_changed.hour }}"
+  - sensor:
+      - unique_id: "sensor.hour"
+        name: "hour"
+        icon: "mdi:clock"
+        state: "{{ states.sensor.time.last_changed.hour }}"

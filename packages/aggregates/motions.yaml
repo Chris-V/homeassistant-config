@@ -16,35 +16,35 @@ group:
       - binary_sensor.workshop_motion
 
 template:
-  binary_sensor:
-    - unique_id: "binary_sensor.all_motions"
-      name: "all_motions"
-      device_class: "motion"
-      state: >-
-        {{
-          expand('group.all_motions')
-            | selectattr('state', 'eq', 'on')
-            | list
-            | length != 0
-        }}
-      attributes:
-        entity_id: >-
+  - binary_sensor:
+      - unique_id: "binary_sensor.all_motions"
+        name: "all_motions"
+        device_class: "motion"
+        state: >-
           {{
             expand('group.all_motions')
               | selectattr('state', 'eq', 'on')
-              | map('attr', 'entity_id')
               | list
+              | length != 0
           }}
+        attributes:
+          entity_id: >-
+            {{
+              expand('group.all_motions')
+                | selectattr('state', 'eq', 'on')
+                | map('attr', 'entity_id')
+                | list
+            }}
 
-  sensor:
-    - unique_id: "sensor.last_motion"
-      name: "last_motion"
-      icon: "mdi:motion-sensor"
-      state: >-
-        {{
-          expand('group.all_motions')
-            | sort(attribute='last_changed', reverse=True)
-            | map(attribute='name')
-            | first
-            | replace(' motion', '')
-        }}
+    sensor:
+      - unique_id: "sensor.last_motion"
+        name: "last_motion"
+        icon: "mdi:motion-sensor"
+        state: >-
+          {{
+            expand('group.all_motions')
+              | sort(attribute='last_changed', reverse=True)
+              | map(attribute='name')
+              | first
+              | replace(' motion', '')
+          }}
