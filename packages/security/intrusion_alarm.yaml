@@ -279,8 +279,16 @@ automation:
                   priority: true
                   tag: "{{ arming_id }}"
                   message: >
+                    {%
+                      set areas = state_attr('binary_sensor.intrusion', 'activity')
+                        | map('area_name')
+                        | select('string')
+                        | sort
+                        | unique
+                        | list
+                    %}
                     {% set count = state_attr('binary_sensor.intrusion', 'activity') | length %}
-                    {{ count }} activity {{ 'event was' if count == 1 else 'events were' }} detected.
+                    {{ count }} events detected{% if areas | count > 0 %} in {{ areas[:-1] | join(', ') }}{% if areas | count > 1 %} and {% endif %}{{ areas[-1] }}{% endif %}.
                 title: "Intrusion detected"
                 dismissible: false
                 push_actions:
