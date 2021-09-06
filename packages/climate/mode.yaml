@@ -74,20 +74,6 @@ group:
       - "input_number.office_thermostat_comfort_setpoint"
       - "input_number.studio_thermostat_comfort_setpoint"
 
-  managed_climate_boost_setpoints:
-    name: "Managed climate boost setpoints"
-    icon: "mdi:thermometer-lines"
-    entities: &managed_climate_boost_setpoints
-      - "input_number.heat_pump_boost_setpoint"
-      - "input_number.basement_hallway_thermostat_boost_setpoint"
-      - "input_number.dining_room_thermostat_boost_setpoint"
-      - "input_number.guest_bedroom_thermostat_boost_setpoint"
-      - "input_number.living_room_thermostat_boost_setpoint"
-      - "input_number.lounge_thermostat_boost_setpoint"
-      - "input_number.master_bedroom_thermostat_boost_setpoint"
-      - "input_number.office_thermostat_boost_setpoint"
-      - "input_number.studio_thermostat_boost_setpoint"
-
 template:
   - sensor:
       - unique_id: "sensor.manual_thermostats_count"
@@ -154,7 +140,6 @@ automation:
             trigger.to_state.object_id
               | replace('_auto_mode', '')
               | replace('_mode', '')
-              | replace('_boost_setpoint', '')
               | replace('_comfort_setpoint', '')
               | replace('_eco_setpoint', '')
           }}
@@ -184,9 +169,6 @@ automation:
         to: "Auto"
       - platform: state
         entity_id: *managed_climate_auto_modes
-      - platform: state
-        entity_id: *managed_climate_boost_setpoints
-        for: 5
       - platform: state
         entity_id: *managed_climate_comfort_setpoints
         for: 5

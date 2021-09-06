@@ -11,15 +11,12 @@ input_number:
   heat_pump_comfort_setpoint:
     name: "Heat pump comfort setpoint"
     <<: *setpoint_config
-  heat_pump_boost_setpoint:
-    name: "Heat pump boost setpoint"
-    <<: *setpoint_config
 
 input_select:
   heat_pump_auto_mode:
     name: "Heat pump auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Boost", "Comfort", "Eco"]
+    options: ["Comfort", "Eco"]
   heat_pump_mode:
     name: "Heat pump mode"
     icon: mdi:home-thermometer-outline

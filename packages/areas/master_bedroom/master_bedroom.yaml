@@ -36,15 +36,12 @@ input_number:
   master_bedroom_thermostat_comfort_setpoint:
     name: "Master bedroom thermostat comfort setpoint"
     <<: *setpoint_config
-  master_bedroom_thermostat_boost_setpoint:
-    name: "Master bedroom thermostat boost setpoint"
-    <<: *setpoint_config
 
 input_select:
   master_bedroom_thermostat_auto_mode:
     name: "Master bedroom thermostat auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Boost", "Comfort", "Eco"]
+    options: ["Comfort", "Eco"]
   master_bedroom_thermostat_mode:
     name: "Master bedroom thermostat mode"
     icon: mdi:home-thermometer-outline

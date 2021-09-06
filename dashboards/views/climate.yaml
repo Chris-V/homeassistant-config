@@ -22,5 +22,3 @@
           name: "Eco"
         - entity: "input_number.heat_pump_comfort_setpoint"
           name: "Comfort"
-        - entity: "input_number.heat_pump_boost_setpoint"
-          name: "Boost"

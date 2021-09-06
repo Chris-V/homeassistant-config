@@ -16,7 +16,7 @@ input_select:
   climate_override_mode:
     name: "Apply override to"
     icon: "mdi:home-thermometer-outline"
-    options: ["Manual", "Boost", "Comfort", "Eco"]
+    options: ["Manual", "Comfort", "Eco"]
 
 script:
   apply_climate_override:
@@ -46,7 +46,6 @@ script:
         } }}
       mode_configs: >
         {{ {
-          'Boost': {'domain': 'input_number', 'suffix': '_boost_setpoint'},
           'Comfort': {'domain': 'input_number', 'suffix': '_comfort_setpoint'},
           'Eco': {'domain': 'input_number', 'suffix': '_eco_setpoint'},
           'Manual': {'domain': 'climate', 'suffix': ''},

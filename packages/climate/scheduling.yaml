@@ -12,7 +12,6 @@ template:
           {% set supported_presets = [
             'Active',
             'Away',
-            'Boost',
             'Bedtime',
             'Sleep',
             'Winter Credit: Cool',
@@ -49,7 +48,7 @@ script:
     mode: "restart"
     fields:
       mode:
-        description: "The setpoint mode to assign to all thermostat. One of Boost, Comfort or Eco."
+        description: "The setpoint mode to assign to all thermostat. One of Comfort or Eco."
         example: "Comfort"
       exceptions:
         description: "Dictionary of room IDs with their setpoint mode that differ from the default mode."
@@ -101,11 +100,6 @@ script:
                     heat_pump: "Comfort"
                     guest_bedroom_thermostat: "Comfort"
                     studio_thermostat: "Comfort"
-          - conditions: "{{ preset == 'boost' }}"
-            sequence:
-              - service: script.assign_climate_auto_mode
-                data:
-                  mode: "Boost"
           - conditions: "{{ preset == 'sleep' }}"
             sequence:
               - service: script.assign_climate_auto_mode
