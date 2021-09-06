@@ -124,7 +124,7 @@ recorder:
       - "sensor.maitre_doyle_conductivity"
       - "sensor.maitre_doyle_moisture"
       - "sensor.maitre_doyle_temperature"
-      - "sensor.manual_thermostats_count"
+      - "sensor.manual_climates_count"
       - "sensor.master_bedroom_temperature"
       - "sensor.master_bedroom_thermostat_temperature"
       - "sensor.media_cpu_temperature"

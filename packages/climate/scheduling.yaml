@@ -53,17 +53,17 @@ script:
         example: "Comfort"
       exceptions:
         description: "Dictionary of room IDs with their setpoint mode that differ from the default mode."
-        example: "{\"my_room\": \"Boost\"}"
+        example: "{\"office_thermostat\": \"Eco\"}"
     sequence:
       - service: scene.apply
         data:
           entities: >
             {% set ns = namespace(entries = []) %}
-            {% for entity_id in expand('group.managed_thermostat_auto_modes') | map(attribute = 'entity_id') %}
+            {% for entity_id in expand('group.managed_climate_auto_modes') | map(attribute = 'entity_id') %}
               {% set ns.entries = ns.entries + ['"{}": "{}"'.format(entity_id, mode)] %}
             {% endfor %}
-            {% for entity_id, override_preset in (exceptions | default({})).items() %}
-              {% set ns.entries = ns.entries + ['"input_select.{}_thermostat_auto_mode": "{}"'.format(entity_id, override_preset)] %}
+            {% for room_key, override_preset in (exceptions | default({})).items() %}
+              {% set ns.entries = ns.entries + ['"input_select.{}_auto_mode": "{}"'.format(room_key, override_preset)] %}
             {% endfor %}
             {{ "{{\n{}\n}}".format(ns.entries | join(',\n')) | from_json }}
 
@@ -80,23 +80,27 @@ script:
               - service: script.assign_climate_auto_mode
                 data:
                   mode: "Comfort"
+                  exceptions:
+                    dining_room_thermostat: "Eco"
+                    living_room_thermostat: "Eco"
+                    master_bedroom_thermostat: "Eco"
+                    office_thermostat: "Eco"
           - conditions: "{{ preset == 'away' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"
                   exceptions:
-                    studio: "Comfort"
+                    studio_thermostat: "Comfort"
           - conditions: "{{ preset == 'bedtime' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"
                   exceptions:
-                    guest_bedroom: "Comfort"
-                    master_bedroom: "Comfort"
-                    office: "Comfort"
-                    studio: "Comfort"
+                    heat_pump: "Comfort"
+                    guest_bedroom_thermostat: "Comfort"
+                    studio_thermostat: "Comfort"
           - conditions: "{{ preset == 'boost' }}"
             sequence:
               - service: script.assign_climate_auto_mode
@@ -107,6 +111,8 @@ script:
               - service: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"
+                  exceptions:
+                    heat_pump: "Comfort"
 
           # Winter Credit presets
           - conditions: "{{ preset == 'winter credit: cool' }}"
@@ -114,16 +120,22 @@ script:
               - service: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"
+                  exceptions:
+                    heat_pump: "Eco"  # TODO: OFF
           - conditions: "{{ preset == 'winter credit: heat' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
-                  mode: "Boost"
+                  mode: "Comfort"
+                  exceptions:
+                    heat_pump: "Eco"
           - conditions: "{{ preset == 'winter credit: peak event' }}"
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"
+                  exceptions:
+                    heat_pump: "Eco"  # TODO: OFF
 
         default:
           - service: "system_log.write"
