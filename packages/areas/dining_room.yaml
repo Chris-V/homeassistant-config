@@ -29,15 +29,12 @@ input_number:
   dining_room_thermostat_comfort_setpoint:
     name: "Dining room thermostat comfort setpoint"
     <<: *setpoint_config
-  dining_room_thermostat_boost_setpoint:
-    name: "Dining room thermostat boost setpoint"
-    <<: *setpoint_config
 
 input_select:
   dining_room_thermostat_auto_mode:
     name: "Dining room thermostat auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Boost", "Comfort", "Eco"]
+    options: ["Comfort", "Eco"]
   dining_room_thermostat_mode:
     name: "Dining room thermostat mode"
     icon: mdi:home-thermometer-outline

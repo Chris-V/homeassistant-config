@@ -28,15 +28,12 @@ input_number:
   studio_thermostat_comfort_setpoint:
     name: "Studio thermostat comfort setpoint"
     <<: *setpoint_config
-  studio_thermostat_boost_setpoint:
-    name: "Studio thermostat boost setpoint"
-    <<: *setpoint_config
 
 input_select:
   studio_thermostat_auto_mode:
     name: "Studio thermostat auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Boost", "Comfort", "Eco"]
+    options: ["Comfort", "Eco"]
   studio_thermostat_mode:
     name: "Studio thermostat mode"
     icon: mdi:home-thermometer-outline

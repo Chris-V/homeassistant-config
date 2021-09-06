@@ -31,15 +31,12 @@ input_number:
   guest_bedroom_thermostat_comfort_setpoint:
     name: "Guest bedroom thermostat comfort setpoint"
     <<: *setpoint_config
-  guest_bedroom_thermostat_boost_setpoint:
-    name: "Guest bedroom thermostat boost setpoint"
-    <<: *setpoint_config
 
 input_select:
   guest_bedroom_thermostat_auto_mode:
     name: "Guest bedroom thermostat auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Boost", "Comfort", "Eco"]
+    options: ["Comfort", "Eco"]
   guest_bedroom_thermostat_mode:
     name: "Guest bedroom thermostat mode"
     icon: mdi:home-thermometer-outline

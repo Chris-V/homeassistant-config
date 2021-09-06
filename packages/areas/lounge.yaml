@@ -32,15 +32,12 @@ input_number:
   lounge_thermostat_comfort_setpoint:
     name: "Lounge thermostat comfort setpoint"
     <<: *setpoint_config
-  lounge_thermostat_boost_setpoint:
-    name: "Lounge thermostat boost setpoint"
-    <<: *setpoint_config
 
 input_select:
   lounge_thermostat_auto_mode:
     name: "Lounge thermostat auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Boost", "Comfort", "Eco"]
+    options: ["Comfort", "Eco"]
   lounge_thermostat_mode:
     name: "Lounge thermostat mode"
     icon: mdi:home-thermometer-outline

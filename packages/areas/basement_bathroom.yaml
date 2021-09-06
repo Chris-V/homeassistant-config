@@ -84,15 +84,12 @@ input_number:
   basement_bathroom_thermostat_comfort_setpoint:
     name: "Basement bathroom thermostat comfort setpoint"
     <<: *setpoint_config
-  basement_bathroom_thermostat_boost_setpoint:
-    name: "Basement bathroom thermostat boost setpoint"
-    <<: *setpoint_config
 
 input_select:
   basement_bathroom_thermostat_auto_mode:
     name: "Basement bathroom thermostat auto mode"
     icon: mdi:home-thermometer-outline
-    options: ["Boost", "Comfort", "Eco"]
+    options: ["Comfort", "Eco"]
   basement_bathroom_thermostat_mode:
     name: "Basement bathroom thermostat mode"
     icon: mdi:home-thermometer-outline
