@@ -12,7 +12,7 @@ input_select:
   climate_override_location:
     name: "Apply override in"
     icon: "mdi:floor-plan"
-    options: ["Whole house", "Ground floor", "Basement"]
+    options: ["Heat pump", "Whole house", "Ground floor", "Basement"]
   climate_override_mode:
     name: "Apply override to"
     icon: "mdi:home-thermometer-outline"
@@ -28,17 +28,28 @@ script:
       location: "{{ states('input_select.climate_override_location') }}"
       mode: "{{ states('input_select.climate_override_mode') }}"
       temperature: "{{ states('input_number.climate_override_temperature') | round(1) }}"
-      location_configs: >
+      location_keys: >
         {{ {
-          'Basement': ['basement_bathroom', 'basement_hallway', 'guest_bedroom', 'lounge', 'studio'],
-          'Ground floor': ['dining_room', 'living_room', 'master_bedroom', 'office']
+          'Basement': [
+            'basement_hallway_thermostat',
+            'guest_bedroom_thermostat',
+            'lounge_thermostat',
+            'studio_thermostat',
+          ],
+          'Ground floor': [
+            'dining_room_thermostat',
+            'living_room_thermostat',
+            'master_bedroom_thermostat',
+            'office_thermostat',
+          ],
+          'Heat pump': ['heat_pump'],
         } }}
       mode_configs: >
         {{ {
-          'Boost': {'domain': 'input_number', 'suffix': '_thermostat_boost_setpoint'},
-          'Comfort': {'domain': 'input_number', 'suffix': '_thermostat_comfort_setpoint'},
-          'Eco': {'domain': 'input_number', 'suffix': '_thermostat_eco_setpoint'},
-          'Manual': {'domain': 'climate', 'suffix': '_thermostat'},
+          'Boost': {'domain': 'input_number', 'suffix': '_boost_setpoint'},
+          'Comfort': {'domain': 'input_number', 'suffix': '_comfort_setpoint'},
+          'Eco': {'domain': 'input_number', 'suffix': '_eco_setpoint'},
+          'Manual': {'domain': 'climate', 'suffix': ''},
         } }}
 
     sequence:
@@ -49,9 +60,9 @@ script:
             {% set mode_config = mode_configs[mode] %}
 
             {% if location == 'Whole house' %}
-              {% set ns.selection = location_configs['Basement'] + location_configs['Ground floor'] %}
+              {% set ns.selection = location_keys['Basement'] + location_keys['Ground floor'] %}
             {% else %}
-              {% set ns.selection = location_configs[location] %}
+              {% set ns.selection = location_keys[location] %}
             {% endif %}
 
             {% for location in ns.selection -%}

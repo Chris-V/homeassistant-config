@@ -11,10 +11,10 @@ views:
     icon: mdi:shield-home
     cards: !include views/security.yaml
 
-  - title: Livings
-    path: livings
-    icon: mdi:leaf
-    cards: !include views/livings.yaml
+  - title: Climate
+    path: climate
+    icon: mdi:home-thermometer
+    cards: !include views/climate.yaml
 
   - title: Ground Floor
     path: ground
@@ -25,3 +25,8 @@ views:
     path: basement
     icon: mdi:home-floor-b
     cards: !include views/basement.yaml
+
+  - title: Livings
+    path: livings
+    icon: mdi:leaf
+    cards: !include views/livings.yaml

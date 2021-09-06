@@ -27,10 +27,10 @@ cards:
             entity_id: automation.apply_scheduled_climate_preset
 
       - <<: *climate_button_card_defaults
-        entity: sensor.manual_thermostats_count
+        entity: sensor.manual_climates_count
         name: Restore to auto
         label: >
-          [[[ return states['sensor.manual_thermostats_count'].state + ' in manual mode'; ]]]
+          [[[ return states['sensor.manual_climates_count'].state + ' in manual mode'; ]]]
         tap_action:
           action: call-service
           service: script.restore_climate_auto_mode

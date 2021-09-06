@@ -1,0 +1,26 @@
+- type: "vertical-stack"
+  title: "Global controls"
+  cards:
+    - !include ../cards/climate-overview.yaml
+
+- type: "vertical-stack"
+  title: "Heat pump"
+  cards:
+    - type: "thermostat"
+      entity: "climate.heat_pump"
+      name: " "
+      style: |
+        #info {
+          padding-bottom: 6px
+        }
+    - type: "entities"
+      show_header_toggle: false
+      entities:
+        - entity: "input_select.heat_pump_mode"
+          name: "Mode"
+        - entity: "input_number.heat_pump_eco_setpoint"
+          name: "Eco"
+        - entity: "input_number.heat_pump_comfort_setpoint"
+          name: "Comfort"
+        - entity: "input_number.heat_pump_boost_setpoint"
+          name: "Boost"
