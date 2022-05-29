@@ -5,7 +5,7 @@ cards:
   - !template
     file: person.yaml.j2
     variables:
-      battery_entity: sensor.chris_moto_g7_battery_level
+      battery_entity: sensor.chris_pixel_6_battery_level
       image: /local/secrets/chris.webp
       person_entity: person.chris
   - !template

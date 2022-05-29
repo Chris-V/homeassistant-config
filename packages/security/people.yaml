@@ -14,8 +14,8 @@ person:
     name: "Chris"
     user_id: "221fad543e1a4c05af8aaac8c68e985e"
     device_trackers:
-      - device_tracker.chris_router_moto_g7
-      - device_tracker.chris_mobile_app_moto_g7
+      - device_tracker.chris_router_pixel_6
+      - device_tracker.chris_mobile_app_pixel_6
   - id: "karine"
     name: "Karine"
     user_id: "ef6743938a1646d2a1e8706e1bc00e34"
