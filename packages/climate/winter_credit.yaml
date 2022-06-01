@@ -72,6 +72,7 @@ automation:
           text: "{{ text | replace('a.m.', 'AM') | replace('p.m.', 'PM') }}"
           # yamllint disable-line rule:quoted-strings
           pattern: '(?:([a-z]+\.? \d{1,2}), )?from (\d{1,2}(?::\d{2})?)(?: (AM|PM))? to (\d{1,2}(?::\d{2})?)(?: (AM|PM)?)'
+          date_time_format: "%Y-%m-%d %H-%M-%S"
           count: "{{ text | regex_findall(pattern, ignorecase = True) | length }}"
           events: >
             {% set ns = namespace(day = undefined, events = []) %}
@@ -93,12 +94,12 @@ automation:
                 {%- set start = ns.day.replace(year = now().year, hour = start_hour.hour, minute = start_hour.minute) -%}
                 {%- set end = ns.day.replace(year = now().year, hour = end_hour.hour, minute = end_hour.minute) -%}
                 {% set ns.events = ns.events + [{
-                  'start': (start - timedelta(hours = 1, minutes = 30)) | as_timestamp | timestamp_local,
-                  'end': start | as_timestamp | timestamp_local,
+                  'start': (start - timedelta(hours = 1, minutes = 30)) | as_timestamp | timestamp_custom(date_time_format),
+                  'end': start | as_timestamp | timestamp_custom(date_time_format),
                   'preset': 'Winter Credit: Heat',
                 }, {
-                  'start': start | as_timestamp | timestamp_local,
-                  'end': end | as_timestamp | timestamp_local,
+                  'start': start | as_timestamp | timestamp_custom(date_time_format),
+                  'end': end | as_timestamp | timestamp_custom(date_time_format),
                   'preset': 'Winter Credit: Peak Event',
                 }] -%}
               {% endif -%}
