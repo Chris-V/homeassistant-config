@@ -4,6 +4,8 @@ homeassistant:
       battery_type: "APC BR1500G RS 1500 12V"
       battery_warning_level: 0
       friendly_name: "UPS battery status"
+    switch.managed_auxialiary_servers:
+      icon: "mdi:server-security"
 
 apcupsd:
   host: !secret ups_host
@@ -22,6 +24,13 @@ sensor:
       - timeleft  # Time Left on Battery
       - tonbatt  # Time on Battery
 
+switch:
+  - platform: "group"
+    unique_id: "switch.managed_auxialiary_servers"
+    name: "Managed auxialiary servers"
+    entities:
+      - "switch.network_media"
+
 template:
   - sensor:
       - unique_id: "sensor.ups_battery_status"
@@ -34,13 +43,6 @@ template:
 input_boolean:
   power_outage_manage_devices:
     name: "Manage devices based on power outages"
-
-group:
-  managed_servers:
-    name: "Managed auxialiary servers"
-    icon: "mdi:server-security"
-    entities:
-      - "switch.network_media"
 
 automation:
   - id: "5cdf949f-e2e8-48b2-88c1-59f2c2f4fad2"
@@ -68,7 +70,7 @@ automation:
             url: "/admin-infrastructure/network"
           message: |-
             A power outage is ongoing at home.
-            {%- if is_state('group.managed_servers', 'off') -%}
+            {%- if is_state('switch.managed_auxialiary_servers', 'off') -%}
               Auxiliary servers are already turned off.
             {% elif is_state('input_boolean.power_outage_manage_devices', 'on') -%}
               Auxiliary servers will automatically shutdown in {{ shutdown_minutes }} minutes.
@@ -77,7 +79,7 @@ automation:
             {%- endif %}
           push_actions: >-
             {% set ns = namespace(actions = []) %}
-            {% if is_state('group.managed_servers', 'on') %}
+            {% if is_state('switch.managed_auxialiary_servers', 'on') %}
               {% set ns.actions = ns.actions + [{"action": "power_outage_shutdown", "title": "Shutdown now"}] %}
               {% if is_state('input_boolean.power_outage_manage_devices', 'on') %}
                 {% set ns.actions = ns.actions + [{"action": "power_outage_cancel", "title": "Cancel"}] %}
@@ -86,7 +88,7 @@ automation:
             {{ ns.actions }}
 
       - condition: state
-        entity_id: "group.managed_servers"
+        entity_id: "switch.managed_auxialiary_servers"
         state: "on"
 
       - wait_for_trigger:
@@ -159,7 +161,7 @@ automation:
           title: "Power restored"
           message: |-
             A power outage has finished after {{ relative_time(trigger.from_state.last_changed) }}.
-            {%- if is_state('group.managed_servers', 'on') -%}
+            {%- if is_state('switch.managed_auxialiary_servers', 'on') -%}
               Auxiliary servers are already powered on.
             {% elif is_state('input_boolean.power_outage_manage_devices', 'on') -%}
               Auxiliary servers will automatically power on in {{ power_on_minutes }} minutes.
@@ -168,7 +170,7 @@ automation:
             {%- endif %}
           push_actions: >-
             {% set ns = namespace(actions = []) %}
-            {% if is_state('group.managed_servers', 'off') and is_state('input_boolean.power_outage_manage_devices', 'on') %}
+            {% if is_state('switch.managed_auxialiary_servers', 'off') and is_state('input_boolean.power_outage_manage_devices', 'on') %}
               {% set ns.actions = ns.actions + [{"action": "power_restored_cancel", "title": "Cancel"}] %}
             {% endif %}
             {{ ns.actions }}
@@ -177,7 +179,7 @@ automation:
       - condition: and
         conditions:
           - condition: state
-            entity_id: "group.managed_servers"
+            entity_id: "switch.managed_auxialiary_servers"
             state: "off"
           - condition: state
             entity_id: "input_boolean.power_outage_manage_devices"

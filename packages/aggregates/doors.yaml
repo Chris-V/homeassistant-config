@@ -1,33 +1,8 @@
-homeassistant:
-  customize:
-    binary_sensor.all_doors:
-      friendly_name: "All doors"
-
-group:
-  all_doors:
+binary_sensor:
+  - platform: "group"
+    unique_id: "binary_sensor.all_doors"
+    device_class: "door"
     name: "All doors"
-    icon: "mdi:door"
     entities:
       - binary_sensor.kitchen_door
       - binary_sensor.living_room_door
-
-template:
-  - binary_sensor:
-      - unique_id: "binary_sensor.all_doors"
-        name: "all_doors"
-        device_class: "door"
-        state: >-
-          {{
-            expand('group.all_doors')
-              | selectattr('state', 'eq', 'on')
-              | list
-              | length != 0
-          }}
-        attributes:
-          entity_id: >-
-            {{
-              expand('group.all_doors')
-                | selectattr('state', 'eq', 'on')
-                | map('attr', 'entity_id')
-                | list
-            }}

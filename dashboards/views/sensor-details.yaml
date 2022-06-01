@@ -11,7 +11,7 @@
     method: state
   filter:
     include:
-      - group: group.all_doors
+      - group: binary_sensor.all_doors
         options:
           <<: &aggregate_row_options
             type: custom:template-entity-row
@@ -44,7 +44,7 @@
     method: state
   filter:
     include:
-      - group: group.all_windows
+      - group: binary_sensor.all_windows
         options:
           <<: *aggregate_row_options
           name: >-
@@ -67,7 +67,7 @@
     method: state
   filter:
     include:
-      - group: group.all_leaks
+      - group: binary_sensor.all_leaks
         options:
           <<: *aggregate_row_options
           name: >-
@@ -90,7 +90,7 @@
     method: state
   filter:
     include:
-      - group: group.all_motions
+      - group: binary_sensor.all_motions
         options:
           <<: *aggregate_row_options
           name: >-

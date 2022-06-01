@@ -3,17 +3,17 @@ homeassistant:
     sensor.broadcast_queue:
       friendly_name: "Broadcast queue"
 
-group:
-  broadcast_media_players:
-    name: "Broadcast enabled media players"
-    icon: "mdi:speaker-multiple"
+media_player:
+  - platform: "group"
+    unique_id: "media_player.broadcast_group"
+    name: "Broadcast group"
     all: true
     entities:
-      - media_player.laundry_room_google_home
-      - media_player.living_room_google_home
-      - media_player.lounge_google_home
-      - media_player.master_bedroom_google_home
-      - media_player.office_sonos
+      - "media_player.laundry_room_google_home"
+      - "media_player.living_room_google_home"
+      - "media_player.lounge_google_home"
+      - "media_player.master_bedroom_google_home"
+      - "media_player.office_sonos"
 
 input_text:
   broadcast_message:
@@ -56,8 +56,8 @@ script:
 
     fields:
       media_players:
-        description: "The media players to play the message on. Defaults to group.broadcast_media_players."
-        example: "group.broadcast_media_players"
+        description: "The media players to play the message on. Defaults to media_player.broadcast_group."
+        example: "media_player.broadcast_group"
       message:
         description: "The message to play on the speakers."
         example: "Today is a fine day. Don't forget to charge your phone."
@@ -72,7 +72,7 @@ script:
       - variables:
           media_players: >-
             {{
-              expand(media_players | default('group.broadcast_media_players', True))
+              expand(media_players | default('media_player.broadcast_group', True))
                 | map(attribute = 'entity_id')
                 | list
             }}
