@@ -24,6 +24,7 @@ sensor:
       - type: memory_use_percent
 
   - platform: command_line
+    unique_id: "automate_processor_temperature"
     name: "processor_temperature"
     command: "cat /sys/class/thermal/thermal_zone0/temp"
     value_template: "{{ value|multiply(0.001)|round(1) }}"
