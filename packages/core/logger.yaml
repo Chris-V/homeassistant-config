@@ -3,13 +3,8 @@ logger:
   logs:
     homeassistant.bootstrap: "info"
     homeassistant.setup: "info"
-    mychevy.mychevy: "error"
   filters:
     # yamllint disable rule:quoted-strings
-    homeassistant.components.mychevy:
-      - 'This probably means the OnStar link is down again'  # error
-    homeassistant.components.mychevy.sensor:
-      - 'This probably means the mychevy to OnStar link is down'  # error
     homeassistant.components.broadlink.updater:
       - '\[Errno -4000\] Network timeout'  # error
     # Google Homes & groups seem to change their IPs and create a lot of log pollution
