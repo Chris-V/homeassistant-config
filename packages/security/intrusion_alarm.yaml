@@ -118,9 +118,9 @@ template:
             -%}
             {{
               expand(
-                'group.all_windows',
-                'group.all_doors',
-                'group.all_motions',
+                'binary_sensor.all_windows',
+                'binary_sensor.all_doors',
+                'binary_sensor.all_motions',
               ) | selectattr('last_changed', '>=', armed_since) | length
             }}
           {%- else -%}
@@ -139,9 +139,9 @@ template:
               -%}
               {%
                 set ns.entities = expand(
-                  'group.all_windows',
-                  'group.all_doors',
-                  'group.all_motions',
+                  'binary_sensor.all_windows',
+                  'binary_sensor.all_doors',
+                  'binary_sensor.all_motions',
                 ) | selectattr('last_changed', '>=', armed_since)
               -%}
             {%- endif -%}
