@@ -66,7 +66,6 @@ group:
       - "sensor.water_heater_switch_node_status"
       - "sensor.workshop_light_switch_node_status"
       - "sensor.workshop_motion_sensor_node_status"
-      - "sensor.z_wave_controller_node_status"
 
 template:
   - sensor:
