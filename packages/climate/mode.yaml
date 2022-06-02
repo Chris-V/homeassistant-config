@@ -79,13 +79,7 @@ template:
       - unique_id: "sensor.manual_thermostats_count"
         name: "manual_climates_count"
         icon: "mdi:thermometer-alert"
-        state: |
-          {{
-            expand('group.managed_climate_modes')
-              | selectattr('state', 'eq', 'Manual')
-              | list
-              | count
-          }}
+        state: "{{ this.attributes.entity_id | default([]) | length }}"
         attributes:
           entity_id: |
             {{

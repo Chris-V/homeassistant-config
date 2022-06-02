@@ -75,7 +75,7 @@ template:
             | replace('unknown', '')
             | replace('undefined','')
             | replace('exceptional', '') %}
-          mdi:{% if state_icon %}weather-{{ state_icon }}{% else %}help-circle{% endif %}
+          mdi:{{ (state_icon | length > 0) | iif('weather-', help-circle) }}
         availability: "{{ not is_state('sensor.weather_quebec_forecast', 'unavailable') }}"
 
 automation:

@@ -37,18 +37,7 @@ template:
       - unique_id: "binary_sensor.all_batteries"
         name: "all_batteries"
         device_class: "battery"
-        state: >-
-          {% set n = namespace(entities = []) %}
-
-          {% for entity in expand('group.all_batteries') %}
-            {% set state = entity.state | int(0) %}
-            {% set warning_level = state_attr(entity.entity_id, 'battery_warning_level') | int(25) %}
-            {% if state <= warning_level %}
-              {% set n.entities = n.entities + [entity.entity_id] %}
-            {% endif %}
-          {% endfor %}
-
-          {{ n.entities | length != 0 }}
+        state: "{{ this.attributes.entity_id | default([]) | length }}"
         attributes:
           entity_id: >-
             {% set ns = namespace(entities = []) %}

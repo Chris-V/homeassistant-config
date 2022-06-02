@@ -69,21 +69,20 @@ template:
         icon: "mdi:account-star"
         state: >-
           {{
-            expand('group.guests')
-              | selectattr('state', 'eq', 'home')
+            expand(this.attributes.entity_id | default([]))
               | map('attr', 'name')
               | sort
               | join(', ')
               | default('Nobody', true)
           }}
         attributes:
-          count: >-
+          entity_id: >-
             {{
               expand('group.guests')
                 | selectattr('state', 'eq', 'home')
                 | list
-                | count
             }}
+          count: "{{ this.attributes.entity_id | default([]) | count }}"
 
 automation:
   - id: "91bb52da-440a-4082-a6f3-4e58253a51c8"

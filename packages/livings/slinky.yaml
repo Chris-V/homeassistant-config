@@ -46,10 +46,10 @@ template:
           heater: "{{ is_state('switch.slinky_heater', 'off') or states('sensor.slinky_heater_power') | float > 1 }}"
           uv_light: "{{ is_state('switch.slinky_uv_light', 'off') or states('sensor.slinky_uv_light_power') | float > 1 }}"
         state: >-
-          {{ is_state('input_boolean.slinky_scheduled_lights', 'off')
-              or (is_state('switch.slinky_heat_bulb', 'on') and states('sensor.slinky_heat_bulb_power') | float < 1)
-              or (is_state('switch.slinky_heater', 'on') and states('sensor.slinky_heater_power') | float < 1)
-              or (is_state('switch.slinky_uv_light', 'on') and states('sensor.slinky_uv_light_power') | float < 1)
+          {{ !this.attributes.scheduling
+              or !this.attributes.heat_bulb
+              or !this.attributes.heater
+              or !this.attributes.uv_light
           }}
 
     sensor:  # Fake sensors until everything is ready

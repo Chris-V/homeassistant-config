@@ -37,8 +37,7 @@ template:
         name: "ups_battery_status"
         device_class: "battery"
         unit_of_measurement: "%"
-        state: >-
-          {% if 'REPLACEBATT' in states('sensor.ups_status') %}0{% else %}100{% endif %}
+        state: "{{ iif('REPLACEBATT' in states('sensor.ups_status'), 0, 100 }}"
 
 input_boolean:
   power_outage_manage_devices:

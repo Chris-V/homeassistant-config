@@ -20,19 +20,8 @@ template:
       - unique_id: "binary_sensor.all_plants"
         name: "all_plants"
         device_class: "problem"
-        icon: >-
-          {% set active = expand('group.all_plants')
-              | selectattr('state', 'eq', 'problem')
-              | list
-              | length != 0 %}
-          mdi:leaf{% if active %}-off{% endif %}
-        state: >-
-          {{
-            expand('group.all_plants')
-              | selectattr('state', 'eq', 'problem')
-              | list
-              | length != 0
-          }}
+        icon: "mdi:leaf{{ iif(this.state == 'on', '-off', '') }}"
+        state: "{{ this.attributes.entity_id | default([]) | length }}"
         attributes:
           entity_id: >-
             {{
