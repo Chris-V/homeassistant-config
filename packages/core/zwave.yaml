@@ -89,36 +89,25 @@ automation:
 
     trigger:
       - platform: "state"
-        id: "died"
         entity_id: *zwave_nodes
         from: "alive"
         to: "dead"
         for: 60
+        variables:
+          dismiss: false
+
       - platform: "state"
-        id: "revived"
         entity_id: *zwave_nodes
         from: "dead"
         to: "alive"
+        variables:
+          dismiss: true
 
     action:
-      - choose:
-          - conditions:
-              - condition: "trigger"
-                id: "died"
-            sequence:
-              - service: "python_script.notify"
-                data:
-                  push_target: "admin"
-                  persistent: true
-                  tag: "{{ trigger.to_state.entity_id }}"
-                  title: "☠️ {{ trigger.to_state.name | lower | replace(': node status', '') | title }} is dead "
-          - conditions:
-              - condition: "trigger"
-                id: "revived"
-            sequence:
-              - service: "python_script.notify"
-                data:
-                  push_target: "admin"
-                  persistent: true
-                  dismiss: true
-                  tag: "{{ trigger.to_state.entity_id }}"
+      - service: "python_script.notify"
+        data:
+          push_target: "admin"
+          persistent: true
+          dismiss: "{{ dismiss }}"
+          tag: "{{ trigger.to_state.entity_id }}"
+          title: "☠️ {{ trigger.to_state.name | lower | replace(': node status', '') | title }} is dead "

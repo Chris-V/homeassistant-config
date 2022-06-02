@@ -153,25 +153,24 @@ script:
       - choose:
           - conditions: "{{ action == 'add' }}"
             sequence:
-              - choose:
-                  - conditions: "{{ message | length > 0 }}"
-                    sequence:
-                      - service: "mqtt.publish"
-                        data:
-                          topic: *broadcast_queue_topic
-                          retain: true
-                          payload_template: >
-                            {%
-                              set new_item = {
-                                "timestamp": now().isoformat(),
-                                "tag": tag or context.id,
-                                "data": {
-                                  "message": message
-                                }
-                              }
-                            %}
-                            {{ (items | rejectattr('tag', '==', tag) | list + [new_item]) | to_json }}
-                default:
+              - if: "{{ message | length > 0 }}"
+                then:
+                  - service: "mqtt.publish"
+                    data:
+                      topic: *broadcast_queue_topic
+                      retain: true
+                      payload_template: >
+                        {%
+                          set new_item = {
+                            "timestamp": now().isoformat(),
+                            "tag": tag or context.id,
+                            "data": {
+                              "message": message
+                            }
+                          }
+                        %}
+                        {{ (items | rejectattr('tag', '==', tag) | list + [new_item]) | to_json }}
+                else:
                   - service: "system_log.write"
                     data:
                       level: "error"
@@ -235,8 +234,7 @@ automation:
         entity_id: "group.household"
         state: "home"
         for: 120
-      - condition: or
-        conditions:
+      - or:
           - condition: time
             after: *week_trigger_time
             before: "23:59:59"

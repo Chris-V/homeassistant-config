@@ -18,7 +18,6 @@ script:
               data:
                 entity_id: "{{ entity_id }}"
                 transition: 0
-            - choose:
-                - conditions: "{{ not repeat.last }}"
-                  sequence:
-                    - delay: 1
+            - if: "{{ not repeat.last }}"
+              then:
+                - delay: 1

@@ -246,15 +246,14 @@ automation:
     action:
       - repeat:
           sequence:
-            - choose:
-                - conditions:
-                    - condition: state
-                      entity_id: "input_boolean.silence_intrusion_alarm"
-                      state: "off"
-                  sequence:
-                    - service: script.broadcast_notification
-                      data:
-                        message: "Intrusion detected. Authorities have been notified."
+            - if:
+                - condition: state
+                  entity_id: "input_boolean.silence_intrusion_alarm"
+                  state: "off"
+              then:
+                - service: script.broadcast_notification
+                  data:
+                    message: "Intrusion detected. Authorities have been notified."
             - delay: 10
           until:
             - condition: state
