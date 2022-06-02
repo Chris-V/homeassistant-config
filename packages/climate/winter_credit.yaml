@@ -58,6 +58,7 @@ automation:
     trigger:
       - platform: state
         entity_id: "sensor.chris_pixel_6_last_notification"
+        to: ~
 
     variables:
       text: "{{ trigger.to_state.attributes['android.text'] }}"

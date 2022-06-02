@@ -24,13 +24,12 @@ automation:
     initial_state: true
     mode: "parallel"
     trigger:
-      - platform: state
-        entity_id: sensor.latest_home_assistant_version
-    condition: >-
-      {{
-        trigger.to_state.state not in ('unknown', 'unavailable')
-          and trigger.to_state.state != states('sensor.current_home_assistant_version')
-      }}
+      - platform: "state"
+        entity_id: "sensor.latest_home_assistant_version"
+        not_to:
+          - "unknown"
+          - "unavailable"
+    condition: "{{ !is_states('sensor.current_home_assistant_version', trigger.to_state.state) }}"
     action:
       - service: python_script.notify
         data:
