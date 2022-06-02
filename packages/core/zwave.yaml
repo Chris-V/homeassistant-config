@@ -72,18 +72,12 @@ template:
       - unique_id: "sensor.dead_zwave_nodes"
         name: "Dead Z-Wave Nodes"
         icon: "mdi:robot-dead"
-        state: >-
-          {{
-            expand('group.zwave_nodes')
-              | selectattr('state', 'in', ['dead', 'unavailable'])
-              | list
-              | count
-          }}
+        state: "{{ this.attributes.entity_id | default([]) | length }}"
         attributes:
           entity_id: >-
             {{
               expand('group.zwave_nodes')
-              | selectattr('state', 'in', ['dead', 'unavailable'])
+                | selectattr('state', 'in', ['dead', 'unavailable'])
                 | map(attribute = 'entity_id')
                 | sort
             }}

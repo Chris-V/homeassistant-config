@@ -46,12 +46,7 @@ template:
   - binary_sensor:
       - unique_id: "449f4beb-83a1-43d2-a7ba-64de0a305960"
         name: "presence_armed"
-        icon: >-
-          {% if is_state('binary_sensor.presence_armed', 'on') -%}
-            mdi:shield-check
-          {%- else -%}
-            mdi:shield-off
-          {%- endif %}
+        icon: "mdi:shield-{{ iif(this.state == 'on', 'check', 'off') }}"
         state: >-
           {{
             is_state('input_boolean.force_presence_armed', 'on')
@@ -87,10 +82,9 @@ template:
             {% else -%}
               {{ state_attr('binary_sensor.intrusion_activity', 'activity') | default([], True) -}}
             {% endif %}
-        availability: >-
-          {{ states.binary_sensor.presence_armed is not none }}
+        availability: "{{ states.binary_sensor.presence_armed is not none }}"
         icon: >-
-          {%- if is_state('binary_sensor.intrusion_activity', 'on') -%}
+          {%- if this.state == 'on' -%}
             mdi:shield-alert
           {%- elif is_state('binary_sensor.presence_armed', 'on') -%}
             mdi:shield-check
@@ -107,25 +101,7 @@ template:
     sensor:
       - unique_id: "0d5d4c9c-bcb3-4e21-b7b5-74e67b2aae6a"
         name: "intrusion_events"
-        state: >-
-          {% set armed = states.binary_sensor.presence_armed -%}
-          {% if armed is not none and armed.state == 'on' -%}
-            {%
-              set armed_since = states('input_datetime.presence_armed_since')
-                | as_datetime
-                | as_local
-                | max(armed.last_changed)
-            -%}
-            {{
-              expand(
-                'binary_sensor.all_windows',
-                'binary_sensor.all_doors',
-                'binary_sensor.all_motions',
-              ) | selectattr('last_changed', '>=', armed_since) | length
-            }}
-          {%- else -%}
-            0
-          {%- endif %}
+        state: "{{ this.attributes.entities | default([]) | length }}"
         attributes:
           entities: >-
             {% set ns = namespace(entities = []) -%}
