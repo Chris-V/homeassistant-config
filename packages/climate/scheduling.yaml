@@ -145,7 +145,6 @@ automation:
     trigger:
       - platform: state
         entity_id: "sensor.scheduled_climate_preset"
-    condition:
-      - "{{ trigger.from_state is not defined or trigger.from_state.state != trigger.to_state.state }}"
+        to: ~
     action:
       - service: script.apply_scheduled_climate_preset

@@ -163,11 +163,14 @@ automation:
         to: "Auto"
       - platform: state
         entity_id: *managed_climate_auto_modes
+        to: ~
       - platform: state
         entity_id: *managed_climate_comfort_setpoints
+        to: ~
         for: 5
       - platform: state
         entity_id: *managed_climate_eco_setpoints
+        to: ~
         for: 5
 
     variables:
