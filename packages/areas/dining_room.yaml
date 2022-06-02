@@ -58,7 +58,8 @@ template:
         name: "dining_room_temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
-        state: "{{ states('sensor.dining_room_thermostat_temperature') | round(1) }}"
+        state: "{{ states('sensor.dining_room_thermostat_temperature') | float(0) | round(1) }}"
+        availability: "{{ not is_state('sensor.dining_room_thermostat_temperature', 'unavailable') }}"
         attributes:
           heating: "{{ is_state_attr('climate.dining_room_thermostat', 'hvac_action', 'heating') }}"
 

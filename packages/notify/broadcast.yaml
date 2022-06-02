@@ -7,7 +7,6 @@ media_player:
   - platform: "group"
     unique_id: "media_player.broadcast_group"
     name: "Broadcast group"
-    all: true
     entities:
       - "media_player.laundry_room_google_home"
       - "media_player.living_room_google_home"

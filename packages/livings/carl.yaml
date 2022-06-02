@@ -42,14 +42,15 @@ template:
         picture: "/local/animals/carl_avatar.jpg"
         attributes:
           scheduling: "{{ is_state('input_boolean.carl_scheduled_lights', 'on') }}"
-          heat_bulb: "{{ is_state('switch.carl_heat_bulb', 'off') or states('sensor.carl_heat_bulb_power') | float > 1 }}"
-          heater: "{{ is_state('switch.carl_heater', 'off') or states('sensor.carl_heater_power') | float > 1 }}"
-          uv_light: "{{ is_state('switch.carl_uv_light', 'off') or states('sensor.carl_uv_light_power') | float > 1 }}"
+          heat_bulb: "{{ is_state('switch.carl_heat_bulb', 'off') or states('sensor.carl_heat_bulb_power') | float(0) > 1 }}"
+          heater: "{{ is_state('switch.carl_heater', 'off') or states('sensor.carl_heater_power') | float(0) > 1 }}"
+          uv_light: "{{ is_state('switch.carl_uv_light', 'off') or states('sensor.carl_uv_light_power') | float(0) > 1 }}"
         state: >-
-          {{ !this.attributes.scheduling
-              or !this.attributes.heat_bulb
-              or !this.attributes.heater
-              or !this.attributes.uv_light
+          {{
+            not this.attributes.scheduling | default(True)
+              or not this.attributes.heat_bulb | default(True)
+              or not this.attributes.heater | default(True)
+              or not this.attributes.uv_light | default(True)
           }}
 
     sensor:  # Fake sensors until everything is ready

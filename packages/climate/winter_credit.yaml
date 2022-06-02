@@ -34,7 +34,7 @@ template:
           {% set delta = 3 %}
           {% set peak_events = [range(6, 9), range(16, 20)] %}
 
-          {% set hour = states('sensor.hour') | int %}
+          {% set hour = states('sensor.hour') | int(0) %}
           {% set ns = namespace(preset = '') %}
 
           {% if is_state('binary_sensor.winter_credit_enabled', 'on') %}

@@ -11,12 +11,6 @@ system_health: {}
 
 sensor:
   - platform: websocket_api
-  - platform: version
-    name: "latest_home_assistant_version"
-    source: "container"
-  - platform: version
-    name: "current_home_assistant_version"
-    source: "local"
 
 automation:
   - id: "6ea34d47-1181-4c94-9ab6-43fe4c0b42cc"
@@ -29,7 +23,7 @@ automation:
         not_to:
           - "unknown"
           - "unavailable"
-    condition: "{{ !is_states('sensor.current_home_assistant_version', trigger.to_state.state) }}"
+    condition: "{{ not is_state('sensor.current_home_assistant_version', trigger.to_state.state) }}"
     action:
       - service: python_script.notify
         data:

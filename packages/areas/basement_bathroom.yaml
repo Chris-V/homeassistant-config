@@ -43,13 +43,15 @@ template:
         name: "basement_bathroom_humidity"
         device_class: "humidity"
         unit_of_measurement: "%"
-        state: "{{ states('sensor.basement_bathroom_multisensor_relative_humidity') | round }}"
+        state: "{{ states('sensor.basement_bathroom_multisensor_relative_humidity') | int(0) | round }}"
+        availability: "{{ not is_state('sensor.basement_bathroom_multisensor_relative_humidity', 'unavailable') }}"
 
       - unique_id: "sensor.basement_bathroom_temperature"
         name: "basement_bathroom_temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
-        state: "{{ states('sensor.basement_bathroom_multisensor_temperature') | round(1) }}"
+        state: "{{ states('sensor.basement_bathroom_multisensor_temperature') | int(0) | round(1) }}"
+        availability: "{{ not is_state('sensor.basement_bathroom_multisensor_temperature', 'unavailable') }}"
         attributes:
           heating: false
 
@@ -124,12 +126,7 @@ automation:
         light_entity: "light.basement_bathroom_vanity"
         light_off_entity: "light.basement_bathroom_lights"
         presence_entity: "binary_sensor.basement_bathroom_presence"
-        brightness_pct: >
-          {% set time = now().strftime('%H%M') | int %}
-          {%- if time <= 600 -%} 1
-          {%- elif time >= 900 and time <= 1800 -%} 85
-          {%- else -%} 50
-          {%- endif -%}
+        brightness_based_on_time: true
 
   - id: "28830f28-ec7e-4c19-9508-355e16978c13"
     alias: "basement_bathroom_fan_switch_zwave_scenes"

@@ -56,13 +56,15 @@ template:
         name: "main_bathroom_humidity"
         device_class: "humidity"
         unit_of_measurement: "%"
-        state: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | round }}"
+        state: "{{ states('sensor.main_bathroom_multisensor_relative_humidity') | int(0) | round }}"
+        availability: "{{ not is_state('sensor.main_bathroom_multisensor_relative_humidity', 'unavailable') }}"
 
       - unique_id: "sensor.main_bathroom_temperature"
         name: "main_bathroom_temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
-        state: "{{ states('sensor.main_bathroom_multisensor_temperature') | round(1) }}"
+        state: "{{ states('sensor.main_bathroom_multisensor_temperature') | int(0) | round(1) }}"
+        availability: "{{ not is_state('sensor.main_bathroom_multisensor_temperature', 'unavailable') }}"
         attributes:
           heating: false
 
@@ -113,12 +115,7 @@ automation:
         light_entity: "light.main_bathroom_spots"
         light_off_entity: "light.main_bathroom_lights"
         presence_entity: "binary_sensor.main_bathroom_presence"
-        brightness_pct: >
-          {% set time = now().strftime('%H%M') | int %}
-          {%- if time <= 600 -%} 1
-          {%- elif time >= 900 and time <= 1800 -%} 85
-          {%- else -%} 50
-          {%- endif -%}
+        brightness_based_on_time: true
 
   - id: "3285fa23-169e-43ff-94e7-29a79d1223d4"
     alias: "main_bathroom_fan_switch_zwave_scenes"

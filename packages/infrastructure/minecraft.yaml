@@ -54,7 +54,7 @@ automation:
       - condition: state
         entity_id: "input_boolean.notify_minecraft_status"
         state: "on"
-      - "{{ !is_state('sensor.minecraft_server_version', trigger.to_state.state) }}"
+      - "{{ not is_state('sensor.minecraft_server_version', trigger.to_state.state) }}"
     action:
       - service: python_script.notify
         data:
