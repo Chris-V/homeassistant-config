@@ -1,16 +1,4 @@
 mqtt:
-  broker: !secret mqtt_host
-  port: !secret mqtt_port
   certificate: "auto"
   client_id: "home_assistant"
   keepalive: 60
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-  birth_message:
-    topic: "home-assistant/status"
-    payload: "online"
-    retain: true
-  will_message:
-    topic: "home-assistant/status"
-    payload: "offline"
-    retain: true

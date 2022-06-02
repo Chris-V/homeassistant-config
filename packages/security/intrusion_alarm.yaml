@@ -95,7 +95,7 @@ template:
           {{
             is_state('binary_sensor.presence_armed', 'on')
               and is_state('binary_sensor.intrusion_events', 'on')
-              or states('sensor.intrusion_events') | default | int > 0
+              or states('sensor.intrusion_events') | int(0) > 0
           }}
 
     sensor:

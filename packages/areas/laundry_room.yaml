@@ -31,11 +31,18 @@ template:
               'sensor.washing_machine_leak_temperature',
             ])
               | map(attribute = 'state')
+              | default('unavailable')
+              | reject('==', 'unavailable')
               | map('float')
               | list
           %}
-          {% set length = temperatures | count %}
-          {{ 'unavailable' if length == 0 else (temperatures | sum / length) | round(1) }}
+          {% set count = temperatures | length %}
+          {{ iif(count == 0, 'unavailable', (temperatures | sum / count) | round(1)) }}
+        availability: >
+          {{
+            not is_state('sensor.basement_hallway_thermostat_temperature', 'unavailable')
+              or not is_state('sensor.washing_machine_leak_temperature', 'unavailable')
+          }}
         attributes:
           heating: "{{ is_state_attr('climate.basement_hallway_thermostat', 'hvac_action', 'heating') }}"
 

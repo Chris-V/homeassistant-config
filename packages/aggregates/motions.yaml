@@ -15,10 +15,13 @@ template:
         name: "Last motion"
         icon: "mdi:motion-sensor"
         state: >-
-          {{
-            expand('binary_sensor.all_motions')
+          {%
+            set motions = expand('binary_sensor.all_motions')
               | sort(attribute='last_changed', reverse=True)
               | map(attribute='name')
-              | first
-              | replace(' motion', '')
-          }}
+          %}
+          {% if motions | first is undefined %}
+          Unknown
+          {% else %}
+          {{ motions | first | replace(' motion', '') }}
+          {% endif %}

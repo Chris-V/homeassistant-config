@@ -52,6 +52,7 @@ template:
         name: "studio_temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
-        state: "{{ states('sensor.studio_thermostat_temperature') | round(1) }}"
+        state: "{{ states('sensor.studio_thermostat_temperature') | float(0) | round(1) }}"
+        availability: "{{ not is_state('sensor.studio_thermostat_temperature', 'unavailable') }}"
         attributes:
           heating: "{{ is_state_attr('climate.studio_thermostat', 'hvac_action', 'heating') }}"

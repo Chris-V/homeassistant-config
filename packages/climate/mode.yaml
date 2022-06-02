@@ -125,6 +125,7 @@ automation:
       - platform: state
         entity_id: *managed_climates
         attribute: "temperature"
+        not_to: "unavailable"
         for: 5
 
     variables:
@@ -139,10 +140,10 @@ automation:
           }}
         auto_mode: "{{ states('input_select.{}_auto_mode'.format(name)) | default('Eco') }}"
         mode: "{{ states('input_select.{}_mode'.format(name)) | default('Auto') }}"
-        target_setpoint: "{{ states('input_number.{}_{}_setpoint'.format(name, auto_mode | lower)) | float }}"
-      current_setpoint: "{{ trigger.to_state.attributes.temperature | float }}"
+        target_setpoint: "{{ states('input_number.{}_{}_setpoint'.format(name, auto_mode | lower)) | float(0) }}"
+      current_setpoint: "{{ trigger.to_state.attributes.temperature | float(0) }}"
 
-    condition: "{{ trigger.to_state.attributes.preset_mode != 'none' or target_setpoint != current_setpoint }}"
+    condition: "{{ trigger.to_state.attributes.preset_mode | default('none') != 'none' or target_setpoint != current_setpoint }}"
 
     action:
       - service: "input_select.select_option"
