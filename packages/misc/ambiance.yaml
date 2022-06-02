@@ -21,23 +21,24 @@ script:
     icon: "mdi:lamp"
     mode: restart
     sequence:
-      - service: homeassistant.turn_on
-        data:
-          entity_id: "light.master_bedroom_bedsides"
-          brightness_pct: 5
-          kelvin: 2200
-      - service: homeassistant.turn_on
-        data:
-          entity_id: "light.bookshelf"
-      - service: homeassistant.turn_on
-        data:
-          entity_id: "light.basement_hallway"
-          brightness: 40
-      - service: homeassistant.turn_on
-        data:
-          entity_id: "light.lounge_ambiance"
-          brightness_pct: 30
-          kelvin: 2200
+      parallel:
+        - service: homeassistant.turn_on
+          data:
+            entity_id: "light.master_bedroom_bedsides"
+            brightness_pct: 5
+            kelvin: 2200
+        - service: homeassistant.turn_on
+          data:
+            entity_id: "light.bookshelf"
+        - service: homeassistant.turn_on
+          data:
+            entity_id: "light.basement_hallway"
+            brightness: 40
+        - service: homeassistant.turn_on
+          data:
+            entity_id: "light.lounge_ambiance"
+            brightness_pct: 30
+            kelvin: 2200
 
 automation:
   - id: "a4fe52e0-99f0-449d-9bc7-50378d9d6df8"
@@ -63,10 +64,11 @@ automation:
         entity_id: "group.household"
         state: "home"
     action:
-      - service: script.evening_ambiance
-      - service: light.turn_on
-        data:
-          entity_id: "light.outdoor_lights"
+      - parallel:
+          - service: script.evening_ambiance
+          - service: light.turn_on
+            data:
+              entity_id: "light.outdoor_lights"
 
   - id: "2c48ecbc-7b65-4938-af37-dcda12952465"
     alias: "arrival_lights"
