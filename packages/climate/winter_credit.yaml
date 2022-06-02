@@ -108,25 +108,23 @@ automation:
 
             {{ ns.events }}
 
-      - choose:
-          - conditions:
-              - "{{ count == 0 or count != events | length / 2 }}"
-            sequence:
-              - service: persistent_notification.create
-                data:
-                  title: "Failed to parse peak event notification"
-                  message: |
-                    <strong>{{ text }}</strong>
-                    <hr>
-                    <pre>{{ events }}</pre>
+      - if: "{{ count == 0 or count != events | length / 2 }}"
+        then:
+          - service: persistent_notification.create
+            data:
+              title: "Failed to parse peak event notification"
+              message: |
+                <strong>{{ text }}</strong>
+                <hr>
+                <pre>{{ events }}</pre>
 
       - repeat:
-          count: "{{ events | length }}"
+          for_each: "{{ events }}"
           sequence:
             - service: google.add_event
               data:
                 calendar_id: !secret gcal_climate_id
-                summary: "{{ events[repeat.index - 1].preset }} #special"
+                summary: "{{ repeat.item.preset }} #special"
                 description: "{{ text }}"
-                start_date_time: "{{ events[repeat.index - 1].start }}"
-                end_date_time: "{{ events[repeat.index - 1].end }}"
+                start_date_time: "{{ repeat.item.start }}"
+                end_date_time: "{{ repeat.item.end }}"

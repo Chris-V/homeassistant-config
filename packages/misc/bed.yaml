@@ -46,77 +46,70 @@ script:
             - "light.lounge_lights"
             - "light.office_lights"
 
-      - choose:
-          conditions:
-            - condition: not
-              conditions:
-                - condition: state
-                  entity_id: "media_player.living_room_tv"
-                  state: "on"  # on => a source other than home is on display
-          sequence:
-            - service: homeassistant.turn_off
-              data:
-                entity_id:
-                  - "light.living_room_ambiance"
-                  - "media_player.living_room_tv"
+      - if:
+          - alias: "TV is on the home screen"
+            not:
+              - condition: state
+                entity_id: "media_player.living_room_tv"
+                state: "on"  # on => a source other than home is on display
+        then:
+          - service: homeassistant.turn_off
+            data:
+              entity_id:
+                - "light.living_room_ambiance"
+                - "media_player.living_room_tv"
 
-      - choose:
-          conditions:
-            - condition: state
-              entity_id: "binary_sensor.basement_bathroom_motion"
-              state: "off"
-          sequence:
-            - service: light.turn_off
-              data:
-                entity_id: "light.basement_bathroom_lights"
+      - if:
+          - condition: state
+            entity_id: "binary_sensor.basement_bathroom_motion"
+            state: "off"
+        then:
+          - service: light.turn_off
+            data:
+              entity_id: "light.basement_bathroom_lights"
 
-      - choose:
-          conditions:
-            - condition: state
+      - if:
+          - condition: state
+            entity_id: "light.dining_room"
+            state: "on"
+        then:
+          - service: light.turn_on
+            data:
               entity_id: "light.dining_room"
-              state: "on"
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: "light.dining_room"
-                brightness_pct: 10
+              brightness_pct: 10
 
-      - choose:
-          conditions:
-            - condition: state
-              entity_id: "binary_sensor.laundry_room_motion"
-              state: "off"
-          sequence:
-            - service: light.turn_off
-              data:
-                entity_id: "light.laundry_room_lights"
+      - if:
+          - condition: state
+            entity_id: "binary_sensor.laundry_room_motion"
+            state: "off"
+        then:
+          - service: light.turn_off
+            data:
+              entity_id: "light.laundry_room_lights"
 
-      - choose:
-          conditions:
-            - condition: state
-              entity_id: "media_player.living_room_tv"
-              state: "home"
-          sequence:
-            - service: remote.turn_off
-              data:
-                entity_id: "remote.living_room_tv"
+      - if:
+          - condition: state
+            entity_id: "media_player.living_room_tv"
+            state: "home"
+        then:
+          - service: remote.turn_off
+            data:
+              entity_id: "remote.living_room_tv"
 
-      - choose:
-          conditions:
-            - condition: state
-              entity_id: "binary_sensor.main_bathroom_motion"
-              state: "off"
-          sequence:
-            - service: light.turn_off
-              data:
-                entity_id: "light.main_bathroom_lights"
+      - if:
+          - condition: state
+            entity_id: "binary_sensor.main_bathroom_motion"
+            state: "off"
+        then:
+          - service: light.turn_off
+            data:
+              entity_id: "light.main_bathroom_lights"
 
-      - choose:
-          conditions:
-            - condition: state
-              entity_id: "binary_sensor.workshop_motion"
-              state: "off"
-          sequence:
-            - service: light.turn_off
-              data:
-                entity_id: "light.workshop_lights"
+      - if:
+          - condition: state
+            entity_id: "binary_sensor.workshop_motion"
+            state: "off"
+        then:
+          - service: light.turn_off
+            data:
+              entity_id: "light.workshop_lights"

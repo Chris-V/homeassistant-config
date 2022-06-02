@@ -110,8 +110,7 @@ automation:
           minutes: "{{ shutdown_minutes if is_state('input_boolean.power_outage_manage_devices', 'on') else 240 }}"
         continue_on_timeout: true
 
-      - condition: template
-        value_template: >-
+      - condition: >-
           {% set timed_out = wait.trigger is none %}
           {{
             is_state('binary_sensor.ups_online_status', 'off')
@@ -198,8 +197,7 @@ automation:
           minutes: "{{ power_on_minutes }}"
         continue_on_timeout: true
 
-      - condition: template
-        value_template: >-
+      - condition: >-
           {% set timed_out = wait.trigger is none %}
           {{
             is_state('binary_sensor.ups_online_status', 'on')

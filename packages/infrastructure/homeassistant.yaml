@@ -60,23 +60,19 @@ automation:
           message: "{{ trigger.event.data.service_data.message }}"
 
   - id: "673d5462-19e1-4a63-ad41-75c0690dcaa2"
-    alias: Notify HA startup
+    alias: Notify HA status.
     trigger:
       - platform: homeassistant
         event: "start"
-    action:
-      - service: notify.admin
-        data:
-          message: Home-Assistant has started.
-          data: &ha_status_data
-            tag: "homeassistant-status"
-  - id: "df1650ff-20b4-46e0-976f-319ceb444f8d"
-    alias: Notify HA shutdown
-    trigger:
+        variables:
+          action: "started"
       - platform: homeassistant
         event: "shutdown"
+        variables:
+          action: "shut down"
     action:
-      - service: notify.admin
+      - service: "notify.admin"
         data:
-          message: Home-Assistant has shut down.
-          data: *ha_status_data
+          message: "Home-Assistant has {{ action }}."
+          data:
+            tag: "homeassistant-status"

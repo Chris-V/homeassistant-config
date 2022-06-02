@@ -54,8 +54,7 @@ automation:
       - condition: state
         entity_id: "input_boolean.notify_minecraft_status"
         state: "on"
-      - condition: template
-        value_template: "{{ !is_state('sensor.minecraft_server_version', trigger.to_state.state) }}"
+      - "{{ !is_state('sensor.minecraft_server_version', trigger.to_state.state) }}"
     action:
       - service: python_script.notify
         data:
@@ -75,6 +74,7 @@ automation:
     trigger:
       - platform: state
         entity_id: "sensor.minecraft_server_players_online"
+        attribute: "players_list"
     condition:
       - condition: state
         entity_id: "input_boolean.notify_minecraft_player_changes"
@@ -93,6 +93,6 @@ automation:
             {% for player in trigger.to_state.attributes.players_list | default([]) -%}
             {{ player }}{{ ', ' if not loop.last and loop.revindex != 2 }}{{ ' and ' if loop.revindex == 2 }}
             {%- endfor %}
-            {{ ' is ' if count == 1 else ' are ' }}
+            {{ count == 1 | iif(' is ', ' are ') }}
             online.
             {% endif %}
