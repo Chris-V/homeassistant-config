@@ -15,101 +15,102 @@ script:
     mode: "single"
     max_exceeded: "silent"
     sequence:
-      - service: tts.google_cloud_say
-        data:
-          entity_id: "media_player.master_bedroom_google_home"
-          message: >-
-            {{ [
-                  "Sweet dreams!",
-                  "Good night!",
-                  "Night! Night!",
-                  "Don\'t let the bed bugs bite!",
-                ] | random }}
+      parallel:
+        - service: tts.google_cloud_say
+          data:
+            entity_id: "media_player.master_bedroom_google_home"
+            message: >-
+              {{ [
+                    "Sweet dreams!",
+                    "Good night!",
+                    "Night! Night!",
+                    "Don\'t let the bed bugs bite!",
+                  ] | random }}
 
-      - service: light.turn_on
-        data:
-          entity_id: "light.master_bedroom_bedsides"
-          brightness_pct: 5
-          kelvin: 2200
+        - service: light.turn_on
+          data:
+            entity_id: "light.master_bedroom_bedsides"
+            brightness_pct: 5
+            kelvin: 2200
 
-      - service: lock.lock
-        data:
-          entity_id: "lock.kitchen_door"
+        - service: lock.lock
+          data:
+            entity_id: "lock.kitchen_door"
 
-      - service: light.turn_off
-        data:
-          entity_id:
-            - "light.master_bedroom"
-            - "light.kitchen_lights"
-            - "light.bookshelf"
-            - "light.common_basement_lights"
-            - "light.lounge_lights"
-            - "light.office_lights"
+        - service: light.turn_off
+          data:
+            entity_id:
+              - "light.master_bedroom"
+              - "light.kitchen_lights"
+              - "light.bookshelf"
+              - "light.common_basement_lights"
+              - "light.lounge_lights"
+              - "light.office_lights"
 
-      - if:
-          - alias: "TV is on the home screen"
-            not:
-              - condition: state
-                entity_id: "media_player.living_room_tv"
-                state: "on"  # on => a source other than home is on display
-        then:
-          - service: homeassistant.turn_off
-            data:
-              entity_id:
-                - "light.living_room_ambiance"
-                - "media_player.living_room_tv"
+        - if:
+            - alias: "TV is on the home screen"
+              not:
+                - condition: state
+                  entity_id: "media_player.living_room_tv"
+                  state: "on"  # on => a source other than home is on display
+          then:
+            - service: homeassistant.turn_off
+              data:
+                entity_id:
+                  - "light.living_room_ambiance"
+                  - "media_player.living_room_tv"
 
-      - if:
-          - condition: state
-            entity_id: "binary_sensor.basement_bathroom_motion"
-            state: "off"
-        then:
-          - service: light.turn_off
-            data:
-              entity_id: "light.basement_bathroom_lights"
+        - if:
+            - condition: state
+              entity_id: "binary_sensor.basement_bathroom_motion"
+              state: "off"
+          then:
+            - service: light.turn_off
+              data:
+                entity_id: "light.basement_bathroom_lights"
 
-      - if:
-          - condition: state
-            entity_id: "light.dining_room"
-            state: "on"
-        then:
-          - service: light.turn_on
-            data:
+        - if:
+            - condition: state
               entity_id: "light.dining_room"
-              brightness_pct: 10
+              state: "on"
+          then:
+            - service: light.turn_on
+              data:
+                entity_id: "light.dining_room"
+                brightness_pct: 10
 
-      - if:
-          - condition: state
-            entity_id: "binary_sensor.laundry_room_motion"
-            state: "off"
-        then:
-          - service: light.turn_off
-            data:
-              entity_id: "light.laundry_room_lights"
+        - if:
+            - condition: state
+              entity_id: "binary_sensor.laundry_room_motion"
+              state: "off"
+          then:
+            - service: light.turn_off
+              data:
+                entity_id: "light.laundry_room_lights"
 
-      - if:
-          - condition: state
-            entity_id: "media_player.living_room_tv"
-            state: "home"
-        then:
-          - service: remote.turn_off
-            data:
-              entity_id: "remote.living_room_tv"
+        - if:
+            - condition: state
+              entity_id: "media_player.living_room_tv"
+              state: "home"
+          then:
+            - service: remote.turn_off
+              data:
+                entity_id: "remote.living_room_tv"
 
-      - if:
-          - condition: state
-            entity_id: "binary_sensor.main_bathroom_motion"
-            state: "off"
-        then:
-          - service: light.turn_off
-            data:
-              entity_id: "light.main_bathroom_lights"
+        - if:
+            - condition: state
+              entity_id: "binary_sensor.main_bathroom_motion"
+              state: "off"
+          then:
+            - service: light.turn_off
+              data:
+                entity_id: "light.main_bathroom_lights"
 
-      - if:
-          - condition: state
-            entity_id: "binary_sensor.workshop_motion"
-            state: "off"
-        then:
-          - service: light.turn_off
-            data:
-              entity_id: "light.workshop_lights"
+        - if:
+            - condition: state
+              entity_id: "binary_sensor.workshop_motion"
+              state: "off"
+          then:
+            - service: light.turn_off
+              data:
+                entity_id: "light.workshop_lights"
