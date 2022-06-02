@@ -17,14 +17,14 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
 
       - name: "Drop custom component blocks"
-        uses: "mikefarah/yq@v4.4.0"
+        uses: "mikefarah/yq@v4.25.2"
         with:
           cmd: |
-            yq eval 'del(.hacs)' configuration.yaml -i &&
-            yq eval 'del(.lovelace_preprocessor)' packages/ui/frontend.yaml -i
+            yq 'del(.hacs)' configuration.yaml -i &&
+            yq 'del(.lovelace_preprocessor)' packages/ui/frontend.yaml -i
 
       - name: "Validate configuration"
         uses: "frenck/action-home-assistant@v1"
