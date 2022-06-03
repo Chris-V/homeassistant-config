@@ -31,16 +31,16 @@ input_text:
     name: "Presence armed ID"
     icon: "mdi:shield-alert"
 
-binary_sensor:
-  - platform: mqtt
-    name: "intrusion_events"
-    device_class: "safety"
-    state_topic: &activity_events_topic "home-assistant/intrusion/events"
-    value_template: "{{ value_json.state }}"
-    payload_on: "on"
-    payload_off: "off"
-    json_attributes_topic: *activity_events_topic
-    json_attributes_template: "{{ value_json.attributes | to_json }}"
+mqtt:
+  binary_sensor:
+    - name: "intrusion_events"
+      device_class: "safety"
+      state_topic: &activity_events_topic "home-assistant/intrusion/events"
+      value_template: "{{ value_json.state }}"
+      payload_on: "on"
+      payload_off: "off"
+      json_attributes_topic: *activity_events_topic
+      json_attributes_template: "{{ value_json.attributes | to_json }}"
 
 template:
   - binary_sensor:
