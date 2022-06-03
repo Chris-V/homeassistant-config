@@ -45,6 +45,7 @@
         - type: custom:lovelace-multiline-text-input-card
           entity: input_text.broadcast_message
           title: Broadcast custom message
+          autosave: true
           placeholder_text: Message
           show_success_messages: false
           max_length: 255
