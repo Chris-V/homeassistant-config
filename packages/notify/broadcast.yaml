@@ -21,18 +21,18 @@ input_text:
     max: 255
     initial: ""
 
-sensor:
-  - platform: "mqtt"
-    unique_id: "mqtt_broadcast_queue"
-    name: "broadcast_queue"
-    icon: "mdi:bullhorn"
-    state_topic: &broadcast_queue_topic "home-assistant/broadcast/queue"
-    value_template: >
-      {{ value_json | default([], True) | length }}
-    json_attributes_topic: *broadcast_queue_topic
-    json_attributes_template: >
-      {% set items = value_json | default([], True) %}
-      {{ { "items": items } | tojson }}
+mqtt:
+  sensor:
+    - unique_id: "mqtt_broadcast_queue"
+      name: "broadcast_queue"
+      icon: "mdi:bullhorn"
+      state_topic: &broadcast_queue_topic "home-assistant/broadcast/queue"
+      value_template: >
+        {{ value_json | default([], True) | length }}
+      json_attributes_topic: *broadcast_queue_topic
+      json_attributes_template: >
+        {% set items = value_json | default([], True) %}
+        {{ { "items": items } | tojson }}
 
 script:
   broadcast_manual_message:
