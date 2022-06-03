@@ -78,6 +78,7 @@ script:
           volume_level: "{{ volume_level | default(0.8, True) }}"
 
       - service: media_player.turn_on
+        continue_on_error: true
         data:
           entity_id: "{{ media_players }}"
       - wait_template: >-
