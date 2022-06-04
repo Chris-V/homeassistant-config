@@ -61,10 +61,10 @@ automation:
         to: ~
 
     variables:
-      text: "{{ trigger.to_state.attributes['android.text'] }}"
+      text: "{{ trigger.to_state.attributes['android.text'] | default('') }}"
 
     condition:
-      - "{{ trigger.to_state.attributes.package == 'com.hydroquebec.mf_android' }}"
+      - "{{ trigger.to_state.attributes['package'] | default('') == 'com.hydroquebec.mf_android' }}"
       - "{{ 'Winter Credit Option:' in text }}"
       - "{{ 'Reminder.' not in text }}"
 
