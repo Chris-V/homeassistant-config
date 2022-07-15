@@ -48,10 +48,6 @@ light:
       - light.dining_room
       - light.hallway
 
-  - platform: switch
-    name: hallway
-    entity_id: "switch.hallway_light"
-
 template:
   - sensor:
       - unique_id: "sensor.dining_room_temperature"

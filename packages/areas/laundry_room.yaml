@@ -3,7 +3,7 @@ homeassistant:
     binary_sensor.washing_machine_leak:
       device_class: "moisture"
     sensor.laundry_room_temperature:
-      friendly_name: "Laundry room temperature"
+      friendly_name: "Laundry temperature"
 
 cloud:
   google_actions:

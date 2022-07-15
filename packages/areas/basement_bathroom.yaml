@@ -15,8 +15,6 @@ homeassistant:
       battery_warning_level: 40
     sensor.basement_bathroom_temperature:
       friendly_name: "Basement bathroom temperature"
-    light.basement_bathroom:
-      friendly_name: "Basement bathroom light"
 
 cloud:
   google_actions:
@@ -55,24 +53,6 @@ template:
         attributes:
           heating: false
 
-fan:
-  - platform: template
-    fans:
-      basement_bathroom:
-        unique_id: "fan.basement_bathroom"
-        friendly_name: "Basement bathroom fan"
-        value_template: "{% if is_state('switch.basement_bathroom_fan', 'on') %}on{% else %}off{% endif %}"
-        availability_template: "{{ not is_state('switch.basement_bathroom_fan', 'unavailable') }}"
-        speed_count: 1
-        turn_on:
-          service: "switch.turn_on"
-          data:
-            entity_id: "switch.basement_bathroom_fan"
-        turn_off:
-          service: "switch.turn_off"
-          data:
-            entity_id: "switch.basement_bathroom_fan"
-
 input_number:
   basement_bathroom_thermostat_eco_setpoint:
     name: "Basement bathroom thermostat eco setpoint"
@@ -104,10 +84,6 @@ light:
     entities:
       - light.basement_bathroom
       - light.basement_bathroom_vanity
-
-  - platform: switch
-    name: basement_bathroom
-    entity_id: "switch.basement_bathroom_light"
 
 automation:
   - id: "13a8923b-8f42-4a1f-9d21-91980a400c75"
