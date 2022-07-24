@@ -7,7 +7,7 @@ cloud:
   google_actions:
     filter:
       include_entities:
-        - "light.office"
+        - "light.office_spots"
 
 input_number:
   office_thermostat_eco_setpoint:
@@ -38,7 +38,7 @@ light:
     unique_id: "office_lights"
     name: "Office lights"
     entities:
-      - light.office
+      - "light.office_spots"
 
 template:
   - sensor:

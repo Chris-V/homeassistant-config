@@ -18,6 +18,8 @@
         name: Front porch
         icon: mdi:outdoor-lamp
         icon_tag: mdi:sofa
+      - entity_id: light.backyard_soffit
+        name: Soffits
       - entity_id: light.shed_outdoor
         name: Shed door
         icon: mdi:outdoor-lamp
@@ -39,6 +41,11 @@
       - entity_id: sensor.living_room_temperature
         name: Temperature
     switches:
+      - entity_id: light.living_room
+        name: Spots
+      - entity_id: light.foyer
+        name: Foyer
+        icon: mdi:door
       - entity_id: light.bookshelf
         name: Bookshelf
         icon: mdi:bookshelf
@@ -104,10 +111,9 @@
     switches:
       - entity_id: light.dining_room
         name: Table
-        icon: mdi:vanity-light
+        icon: mdi:table-furniture
       - entity_id: light.hallway
         name: Hallway
-        icon: mdi:wall-sconce-flat
     climate:
       room_key: dining_room
 
@@ -129,10 +135,8 @@
     switches:
       - entity_id: light.main_bathroom_spots
         name: Spots
-        icon: mdi:wall-sconce-flat
       - entity_id: light.main_bathroom_vanity
         name: Vanity
-        icon: mdi:vanity-light
       - entity_id: fan.main_bathroom
         name: Fan
 
@@ -146,8 +150,10 @@
       - entity_id: sensor.master_bedroom_temperature
         name: Temperature
     switches:
+      - entity_id: light.master_bedroom_spots
+        name: Spots
       - entity_id: light.master_bedroom
-        name: Light
+        name: Sconces
         icon: mdi:wall-sconce
       - entity_id: light.bedside_chris
         name: Chris' lamp
@@ -172,8 +178,8 @@
       - entity_id: sensor.office_temperature
         name: Temperature
     switches:
-      - entity_id: light.office
-        name: Light
+      - entity_id: light.office_spots
+        name: Spots
       - entity_id: media_player.office_sonos
         name: Sonos
         icon: mdi:speaker

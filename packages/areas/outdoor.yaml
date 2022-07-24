@@ -12,6 +12,7 @@ cloud:
     filter:
       include_entities:
         - "light.front_porch"
+        - "light.backyard_soffit"
         - "light.shed"
         - "light.shed_outdoor"
         - "light.side_porch"
@@ -26,9 +27,10 @@ light:
     unique_id: "outdoor_lights"
     name: "Outdoor lights"
     entities:
-      - light.side_porch
-      - light.front_porch
-      - light.shed_outdoor
+      - "light.backyard_soffit"
+      - "light.front_porch"
+      - "light.shed_outdoor"
+      - "light.side_porch"
 
 template:
   - sensor:

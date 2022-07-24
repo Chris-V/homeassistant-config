@@ -4,7 +4,7 @@ homeassistant:
       friendly_name: "Living room door"
       device_class: "door"
     light.living_room_ambiance:
-      friendly_name: "Living room ambiance light"
+      friendly_name: "Living room lamp"
     light.bookshelf:
       friendly_name: "Bookshelf light"
     sensor.living_room_door_sensor_battery:
@@ -23,13 +23,18 @@ cloud:
     filter:
       include_entities:
         - "light.bookshelf"
+        - "light.foyer"
+        - "light.living_room"
         - "light.living_room_ambiance"
         - "light.staircase"
         - "switch.bookshelf_outlet"
     entity_config:
       light.living_room_ambiance:
         aliases:
-          - "Living room light"
+          - "Living room lamp"
+      light.living_room:
+        aliases:
+          - "Living room spots"
       switch.bookshelf_outlet:
         aliases:
           - "Christmas tree"
@@ -71,8 +76,10 @@ light:
     unique_id: "living_room_lights"
     name: "Living room lights"
     entities:
-      - light.living_room_ambiance
-      - light.bookshelf
+      - "light.living_room"
+      - "light.foyer"
+      - "light.living_room_ambiance"
+      - "light.bookshelf"
 
   - platform: switch
     name: living_room_ambiance

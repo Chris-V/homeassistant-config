@@ -2,8 +2,6 @@ homeassistant:
   customize:
     light.master_bedroom_bedsides:
       friendly_name: "Master bedroom's bedside lamps"
-    light.master_bedroom:
-      friendly_name: "Master bedroom light"
     sensor.master_bedroom_temperature:
       friendly_name: "Master bedroom temperature"
 
@@ -11,14 +9,14 @@ cloud:
   google_actions:
     filter:
       include_entities:
-        - "light.master_bedroom"
+        - "light.master_bedroom_spots"
         - "light.master_bedroom_bedsides"
         - "light.bedside_chris"
         - "light.bedside_karine"
     entity_config:
       light.master_bedroom:
         aliases:
-          - "Bedroom light"
+          - "Bedroom spots"
       light.master_bedroom_bedsides:
         aliases:
           - "Bedside lamps"
@@ -53,6 +51,7 @@ light:
     name: "Master bedroom lights"
     entities:
       - light.master_bedroom
+      - light.master_bedroom_spots
       - light.bedside_chris
       - light.bedside_karine
   - platform: group

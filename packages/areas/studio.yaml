@@ -13,7 +13,8 @@ cloud:
   google_actions:
     filter:
       include_entities:
-        - "light.studio"
+        - "light.studio_spots"
+        - "light.studio_panel"
 
 input_number:
   studio_thermostat_eco_setpoint:
@@ -44,7 +45,8 @@ light:
     unique_id: "studio_lights"
     name: "Studio lights"
     entities:
-      - "light.studio"
+      - "light.studio_panel"
+      - "light.studio_spots"
 
 template:
   - sensor:

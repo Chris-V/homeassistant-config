@@ -1,7 +1,5 @@
 homeassistant:
   customize:
-    light.hallway:
-      friendly_name: "Hallway light"
     sensor.dining_room_temperature:
       friendly_name: "Dining room temperature"
 

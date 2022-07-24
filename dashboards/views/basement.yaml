@@ -10,10 +10,9 @@
     switches:
       - entity_id: light.basement_hallway
         name: Hallway
-        icon: mdi:wall-sconce-flat
       - entity_id: light.downstairs
         name: Downstairs
-        icon: mdi:lightbulb
+        icon: mdi:wall-sconce
     climate:
       room_key: basement_hallway
 
@@ -30,8 +29,7 @@
         name: Temperature
     switches:
       - entity_id: light.lounge
-        name: Light
-        icon: mdi:wall-sconce-flat
+        name: Spots
       - entity_id: light.lounge_ambiance
         name: Ambiance
         icon: mdi:floor-lamp
@@ -66,10 +64,8 @@
     switches:
       - entity_id: light.basement_bathroom
         name: Spots
-        icon: mdi:wall-sconce-flat
       - entity_id: light.basement_bathroom_vanity
         name: Vanity
-        icon: mdi:vanity-light
       - entity_id: fan.basement_bathroom
         name: Fan
 
@@ -85,8 +81,8 @@
       - entity_id: sensor.guest_bedroom_temperature
         name: Temperature
     switches:
-      - entity_id: light.guest_bedroom
-        name: Light
+      - entity_id: light.guest_bedroom_spots
+        name: Spots
       - entity_id: light.guest_bedroom_closet
         name: Closet light
         icon: mdi:wardrobe
@@ -105,8 +101,10 @@
       - entity_id: sensor.studio_temperature
         name: Temperature
     switches:
-      - entity_id: light.studio
-        name: Light
+      - entity_id: light.studio_spots
+        name: Spots
+      - entity_id: light.studio_panel
+        name: Panel
     climate:
       room_key: studio
 
@@ -127,7 +125,7 @@
         icon: mdi:thermometer
     switches:
       - entity_id: light.laundry_room
-        name: Light
+        name: Spots
       - entity_id: media_player.laundry_room_google_home
         name: Google Home
         icon: mdi:speaker
