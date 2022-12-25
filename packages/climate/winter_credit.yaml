@@ -110,7 +110,7 @@ automation:
 
       - if: "{{ count == 0 or count != events | length / 2 }}"
         then:
-          - service: persistent_notification.create
+          - service: "persistent_notification.create"
             data:
               title: "Failed to parse peak event notification"
               message: |
@@ -121,9 +121,9 @@ automation:
       - repeat:
           for_each: "{{ events }}"
           sequence:
-            - service: google.add_event
+            - service: "google.create_event"
               data:
-                calendar_id: !secret gcal_climate_id
+                entity_id: "calendar.special_climate_schedule"
                 summary: "{{ repeat.item.preset }} #special"
                 description: "{{ text }}"
                 start_date_time: "{{ repeat.item.start }}"
