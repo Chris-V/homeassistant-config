@@ -1,12 +1,8 @@
-homeassistant:
-  customize:
-    sensor.minecraft_latest_version:
-      friendly_name: "Latest Minecraft version"
-      icon: "mdi:update"
-
 sensor:
   - platform: rest
-    name: "minecraft_latest_version"
+    unique_id: "minecraft_latest_version"
+    name: "Latest Minecraft version"
+    icon: "mdi:update"
     resource: "https://launchermeta.mojang.com/mc/game/version_manifest.json"
     value_template: "{{ value_json.latest.release }}"
     scan_interval: 900
