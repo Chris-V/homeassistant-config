@@ -93,7 +93,7 @@
   file: ../cards/area.yaml.j2
   variables:
     name: Studio
-    icon: mdi:flash-circle
+    icon: mdi:lightning-bolt-circle
     color: 0, 54, 58
     sensors:
       - entity_id: binary_sensor.studio_window
