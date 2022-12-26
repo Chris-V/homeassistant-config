@@ -24,6 +24,7 @@ header:
     card:
       - padding: 24px 16px 0
       - box-shadow: none
+      - border: "0"
       - background: none
       - color: var(--ha-card-header-color, --primary-text-color)
       - font-size: var(--ha-card-header-font-size, 24px)
