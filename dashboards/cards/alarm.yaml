@@ -10,6 +10,17 @@ style:
       margin: 12px 12px 0 0;
       --mdc-icon-size: 24px;
     }
+  "hui-buttons-header-footer$": |
+    .divider {
+      display: none;
+    }
+    hui-buttons-base.header.header {
+      --padding-top: 0;
+    }
+  "hui-buttons-header-footer$hui-buttons-base$ha-chip$": |
+    .mdc-chip__icon {
+      margin-inline: 0 !important;
+    }
   "hui-buttons-header-footer$hui-buttons-base$state-badge$": |
     ha-icon[data-domain="lock"][data-state="unlocked"] {
       color: var(--paper-item-icon-color) !important;
@@ -55,6 +66,7 @@ footer:
   style: |
     ha-card {
       --ha-card-background: none;
+      border: 0;
     }
 
 entities:
@@ -67,6 +79,7 @@ entities:
       card:
         - "--ha-card-background": none
         - "--ha-card-box-shadow": none
+        - border: 0
         - padding: 0
     state:
       - value: "on"
