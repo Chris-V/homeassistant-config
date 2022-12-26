@@ -52,6 +52,8 @@ cards:
         card:
           - height: 48px
           - padding: 1% 0
+          - border: "0"
+          - box-shadow: none
         name:
           - place-self: center start
       tap_action:
