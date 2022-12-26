@@ -62,12 +62,13 @@
 - type: custom:mod-card
   card_mod:
     style: |
-      {{ "{% if is_state_attr('" ~ sensor_config.entity_id ~ "', 'heating', True) %}" }}
       ha-card {
+        border: 0;
+      {{ "{% if is_state_attr('" ~ sensor_config.entity_id ~ "', 'heating', True) %}" }}
         --primary-text-color: var(--paper-item-icon-active-color);
         --paper-item-icon-color: var(--paper-item-icon-active-color);
-      }
       {{ "{% endif %}" }}
+      }
   card:
     type: custom:container-element
     style:
