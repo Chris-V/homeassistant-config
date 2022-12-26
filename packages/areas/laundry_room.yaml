@@ -26,12 +26,11 @@ template:
         unit_of_measurement: "°C"
         state: >
           {%
-            set temperatures = expand([
+            set temperatures = [
               'sensor.basement_hallway_thermostat_temperature',
               'sensor.washing_machine_leak_temperature',
-            ])
-              | map(attribute = 'state')
-              | default('unavailable')
+            ]
+              | map('states')
               | reject('==', 'unavailable')
               | map('float')
               | list

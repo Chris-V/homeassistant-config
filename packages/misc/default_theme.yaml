@@ -13,18 +13,16 @@ template:
         state: >-
           {{
             (
-              expand(
+              [
                 'binary_sensor.all_leaks',
                 'binary_sensor.intrusion_activity',
                 'binary_sensor.kitchen_door_lock_jammed',
-              )
-                | selectattr('state', '==', 'on')
+              ]
+                | select('is_state', 'on')
                 | first is defined
             ) or (
-              expand(
-                'switch.main_water_shut_off_valve',
-              )
-                | selectattr('state', '==', 'off')
+              ['switch.main_water_shut_off_valve']
+                | select('is_state', 'off')
                 | first is defined
             )
           }}
