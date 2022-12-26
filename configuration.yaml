@@ -4,6 +4,7 @@ homeassistant:
   longitude: !secret zone_home_longitude
   elevation: !secret zone_home_elevation
   time_zone: !secret zone_home_tz
+  country: "CA"
   unit_system: "metric"
   external_url: !secret http_public_host
   internal_url: !secret http_public_host
