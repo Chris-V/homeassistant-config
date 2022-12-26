@@ -60,7 +60,7 @@ template:
           {{
             is_state('input_boolean.force_guest_mode', 'on')
               or is_state('group.household', 'home')
-              and state_attr('sensor.guests_home', 'count') | int | default(0) > 0
+              and state_attr('sensor.guests_home', 'count') | int(0) > 0
           }}
 
     sensor:
