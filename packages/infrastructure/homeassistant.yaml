@@ -23,7 +23,7 @@ automation:
         not_to:
           - "unknown"
           - "unavailable"
-    condition: "{{ not is_state('sensor.current_home_assistant_version', trigger.to_state.state) }}"
+    condition: "{{ trigger.to_state.state | version > states('sensor.current_home_assistant_version') }}"
     action:
       - service: python_script.notify
         data:

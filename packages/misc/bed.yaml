@@ -21,7 +21,7 @@ script:
             entity_id: "media_player.master_bedroom_google_home"
             message: >-
               {{ [
-                    "Sweet dreams!",
+                    "Sweet dreams!",x
                     "Good night!",
                     "Night! Night!",
                     "Don\'t let the bed bugs bite!",
@@ -48,7 +48,7 @@ script:
               - "light.office_lights"
 
         - if:
-            - alias: "TV is on the home screen"
+            - alias: "TV is off or showing the home screen"
               not:
                 - condition: state
                   entity_id: "media_player.living_room_tv"
