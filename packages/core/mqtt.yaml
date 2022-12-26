@@ -1,4 +1,1 @@
-mqtt:
-  certificate: "auto"
-  client_id: "home_assistant"
-  keepalive: 60
+mqtt: {}
