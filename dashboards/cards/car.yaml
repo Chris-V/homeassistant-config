@@ -20,21 +20,21 @@ elements:
       "--primary-text-color": "#DADADB"
       "--mdc-icon-size": 40px
     elements:
-      - type: state-icon
-        entity: binary_sensor.bolt_ev_network_link
-        style:
-          position: absolute
-          top: -5px
-          left: -5px
-          "--mdc-icon-size": 20px
+      # - type: state-icon
+      #   entity: binary_sensor.bolt_ev_network_link
+      #   style:
+      #     position: absolute
+      #     top: -5px
+      #     left: -5px
+      #     "--mdc-icon-size": 20px
 
-      - type: state-icon
-        entity: binary_sensor.bolt_ev_recharge_recommended
-        style:
-          position: absolute
-          top: 25px
-          left: -5px
-          "--mdc-icon-size": 20px
+      # - type: state-icon
+      #   entity: binary_sensor.bolt_ev_recharge_recommended
+      #   style:
+      #     position: absolute
+      #     top: 25px
+      #     left: -5px
+      #     "--mdc-icon-size": 20px
 
       - type: custom:container-element
         style:
@@ -59,13 +59,13 @@ elements:
               justify-content: flex-start
             elements:
               - type: state-icon
-                entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
+                entity: sensor.bolt_ev_battery_level
                 title: null
                 style:
                   margin: -16px -12px -12px -12px
                   "--mdc-icon-size": 16px
               - type: state-label
-                entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
+                entity: sensor.bolt_ev_battery_level
                 title: null
                 style:
                   margin: 2px -8px -8px -8px
@@ -77,23 +77,23 @@ elements:
             elements:
               - type: conditional
                 conditions:
-                  - entity: binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in
+                  - entity: binary_sensor.bolt_ev_charge_state
                     state: "on"
-                  - entity: sensor.mychevy_2019_chevrolet_bolt_ev_battery_level
+                  - entity: sensor.bolt_ev_battery_level
                     state_not: 100
                 elements:
                   - type: state-label
-                    entity: sensor.mychevy_2019_chevrolet_bolt_ev_charged_by
+                    entity: sensor.bolt_ev_plug_voltage  # sensor.bolt_ev_charged_by
                     title: null
               - type: conditional
                 conditions:
-                  - entity: binary_sensor.mychevy_2019_chevrolet_bolt_ev_plugged_in
+                  - entity: binary_sensor.bolt_ev_charge_state
                     state: "off"
                 elements:
                   - type: state-label
-                    entity: sensor.mychevy_2019_chevrolet_bolt_ev_electric_range
+                    entity: sensor.bolt_ev_range
                     title: null
 
           - type: state-label
-            entity: sensor.mychevy_2019_chevrolet_bolt_ev_mileage
+            entity: sensor.bolt_ev_odometer
             title: null
