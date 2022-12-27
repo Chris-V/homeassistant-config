@@ -27,7 +27,7 @@
       square: false
       columns: 2
       cards:
-        - !include ../cards/car.yaml
+        - !include ../cards/bolt-ev.yaml
         - !include ../cards/livings-overview.yaml
     - !include ../cards/house-feed.yaml
 

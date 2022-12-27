@@ -1,0 +1,118 @@
+- type: grid
+  columns: 2
+  square: false
+  cards:
+    - type: button
+      entity: script.bolt_ev_start
+      name: Start
+      show_state: false
+      tap_action:
+        action: toggle
+    - type: button
+      entity: script.bolt_ev_cancel_start
+      name: Cancel Start
+      show_state: false
+      tap_action:
+        action: toggle
+    - type: button
+      entity: script.bolt_ev_lock_doors
+      name: Lock
+      show_state: false
+      tap_action:
+        action: toggle
+    - type: button
+      entity: script.bolt_ev_unlock_doors
+      name: Unlock
+      show_state: false
+      tap_action:
+        action: toggle
+
+- type: grid
+  columns: 2
+  square: false
+  cards:
+    - type: gauge
+      entity: sensor.bolt_ev_battery_level
+      min: 0
+      max: 100
+      name: Battery
+      severity:
+        green: 60
+        yellow: 40
+        red: 15
+
+    - type: gauge
+      entity: sensor.bolt_ev_range
+      min: 0
+      max: 420
+      name: Range
+      severity:
+        green: 250
+        yellow: 150
+        red: 75
+
+- type: glance
+  columns: 2
+  title: Tires
+  entities:
+    - entity: sensor.bolt_ev_tire_pressure_left_front
+      name: Left Front
+      icon: "mdi:car-tire-alert"
+    - entity: sensor.bolt_ev_tire_pressure_right_front
+      name: Right Front
+      icon: "mdi:car-tire-alert"
+    - entity: sensor.bolt_ev_tire_pressure_left_rear
+      name: Left Rear
+      icon: "mdi:car-tire-alert"
+    - entity: sensor.bolt_ev_tire_pressure_right_rear
+      name: Right Rear
+      icon: "mdi:car-tire-alert"
+
+- type: "custom:mini-graph-card"
+  name: Temperature
+  hours_to_show: 24
+  points_per_hour: 1
+  line_width: 2
+  entities:
+    - entity: sensor.bolt_ev_ambient_air_temperature
+      name: Ambient
+    - entity: sensor.bolt_ev_battery_temperature
+      name: Battery
+    - entity: sensor.outdoor_temperature
+      name: Outdoor
+
+- type: entities
+  title: Charging
+  state_color: true
+  entities:
+    - entity: binary_sensor.bolt_ev_plug_state
+      secondary_info: last-changed
+    - entity: binary_sensor.bolt_ev_charge_state
+      secondary_info: last-changed
+    - entity: binary_sensor.bolt_ev_priority_charge_indicator
+    - entity: binary_sensor.bolt_ev_priority_charge_status
+    - entity: sensor.bolt_ev_plug_voltage
+    - entity: sensor.bolt_ev_interm_volt_batt_volt
+    - entity: sensor.bolt_ev_charger_power_level
+
+- type: entities
+  title: Efficiency
+  entities:
+    - entity: sensor.bolt_ev_lifetime_mpge
+    - entity: sensor.bolt_ev_lifetime_efficiency
+    - entity: sensor.bolt_ev_electric_economy
+  state_color: true
+  footer:
+    type: "custom:mini-graph-card"
+    entities:
+      - entity: sensor.bolt_ev_odometer
+      - entity: sensor.bolt_ev_lifetime_energy_used
+        y_axis: secondary
+        show_state: true
+    hours_to_show: 672
+    group_by: date
+    decimals: 0
+    show:
+      graph: bar
+      name: false
+      icon: false

@@ -1,0 +1,44 @@
+script:
+  bolt_ev_start:
+    alias: "Start Bolt EV"
+    mode: "single"
+    icon: "mdi:car-electric"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: homeassistant/YOUR_CAR_VIN/command
+          payload: >
+            {"command": "startVehicle"}
+
+  bolt_ev_cancel_start:
+    alias: "Cancel Bolt EV start"
+    mode: "single"
+    icon: "mdi:car-off"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: homeassistant/YOUR_CAR_VIN/command
+          payload: >
+            {"command": "cancelStartVehicle"}
+
+  bolt_ev_lock_doors:
+    alias: "Lock Bolt EV doors"
+    mode: "single"
+    icon: "mdi:car-door-lock"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: homeassistant/YOUR_CAR_VIN/command
+          payload: >
+            {"command": "lockDoor"}
+
+  bolt_ev_unlock_doors:
+    alias: "Unlock Bolt EV doors"
+    mode: "single"
+    icon: "mdi:car-door"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: homeassistant/YOUR_CAR_VIN/command
+          payload: >
+            {"command": "unlockDoor"}
