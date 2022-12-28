@@ -36,6 +36,7 @@ recorder:
       - "binary_sensor.carl_requires_attention"
       - "binary_sensor.guest_bedroom_window"
       - "binary_sensor.guest_mode"
+      - "binary_sensor.heat_pump_status"
       - "binary_sensor.intrusion_activity"
       - "binary_sensor.intrusion_events"
       - "binary_sensor.kitchen_door"
