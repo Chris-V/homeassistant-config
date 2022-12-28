@@ -74,11 +74,11 @@ template:
               -%}
 
               {% set ns = namespace(device_names = []) -%}
-              {% for device in intrusion_devices -%}
+              {% for device in devices -%}
                 {% set ns.device_names = ns.device_names + [device_attr(device, 'name')] -%}
               {% endfor -%}
 
-              {{ (entities | map(attribute = 'name') + ns.device_names) | unique | sort -}}
+              {{ (entities | map(attribute = 'name') | list + ns.device_names) | unique | sort -}}
             {% else -%}
               {{ state_attr('binary_sensor.intrusion_activity', 'activity') | default([], True) -}}
             {% endif %}
@@ -101,7 +101,7 @@ template:
     sensor:
       - unique_id: "0d5d4c9c-bcb3-4e21-b7b5-74e67b2aae6a"
         name: "intrusion_events"
-        state: "{{ this.attributes.entities | default([]) | length }}"
+        state: "{{ this.attributes.entities | default([], True) | length }}"
         attributes:
           entities: >-
             {% set ns = namespace(entities = []) -%}
