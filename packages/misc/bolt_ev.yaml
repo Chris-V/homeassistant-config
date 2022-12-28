@@ -3,10 +3,12 @@ script:
     alias: "Start Bolt EV"
     mode: "single"
     icon: "mdi:car-electric"
+    variables:
+      vin: !secret bolt_ev_vin
     sequence:
-      - service: mqtt.publish
+      - service: "mqtt.publish"
         data:
-          topic: homeassistant/YOUR_CAR_VIN/command
+          topic: homeassistant/{{ vin }}/command
           payload: >
             {"command": "startVehicle"}
 
@@ -14,10 +16,12 @@ script:
     alias: "Cancel Bolt EV start"
     mode: "single"
     icon: "mdi:car-off"
+    variables:
+      vin: !secret bolt_ev_vin
     sequence:
-      - service: mqtt.publish
+      - service: "mqtt.publish"
         data:
-          topic: homeassistant/YOUR_CAR_VIN/command
+          topic: homeassistant/{{ vin }}/command
           payload: >
             {"command": "cancelStartVehicle"}
 
@@ -25,10 +29,12 @@ script:
     alias: "Lock Bolt EV doors"
     mode: "single"
     icon: "mdi:car-door-lock"
+    variables:
+      vin: !secret bolt_ev_vin
     sequence:
-      - service: mqtt.publish
+      - service: "mqtt.publish"
         data:
-          topic: homeassistant/YOUR_CAR_VIN/command
+          topic: homeassistant/{{ vin }}/command
           payload: >
             {"command": "lockDoor"}
 
@@ -36,9 +42,11 @@ script:
     alias: "Unlock Bolt EV doors"
     mode: "single"
     icon: "mdi:car-door"
+    variables:
+      vin: !secret bolt_ev_vin
     sequence:
-      - service: mqtt.publish
+      - service: "mqtt.publish"
         data:
-          topic: homeassistant/YOUR_CAR_VIN/command
+          topic: homeassistant/{{ vin }}/command
           payload: >
             {"command": "unlockDoor"}
