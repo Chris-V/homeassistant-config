@@ -68,6 +68,7 @@ recorder:
       - "sensor.basement_hallway_thermostat_temperature"
       - "sensor.bolt_ev_ambient_air_temperature"
       - "sensor.bolt_ev_battery_level"
+      - "sensor.bolt_ev_battery_temperature"
       - "sensor.bolt_ev_charger_power_level"
       - "sensor.bolt_ev_plug_voltage"
       - "sensor.bolt_ev_range"
