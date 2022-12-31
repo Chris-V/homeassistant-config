@@ -23,7 +23,5 @@
   entities:
     - entity: input_boolean.notify_individual_guest_arrivals
       name: Individual guest arrivals, or only first
-    - entity: input_boolean.notify_car_problems
-      name: Car problems
     - entity: input_boolean.notify_plant_problems
       name: Plant problems
