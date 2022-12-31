@@ -3,8 +3,6 @@ device_tracker:
     count: 3
     hosts:
       avatar_media: !secret media_ip
-      avatar_relay_north: !secret relay_north_ip
-      avatar_relay_south: !secret relay_south_ip
 
     # Options shared by all trackers
     interval_seconds: 10  # seconds between each scan

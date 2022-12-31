@@ -60,23 +60,30 @@
         - entity: sensor.minecraft_server_latency_time
           name: Latency
 
-- type: vertical-stack
-  cards:
-    - !template
-      file: ../cards/server.yaml.j2
-      variables:
-        name: Relay South
-        key: relay_south
-
-    - !template
-      file: ../cards/server.yaml.j2
-      variables:
-        name: Relay North
-        key: relay_north
+- type: entities
+  title: Devices
+  show_header_toggle: false
+  style: !template
+    file: ../styles/inset-icon.css.j2
+    variables:
+      svg_path: "M22,9V7H20V5A2,2 0 0,0 18,3H4A2,2 0 0,0 2,5V19A2,2 0 0,0 4,21H18A2,2 0 0,0 20,19V17H22V15H20V13H22V11H20V9H22M18,19H4V5H18V19M6,13H11V17H6V13M12,7H16V10H12V7M6,7H11V12H6V7M12,11H16V17H12V11Z"
+  entities:
+    - entity: "binary_sensor.heat_pump_status"
+      state_color: true
+    - entity: "sensor.heat_pump_uptime"
+    - entity: "binary_sensor.kitchen_proxy_status"
+      state_color: true
+    - entity: "sensor.kitchen_proxy_uptime"
+    - entity: "binary_sensor.lounge_proxy_status"
+      state_color: true
+    - entity: "sensor.lounge_proxy_uptime"
+    - entity: "binary_sensor.office_proxy_status"
+      state_color: true
+    - entity: "sensor.office_proxy_uptime"
 
 - type: entities
   show_header_toggle: false
-  title: UPS
+  title: Server UPS
   style: !template
     file: ../styles/inset-icon.css.j2
     variables:
