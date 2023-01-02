@@ -1,0 +1,39 @@
+- !template
+  file: ../cards/plant.yaml.j2
+  variables:
+    badges_position: "end"
+    image: /local/plants/money_tree_card.jpg
+    plant_entity_id: plant.dollorama
+
+- !template
+  file: ../cards/plant.yaml.j2
+  variables:
+    image: /local/plants/avocado_hall_card.jpg
+    plant_entity_id: plant.maitre_doyle
+
+- !template
+  file: ../cards/plant.yaml.j2
+  variables:
+    image: /local/plants/meyer_lemon_tree_card.jpg
+    plant_entity_id: plant.snicket
+
+- !template
+  file: ../cards/plant.yaml.j2
+  variables:
+    badges_position: "end"
+    image: /local/plants/spider_plant_card.jpg
+    plant_entity_id: plant.spidy
+
+- !template
+  file: ../cards/plant.yaml.j2
+  variables:
+    badges_position: "end"
+    color: dark
+    image: /local/plants/devils_ivy_card.jpg
+    plant_entity_id: plant.viny
+
+- !template
+  file: ../cards/plant.yaml.j2
+  variables:
+    image: /local/plants/dracaena_fragrans_card.jpg
+    plant_entity_id: plant.drake

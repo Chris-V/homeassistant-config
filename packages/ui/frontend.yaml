@@ -9,9 +9,16 @@ lovelace:
   mode: "yaml"
 
   dashboards:
+    living-details:
+      filename: "dashboards/livings.yaml"
+      icon: "mdi:bee-flower"
+      mode: "yaml"
+      require_admin: false
+      show_in_sidebar: true
+      title: "Livings"
     overview-details:
       filename: "dashboards/overview-details.yaml"
-      icon: "mdi:eye"
+      icon: "mdi:table-cog"
       mode: "yaml"
       require_admin: false
       show_in_sidebar: true

@@ -26,11 +26,6 @@ views:
     icon: mdi:home-floor-b
     cards: !include views/basement.yaml
 
-  - title: Livings
-    path: livings
-    icon: mdi:leaf
-    cards: !include views/livings.yaml
-
   - title: Bolt EV
     path: boltev
     subview: true

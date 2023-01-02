@@ -1,0 +1,12 @@
+title: Livings
+
+views:
+  - title: Plants
+    path: plants
+    icon: mdi:flower
+    cards: !include views/plants.yaml
+
+  - title: Terrariums
+    path: terrariums
+    icon: mdi:snake
+    cards: !include views/terrariums.yaml
