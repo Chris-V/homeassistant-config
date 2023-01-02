@@ -12,11 +12,11 @@ elements:
       state_filter:
         "on": sepia() saturate(350%) hue-rotate(-50deg)
         "off": inherit
-      double_tap_action:
-        action: navigate
-        navigation_path: /lovelace/livings
     entity: binary_sensor.slinky_requires_attention
     image: /local/animals/slinky_tile.jpg
+    double_tap_action:
+      action: navigate
+      navigation_path: /living-details/terrariums
     style:
       <<: &sensor_image_element_style
         transform: none
@@ -27,6 +27,9 @@ elements:
   - <<: *sensor_image_element_config
     entity: binary_sensor.carl_requires_attention
     image: /local/animals/carl_tile.jpg
+    double_tap_action:
+      action: navigate
+      navigation_path: /living-details/terrariums
     style:
       <<: *sensor_image_element_style
       left: 50%
@@ -34,6 +37,9 @@ elements:
   - <<: *sensor_image_element_config
     entity: binary_sensor.all_plants
     image: /local/plants/plant_tile.jpg
+    double_tap_action:
+      action: navigate
+      navigation_path: /living-details/plants
     style:
       transform: none
       height: 50%
