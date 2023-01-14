@@ -8,29 +8,30 @@ group:
     name: "Batteries"
     icon: "mdi:battery"
     entities: &battery_entities
-      - sensor.basement_bathroom_door_sensor_battery
-      - sensor.basement_bathroom_multisensor_battery
-      - sensor.chris_bedside_remote_battery
-      - sensor.dollorama_battery
-      - sensor.drake_battery
-      - sensor.guest_bedroom_window_sensor_battery
-      - sensor.karine_bedside_remote_battery
-      - sensor.kitchen_door_lock_battery
-      - sensor.kitchen_door_sensor_battery
-      - sensor.kitchen_sink_leak_sensor_battery
-      - sensor.living_room_door_sensor_battery
-      - sensor.living_room_remote_battery
-      - sensor.laundry_motion_sensor_battery
-      - sensor.lounge_window_sensor_battery
-      - sensor.main_bathroom_multisensor_battery
-      - sensor.maitre_doyle_battery
-      - sensor.snicket_battery
-      - sensor.spidy_battery
-      - sensor.studio_window_sensor_battery
-      - sensor.ups_battery_status
-      - sensor.viny_battery
-      - sensor.water_heater_leak_sensor_battery
-      - sensor.workshop_motion_sensor_battery
+      - "sensor.basement_bathroom_door_sensor_battery"
+      - "sensor.basement_bathroom_multisensor_battery"
+      - "sensor.chris_bedside_remote_battery"
+      - "sensor.dollorama_battery"
+      - "sensor.drake_battery"
+      - "sensor.guest_bedroom_window_sensor_battery"
+      - "sensor.karine_bedside_remote_battery"
+      - "sensor.kitchen_door_lock_battery"
+      - "sensor.kitchen_door_sensor_battery"
+      - "sensor.kitchen_sink_leak_sensor_battery"
+      - "sensor.living_room_door_sensor_battery"
+      - "sensor.living_room_remote_battery"
+      - "sensor.laundry_motion_sensor_battery"
+      - "sensor.lounge_airthings_battery"
+      - "sensor.lounge_window_sensor_battery"
+      - "sensor.main_bathroom_multisensor_battery"
+      - "sensor.maitre_doyle_battery"
+      - "sensor.snicket_battery"
+      - "sensor.spidy_battery"
+      - "sensor.studio_window_sensor_battery"
+      - "sensor.ups_battery_status"
+      - "sensor.viny_battery"
+      - "sensor.water_heater_leak_sensor_battery"
+      - "sensor.workshop_motion_sensor_battery"
 
 template:
   - binary_sensor:
