@@ -73,7 +73,7 @@ automation:
           text: "{{ text | replace('a.m.', 'AM') | replace('p.m.', 'PM') }}"
           # yamllint disable-line rule:quoted-strings
           pattern: '(?:([a-z]+\.? \d{1,2}), )?from (\d{1,2}(?::\d{2})?)(?: (AM|PM))? to (\d{1,2}(?::\d{2})?)(?: (AM|PM)?)'
-          date_time_format: "%Y-%m-%d %H-%M-%S"
+          date_time_format: "%Y-%m-%d %H:%M:%S"
           count: "{{ text | regex_findall(pattern, ignorecase = True) | length }}"
           events: >
             {% set ns = namespace(day = undefined, events = []) %}
