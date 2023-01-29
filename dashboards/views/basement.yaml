@@ -13,6 +13,8 @@
       - entity_id: light.downstairs
         name: Downstairs
         icon: mdi:wall-sconce
+      - entity_id: light.staircase
+        name: Staircase
     climate:
       room_key: basement_hallway
 

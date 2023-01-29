@@ -140,8 +140,8 @@ automation:
           }}
         auto_mode: "{{ states('input_select.{}_auto_mode'.format(name)) | default('Eco') }}"
         mode: "{{ states('input_select.{}_mode'.format(name)) | default('Auto') }}"
-        target_setpoint: "{{ states('input_number.{}_{}_setpoint'.format(name, auto_mode | lower)) | float(0) }}"
-      current_setpoint: "{{ trigger.to_state.attributes.temperature | float(0) }}"
+        target_setpoint: "{{ states('input_number.{}_{}_setpoint'.format(name, auto_mode | lower)) | default | float(0) }}"
+      current_setpoint: "{{ trigger.to_state.attributes.temperature | default | float(0) }}"
 
     condition: "{{ trigger.to_state.attributes.preset_mode | default('none') != 'none' or target_setpoint != current_setpoint }}"
 
@@ -176,7 +176,7 @@ automation:
 
     variables:
       <<: *climate_variables
-      current_setpoint: "{{ state_attr('climate.{}'.format(name), 'temperature') | float }}"
+      current_setpoint: "{{ state_attr('climate.{}'.format(name), 'temperature') | default | float(0) }}"
 
     condition: "{{ mode == 'Auto' and target_setpoint != current_setpoint }}"
 
