@@ -42,7 +42,7 @@
               + state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) | list
         -%}
         {% set count = (devices + entities) | length -%}
-        {% set areas = (devices + entities) | map('area_name') | select('string') | sort | unique | list -%}
+        {% set area_names = (devices + entities) | map('area_name') | select('string') | unique | sort | list -%}
 
         <ha-icon icon="mdi:identifier"></ha-icon> {{ states('input_text.presence_armed_id') }}
 
@@ -50,25 +50,25 @@
 
         {%- if count > 0 %}
 
-          <ha-icon icon="mdi:shield-alert"></ha-icon> {{ count }} event{% if count > 0 %}s{% endif %} detected{% if areas | count > 0 %} in:{% else %}.{% endif %}
+        <ha-icon icon="mdi:shield-alert"></ha-icon> {{ count }} event{{ iif(count > 0, 's', '') }} detected{{ iif(area_names | count > 0, ' in:', '.') }}
 
-          {% for area_id in areas -%}
-            * [{{ area_name(area_id) }}](/config/areas/area/{{ area_id }})
-          {% endfor %}
+        {% for area in area_names -%}
+        * [{{ area }}](/config/areas/area/{{ area | area_id }})
+        {% endfor %}
         {%- endif %}
 
     - type: "markdown"
       title: "Devices"
       content: |
         {%
-          set devices = (
+          set device_ids = (
             state_attr('sensor.intrusion_events', 'devices') | default([], True)
               + state_attr('binary_sensor.intrusion_events', 'devices') | default([], True)
           ) | unique
         -%}
-        {% for device_id in devices -%}
-          * [{{ device_attr(device_id, 'name') }}](/config/devices/device/{{ device_id }})
-        {%- endfor %}
+        {% for device_id in device_ids -%}
+        * [{{ device_attr(device_id, 'name') }}](/config/devices/device/{{ device_id }})
+        {% endfor %}
 
     - type: "custom:auto-entities"
       card:
@@ -79,9 +79,12 @@
         method: "name"
       filter:
         template: >-
-          {{
-            (
+          {%
+            set entity_ids = (
               state_attr('sensor.intrusion_events', 'entities') | default([], True)
                 + state_attr('binary_sensor.intrusion_events', 'entities') | default([], True)
-            ) | unique
-          }}
+            ) | sort | unique
+          -%}
+          {% for entity_id in entity_ids -%}
+          * {{ entity_id }} {% if states[entity_id] %}({{ states[entity_id].name }}){% endif %}
+          {% endfor %}
