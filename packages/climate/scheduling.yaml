@@ -13,6 +13,7 @@ template:
             'Active',
             'Away',
             'Bedtime',
+            'Boost',
             'Sleep',
             'Winter Credit: Cool',
             'Winter Credit: Heat',
@@ -35,12 +36,12 @@ template:
             {% set preset = winter_credit_baseline_preset %}
           {% elif is_state('group.household', 'home') -%}
             {% set preset = parse_calendar_preset(
-                'calendar.regular_climate_schedule',
+                'calendar.climate',
                 (states[self].state if states[self] else 'Active')
               ) -%}
           {% endif -%}
 
-          {{ parse_calendar_preset('calendar.special_climate_schedule', preset) }}
+          {{ parse_calendar_preset('calendar.climate_exceptions', preset) }}
 
 script:
   assign_climate_auto_mode:
@@ -100,6 +101,11 @@ script:
                     heat_pump: "Comfort"
                     guest_bedroom_thermostat: "Comfort"
                     studio_thermostat: "Comfort"
+          - conditions: "{{ preset == 'boost' }}"
+            sequence:
+              - service: script.assign_climate_auto_mode
+                data:
+                  mode: "Comfort"
           - conditions: "{{ preset == 'sleep' }}"
             sequence:
               - service: script.assign_climate_auto_mode
@@ -113,9 +119,7 @@ script:
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
-                  mode: "Eco"
-                  exceptions:
-                    heat_pump: "Eco"  # TODO: OFF
+                  mode: "Eco"  # TODO: heat_pump=OFF
           - conditions: "{{ preset == 'winter credit: heat' }}"
             sequence:
               - service: script.assign_climate_auto_mode
@@ -127,9 +131,7 @@ script:
             sequence:
               - service: script.assign_climate_auto_mode
                 data:
-                  mode: "Eco"
-                  exceptions:
-                    heat_pump: "Eco"  # TODO: OFF
+                  mode: "Eco"  # TODO: heat_pump=OFF
 
         default:
           - service: "system_log.write"
