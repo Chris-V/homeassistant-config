@@ -13,25 +13,23 @@ template:
       - unique_id: "4ff23e99-f31f-4b96-9cb8-dd53b3796354"
         name: "winter_credit_enabled"
         state: >-
-          {% set date_sensor = states.sensor.date -%}
+          {% set date = states('sensor.date') | as_datetime -%}
           {{
-            date_sensor is not none
-              and date_sensor.last_changed.month <= 3
-              or date_sensor.last_changed.month == 12
+            date is not none and (date.month <= 3 or date.month == 12)
           }}
       - unique_id: "42ce95f4-91ce-41dd-8d33-61fba466e7f6"
         name: "winter_credit_peak_event"
+        icon: "mdi:snowflake-alert"
         state: >-
-          {% set special_schedule = state_attr('calendar.special_climate_schedule', 'message') | default('', True) -%}
+          {% set special_schedule = state_attr('calendar.climate_exceptions', 'message') | default('', True) -%}
           {{ 'Winter Credit: Peak Event' in special_schedule }}
 
     sensor:
       - unique_id: "sensor.winter_credit_baseline_climate_preset"
         name: "winter_credit_baseline_climate_preset"
-        icon: "mdi:thermometer-lines"
-        # TODO: work with actual date-time ranges
+        icon: "mdi:snowflake-thermometer"
         state: >-
-          {% set delta = 3 %}
+          {% set cooling_delta = 3 %}
           {% set peak_events = [range(6, 9), range(16, 20)] %}
 
           {% set hour = states('sensor.hour') | int(0) %}
@@ -41,7 +39,7 @@ template:
             {% for event in peak_events if not ns.preset %}
               {% if hour in event %}
                 {% set ns.preset = 'Winter Credit: Heat' %}
-              {% elif hour in range(event[0] - delta, event[0]) %}
+              {% elif hour in range(event[0] - cooling_delta, event[0]) %}
                 {% set ns.preset = 'Winter Credit: Cool' %}
               {% endif %}
             {% endfor %}
@@ -64,6 +62,7 @@ automation:
       text: "{{ trigger.to_state.attributes['android.text'] | default('') }}"
 
     condition:
+      - "{{ is_state('binary_sensor.winter_credit_enabled', 'on') }}"
       - "{{ trigger.to_state.attributes['package'] | default('') == 'com.hydroquebec.mf_android' }}"
       - "{{ 'Winter Credit Option:' in text }}"
       - "{{ 'Reminder.' not in text }}"
@@ -97,11 +96,15 @@ automation:
                 {% set ns.events = ns.events + [{
                   'start': (start - timedelta(hours = 1, minutes = 30)) | as_timestamp | timestamp_custom(date_time_format),
                   'end': start | as_timestamp | timestamp_custom(date_time_format),
-                  'preset': 'Winter Credit: Heat',
+                  'preset': 'Boost',
                 }, {
                   'start': start | as_timestamp | timestamp_custom(date_time_format),
                   'end': end | as_timestamp | timestamp_custom(date_time_format),
                   'preset': 'Winter Credit: Peak Event',
+                }, {
+                  'start': end | as_timestamp | timestamp_custom(date_time_format),
+                  'end': (end + timedelta(minutes = 90)) | as_timestamp | timestamp_custom(date_time_format),
+                  'preset': 'Boost',
                 }] -%}
               {% endif -%}
             {% endfor %}
@@ -121,10 +124,11 @@ automation:
       - repeat:
           for_each: "{{ events }}"
           sequence:
-            - service: "google.create_event"
+            - service: "calendar.create_event"
+              target:
+                entity_id: "calendar.climate_exceptions"
               data:
-                entity_id: "calendar.special_climate_schedule"
-                summary: "{{ repeat.item.preset }} #special"
+                summary: "{{ repeat.item.preset }}"
                 description: "{{ text }}"
                 start_date_time: "{{ repeat.item.start }}"
                 end_date_time: "{{ repeat.item.end }}"
