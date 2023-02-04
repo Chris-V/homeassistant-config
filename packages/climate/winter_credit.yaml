@@ -75,26 +75,26 @@ automation:
           date_time_format: "%Y-%m-%d %H:%M:%S"
           count: "{{ text | regex_findall(pattern, ignorecase = True) | length }}"
           events: >
-            {% set ns = namespace(day = undefined, events = []) %}
+            {% set ns = namespace(day = None, events = []) %}
 
             {% for match in (text | regex_findall(pattern, ignorecase = True)) %}
-              {% set ns.day = strptime(match[0] | regex_replace('[^a-zA-Z0-9 ]', ''), '%b %d') | default(ns.day, True) -%}
+              {% set ns.day = strptime(match[0] | regex_replace('[^a-zA-Z0-9 ]', ''), '%b %d', None) | default(ns.day, True) -%}
               {% set start_hour = strptime(
                   match[1]
                     ~ (':00' if ':' not in match[1])
                     ~ ' ' ~ (match[2] or match[4] or 'AM'),
-                  '%I:%M %p') -%}
+                  '%I:%M %p', None) -%}
               {% set end_hour = strptime(
                   match[3]
                     ~ (':00' if ':' not in match[3])
                     ~ ' ' ~ (match[4] or match[2] or 'AM'),
-                  '%I:%M %p') -%}
+                  '%I:%M %p', None) -%}
 
-              {% if [ns.day, start_hour, end_hour] | select('string') | first is undefined -%}
+              {% if [ns.day, start_hour, end_hour] | select('none') | first is not none -%}
                 {%- set start = ns.day.replace(year = now().year, hour = start_hour.hour, minute = start_hour.minute) -%}
                 {%- set end = ns.day.replace(year = now().year, hour = end_hour.hour, minute = end_hour.minute) -%}
                 {% set ns.events = ns.events + [{
-                  'start': (start - timedelta(hours = 1, minutes = 30)) | as_timestamp | timestamp_custom(date_time_format),
+                  'start': (start - timedelta(minutes = 90)) | as_timestamp | timestamp_custom(date_time_format),
                   'end': start | as_timestamp | timestamp_custom(date_time_format),
                   'preset': 'Boost',
                 }, {
@@ -111,7 +111,7 @@ automation:
 
             {{ ns.events }}
 
-      - if: "{{ count == 0 or count != events | length / 2 }}"
+      - if: "{{ count == 0 or count != events | length / 3 }}"
         then:
           - service: "persistent_notification.create"
             data:
@@ -120,15 +120,15 @@ automation:
                 <strong>{{ text }}</strong>
                 <hr>
                 <pre>{{ events }}</pre>
-
-      - repeat:
-          for_each: "{{ events }}"
-          sequence:
-            - service: "calendar.create_event"
-              target:
-                entity_id: "calendar.climate_exceptions"
-              data:
-                summary: "{{ repeat.item.preset }}"
-                description: "{{ text }}"
-                start_date_time: "{{ repeat.item.start }}"
-                end_date_time: "{{ repeat.item.end }}"
+        else:
+          - repeat:
+              for_each: "{{ events }}"
+              sequence:
+                - service: "calendar.create_event"
+                  target:
+                    entity_id: "calendar.climate_exceptions"
+                  data:
+                    summary: "{{ repeat.item.preset }}"
+                    description: "{{ text }}"
+                    start_date_time: "{{ repeat.item.start }}"
+                    end_date_time: "{{ repeat.item.end }}"
