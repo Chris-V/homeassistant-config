@@ -20,8 +20,8 @@ person:
     name: "Karine"
     user_id: "ef6743938a1646d2a1e8706e1bc00e34"
     device_trackers:
-      - device_tracker.karine_router_pixel_1
-      - device_tracker.karine_mobile_app_pixel_1
+      - device_tracker.karine_router_pixel_7
+      - device_tracker.karine_mobile_app_pixel_7
 
 group:
   household:
