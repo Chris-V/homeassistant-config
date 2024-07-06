@@ -48,7 +48,7 @@ template:
         availability: "{{ not is_state('sensor.weather_quebec_temperature', 'unavailable') }}"
       - unique_id: "sensor.weather_summary"
         name: "weather_summary"
-        state: "{{ states('sensor.weather_quebec_forecast') }}"
+        state: "{{ states('   ') }}"
         icon: >
           {% set state_icon = states('weather.quebec')
             | replace('partlycloudy', 'partly-cloudy')

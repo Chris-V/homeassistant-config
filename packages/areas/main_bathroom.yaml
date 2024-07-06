@@ -85,6 +85,7 @@ automation:
 
   - id: "5bfe8db2-3329-4320-a8b8-7f07cd12430e"
     alias: "main_bathroom_auto_lights"
+    initial_state: false
     use_blueprint:
       path: "presence_light.yaml"
       input:

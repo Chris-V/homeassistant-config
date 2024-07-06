@@ -65,18 +65,14 @@ action:
   - service: switch.turn_on
     entity_id: !input heater_switch
 
-  - choose:
-      # Day
-      - conditions: >-
-          {% set now = strptime(states('sensor.time'), '%H:%M') %}
-          {% set day_time = strptime(states(day_time_entity), '%H:%M:%S') %}
-          {% set night_time = strptime(states(night_time_entity), '%H:%M:%S') %}
-          {{ day_time <= now < night_time }}
-        sequence:
-          - service: switch.turn_on
-            entity_id: !input uv_light_switch
-    # Night
-    default:
+  - if:
+      - condition: time
+        after: !input day_time_entity
+        before: !input night_time_entity
+    then:
+      - service: switch.turn_on
+        entity_id: !input uv_light_switch
+    else:
       - service: switch.turn_off
         entity_id:
           - !input heat_bulb_switch

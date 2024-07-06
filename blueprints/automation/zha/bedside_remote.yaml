@@ -36,24 +36,24 @@ variables:
 
 action:
   choose:
-    # Tap power
-    - conditions: >-
+    - alias: Tap power button
+      conditions: >-
         {{ {'command': 'toggle', 'cluster_id': 6, 'args': []}.items() <= trigger.event.data.items() }}
       sequence:
         - service: light.toggle
           data:
             entity_id: "{{ states(entity_input_select) }}"
 
-    # Hold power
-    - conditions: >-
+    - alias: Hold power button
+      conditions: >-
         {{ {'command': 'release', 'cluster_id': 5, 'args': [0]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: light.toggle
           data:
             entity_id: light.master_bedroom
 
-    # Tap dim up
-    - conditions: >-
+    - alias: Tap dim up button
+      conditions: >-
         {{ {'command': 'step_with_on_off', 'cluster_id': 8, 'args': [0, 43, 5]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: light.turn_on
@@ -61,16 +61,16 @@ action:
             entity_id: "{{ states(entity_input_select) }}"
             brightness_step_pct: 10
 
-    # Hold dim up
-    - conditions: >-
+    - alias: Hold dim up button
+      conditions: >-
         {{ {'command': 'move_with_on_off', 'cluster_id': 8, 'args': [0, 83]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: input_select.select_next
           data:
             entity_id: !input color_input_select
 
-    # Tap dim down
-    - conditions: >-
+    - alias: Tap dim down button
+      conditions: >-
         {{ {'command': 'step', 'cluster_id': 8, 'args': [1, 43, 5]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: light.turn_on
@@ -78,16 +78,16 @@ action:
             entity_id: "{{ states(entity_input_select) }}"
             brightness_step_pct: -10
 
-    # Hold dim down
-    - conditions: >-
+    - alias: Hold dim down button
+      conditions: >-
         {{ {'command': 'move', 'cluster_id': 8, 'args': [1, 83]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: input_select.select_previous
           data:
             entity_id: !input color_input_select
 
-    # Tap left
-    - conditions: >-
+    - alias: Tap left button
+      conditions: >-
         {{ {'command': 'press', 'cluster_id': 5, 'args': [257, 13, 0]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: input_select.select_previous
@@ -99,14 +99,14 @@ action:
             variables:
               entity_id: "{{ states(entity_input_select) }}"
 
-    # Hold left
-    - conditions: >-
+    - alias: Hold left button
+      conditions: >-
         {{ {'command': 'hold', 'cluster_id': 5, 'args': [3329, 0]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: script.bedtime
 
-    # Tap right
-    - conditions: >-
+    - alias: Tap right button
+      conditions: >-
         {{ {'command': 'press', 'cluster_id': 5, 'args': [256, 13, 0]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: input_select.select_next
@@ -118,8 +118,8 @@ action:
             variables:
               entity_id: "{{ states(entity_input_select) }}"
 
-    # Hold right
-    - conditions: >-
+    - alias: Hold right button
+      conditions: >-
         {{ {'command': 'hold', 'cluster_id': 5, 'args': [3328, 0]}.items() <= trigger.event.data.items() }}
       sequence:
         - service: script.everything_off

@@ -16,7 +16,7 @@
           <<: &aggregate_row_options
             type: custom:template-entity-row
             active: "{{ is_state('this.entity_id', 'on') }}"
-            secondary: "{% if states['this.entity_id'] %}{{ relative_time(states['this.entity_id'].last_changed) }} ago{% endif %}"
+            secondary: "{% if states['this.entity_id'] %}{{ time_since(states['this.entity_id'].last_changed, 0) }} ago{% endif %}"
             state: >-
               {% set state = states['this.entity_id'] | default({"state": "unavailable"}, True) %}
               {% if state.state in ['on', 'off'] -%}
