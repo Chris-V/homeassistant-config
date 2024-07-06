@@ -125,7 +125,7 @@ automation:
           push_target: "admin"
           tag: "presence_{{ trigger.to_state.object_id }}"
           title: "{{ trigger.to_state.name }} arrived home."
-          message: "Household is {{ states('group.household') }}."
+          message: "Household is {{ states_translated('group.household') }}."
 
   - id: "b3882bea-08d5-4c54-a076-092754457354"
     alias: notify_household_person_leaves
@@ -145,4 +145,4 @@ automation:
           push_target: "admin"
           tag: "presence_{{ trigger.to_state.object_id }}"
           title: "{{ trigger.to_state.name }} left home."
-          message: "Household is {{ states('group.household') }}."
+          message: "Household is {{ states_translated('group.household') }}."

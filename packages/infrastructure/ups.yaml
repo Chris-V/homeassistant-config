@@ -138,7 +138,7 @@ automation:
           push_target: "household"
           title: "Power restored"
           message: |-
-            A power outage has finished after {{ relative_time(trigger.from_state.last_changed) }}.
+            A power outage has finished after {{ time_since(trigger.from_state.last_changed, 0) }}.
             {%- if is_state('switch.managed_auxialiary_servers', 'on') %} Auxiliary servers are already powered on.
             {%- elif is_state('input_boolean.power_outage_manage_devices', 'on') %} Auxiliary servers will automatically power on in {{ power_on_minutes }} minutes.
             {%- else %} Automatic power on of auxiliary servers is disabled.

@@ -12,19 +12,10 @@ template:
         icon: "mdi:alarm-light"
         state: >-
           {{
-            (
-              [
-                'binary_sensor.all_leaks',
-                'binary_sensor.intrusion_activity',
-                'binary_sensor.kitchen_door_lock_jammed',
-              ]
-                | select('is_state', 'on')
-                | first is defined
-            ) or (
-              ['switch.main_water_shut_off_valve']
-                | select('is_state', 'off')
-                | first is defined
-            )
+            is_state('binary_sensor.all_leaks', 'on')
+              or is_state('binary_sensor.intrusion_activity', 'on')
+              or is_state('binary_sensor.kitchen_door_lock_jammed', 'on')
+              or is_state('switch.main_water_shut_off_valve', 'off')
           }}
       - unique_id: "db252c59-897b-4bd9-94a8-d5d17f48ed68"
         name: "use_dark_theme"

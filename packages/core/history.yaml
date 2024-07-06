@@ -1,3 +1,7 @@
+history: {}
+
+logbook: {}
+
 recorder:
   purge_keep_days: 14
   include: &recorder_inclusion
@@ -205,9 +209,3 @@ recorder:
       - "sensor.weather_summary"
       - "sensor.winter_credit_baseline_climate_preset"
       - "sensor.workshop_motion_sensor_battery"
-
-history:
-  include: *recorder_inclusion
-
-logbook:
-  include: *recorder_inclusion
