@@ -47,6 +47,4 @@ lovelace:
     - { type: "module", url: "/hacsfiles/simple-thermostat/simple-thermostat.js" }
     - { type: "module", url: "/hacsfiles/text-element/text-element.js" }
 
-map: {}
-
 mobile_app: {}
