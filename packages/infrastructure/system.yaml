@@ -28,11 +28,6 @@ sensor:
       - date
       - time
 
-  - platform: systemmonitor
-    resources:
-      - type: processor_use
-      - type: memory_use_percent
-
 template:
   - sensor:
       - unique_id: "sensor.hour"
