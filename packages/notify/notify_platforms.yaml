@@ -15,7 +15,7 @@ notify:
     name: "household"
     services:
       - service: admin
-      - service: mobile_app_karine_pixel_1
+      - service: mobile_app_karine_pixel_7
 
 tts:
   - platform: google_cloud
