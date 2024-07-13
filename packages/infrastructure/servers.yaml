@@ -27,8 +27,8 @@ switch:
       network_media:
         unique_id: "switch.network_media"
         friendly_name: "Media"
-        value_template: "{{ is_state('device_tracker.avatar_media', 'home') }}"
-        icon_template: "mdi:server-network{% if not is_state('device_tracker.avatar_media', 'home') %}-off{% endif %}"
+        value_template: "{{ is_state('binary_sensor.avatar_media', 'on') }}"
+        icon_template: "mdi:server-network{% if not is_state('binary_sensor.avatar_media', 'on') %}-off{% endif %}"
         turn_on:
           service: "shell_command.wake_on_lan"
           data:

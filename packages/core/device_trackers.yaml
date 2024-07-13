@@ -1,19 +1,14 @@
 device_tracker:
-  - platform: ping
-    count: 3
-    hosts:
-      avatar_media: !secret media_ip
+  - platform: snmp
+    host: !secret router_ip
+    community: !secret router_snmp_community
+    baseoid: "1.3.6.1.2.1.4.22.1.2"
 
     # Options shared by all trackers
     interval_seconds: 10  # seconds between each scan
     consider_home: 35  # seconds unseen but considered home
     new_device_defaults:
       track_new_devices: false
-
-  - platform: snmp
-    host: !secret router_ip
-    community: !secret router_snmp_community
-    baseoid: "1.3.6.1.2.1.4.22.1.2"
 
   - platform: ddwrt
     host: !secret router_ip
