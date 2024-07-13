@@ -5,11 +5,12 @@ homeassistant:
     binary_sensor.intrusion_activity:
       friendly_name: "Intrusion"
 
-notify:
-  - platform: "file"
-    name: "intrusion_log"
-    filename: "/config/logs/intrusion.log"
-    timestamp: true
+# Configured in UI:
+# notify:
+#   - platform: "file"
+#     name: "intrusion_log"
+#     filename: "/config/logs/intrusion.log"
+#     timestamp: true
 
 input_boolean:
   force_presence_armed:
@@ -151,7 +152,9 @@ script:
             }
       - service: input_boolean.turn_off
         entity_id: "input_boolean.silence_intrusion_alarm"
-      - service: notify.intrusion_log
+      - service: "notify.send_message"
+        target:
+          entity_id: "notify.intrusion_log"
         data:
           message: "({{ arming_id }}) Intrusion alarm initialized."
 
@@ -166,7 +169,9 @@ automation:
         from: "off"
         to: "on"
     action:
-      - service: notify.intrusion_log
+      - service: "notify.send_message"
+        target:
+          entity_id: "notify.intrusion_log"
         data:
           message: "Intrusion alarm armed."
       - service: "script.initialize_alarm_states"
@@ -181,7 +186,9 @@ automation:
         from: "on"
         to: "off"
     action:
-      - service: notify.intrusion_log
+      - service: "notify.send_message"
+        target:
+          entity_id: "notify.intrusion_log"
         data:
           message: "({{ states('input_text.presence_armed_id') }}) Intrusion alarm disarmed."
 
@@ -313,7 +320,9 @@ automation:
                   - action: "reset_{{ arming_id }}"
                     title: "Reset"
 
-            - service: notify.intrusion_log
+            - service: "notify.send_message"
+              target:
+                entity_id: "notify.intrusion_log"
               data:
                 message: "({{ arming_id }}) Intrusion activity: `{{ state_attr('binary_sensor.intrusion_activity', 'activity') | to_json }}`"
 
@@ -330,7 +339,9 @@ automation:
           <<: *alarm_notification
           title: "Intrusion cleared"
           dismissible: true
-      - service: notify.intrusion_log
+      - service: "notify.send_message"
+        target:
+          entity_id: "notify.intrusion_log"
         data:
           message: "({{ arming_id }}) Intrusion cleared."
 
@@ -360,7 +371,9 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: "input_boolean.silence_intrusion_alarm"
-      - service: notify.intrusion_log
+      - service: "notify.send_message"
+        target:
+          entity_id: "notify.intrusion_log"
         data:
           message: "({{ arming_id }}) Intrusion alarm silenced."
 
@@ -387,7 +400,9 @@ automation:
       - "{{ trigger.event.data.action == 'reset_' ~ arming_id }}"
 
     action:
-      - service: notify.intrusion_log
+      - service: "notify.send_message"
+        target:
+          entity_id: "notify.intrusion_log"
         data:
           message: "({{ arming_id }}) Intrusion alarm cleared."
       - service: "script.initialize_alarm_states"
