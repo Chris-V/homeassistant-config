@@ -17,6 +17,7 @@
 /.cloud
 /.google.token
 /image
+/logs
 /tts
 /themes/*
 !/themes/blank.yaml
