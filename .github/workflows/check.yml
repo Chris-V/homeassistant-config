@@ -23,8 +23,8 @@ jobs:
         uses: "mikefarah/yq@v4.44.2"
         with:
           cmd: |
-            yq 'del(.hacs)' configuration.yaml -i &&
-            yq 'del(.lovelace_preprocessor)' packages/ui/frontend.yaml -i
+            yq -i 'del(.homeassistant.allowlist_external_dirs[] | select(. == "/config/logs"))' configuration.yaml
+            yq -i 'del(.lovelace_preprocessor)' packages/ui/frontend.yaml
 
       - name: "Validate configuration"
         uses: "frenck/action-home-assistant@v1"

@@ -8,6 +8,9 @@ homeassistant:
   unit_system: "metric"
   external_url: !secret http_public_host
   internal_url: !secret http_public_host
+  allowlist_external_dirs:
+    - "/config/logs"
+    - "/tmp"
   auth_providers:
     - type: "homeassistant"
   auth_mfa_modules:

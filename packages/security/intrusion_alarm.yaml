@@ -8,7 +8,7 @@ homeassistant:
 notify:
   - platform: "file"
     name: "intrusion_log"
-    filename: "/config/intrusion.log"
+    filename: "/config/logs/intrusion.log"
     timestamp: true
 
 input_boolean:
