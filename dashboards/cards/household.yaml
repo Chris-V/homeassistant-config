@@ -11,6 +11,6 @@ cards:
   - !template
     file: person.yaml.j2
     variables:
-      battery_entity: sensor.karine_pixel_1_battery_level
+      battery_entity: sensor.karine_pixel_7_battery_level
       image: /local/secrets/karine.webp
       person_entity: person.karine
