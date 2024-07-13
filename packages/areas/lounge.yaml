@@ -62,14 +62,6 @@ template:
         attributes:
           heating: "{{ is_state_attr('climate.lounge_thermostat', 'hvac_action', 'heating') }}"
 
-switch:
-  - platform: broadlink
-    mac: !secret broadlink_mac
-    switches:
-      - name: "lounge_tv"
-        command_on: "JgBQAAABKJMTERQRFDUUERQRFBEUERQQFDYTNhQRFDUUNhM2FDYTNhQRFBEUEBQ2ExIUEBQRFBEUNRQ2EzYUERQ1FDYTNhQ2EwAFIwABKEgUAA0FAAAAAAAAAAA="
-        command_off: "JgBYAAABKZITERQRFDUXDhUQFBEUEBUQFDYTNhUQFTQUNhQ1FTUUNRQRFBEUEBQ2FRESERQRFBEUNRQ2FDUUERQ1EzcUNRQ2FAAFIgABKEkUAAxPAAEoSBQADQU="
-
 automation:
   - id: "75e713fa-34ef-400f-afb0-1f88c6811aa8"
     alias: "lounge_light_dimmer_zwave_scenes"
