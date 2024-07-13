@@ -5,8 +5,6 @@ logger:
     homeassistant.setup: "info"
   filters:
     # yamllint disable rule:quoted-strings
-    homeassistant.components.broadlink.updater:
-      - '\[Errno -4000\] Network timeout'  # error
     # Google Homes & groups seem to change their IPs and create a lot of log pollution
     pychromecast.socket_client:
       - 'Failed to connect to service ServiceInfo\.\*, retrying in'  # error

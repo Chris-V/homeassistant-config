@@ -39,14 +39,6 @@ cloud:
         aliases:
           - "Christmas tree"
 
-switch:
-  - platform: broadlink
-    mac: !secret broadlink_mac
-    switches:
-      - name: "bookshelf_outlet"
-        command_on: "sggyAAYUEggGFBMIBhQGFAYUEgcGFBIIBhQSCAYUEggGFBIIEwcSCAYUBhQGFAcUEggSCAa/AAAA"
-        command_off: "sgkyAAYUEgcGFBIHBhQGFAYUEgcGFBIHBhQSCAYUEggGFBIHEggSCAYUBhQSBxMHBhQGFAa/AAAA"
-
 input_number:
   living_room_thermostat_eco_setpoint:
     name: "Living room thermostat eco setpoint"
