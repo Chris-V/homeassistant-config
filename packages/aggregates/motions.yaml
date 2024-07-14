@@ -19,8 +19,9 @@ template:
             set motions = expand('binary_sensor.all_motions')
               | sort(attribute='last_changed', reverse=True)
               | map(attribute='name')
+              | list
           %}
-          {% if motions | first is undefined %}
+          {% if motions | length == 0 %}
           Unknown
           {% else %}
           {{ motions | first | replace(' motion', '') }}
