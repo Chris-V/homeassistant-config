@@ -3,10 +3,11 @@
     type: entities
     title: Doors
     show_header_toggle: false
-    style: !template
-      file: ../styles/inset-icon.css.j2
-      variables:
-        svg_path: "M8,3C6.89,3 6,3.89 6,5V21H18V5C18,3.89 17.11,3 16,3H8M8,5H16V19H8V5M13,11V13H15V11H13Z"
+    card_mod:
+      style: !template
+        file: ../styles/inset-icon.css.j2
+        variables:
+          svg_path: "M8,3C6.89,3 6,3.89 6,5V21H18V5C18,3.89 17.11,3 16,3H8M8,5H16V19H8V5M13,11V13H15V11H13Z"
   sort:
     method: state
   filter:
@@ -16,7 +17,7 @@
           <<: &aggregate_row_options
             type: custom:template-entity-row
             active: "{{ is_state('this.entity_id', 'on') }}"
-            secondary: "{% if states['this.entity_id'] %}{{ time_since(states['this.entity_id'].last_changed, 0) }}{% endif %}"
+            secondary: "{% if states['this.entity_id'] %}{{ time_since(states['this.entity_id'].last_changed, 2) }}{% endif %}"
             state: "{{ state_translated('this.entity_id') }}"
           name: >-
             {% if states['this.entity_id'] -%}
@@ -30,10 +31,11 @@
     type: entities
     title: Windows
     show_header_toggle: false
-    style: !template
-      file: ../styles/inset-icon.css.j2
-      variables:
-        svg_path: "M6,11H10V9H14V11H18V4H6V11M18,13H6V20H18V13M6,2H18A2,2 0 0,1 20,4V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2Z"
+    card_mod:
+      style: !template
+        file: ../styles/inset-icon.css.j2
+        variables:
+          svg_path: "M6,11H10V9H14V11H18V4H6V11M18,13H6V20H18V13M6,2H18A2,2 0 0,1 20,4V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2Z"
   sort:
     method: state
   filter:
@@ -53,10 +55,11 @@
     type: entities
     title: Leaks
     show_header_toggle: false
-    style: !template
-      file: ../styles/inset-icon.css.j2
-      variables:
-        svg_path: "M22,14H20V16H14V13H16V11H14V6A2,2 0 0,0 12,4H4V2H2V10H4V8H10V11H8V13H10V18A2,2 0 0,0 12,20H20V22H22"
+    card_mod:
+      style: !template
+        file: ../styles/inset-icon.css.j2
+        variables:
+          svg_path: "M22,14H20V16H14V13H16V11H14V6A2,2 0 0,0 12,4H4V2H2V10H4V8H10V11H8V13H10V18A2,2 0 0,0 12,20H20V22H22"
   sort:
     method: state
   filter:
@@ -76,10 +79,11 @@
     type: entities
     title: Motion
     show_header_toggle: false
-    style: !template
-      file: ../styles/inset-icon.css.j2
-      variables:
-        svg_path: "M10,0.2C9,0.2 8.2,1 8.2,2C8.2,3 9,3.8 10,3.8C11,3.8 11.8,3 11.8,2C11.8,1 11,0.2 10,0.2M15.67,1A7.33,7.33 0 0,0 23,8.33V7A6,6 0 0,1 17,1H15.67M18.33,1C18.33,3.58 20.42,5.67 23,5.67V4.33C21.16,4.33 19.67,2.84 19.67,1H18.33M21,1A2,2 0 0,0 23,3V1H21M7.92,4.03C7.75,4.03 7.58,4.06 7.42,4.11L2,5.8V11H3.8V7.33L5.91,6.67L2,22H3.8L6.67,13.89L9,17V22H10.8V15.59L8.31,11.05L9.04,8.18L10.12,10H15V8.2H11.38L9.38,4.87C9.08,4.37 8.54,4.03 7.92,4.03Z"
+    card_mod:
+      style: !template
+        file: ../styles/inset-icon.css.j2
+        variables:
+          svg_path: "M10,0.2C9,0.2 8.2,1 8.2,2C8.2,3 9,3.8 10,3.8C11,3.8 11.8,3 11.8,2C11.8,1 11,0.2 10,0.2M15.67,1A7.33,7.33 0 0,0 23,8.33V7A6,6 0 0,1 17,1H15.67M18.33,1C18.33,3.58 20.42,5.67 23,5.67V4.33C21.16,4.33 19.67,2.84 19.67,1H18.33M21,1A2,2 0 0,0 23,3V1H21M7.92,4.03C7.75,4.03 7.58,4.06 7.42,4.11L2,5.8V11H3.8V7.33L5.91,6.67L2,22H3.8L6.67,13.89L9,17V22H10.8V15.59L8.31,11.05L9.04,8.18L10.12,10H15V8.2H11.38L9.38,4.87C9.08,4.37 8.54,4.03 7.92,4.03Z"
   sort:
     method: state
   filter:

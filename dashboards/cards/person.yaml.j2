@@ -1,10 +1,11 @@
 type: picture-elements
 image: "{{ image }}"
-style: |
-  .element[class~=element] {
-    position: relative;
-    transform: none;
-  }
+card_mod:
+  style: |
+    .element[class~=element] {
+      position: relative;
+      transform: none;
+    }
 elements:
   - type: custom:container-element
     style:
@@ -68,9 +69,10 @@ elements:
             entity_id: "{{ person_entity }}"
             content: "{{ "{{" }} time_since(states['{{ person_entity }}'].last_changed, 1) {{ "}}" }}"
             theme: blank
-            style: |
-              ha-markdown.markdown.no-header {
-                padding: 0;
-                font-size: 0.9rem;
-                color: #D3D3D3;
-              }
+            card_mod:
+              style: |
+                ha-markdown.markdown.no-header {
+                  padding: 0;
+                  font-size: 0.9rem;
+                  color: #D3D3D3;
+                }

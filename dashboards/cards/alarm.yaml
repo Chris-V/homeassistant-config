@@ -1,33 +1,34 @@
 type: entities
 title: Intrusions
 
-style:
-  .: |
-    .header {
-      position: absolute;
-      right: 0;
-      top: 0;
-      margin: 12px 12px 0 0;
-      --mdc-icon-size: 24px;
-    }
-  "hui-buttons-header-footer$": |
-    .divider {
-      display: none;
-    }
-    hui-buttons-base.header.header {
-      --padding-top: 0;
-    }
-  "hui-buttons-header-footer$hui-buttons-base$ha-chip$": |
-    .mdc-chip__icon {
-      margin-inline: 0 !important;
-    }
-  "hui-buttons-header-footer$hui-buttons-base$state-badge$": |
-    ha-icon[data-domain="lock"][data-state="unlocked"] {
-      color: var(--paper-item-icon-color) !important;
-    }
-    ha-icon[data-domain="lock"][data-state="locked"] {
-      color: var(--paper-item-icon-active-color) !important;
-    }
+card_mod:
+  style:
+    .: |
+      .header {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin: 12px 12px 0 0;
+        --mdc-icon-size: 24px;
+      }
+    "hui-buttons-header-footer$": |
+      .divider {
+        display: none;
+      }
+      hui-buttons-base.header.header {
+        --padding-top: 0;
+      }
+    "hui-buttons-header-footer$hui-buttons-base$ha-chip$": |
+      .mdc-chip__icon {
+        margin-inline: 0 !important;
+      }
+    "hui-buttons-header-footer$hui-buttons-base$state-badge$": |
+      ha-icon[data-domain="lock"][data-state="unlocked"] {
+        color: var(--paper-item-icon-color) !important;
+      }
+      ha-icon[data-domain="lock"][data-state="locked"] {
+        color: var(--paper-item-icon-active-color) !important;
+      }
 
 header:
   type: buttons
@@ -63,11 +64,12 @@ footer:
       label: "No"
     - value: "on"
       label: "Yes"
-  style: |
-    ha-card {
-      --ha-card-background: none;
-      border: 0;
-    }
+  card_mod:
+    style: |
+      ha-card {
+        --ha-card-background: none;
+        border: 0;
+      }
 
 entities:
   - type: "custom:button-card"
