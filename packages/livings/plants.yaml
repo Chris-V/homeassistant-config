@@ -9,8 +9,8 @@ group:
     icon: "mdi:flower"
     entities:
       - "plant.drake"
-      - "plant.maitre_doyle"
-      - "plant.snicket"
+      # - "plant.maitre_doyle"
+      # - "plant.snicket"
       - "plant.spidy"
       - "plant.viny"
 
@@ -45,8 +45,8 @@ automation:
         attribute: "problem"
         entity_id:
           - "plant.drake"
-          - "plant.maitre_doyle"
-          - "plant.snicket"
+          # - "plant.maitre_doyle"
+          # - "plant.snicket"
           - "plant.spidy"
           - "plant.viny"
 
