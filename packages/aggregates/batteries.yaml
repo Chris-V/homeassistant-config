@@ -11,7 +11,6 @@ group:
       - "sensor.basement_bathroom_door_sensor_battery"
       - "sensor.basement_bathroom_multisensor_battery"
       - "sensor.chris_bedside_remote_battery"
-      - "sensor.dollorama_battery"
       - "sensor.drake_battery"
       - "sensor.guest_bedroom_window_sensor_battery"
       - "sensor.karine_bedside_remote_battery"

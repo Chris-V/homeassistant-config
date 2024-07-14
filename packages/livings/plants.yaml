@@ -8,7 +8,6 @@ group:
     name: "All plants"
     icon: "mdi:flower"
     entities:
-      - "plant.dollorama"
       - "plant.drake"
       - "plant.maitre_doyle"
       - "plant.snicket"
@@ -45,7 +44,6 @@ automation:
       - platform: state
         attribute: "problem"
         entity_id:
-          - "plant.dollorama"
           - "plant.drake"
           - "plant.maitre_doyle"
           - "plant.snicket"
