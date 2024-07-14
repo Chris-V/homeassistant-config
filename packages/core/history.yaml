@@ -108,6 +108,7 @@ recorder:
       - "sensor.guest_bedroom_thermostat_temperature"
       - "sensor.guest_bedroom_window_sensor_battery"
       - "sensor.guests_home"
+      - "sensor.heat_pump_virtual_probe"
       - "sensor.karine_bedside_remote_battery"
       - "sensor.karine_pixel_7_battery_level"
       - "sensor.karine_pixel_7_wifi_connection"
