@@ -12,7 +12,7 @@
         - entity: binary_sensor.all_windows
         - entity: binary_sensor.all_leaks
         - entity: binary_sensor.kitchen_door_lock_jammed
-        - entity: switch.main_water_shut_off_valve
+        - entity: valve.main_water_shut_off
         - entity: sensor.broadcast_queue
     - !include ../cards/alarm.yaml
 

@@ -5,8 +5,6 @@ homeassistant:
     sensor.water_heater_leak_sensor_battery:
       battery_type: "ER14250 3.6V"
       battery_warning_level: 25
-    switch.main_water_shut_off_valve:
-      icon: "mdi:valve"
 
 cloud:
   google_actions:
