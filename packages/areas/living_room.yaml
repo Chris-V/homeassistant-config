@@ -15,8 +15,6 @@ homeassistant:
       battery_warning_level: 25
     sensor.living_room_temperature:
       friendly_name: "Living room temperature"
-    switch.bookshelf_outlet:
-      friendly_name: "Bookshelf outlet"
 
 cloud:
   google_actions:
@@ -27,7 +25,6 @@ cloud:
         - "light.living_room"
         - "light.living_room_ambiance"
         - "light.staircase"
-        - "switch.bookshelf_outlet"
     entity_config:
       light.living_room_ambiance:
         aliases:
@@ -35,9 +32,6 @@ cloud:
       light.living_room:
         aliases:
           - "Living room spots"
-      switch.bookshelf_outlet:
-        aliases:
-          - "Christmas tree"
 
 input_number:
   living_room_thermostat_eco_setpoint:

@@ -52,9 +52,8 @@
       - entity_id: light.living_room_ambiance
         name: Ambiance
         icon: mdi:floor-lamp-dual
-      - entity_id: switch.bookshelf_outlet
-        name: Bookshelf outlet
-        icon: mdi:power-socket-us
+      - entity_id: light.staircase
+        name: Staircase
       - entity_id: media_player.living_room_tv
         name: TV
         icon: mdi:television

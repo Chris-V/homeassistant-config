@@ -147,6 +147,6 @@
     switches:
       - entity_id: light.workshop
         name: Light
-      - entity_id: switch.main_water_shut_off_valve
-        name: Main water shut-off valve
+      - entity_id: valve.main_water_shut_off
+        name: Main water shut-off
         tap_action: more-info  # Prevents accidental toggles
