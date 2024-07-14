@@ -50,17 +50,18 @@
           show_success_messages: false
           max_length: 255
           buttons: false
-          style: |
-            ha-card {
-              background: none;
-              box-shadow: none;
-            }
-            ha-card .card-content {
-              padding: 0;
-            }
-            ha-card .card-header, #serviceMessage {
-              display: none;
-            }
+          card_mod:
+            style: |
+              ha-card {
+                background: none;
+                box-shadow: none;
+              }
+              ha-card .card-content {
+                padding: 0;
+              }
+              ha-card .card-header, #serviceMessage {
+                display: none;
+              }
         - type: buttons
           entities:
             - entity: script.broadcast_manual_message

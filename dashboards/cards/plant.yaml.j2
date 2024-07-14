@@ -10,19 +10,20 @@
 
 type: picture-elements
 image: "{{ image }}"
-style: |
-  .element[class~=element] {
-    transform: none;
-  }
-  .element button-card {
-    position: relative;
-    --ha-label-badge-title-font-size: 0;
-    --ha-label-badge-font-size: 1.2rem;
-    --label-badge-red: #363941;
-  }
-  .element button-card + button-card {
-      margin-left: 1em;
-  }
+card_mod:
+  style: |
+    .element[class~=element] {
+      transform: none;
+    }
+    .element button-card {
+      position: relative;
+      --ha-label-badge-title-font-size: 0;
+      --ha-label-badge-font-size: 1.2rem;
+      --label-badge-red: #363941;
+    }
+    .element button-card + button-card {
+        margin-left: 1em;
+    }
 elements:
   - type: custom:button-card
     color_type: label-card

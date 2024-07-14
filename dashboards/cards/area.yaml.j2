@@ -150,34 +150,35 @@
 
 type: picture-elements
 image: {{ image | default('/local/rooms/placeholder.webp') }}
-style: |
-  .element[class~=element] {
-    position: relative;
-    transform: none;
-  }
-  ::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-  }
-  ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.55);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba({{ color }}, 0.55);
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba({{ color }}, 1);
-  }
+card_mod:
+  style: |
+    .element[class~=element] {
+      position: relative;
+      transform: none;
+    }
+    ::-webkit-scrollbar {
+      width: 3px;
+      height: 3px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.55);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba({{ color }}, 0.55);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba({{ color }}, 1);
+    }
 elements:
   - type: custom:container-element
     style:
       position: absolute
-      top: 0
-      right: 0
-      left: 0
-      bottom: 0
+      inset: 0
       display: flex
+      align-items: stretch
       flex-direction: column
+      flex-wrap: nowrap
+      justify-content: space-between
       "--secondary-text-color": "#DADADB"
       "--primary-text-color": "#DADADB"
       "--paper-item-icon-color": "#DADADB"
@@ -214,7 +215,7 @@ elements:
             display: flex
             flex-grow: 0
             flex-shrink: 0
-            padding: 0 10px
+            width: "100%"
             color: "#D3D3D3"
             font-size: 1.6em
             font-weight: 500
@@ -297,9 +298,10 @@ elements:
             cards:
               - type: entities
                 show_header_toggle: false
-                style: |
-                  ha-card .card-content { padding: 0; }
-                  ha-card #states > * { margin: 0; }
+                card_mod:
+                  style: |
+                    ha-card .card-content { padding: 0; }
+                    ha-card #states > * { margin: 0; }
                 entities:
                   - entity: input_select.{{ climate.room_key }}_thermostat_mode
                     name: Mode
@@ -310,15 +312,16 @@ elements:
 
               - type: custom:simple-thermostat
                 entity: climate.{{ climate.room_key }}_thermostat
-                style: |
-                  ha-card {
-                    height: 100%;
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    --st-spacing: 0;
-                  }
+                card_mod:
+                  style: |
+                    ha-card {
+                      height: 100%;
+                      width: 100%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      --st-spacing: 0;
+                    }
                 control: []
                 decimals: 1
                 header: false

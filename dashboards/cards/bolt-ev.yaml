@@ -1,10 +1,11 @@
 type: picture-elements
 image: /local/car/bolt_ev_tile.png
-style: |
-  .element[class~=element] {
-    position: relative;
-    transform: none;
-  }
+card_mod:
+  style: |
+    .element[class~=element] {
+      position: relative;
+      transform: none;
+    }
 elements:
   - type: custom:container-element
     style:

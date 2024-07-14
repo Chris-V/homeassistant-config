@@ -63,24 +63,25 @@
 
 type: picture-elements
 image: {{ image }}
-style: |
-  .element[class~=element] {
-    position: relative;
-    transform: none;
-  }
-  ::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-  }
-  ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.45);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(0, 139, 239, 0.45);
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 139, 239, 1);
-  }
+card_mod:
+  style: |
+    .element[class~=element] {
+      position: relative;
+      transform: none;
+    }
+    ::-webkit-scrollbar {
+      width: 3px;
+      height: 3px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.45);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 139, 239, 0.45);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 139, 239, 1);
+    }
 elements:
   - type: custom:container-element
     style:
