@@ -16,7 +16,7 @@
           <<: &aggregate_row_options
             type: custom:template-entity-row
             active: "{{ is_state('this.entity_id', 'on') }}"
-            secondary: "{% if states['this.entity_id'] %}{{ time_since(states['this.entity_id'].last_changed, 0) }} ago{% endif %}"
+            secondary: "{% if states['this.entity_id'] %}{{ time_since(states['this.entity_id'].last_changed, 0) }}{% endif %}"
             state: "{{ state_translated('this.entity_id') }}"
           name: >-
             {% if states['this.entity_id'] -%}
