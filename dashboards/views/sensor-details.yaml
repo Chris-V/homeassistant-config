@@ -17,13 +17,7 @@
             type: custom:template-entity-row
             active: "{{ is_state('this.entity_id', 'on') }}"
             secondary: "{% if states['this.entity_id'] %}{{ time_since(states['this.entity_id'].last_changed, 0) }} ago{% endif %}"
-            state: >-
-              {% set state = states['this.entity_id'] | default({"state": "unavailable"}, True) %}
-              {% if state.state in ['on', 'off'] -%}
-                _(component.binary_sensor.state.{{ state.attributes.device_class }}.{{ state.state }})
-              {%- else -%}
-                _(state.default.{{ state.state }})
-              {%- endif %}
+            state: "{{ state_translated('this.entity_id') }}"
           name: >-
             {% if states['this.entity_id'] -%}
               {{ states['this.entity_id'].name | replace(' door', '') }}
