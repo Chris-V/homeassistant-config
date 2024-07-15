@@ -12,7 +12,6 @@ group:
     name: "Z-Wave nodes"
     icon: "mdi:z-wave"
     entities: &zwave_nodes
-      - "sensor.basement_bathroom_door_sensor_node_status"
       - "sensor.basement_bathroom_fan_switch_node_status"
       - "sensor.basement_bathroom_light_switch_node_status"
       - "sensor.basement_bathroom_multisensor_node_status"

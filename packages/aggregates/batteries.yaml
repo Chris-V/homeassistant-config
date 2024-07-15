@@ -8,7 +8,6 @@ group:
     name: "Batteries"
     icon: "mdi:battery"
     entities: &battery_entities
-      - "sensor.basement_bathroom_door_sensor_battery"
       - "sensor.basement_bathroom_multisensor_battery"
       - "sensor.chris_bedside_remote_battery"
       - "sensor.drake_battery"

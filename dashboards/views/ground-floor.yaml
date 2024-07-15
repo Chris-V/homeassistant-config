@@ -125,8 +125,6 @@
     sensors:
       - entity_id: binary_sensor.main_bathroom_motion
         name: Motion
-      - entity_id: binary_sensor.main_bathroom_door
-        name: Door
       - entity_id: sensor.main_bathroom_humidity
         name: Humidity
       - entity_id: sensor.main_bathroom_temperature
