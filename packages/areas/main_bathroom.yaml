@@ -1,7 +1,5 @@
 homeassistant:
   customize:
-    binary_sensor.main_bathroom_door:
-      friendly_name: "Main bathroom door"
     binary_sensor.main_bathroom_presence:
       friendly_name: "Main bathroom presence"
     sensor.main_bathroom_multisensor_battery:
@@ -34,18 +32,12 @@ cloud:
 
 template:
   - binary_sensor:
-      - unique_id: "binary_sensor.main_bathroom_door"
-        name: "main_bathroom_door"
-        device_class: "door"
-        state: true
-
       - unique_id: "binary_sensor.main_bathroom_presence"
         name: "main_bathroom_presence"
         device_class: "presence"
         state: >-
           {{
             is_state('binary_sensor.main_bathroom_motion', 'on')
-              or is_state('binary_sensor.main_bathroom_door', 'off')
           }}
         delay_off: 15
 
