@@ -39,6 +39,7 @@ light:
     name: "Office lights"
     entities:
       - "light.office_spots"
+      - "light.office_lamp"
 
 template:
   - sensor:
@@ -54,3 +55,21 @@ template:
 sonos:
   media_player:
     advertise_addr: !secret automate_ip
+
+automation:
+  - id: "dc1be8a1-ce4b-4f5e-89d1-1a84ad2ee47b"
+    alias: "office_spots_dimmer_scenes"
+    use_blueprint:
+      path: "zwave/paddle_scenes.yaml"
+      input:
+        on_entity_id: "event.office_spots_dimmer_on_pressed"
+        off_entity_id: "event.office_spots_dimmer_off_pressed"
+
+        tap_on_2x:
+          - service: "light.turn_on"
+            data:
+              entity_id: "light.office_lamp"
+        tap_off_2x:
+          - service: "light.turn_off"
+            data:
+              entity_id: "light.office_lamp"

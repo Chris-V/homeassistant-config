@@ -51,6 +51,7 @@ group:
       - "sensor.master_bedroom_light_switch_node_status"
       - "sensor.master_bedroom_thermostat_node_status"
       - "sensor.office_dimmer_node_status"
+      - "sensor.office_lamp_node_status"
       - "sensor.office_thermostat_node_status"
       - "sensor.shed_light_switch_node_status"
       - "sensor.shed_outdoor_light_switch_node_status"
