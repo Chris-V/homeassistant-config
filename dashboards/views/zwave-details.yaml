@@ -1,55 +1,71 @@
-- type: entities
-  title: Z-Wave Nodes
-  show_header_toggle: false
-  card_mod:
-    style: !template
-      file: ../styles/inset-icon.css.j2
-      variables:
-        svg_path: "M16.3,10.58C13.14,10.58 10.6,13.13 10.6,16.28C10.6,19.43 13.15,22 16.3,22C19.45,22 22,19.43 22,16.28C22,13.13 19.45,10.58 16.3,10.58M18,19.08H13.19L15.81,15H13.31L14.4,13.23H19.18L16.63,17.28H19.18L18,19.08M16.3,3.93V2C8.41,2 2,8.42 2,16.31H3.92C3.94,9.46 9.5,3.93 16.3,3.93M16.3,7.74V5.82C10.5,5.82 5.81,10.53 5.81,16.31H7.73C7.75,11.58 11.59,7.74 16.3,7.74"
-  entities:
-    - type: conditional
-      conditions:
-        - entity: "sensor.dead_zwave_nodes"
-          state_not: "0"
-      row:
-        type: custom:auto-entities
-        card:
-          type: custom:fold-entity-row
-          open: true
-          head:
-            type: section
-            label: Dead
-        sort:
-          method: name
-        filter:
-          template: >
-            {% set ns = namespace(rows = []) %}
-            {%- for entity in expand(state_attr('sensor.dead_zwave_nodes', 'entity_id')) %}
-              {% set ns.rows = ns.rows + [{
-                'entity': entity.entity_id,
-                'name': entity.name | lower | replace(': node status', '') | title,
-              }] %}
-            {%- endfor %}
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Dead nodes
+    show_header_toggle: false
+    card_mod:
+      style: !template
+        file: ../styles/inset-icon.css.j2
+        variables:
+          svg_path: "M10.62 14.44L9.56 15.5L10.62 16.56L9.56 17.62L8.5 16.56L7.44 17.62L6.38 16.56L7.44 15.5L6.38 14.44L7.44 13.38L8.5 14.44L9.56 13.38L10.62 14.44M16.56 13.38L15.5 14.44L14.44 13.38L13.38 14.44L14.44 15.5L13.38 16.56L14.44 17.62L15.5 16.56L16.56 17.62L17.62 16.56L16.56 15.5L17.62 14.44L16.56 13.38M23 15V18C23 18.55 22.55 19 22 19H21V20C21 21.11 20.11 22 19 22H5C3.9 22 3 21.11 3 20V19H2C1.45 19 1 18.55 1 18V15C1 14.45 1.45 14 2 14H3C3 10.13 6.13 7 10 7H11V5.73C10.4 5.39 10 4.74 10 4C10 2.9 10.9 2 12 2S14 2.9 14 4C14 4.74 13.6 5.39 13 5.73V7H14C17.87 7 21 10.13 21 14H22C22.55 14 23 14.45 23 15M21 16H19V14C19 11.24 16.76 9 14 9H10C7.24 9 5 11.24 5 14V16H3V17H5V20H19V17H21V16Z"
+  show_empty: false
+  sort:
+    method: name
+  filter:
+    template: >
+      {% from 'dashboards/zwave.jinja' import select_node_status_rows %}
+      {{ select_node_status_rows(states=['dead']) }}
 
-            {{ ns.rows }}
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Sleeping nodes
+    show_header_toggle: false
+    card_mod:
+      style: !template
+        file: ../styles/inset-icon.css.j2
+        variables:
+          svg_path: "M23,12H17V10L20.39,6H17V4H23V6L19.62,10H23V12M15,16H9V14L12.39,10H9V8H15V10L11.62,14H15V16M7,20H1V18L4.39,14H1V12H7V14L3.62,18H7V20Z"
+  show_empty: false
+  sort:
+    method: name
+  filter:
+    template: >
+      {% from 'dashboards/zwave.jinja' import select_node_status_rows %}
+      {{ select_node_status_rows(states=['asleep']) }}
 
-    - type: custom:auto-entities
-      card:
-        type: custom:fold-entity-row
-        open: false
-        head:
-          type: section
-          label: Alive
-      sort:
-        method: name
-      filter:
-        template: >
-          {% set ns = namespace(rows = []) %}
-          {%- for entity in expand(state_attr('group.zwave_nodes', 'entity_id')) | rejectattr('state', '==', 'dead') %}
-            {% set ns.rows = ns.rows + [{
-              'entity': entity.entity_id,
-              'name': entity.name | lower | replace(': node status', '') | title,
-            }] %}
-          {%- endfor %}
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Alive nodes
+    show_header_toggle: false
+    card_mod:
+      style: !template
+        file: ../styles/inset-icon.css.j2
+        variables:
+          svg_path: "M7.5,4A5.5,5.5 0 0,0 2,9.5C2,10 2.09,10.5 2.22,11H6.3L7.57,7.63C7.87,6.83 9.05,6.75 9.43,7.63L11.5,13L12.09,11.58C12.22,11.25 12.57,11 13,11H21.78C21.91,10.5 22,10 22,9.5A5.5,5.5 0 0,0 16.5,4C14.64,4 13,4.93 12,6.34C11,4.93 9.36,4 7.5,4V4M3,12.5A1,1 0 0,0 2,13.5A1,1 0 0,0 3,14.5H5.44L11,20C12,20.9 12,20.9 13,20L18.56,14.5H21A1,1 0 0,0 22,13.5A1,1 0 0,0 21,12.5H13.4L12.47,14.8C12.07,15.81 10.92,15.67 10.55,14.83L8.5,9.5L7.54,11.83C7.39,12.21 7.05,12.5 6.6,12.5H3Z"
+  show_empty: false
+  sort:
+    method: name
+  filter:
+    template: >
+      {% from 'dashboards/zwave.jinja' import select_node_status_rows %}
+      {{ select_node_status_rows(states=['alive']) }}
 
-          {{ ns.rows }}
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Other nodes
+    show_header_toggle: false
+    card_mod:
+      style: !template
+        file: ../styles/inset-icon.css.j2
+        variables:
+            svg_path: "M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"
+  show_empty: false
+  sort:
+    method: name
+  filter:
+    template: >
+      {% from 'dashboards/zwave.jinja' import select_node_status_rows %}
+      {{ select_node_status_rows(states_not=['alive', 'asleep', 'dead']) }}

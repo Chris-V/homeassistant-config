@@ -1,0 +1,72 @@
+blueprint:
+  name: Start an alarm
+  domain: automation
+  input:
+    group:
+      name: Sensor group.
+      description: Binary sensor group that will start the alarm once it turns on.
+      selector:
+        entity:
+          filter:
+            - domain: binary_sensor
+              integration: group
+    name:
+      name: Name of the thing this alarm handles.
+      selector:
+        text: { }
+
+initial_state: true
+max_exceeded: "silent"
+mode: "single"
+
+trigger_variables:
+  name: !input name
+  group: !input group
+
+trigger:
+  - platform: "homeassistant"
+    event: "start"
+  - platform: "state"
+    entity_id: !input group
+    to: "on"
+
+condition:
+  - condition: state
+    entity_id: !input group
+    state: "on"
+
+action:
+  - parallel:
+      - service: python_script.notify
+        data:
+          audio: false
+          dismissible: false
+          persistent: true
+          priority: true
+          push_target: "household"
+          tag: "alarm_{{ name | slugify }}"
+          title: "{{ name | capitalize }} detected"
+          url: "/lovelace/security"
+          message: &alarm_message >
+            {% from 'strings.jinja' import nice_join %}
+            {%
+              set locations = expand(group)
+                | selectattr('state', '==', 'on')
+                | map(attribute = 'entity_id')
+                | map('area_name')
+                | map('lower')
+                | sort | unique
+            %}
+            {{ name | capitalize }} detected in {{ nice_join(locations) }}.
+
+      - repeat:
+          sequence:
+            - service: "script.broadcast_notification"
+              data:
+                message: *alarm_message
+            - delay: 10
+          until:
+            - condition: state
+              entity_id: !input group
+              state: "off"
+              for: 10

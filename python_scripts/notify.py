@@ -52,9 +52,7 @@ if not dismissible and not tag:
     dismissible = True
 
 if not dismiss and not title:
-    logger.error(
-        'Missing {}. Expected a non-empty string.'
-            .format(ATTR_TITLE))
+    logger.error('Missing {}. Expected a non-empty string.'.format(ATTR_TITLE))
 elif dismiss and not tag:
     logger.error('Must provide a tag to dismiss a notification.')
 else:
@@ -122,7 +120,7 @@ else:
         else:
             if priority:
                 payload = {
-                    'message': 'Alert. {}'.format(message or title)
+                    'message': '{}'.format(message or title)
                 }
                 hass.services.call('script', 'broadcast_notification', payload)
             else:

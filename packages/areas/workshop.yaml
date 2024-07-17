@@ -2,9 +2,6 @@ homeassistant:
   customize:
     light.workshop:
       friendly_name: "Workshop light"
-    sensor.water_heater_leak_sensor_battery:
-      battery_type: "ER14250 3.6V"
-      battery_warning_level: 25
 
 cloud:
   google_actions:

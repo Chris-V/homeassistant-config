@@ -35,7 +35,7 @@ entities:
             {% set row = {
               'type': 'custom:battery-entity-row',
               'entity': entity.entity_id,
-              'name': entity.name | replace(': Battery', '') | replace("'s battery", '') | replace(' battery', ''),
+              'name': entity.name | regex_replace('(: battery|\'s battery| battery)$', '', ignorecase=True),
               'secondary_info': 'battery_type',
               'warning': warning_level + (warning_level / 4) | round(0, 'floor'),
               'critical': warning_level,
@@ -70,7 +70,7 @@ entities:
           {% set row = {
             'type': 'custom:battery-entity-row',
             'entity': entity.entity_id,
-            'name': entity.name | replace(': Battery', '') | replace("'s battery", '') | replace(' battery', ''),
+            'name': entity.name | regex_replace('(: battery|\'s battery| battery)$', '', ignorecase=True),
             'secondary_info': 'last-changed',
             'warning': warning_level + (warning_level / 4) | round(0, 'floor'),
             'critical': warning_level,
