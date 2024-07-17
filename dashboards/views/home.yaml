@@ -13,6 +13,8 @@
         - entity: binary_sensor.all_leaks
         - entity: binary_sensor.kitchen_door_lock_jammed
         - entity: valve.main_water_shut_off
+          tap_action:
+            action: more-info
         - entity: sensor.broadcast_queue
     - !include ../cards/alarm.yaml
 
@@ -37,6 +39,4 @@
       entity: weather.quebec
       show_forecast: true
       secondary_info_attribute: humidity
-      # Sadly, animated icons cause a lot of lag on mobile
-      # theme: Animated Weather Card
     - !include ../cards/climate-overview.yaml

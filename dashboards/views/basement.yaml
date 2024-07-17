@@ -35,9 +35,6 @@
       - entity_id: light.lounge_ambiance
         name: Ambiance
         icon: mdi:floor-lamp
-      - entity_id: switch.lounge_tv
-        name: TV
-        icon: mdi:television
       - entity_id: media_player.lounge_chromecast
         name: Chromecast
         icon: mdi:television-play

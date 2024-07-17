@@ -9,6 +9,7 @@ group:
     icon: "mdi:battery"
     entities: &battery_entities
       - "sensor.basement_bathroom_multisensor_battery"
+      - "sensor.basement_smoke_co_detector_battery"
       - "sensor.chris_bedside_remote_battery"
       - "sensor.drake_battery"
       - "sensor.guest_bedroom_window_sensor_battery"
@@ -18,6 +19,7 @@ group:
       - "sensor.kitchen_sink_leak_sensor_battery"
       - "sensor.living_room_door_sensor_battery"
       - "sensor.living_room_remote_battery"
+      - "sensor.living_room_smoke_co_detector_battery"
       - "sensor.laundry_motion_sensor_battery"
       - "sensor.lounge_airthings_battery"
       - "sensor.lounge_window_sensor_battery"

@@ -1,0 +1,58 @@
+homeassistant:
+  customize:
+    sensor.basement_smoke_co_detector_battery:
+      baterry_type: "AA (2)"
+      battery_warning_level: 40
+    sensor.living_room_smoke_co_detector_battery:
+      baterry_type: "AA (2)"
+      battery_warning_level: 40
+
+# TODO: On TOP of EACH dashboard: Smoke detected, CO detected, Leak detected. Display nothing if all is good
+
+binary_sensor:
+  - platform: "group"
+    name: "Smoke detected"
+    device_class: "smoke"
+    entities:
+      - "binary_sensor.basement_smoke_co_detector_smoke_detected"
+      - "binary_sensor.living_room_smoke_co_detector_smoke_detected"
+
+  - platform: "group"
+    name: "Carbon monoxide detected"
+    device_class: "carbon_monoxide"
+    entities:
+      - "binary_sensor.basement_smoke_co_detector_co_detected"
+      - "binary_sensor.living_room_smoke_co_detector_co_detected"
+
+automation:
+  - id: "2d13be6f-27f6-412f-b9de-2dc7f9f8b7fc"
+    alias: "smoke_alarm"
+    description: "Trigger alarm notifications when smoke is detected."
+    use_blueprint:
+      path: "alarm/start_alarm.yaml"
+      input: &smoke_input
+        name: "Smoke"
+        group: "binary_sensor.smoke_detected"
+
+  - id: "2043d09b-d46b-4f36-826b-1a5e51ade8bb"
+    alias: "clear_smoke_notification"
+    description: "Clear alarm notifications when smoke is gone."
+    use_blueprint:
+      input: *smoke_input
+      path: "alarm/clear_alarm.yaml"
+
+  - id: "95d54049-14ef-477a-8c9f-d01728c8b411"
+    alias: "carbon_monoxide_alarm"
+    description: "Trigger alarm notifications when carbon monoxide is detected."
+    use_blueprint:
+      path: "alarm/start_alarm.yaml"
+      input: &co_input
+        name: "Carbon monoxide"
+        group: "binary_sensor.carbon_monoxide_detected"
+
+  - id: "88058b4d-647e-4c4d-9840-49d14c91871e"
+    alias: "clear_carbon_monoxide_notification"
+    description: "Clear alarm notifications when carbon monoxide is gone."
+    use_blueprint:
+      path: "alarm/clear_alarm.yaml"
+      input: *co_input

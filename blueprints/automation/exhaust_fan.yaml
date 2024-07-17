@@ -8,14 +8,16 @@ blueprint:
       description: The fan to control.
       selector:
         entity:
-          domain: fan
+          filter:
+            - domain: fan
     humidity_entity:
       name: Humidity sensor entity
       description: The relative humidity sensor that will be used as a trigger.
       selector:
         entity:
-          domain: sensor
-          device_class: humidity
+          filter:
+            - domain: sensor
+              device_class: humidity
     humidity_start:
       name: Start humidity level (exclusive)
       description: >

@@ -1,0 +1,43 @@
+blueprint:
+  name: Clear an alarm
+  domain: automation
+  input:
+    group:
+      name: Sensor group.
+      description: Binary sensor group that will clear the alarm once it turns off.
+      selector:
+        entity:
+          filter:
+            - domain: binary_sensor
+              integration: group
+    name:
+      name: Name of the thing this alarm handles.
+      selector:
+        text: { }
+
+initial_state: true
+max_exceeded: "silent"
+mode: "single"
+
+trigger_variables:
+  name: !input name
+  group: !input group
+
+trigger:
+  - platform: "state"
+    entity_id: !input group
+    from: "on"
+    to: "off"
+    for: 10
+
+action:
+  - service: python_script.notify
+    data:
+      audio: false
+      dismissible: true
+      persistent: true
+      priority: false
+      push_target: "household"
+      tag: "alarm_{{ name | slugify }}"
+      title: "{{ name | capitalize }} cleared"
+      url: "/lovelace/security"

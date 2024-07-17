@@ -1,0 +1,12 @@
+{% macro select_node_status_rows(states=[], states_not=[], group_entity_id='group.zwave_nodes') -%}
+{% set ns = namespace(rows = []) %}
+{%- for entity in expand(group_entity_id) %}
+  {%- if (states | length == 0 or entity.state in states) and not entity.state in states_not  %}
+    {%- set ns.rows = ns.rows + [{
+      'entity': entity.entity_id,
+      'name': entity.name | title | replace(': Node Status', ''),
+    }] %}
+  {%- endif %}
+{%- endfor %}
+{{ ns.rows }}
+{%- endmacro %}

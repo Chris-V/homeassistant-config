@@ -1,0 +1,35 @@
+homeassistant:
+  customize:
+    sensor.kitchen_sink_leak_sensor_battery:
+      battery_type: "ER14250 3.6V"
+      battery_warning_level: 25
+    sensor.water_heater_leak_sensor_battery:
+      battery_type: "ER14250 3.6V"
+      battery_warning_level: 25
+
+binary_sensor:
+  - platform: "group"
+    unique_id: "binary_sensor.all_leaks"
+    device_class: "moisture"
+    name: "All leaks"
+    entities:
+      - "binary_sensor.kitchen_sink_leak"
+      - "binary_sensor.washing_machine_leak"
+      - "binary_sensor.water_heater_leak"
+
+automation:
+  - id: "106d9d0a-8a2b-4713-8c3f-3341a24cc9b9"
+    alias: "water_leak"
+    description: "Trigger alarm notifications when water leaks are detected."
+    use_blueprint:
+      path: "alarm/start_alarm.yaml"
+      input: &alarm_input
+        name: "Water leak"
+        group: "binary_sensor.all_leaks"
+
+  - id: "e4eeecc6-146e-4518-a8fd-f4bce43c2574"
+    alias: "clear_water_leak_notification"
+    description: "Clear alarm notifications when water leaks are cleared."
+    use_blueprint:
+      path: "alarm/clear_alarm.yaml"
+      input: *alarm_input

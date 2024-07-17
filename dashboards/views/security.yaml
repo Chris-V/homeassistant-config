@@ -27,7 +27,7 @@
             action_name: "Clear current activity"
 
 - type: "vertical-stack"
-  title: "Session"
+  title: "Last arming"
   cards:
     - type: "markdown"
       content: |
@@ -58,7 +58,7 @@
         {%- endif %}
 
     - type: "markdown"
-      title: "Devices"
+      title: "Device interactions"
       content: |
         {%
           set device_ids = (
@@ -73,7 +73,7 @@
     - type: "custom:auto-entities"
       card:
         type: "entities"
-        title: "Entities"
+        title: "Entity interactions"
         show_header_toggle: false
       sort:
         method: "name"
@@ -88,3 +88,44 @@
           {% for entity_id in entity_ids -%}
           * {{ entity_id }} {% if states[entity_id] %}({{ states[entity_id].name }}){% endif %}
           {% endfor %}
+
+- type: "vertical-stack"
+  title: "Devices"
+  cards:
+    - type: glance
+      title: Leaks
+      entities:
+        - entity: binary_sensor.kitchen_sink_leak
+          name: Kitchen
+        - entity: binary_sensor.washing_machine_leak
+          name: Washing machine
+        - entity: binary_sensor.water_heater_leak
+          name: Water heater
+
+    - type: glance
+      title: Living room smoke/CO detector
+      entities:
+        - entity: binary_sensor.living_room_smoke_co_detector_carbon_monoxide_detected
+          name: CO
+        - entity: binary_sensor.living_room_smoke_co_detector_smoke_detected
+          name: Smoke
+        - entity: binary_sensor.living_room_smoke_co_detector_replacement_required_end_of_life
+          name: EOL
+        - entity: sensor.living_room_smoke_co_detector_last_seen
+          name: Last seen
+        - entity: sensor.living_room_smoke_co_detector_battery
+          name: Battery
+
+    - type: glance
+      title: Basement smoke/CO detector
+      entities:
+        - entity: binary_sensor.basement_smoke_co_detector_carbon_monoxide_detected
+          name: CO
+        - entity: binary_sensor.basement_smoke_co_detector_smoke_detected
+          name: Smoke
+        - entity: binary_sensor.basement_smoke_co_detector_replacement_required_end_of_life
+          name: EOL
+        - entity: sensor.basement_smoke_co_detector_last_seen
+          name: Last seen
+        - entity: sensor.basement_smoke_co_detector_battery
+          name: Battery

@@ -12,9 +12,6 @@ homeassistant:
     sensor.kitchen_door_sensor_battery:
       battery_type: "Sensative Strip"
       battery_warning_level: 20
-    sensor.kitchen_sink_leak_sensor_battery:
-      battery_type: "ER14250 3.6V"
-      battery_warning_level: 25
     sensor.kitchen_temperature:
       friendly_name: "Kitchen temperature"
     light.kitchen:
