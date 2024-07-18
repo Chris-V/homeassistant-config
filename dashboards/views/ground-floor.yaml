@@ -20,6 +20,8 @@
         icon_tag: mdi:sofa
       - entity_id: light.backyard_soffit
         name: Soffits
+      - entity_id: light.backyard_string
+        name: String lights
       - entity_id: light.shed_outdoor
         name: Shed door
         icon: mdi:outdoor-lamp

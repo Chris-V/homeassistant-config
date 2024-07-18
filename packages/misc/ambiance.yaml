@@ -22,28 +22,28 @@ script:
     mode: restart
     sequence:
       parallel:
-        - service: homeassistant.turn_on
+        - service: light.turn_on
           target:
             entity_id: "light.master_bedroom_bedsides"
           data:
             brightness_pct: 5
             kelvin: 2200
-        - service: homeassistant.turn_on
+        - service: light.turn_on
           target:
             entity_id: "light.bookshelf"
           data:
             kelvin: 2200
-        - service: homeassistant.turn_on
+        - service: light.turn_on
           target:
             entity_id: "light.office_lamp"
           data:
             brightness_pct: 10
-        - service: homeassistant.turn_on
+        - service: light.turn_on
           target:
             entity_id: "light.basement_hallway"
           data:
             brightness: 40
-        - service: homeassistant.turn_on
+        - service: light.turn_on
           target:
             entity_id: "light.lounge_ambiance"
           data:
@@ -77,8 +77,12 @@ automation:
       - parallel:
           - service: script.evening_ambiance
           - service: light.turn_on
-            data:
-              entity_id: "light.outdoor_lights"
+            target:
+              entity_id:
+                - "light.backyard_string"
+                - "light.front_porch"
+                - "light.side_porch"
+                - "light.shed"
 
   - id: "2c48ecbc-7b65-4938-af37-dcda12952465"
     alias: "arrival_lights"
@@ -98,8 +102,10 @@ automation:
         below: *sun_elevation
     action:
       - service: light.turn_on
-        data:
-          entity_id: "light.outdoor_lights"
+        target:
+          entity_id:
+            - "light.front_porch"
+            - "light.side_porch"
 
   - id: "a109af89-0910-45b2-9a0e-11d3ae43ec7c"
     alias: turn_off_outdoor
@@ -128,5 +134,5 @@ automation:
         before: "15:00:00"
     action:
       - service: light.turn_off
-        data:
+        target:
           entity_id: "light.outdoor_lights"
