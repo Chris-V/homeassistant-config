@@ -12,6 +12,7 @@ cloud:
     filter:
       include_entities:
         - "light.front_porch"
+        - "light.backyard_string"
         - "light.backyard_soffit"
         - "light.shed"
         - "light.shed_outdoor"
@@ -28,6 +29,7 @@ light:
     name: "Outdoor lights"
     entities:
       - "light.backyard_soffit"
+      - "light.backyard_string"
       - "light.front_porch"
       - "light.shed_outdoor"
       - "light.side_porch"
