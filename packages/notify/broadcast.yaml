@@ -1,38 +1,45 @@
 homeassistant:
   customize:
-    sensor.broadcast_queue:
+    todo.audio_broadcast:
       friendly_name: "Broadcast queue"
+      icon: "mdi:bullhorn"
 
 media_player:
   - platform: "group"
     unique_id: "media_player.broadcast_group"
     name: "Broadcast group"
     entities:
-      - "media_player.laundry_room_google_home"
-      - "media_player.living_room_google_home"
-      - "media_player.lounge_google_home"
-      - "media_player.master_bedroom_google_home"
+      - "media_player.cast_whole_house"
       - "media_player.office_sonos"
 
 input_text:
   broadcast_message:
     name: "Broadcast message"
-    icon: "mdi:message-text"
+    icon: "mdi:bullhorn"
     max: 255
     initial: ""
 
-mqtt:
-  sensor:
-    - unique_id: "mqtt_broadcast_queue"
-      name: "broadcast_queue"
-      icon: "mdi:bullhorn"
-      state_topic: &broadcast_queue_topic "home-assistant/broadcast/queue"
-      value_template: >
-        {{ value_json | default([], True) | length }}
-      json_attributes_topic: *broadcast_queue_topic
-      json_attributes_template: >
-        {% set items = value_json | default([], True) %}
-        {{ { "items": items } | tojson }}
+input_datetime:
+  broadcast_weekday_start:
+    name: "Weekday broadcast start time"
+    icon: "mdi:clock-start"
+    has_date: false
+    has_time: true
+  broadcast_weekday_end:
+    name: "Weekday broadcast end time"
+    icon: "mdi:clock-end"
+    has_date: false
+    has_time: true
+  broadcast_weekend_start:
+    name: "Weekend broadcast start time"
+    icon: "mdi:clock-start"
+    has_date: false
+    has_time: true
+  broadcast_weekend_end:
+    name: "Weekend broadcast end time"
+    icon: "mdi:clock-end"
+    has_date: false
+    has_time: true
 
 script:
   broadcast_manual_message:
@@ -41,10 +48,9 @@ script:
     icon: "mdi:broadcast"
     mode: "queued"
     sequence:
-      - service: "python_script.notify"
+      - service: "script.broadcast_notification"
         data:
-          audio: true
-          title: "{{ states('input_text.broadcast_message') }}"
+          message: "{{ states('input_text.broadcast_message') }}"
 
   broadcast_notification:
     alias: "Broadcast notification"
@@ -80,10 +86,18 @@ script:
       - service: media_player.turn_on
         continue_on_error: true
         data:
-          entity_id: "{{ media_players }}"
+          # Technically filter by supported_features, but we know the result so less jinja hassle
+          # state_attr('...', 'supported_features') | bitwise_and(128) != 0
+          entity_id: >
+            {{
+              expand(media_players)
+                | rejectattr('entity_id', '==', 'media_player.office_sonos')
+                | map(attribute = 'entity_id')
+                | list
+            }}
       - wait_template: >-
           {{ expand(media_players) | selectattr('state', '==', 'off') | first is undefined }}
-        timeout: 15
+        timeout: 3
         continue_on_timeout: true
 
       - service: scene.create
@@ -126,9 +140,8 @@ script:
         selector:
           select:
             options:
-              - "Add"
-              - "Clear"
-              - "Pop"
+              - "add"
+              - "pop"
       message:
         name: "Message"
         description: "The message to enqueue when action is `add`."
@@ -138,70 +151,58 @@ script:
         name: "Tag"
         description: |
           A tag to uniquely identify this message.
-          With `action: add`, if a message with the same tag exists, then it will be updated.
-          With `action: pop`, if tag is specified, then the corresponding message will be removed. Otherwise the first message will be removed.
+          With `action: add`, if a message with the same tag exists, update it. Otherwise add a message to the end of the queue.
+          With `action: pop`, remove the message with the specified tag from the queue.
         selector:
           text: null
 
     sequence:
       - variables:
           action: "{{ action | lower }}"
-          tag: "{{ tag | default | string | trim }}"
           message: "{{ message | default | string | trim }}"
-          items: "{{ state_attr('sensor.broadcast_queue', 'items') | default([], True) | list }}"
+          tag: >
+            {% from 'random.jinja' import random_string %}
+            {{ tag | default(random_string()) | string | trim }}
 
       - choose:
           - conditions: "{{ action == 'add' }}"
             sequence:
-              - if: "{{ message | length > 0 }}"
-                then:
-                  - service: "mqtt.publish"
-                    data:
-                      topic: *broadcast_queue_topic
-                      retain: true
-                      payload_template: >
-                        {%
-                          set new_item = {
-                            "timestamp": now().isoformat(),
-                            "tag": tag or context.id,
-                            "data": {
-                              "message": message
-                            }
-                          }
-                        %}
-                        {{ (items | rejectattr('tag', '==', tag) | list + [new_item]) | to_json }}
-                else:
-                  - service: "system_log.write"
-                    data:
-                      level: "error"
-                      message: >
-                        `script.manage_broadcast_queue` called with `action: add` but `message` is absent.
-
-          - conditions: "{{ action == 'clear' }}"
-            sequence:
-              - service: "mqtt.publish"
+              - service: "todo.get_items"
+                response_variable: "broadcast_items"
+                target:
+                  entity_id: "todo.audio_broadcast"
                 data:
-                  topic: *broadcast_queue_topic
-                  retain: true
-                  payload: "[]"
+                  status:
+                    - needs_action
+              - if: "{{ broadcast_items['todo.audio_broadcast']['items'] | selectattr('summary', '==', tag) | list | length != 0 }}"
+                then:
+                  - service: "todo.update_item"
+                    target:
+                      entity_id: "todo.audio_broadcast"
+                    data:
+                      description: "{{ message }}"
+                      item: "{{ tag }}"
+                      status: "needs_action"
+
+                else:
+                  - service: "todo.add_item"
+                    target:
+                      entity_id: "todo.audio_broadcast"
+                    data:
+                      description: "{{ message }}"
+                      item: "{{ tag }}"
 
           - conditions: "{{ action == 'pop' }}"
             sequence:
-              - service: "mqtt.publish"
+              - service: "todo.remove_item"
+                target:
+                  entity_id: "todo.audio_broadcast"
                 data:
-                  topic: *broadcast_queue_topic
-                  retain: true
-                  payload_template: >
-                    {% if items | length %}
-                      {% if tag %}
-                        {{ items | rejectattr('tag', '==', tag) | list | to_json }}
-                      {% else %}
-                        {% set popped = items.pop(0) %}
-                        {{ items | to_json }}
-                      {% endif %}
-                    {% else %}
-                      []
-                    {% endif %}
+                  item: "{{ tag }}"
+
+      - service: "todo.remove_completed_items"
+        target:
+          entity_id: "todo.audio_broadcast"
 
 automation:
   - id: "36afcfe6-d475-447c-b089-d33aec62a774"
@@ -211,53 +212,71 @@ automation:
     max: 25
 
     trigger:
-      - platform: homeassistant
-        event: start
-      - platform: state
-        entity_id: "sensor.broadcast_queue"
-        attribute: "items"
-      - platform: state
+      - platform: "homeassistant"
+        event: "start"
+      - platform: "state"
+        entity_id: "todo.audio_broadcast"
+      - platform: "state"
         entity_id: "group.household"
         to: "home"
         for: 120
-      - platform: time
+      - platform: "time"
         at:
-          - &week_trigger_time "08:00:00"
-          - &weekend_trigger_time "09:30:00"
-
-    variables:
-      item: "{{ state_attr('sensor.broadcast_queue', 'items') | default([], True) | first | default }}"
+          - "input_datetime.broadcast_weekday_start"
+          - "input_datetime.broadcast_weekend_start"
 
     condition:
-      - "{{ item is mapping }}"
-      - condition: state
+      - condition: "numeric_state"
+        entity_id: "todo.audio_broadcast"
+        above: 0
+      - condition: "state"
         entity_id: "group.household"
         state: "home"
         for: 120
       - or:
-          - condition: time
-            after: *week_trigger_time
-            before: "23:59:59"
+          - condition: "time"
+            after: "input_datetime.broadcast_weekday_start"
+            before: "input_datetime.broadcast_weekday_end"
             weekday:
               - mon
               - tue
               - wed
               - thu
+          - condition: "time"
+            after: "input_datetime.broadcast_weekday_start"
+            before: "input_datetime.broadcast_weekend_end"
+            weekday:
               - fri
-          - condition: time
-            after: *weekend_trigger_time
-            before: "23:59:59"
+          - condition: "time"
+            after: "input_datetime.broadcast_weekend_start"
+            before: "input_datetime.broadcast_weekend_end"
             weekday:
               - sat
+          - condition: "time"
+            after: "input_datetime.broadcast_weekend_start"
+            before: "input_datetime.broadcast_weekday_end"
+            weekday:
               - sun
 
     action:
+      - service: "todo.get_items"
+        response_variable: "broadcast_items"
+        target:
+          entity_id: "todo.audio_broadcast"
+        data:
+          status:
+            - needs_action
+
+      - variables:
+          broadcast_item: "{{ broadcast_items['todo.audio_broadcast']['items'][0] }}"
+
       - service: script.broadcast_notification
         data:
-          message: "Attention. {{ item.data.message }}"
+          message: "{{ broadcast_item['description'] | default(broadcast_item['summary'], true) }}"
+
       - wait_template: "{{ is_state('script.broadcast_notification', 'off') }}"
 
       - service: script.manage_broadcast_queue
         data:
           action: "pop"
-          tag: "{{ item.tag }}"
+          tag: "{{ broadcast_item['summary'] }}"

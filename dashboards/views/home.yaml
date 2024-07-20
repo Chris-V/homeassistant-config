@@ -15,7 +15,7 @@
         - entity: valve.main_water_shut_off
           tap_action:
             action: more-info
-        - entity: sensor.broadcast_queue
+        - entity: todo.audio_broadcast
     - !include ../cards/alarm.yaml
 
 - type: vertical-stack

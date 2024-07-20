@@ -109,10 +109,10 @@ template:
             {% set armed = states.binary_sensor.presence_armed -%}
             {% if armed is not none and armed.state == 'on' -%}
               {%
-                set armed_since = states('input_datetime.presence_armed_since')
-                  | as_datetime
-                  | as_local
-                  | max(armed.last_changed)
+                set armed_since = [
+                  states('input_datetime.presence_armed_since') | as_datetime | as_local,
+                  armed.last_changed
+                ] | max
               -%}
               {%
                 set ns.entities = expand(
