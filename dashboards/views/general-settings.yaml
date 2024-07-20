@@ -15,6 +15,20 @@
     - entity: input_select.default_theme
 
 - type: entities
+  title: Broadcast schedule
+  show_header_toggle: false
+  card_mod:
+    style: !template
+      file: ../styles/inset-icon.css.j2
+      variables:
+        svg_path: "M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"
+  entities:
+    - entity: input_datetime.broadcast_weekday_start
+    - entity: input_datetime.broadcast_weekday_end
+    - entity: input_datetime.broadcast_weekend_start
+    - entity: input_datetime.broadcast_weekend_end
+
+- type: entities
   title: Notifications
   show_header_toggle: false
   card_mod:
@@ -24,6 +38,5 @@
         svg_path: "M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21"
   entities:
     - entity: input_boolean.notify_individual_guest_arrivals
-      name: Individual guest arrivals, or only first
-    - entity: input_boolean.notify_plant_problems
-      name: Plant problems
+      name: Individual guest arrivals
+    - entity: input_boolean.broadcast_plant_problems

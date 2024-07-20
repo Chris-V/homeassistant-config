@@ -72,11 +72,6 @@
                 service_data:
                   entity_id: script.broadcast_manual_message
 
-    - type: markdown
-      title: Queued broadcasts
-      content: |
-        {% set items = state_attr('sensor.broadcast_queue', 'items') | default([]) | list %}
-        {% if items | length == 0 %}No pending broadcasts.{% endif %}
-        {%- for item in items %}
-        1. (`{{ item.tag }}`) {{ item.data.message }}
-        {%- endfor %}
+    - type: "todo-list"
+      entity: "todo.audio_broadcast"
+      title: "Queued broadcasts"

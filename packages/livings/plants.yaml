@@ -31,9 +31,9 @@ template:
             }}
 
 input_boolean:
-  notify_plant_problems:
-    name: "Notify plant problems"
-    icon: "mdi:message-cog"
+  broadcast_plant_problems:
+    name: "Broadcast plant problems"
+    icon: "mdi:bullhorn"
 
 automation:
   - id: "994eba31-84de-4769-8958-f24b5346111a"
@@ -67,11 +67,6 @@ automation:
             | sort
         }}
 
-    condition:
-      - condition: state
-        entity_id: "input_boolean.notify_plant_problems"
-        state: "on"
-
     action:
       - if: "{{ issues | length == 0 }}"
         then:
@@ -79,7 +74,7 @@ automation:
             data:
               dismiss: true
               <<: &notification_options
-                audio: true
+                audio: "{{ is_state('input_boolean.broadcast_plant_problems', 'on') }}"
                 persistent: true
                 push_target: "household"
                 tag: "{{ tag }}"
