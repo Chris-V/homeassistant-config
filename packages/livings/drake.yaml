@@ -26,7 +26,7 @@ plant:
     min_battery: 15
     min_conductivity: 0  # 200
     max_conductivity: 9999  # 1500
-    min_moisture: 15
+    min_moisture: 5
     max_moisture: 60
     min_temperature: 10
     max_temperature: 35

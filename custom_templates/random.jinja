@@ -1,0 +1,10 @@
+{% macro random_string(length=16) %}
+{% set charlist = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789' %}
+{% set result = namespace(value='') %}
+
+{% for i in range(length) %}
+  {% set result.value = result.value ~ charlist | random %}
+{% endfor %}
+
+{{- result.value -}}
+{% endmacro %}
