@@ -81,8 +81,8 @@ automation:
               entity_id:
                 - "light.backyard_string"
                 - "light.front_porch"
-                - "light.side_porch"
-                - "light.shed"
+                - "light.side_porch_sconce"
+                - "light.shed_outdoor"
 
   - id: "2c48ecbc-7b65-4938-af37-dcda12952465"
     alias: "arrival_lights"
@@ -105,7 +105,7 @@ automation:
         target:
           entity_id:
             - "light.front_porch"
-            - "light.side_porch"
+            - "light.side_porch_sconce"
 
   - id: "a109af89-0910-45b2-9a0e-11d3ae43ec7c"
     alias: turn_off_outdoor

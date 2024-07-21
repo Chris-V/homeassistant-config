@@ -50,7 +50,7 @@ action:
       sequence:
         - service: light.toggle
           data:
-            entity_id: light.master_bedroom
+            entity_id: light.master_bedroom_lights
 
     - alias: Tap dim up button
       conditions: >-

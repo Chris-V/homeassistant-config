@@ -8,7 +8,7 @@ cloud:
     filter:
       include_entities:
         - "light.dining_room"
-        - "light.hallway"
+        - "light.hallway_spots"
     entity_config:
       light.dining_room:
         aliases:
@@ -43,8 +43,8 @@ light:
     unique_id: "dining_room_lights"
     name: "Dining room lights"
     entities:
-      - light.dining_room
-      - light.hallway
+      - "light.dining_room"
+      - "light.hallway_spots"
 
 template:
   - sensor:
@@ -58,27 +58,42 @@ template:
           heating: "{{ is_state_attr('climate.dining_room_thermostat', 'hvac_action', 'heating') }}"
 
 automation:
+  - id: "c531a467-eef3-484d-9b4e-b5fc90414bf4"
+    alias: "dining_room_dimmer_zwave_scenes"
+    use_blueprint:
+      path: "zwave/paddle_scenes.yaml"
+      input:
+        on_entity_id: "event.dining_room_light_dimmer_on_pressed"
+        off_entity_id: "event.dining_room_light_dimmer_off_pressed"
+        favorite_entity_id: "event.dining_room_light_dimmer_favorite_pressed"
+
+        tap_favorite:
+          - service: "light.toggle"
+            target:
+              entity_id: "light.hallway_spots"
+
+        tap_on_2x:
+          - service: "light.turn_on"
+            data:
+              entity_id: "light.dining_room_lights"
+        tap_off_2x:
+          - service: "light.turn_off"
+            data:
+              entity_id: "light.dining_room_lights"
+
   - id: "7a81bc8a-fc13-426e-b324-e2c76c1142d7"
     alias: "hallway_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_100_series_scene_control.yaml"
+      path: "zwave/paddle_scenes.yaml"
       input:
-        node_id: 32
+        on_entity_id: "event.hallway_spots_dimmer_on_pressed"
+        off_entity_id: "event.hallway_spots_dimmer_off_pressed"
 
         tap_on_2x:
-          - service: light.turn_on
+          - service: "light.turn_on"
             data:
-              entity_id: "light.dining_room"
+              entity_id: "light.kitchen_track"
         tap_off_2x:
-          - service: light.turn_off
+          - service: "light.turn_off"
             data:
-              entity_id: "light.dining_room"
-
-        tap_on_3x:
-          - service: light.turn_on
-            data:
-              entity_id: "light.kitchen"
-        tap_off_3x:
-          - service: light.turn_off
-            data:
-              entity_id: "light.kitchen"
+              entity_id: "light.kitchen_track"
