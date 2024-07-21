@@ -10,7 +10,7 @@
       - entity_id: sensor.outdoor_temperature
         name: Temperature
     switches:
-      - entity_id: light.side_porch
+      - entity_id: light.side_porch_sconce
         name: Side porch
         icon: mdi:outdoor-lamp
         icon_tag: mdi:fridge
@@ -18,7 +18,7 @@
         name: Front porch
         icon: mdi:outdoor-lamp
         icon_tag: mdi:sofa
-      - entity_id: light.backyard_soffit
+      - entity_id: light.backyard_soffit_spots
         name: Soffits
       - entity_id: light.backyard_string
         name: String lights
@@ -89,12 +89,10 @@
       - entity_id: sensor.kitchen_temperature
         name: Temperature
     switches:
-      - entity_id: light.kitchen
-        name: Spots
-        icon: mdi:track-light
+      - entity_id: light.kitchen_track
+        name: Track
       - entity_id: light.kitchen_sink
         name: Sink
-        icon: mdi:wall-sconce-flat
       - entity_id: lock.kitchen_door
         name: Door lock
     climate:  # (same as living_room)
@@ -113,7 +111,7 @@
       - entity_id: light.dining_room
         name: Table
         icon: mdi:table-furniture
-      - entity_id: light.hallway
+      - entity_id: light.hallway_spots
         name: Hallway
     climate:
       room_key: dining_room
@@ -151,7 +149,7 @@
     switches:
       - entity_id: light.master_bedroom_spots
         name: Spots
-      - entity_id: light.master_bedroom
+      - entity_id: light.master_bedroom_sconces
         name: Sconces
         icon: mdi:wall-sconce
       - entity_id: light.bedside_chris
@@ -160,6 +158,8 @@
       - entity_id: light.bedside_karine
         name: Karine's lamp
         icon: mdi:lava-lamp
+      - entity_id: light.master_bedroom_closet
+        name: Closet
       - entity_id: media_player.master_bedroom_google_home
         name: Google Home
         icon: mdi:speaker

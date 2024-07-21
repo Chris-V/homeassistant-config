@@ -14,17 +14,13 @@ homeassistant:
       battery_warning_level: 20
     sensor.kitchen_temperature:
       friendly_name: "Kitchen temperature"
-    light.kitchen:
-      friendly_name: "Kitchen light"
-    light.kitchen_sink:
-      friendly_name: "Kitchen sink light"
 
 cloud:
   google_actions:
     filter:
       include_entities:
         - "lock.kitchen_door"
-        - "light.kitchen"
+        - "light.kitchen_track"
         - "light.kitchen_sink"
 
 light:
@@ -32,7 +28,7 @@ light:
     unique_id: "kitchen_lights"
     name: "Kitchen lights"
     entities:
-      - light.kitchen
+      - light.kitchen_track
       - light.kitchen_sink
   - platform: switch
     name: kitchen
@@ -55,51 +51,41 @@ template:
 
 automation:
   - id: "ab8460a3-e7b3-4cef-989e-11a65da297f9"
-    alias: "kitchen_light_switch_zwave_scenes"
+    alias: "kitchen_track_dimmer_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_100_series_scene_control.yaml"
+      path: "zwave/paddle_scenes.yaml"
       input:
-        node_id: 3
+        on_entity_id: "event.kitchen_track_light_dimmer_on_pressed"
+        off_entity_id: "event.kitchen_track_light_dimmer_off_pressed"
+        favorite_entity_id: "event.kitchen_track_light_dimmer_favorite_pressed"
+
+        tap_favorite:
+          - service: "light.toggle"
+            target:
+              entity_id: "light.kitchen_sink"
 
         tap_on_2x:
-          - service: light.turn_on
-            data:
-              entity_id: "light.kitchen_sink"
-        tap_off_2x:
-          - service: light.turn_off
-            data:
-              entity_id: "light.kitchen_sink"
-
-        tap_on_3x:
-          - service: light.turn_on
+          - service: "light.turn_on"
             data:
               entity_id: "light.kitchen_lights"
-        tap_off_3x:
-          - service: light.turn_off
+        tap_off_2x:
+          - service: "light.turn_off"
             data:
               entity_id: "light.kitchen_lights"
 
   - id: "3353147e-584b-4a98-8a1f-6a46bda78960"
     alias: "kitchen_sink_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/inovelli_nzw_scene_control.yaml"
+      path: "zwave/paddle_scenes.yaml"
       input:
-        node_id: 50
+        on_entity_id: "event.kitchen_sink_light_switch_on_pressed"
+        off_entity_id: "event.kitchen_sink_light_switch_off_pressed"
 
         tap_on_2x:
-          - service: light.turn_on
+          - service: "light.turn_on"
             data:
-              entity_id: "light.kitchen"
+              entity_id: "light.kitchen_track"
         tap_off_2x:
-          - service: light.turn_off
+          - service: "light.turn_off"
             data:
-              entity_id: "light.kitchen"
-
-        tap_on_3x:
-          - service: light.turn_on
-            data:
-              entity_id: "light.kitchen_lights"
-        tap_off_3x:
-          - service: light.turn_off
-            data:
-              entity_id: "light.kitchen_lights"
+              entity_id: "light.kitchen_track"
