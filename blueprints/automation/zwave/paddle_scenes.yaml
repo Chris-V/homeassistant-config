@@ -1,0 +1,234 @@
+blueprint:
+  name: ZWave paddle scene control
+  description: >
+    Associate actions to scenes ZWave paddle generated scene events.
+  domain: automation
+  input:
+    on_entity_id:
+      name: Event entities
+      description: Listen to events from these entities.
+      default: event.dummy
+      selector:
+        entity:
+          filter:
+            integration: zwave
+            domain: event
+
+    off_entity_id:
+      name: Event entities
+      description: Listen to events from these entities.
+      default: event.dummy
+      selector:
+        entity:
+          filter:
+            integration: zwave
+            domain: event
+
+    favorite_entity_id:
+      name: Event entities
+      description: Listen to events from these entities.
+      default: event.dummy
+      selector:
+        entity:
+          filter:
+            integration: zwave
+            domain: event
+
+    hold_on:
+      name: Hold on paddle
+      description: Action to execute when the on paddle is held.
+      default: []
+      selector:
+        action: {}
+    hold_off:
+      name: Hold off paddle
+      description: Action to execute when the off paddle is held.
+      default: []
+      selector:
+        action: {}
+
+    release_on:
+      name: Release on paddle
+      description: Action to execute when the on paddle is released, typically after a hold event.
+      default: []
+      selector:
+        action: {}
+    release_off:
+      name: Release off paddle
+      description: Action to execute when the off paddle is released, typically after a hold event.
+      default: []
+      selector:
+        action: {}
+
+    tap_favorite:
+      name: Tap the favorite button
+      description: Action to run when the favorite button is pressed.
+      default: []
+      selector:
+        action: {}
+
+    tap_on_1x:
+      name: Tap the on paddle once
+      description: Action to run when the on paddle is pressed.
+      default: []
+      selector:
+        action: {}
+    tap_off_1x:
+      name: Tap the off paddle once
+      description: Action to run when the off paddle is pressed.
+      default: []
+      selector:
+        action: {}
+
+    tap_on_2x:
+      name: Tap the on paddle twice
+      description: Action to run when the on paddle is quickly pressed twice.
+      default: []
+      selector:
+        action: {}
+    tap_off_2x:
+      name: Tap the off paddle twice
+      description: Action to run when the off paddle is quickly pressed twice.
+      default: []
+      selector:
+        action: {}
+
+    tap_on_3x:
+      name: Tap the on paddle 3 times
+      description: Action to run when the on paddle is quickly pressed 3 times.
+      default: []
+      selector:
+        action: {}
+    tap_off_3x:
+      name: Tap the off paddle 3 times
+      description: Action to run when the off paddle is quickly pressed 3 times.
+      default: []
+      selector:
+        action: {}
+
+    tap_on_4x:
+      name: Tap the on paddle 4 times
+      description: Action to run when the on paddle is quickly pressed 4 times.
+      default: []
+      selector:
+        action: {}
+    tap_off_4x:
+      name: Tap the off paddle 4 times
+      description: Action to run when the off paddle is quickly pressed 4 times.
+      default: []
+      selector:
+        action: {}
+
+    tap_on_5x:
+      name: Tap the on paddle 5 times
+      description: Action to run when the on paddle is quickly pressed 5 times.
+      default: []
+      selector:
+        action: {}
+    tap_off_5x:
+      name: Tap the off paddle 5 times
+      description: Action to run when the off paddle is quickly pressed 5 times.
+      default: []
+      selector:
+        action: {}
+
+max_exceeded: silent
+mode: "queued"
+
+trigger_variables:
+  on_entity_id: !input on_entity_id
+  off_entity_id: !input off_entity_id
+  favorite_entity_id: !input favorite_entity_id
+
+trigger:
+  - platform: state
+    enabled: "{{ on_entity_id != 'event.dummy' }}"
+    entity_id: !input on_entity_id
+    variables:
+      on_pressed: true
+      off_pressed: false
+      favorite_pressed: false
+  - platform: state
+    enabled: "{{ off_entity_id != 'event.dummy' }}"
+    entity_id: !input off_entity_id
+    variables:
+      on_pressed: false
+      off_pressed: true
+      favorite_pressed: false
+  - platform: state
+    enabled: "{{ favorite_entity_id != 'event.dummy' }}"
+    entity_id: !input favorite_entity_id
+    variables:
+      on_pressed: false
+      off_pressed: false
+      favorite_pressed: true
+
+variables:
+  event_type: "{{ trigger.to_state.attributes.event_type }}"
+
+action:
+  - choose:
+      # Tap 1x
+      - conditions: "{{ event_type == 'KeyPressed' }}"
+        sequence:
+          - choose:
+              - conditions: "{{ on_pressed }}"
+                sequence: !input tap_on_1x
+              - conditions: "{{ off_pressed }}"
+                sequence: !input tap_off_1x
+              - conditions: "{{ favorite_pressed }}"
+                sequence: !input tap_favorite
+
+      # Hold
+      - conditions: "{{ event_type == 'KeyHeldDown' }}"
+        sequence:
+          - choose:
+              - conditions: "{{ on_pressed }}"
+                sequence: !input hold_on
+              - conditions: "{{ off_pressed }}"
+                sequence: !input hold_off
+
+      # Release
+      - conditions: "{{ event_type == 'KeyReleased' }}"
+        sequence:
+          - choose:
+              - conditions: "{{ on_pressed }}"
+                sequence: !input release_on
+              - conditions: "{{ off_pressed }}"
+                sequence: !input release_off
+
+      # Tap 2x
+      - conditions: "{{ event_type == 'KeyPressed2x' }}"
+        sequence:
+          - choose:
+              - conditions: "{{ on_pressed }}"
+                sequence: !input tap_on_2x
+              - conditions: "{{ off_pressed }}"
+                sequence: !input tap_off_2x
+
+      # Tap 3x
+      - conditions: "{{ event_type == 'KeyPressed3x' }}"
+        sequence:
+          - choose:
+              - conditions: "{{ on_pressed }}"
+                sequence: !input tap_on_3x
+              - conditions: "{{ off_pressed }}"
+                sequence: !input tap_off_3x
+
+      # Tap 4x
+      - conditions: "{{ event_type == 'KeyPressed4x' }}"
+        sequence:
+          - choose:
+              - conditions: "{{ on_pressed }}"
+                sequence: !input tap_on_4x
+              - conditions: "{{ off_pressed }}"
+                sequence: !input tap_off_4x
+
+      # Tap 5x
+      - conditions: "{{ event_type == 'KeyPressed5x' }}"
+        sequence:
+          - choose:
+              - conditions: "{{ on_pressed }}"
+                sequence: !input tap_on_5x
+              - conditions: "{{ off_pressed }}"
+                sequence: !input tap_off_5x

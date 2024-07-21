@@ -40,7 +40,8 @@ script:
         - service: light.turn_off
           data:
             entity_id:
-              - "light.master_bedroom"
+              - "light.master_bedroom_sconces"
+              - "light.master_bedroom_spots"
               - "light.kitchen_lights"
               - "light.bookshelf"
               - "light.common_basement_lights"

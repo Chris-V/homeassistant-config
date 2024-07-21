@@ -9,6 +9,7 @@ recorder:
       - "calendar"
       - "climate"
       - "device_tracker"
+      - "event"
       - "fan"
       - "group"
       - "input_boolean"

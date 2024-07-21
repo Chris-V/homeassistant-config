@@ -13,10 +13,10 @@ cloud:
       include_entities:
         - "light.front_porch"
         - "light.backyard_string"
-        - "light.backyard_soffit"
+        - "light.backyard_soffit_spots"
         - "light.shed"
         - "light.shed_outdoor"
-        - "light.side_porch"
+        - "light.side_porch_sconce"
     entity_config:
       light.shed_outdoor:
         aliases:
@@ -28,11 +28,11 @@ light:
     unique_id: "outdoor_lights"
     name: "Outdoor lights"
     entities:
-      - "light.backyard_soffit"
+      - "light.backyard_soffit_spots"
       - "light.backyard_string"
       - "light.front_porch"
       - "light.shed_outdoor"
-      - "light.side_porch"
+      - "light.side_porch_sconce"
 
 template:
   - sensor:
@@ -64,32 +64,67 @@ automation:
   - id: "abe8645a-9131-4822-8877-631f62b3e716"
     alias: "front_porch_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_100_series_scene_control.yaml"
+      path: "zwave/paddle_scenes.yaml"
       input:
-        node_id: 6
+        on_entity_id: "event.front_porch_light_switch_on_pressed"
+        off_entity_id: "event.front_porch_light_switch_off_pressed"
 
         <<: &all_outdoor_on_off
-          tap_on_2x:
-            - service: light.turn_on
+          tap_on_3x:
+            - service: "light.turn_on"
               data:
                 entity_id: "light.outdoor_lights"
-          tap_off_2x:
-            - service: light.turn_off
+          tap_off_3x:
+            - service: "light.turn_off"
               data:
                 entity_id: "light.outdoor_lights"
 
   - id: "bc0ae565-8522-4e0c-b0d3-f0e46b109f04"
-    alias: "side_porch_light_switch_zwave_scenes"
+    alias: "side_porch_sconce_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_100_series_scene_control.yaml"
+      path: "zwave/paddle_scenes.yaml"
       input:
-        node_id: 2
+        on_entity_id: "event.side_porch_sconce_dimmer_on_pressed"
+        off_entity_id: "event.side_porch_sconce_dimmer_off_pressed"
+        favorite_entity_id: "event.side_porch_sconce_dimmer_favorite_pressed"
+
         <<: *all_outdoor_on_off
+
+        tap_on_2x:
+          - service: "light.turn_on"
+            target:
+              entity_id: "light.shed_outdoor"
+        tap_off_2x:
+          - service: "light.turn_off"
+            target:
+              entity_id: "light.shed_outdoor"
+
+  - id: "c0215e45-73ab-4e4a-af7f-f5ea1b7cff00"
+    alias: "backyard_soffit_spots_switch_zwave_scenes"
+    use_blueprint:
+      path: "zwave/paddle_scenes.yaml"
+      input:
+        on_entity_id: "event.backyard_soffit_spots_dimmer_on_pressed"
+        off_entity_id: "event.backyard_soffit_spots_dimmer_off_pressed"
+        favorite_entity_id: "event.backyard_soffit_spots_dimmer_favorite_pressed"
+
+        <<: *all_outdoor_on_off
+
+        tap_on_2x:
+          - service: "light.turn_on"
+            target:
+              entity_id: "light.backyard_string"
+        tap_off_2x:
+          - service: "light.turn_off"
+            target:
+              entity_id: "light.backyard_string"
 
   - id: "a503f433-fcce-4763-9930-a2c7b7679426"
     alias: "shed_outdoor_light_switch_zwave_scenes"
     use_blueprint:
-      path: "zwave/homeseer_100_series_scene_control.yaml"
+      path: "zwave/paddle_scenes.yaml"
       input:
-        node_id: 5
+        on_entity_id: "event.shed_outdoor_light_switch_on_pressed"
+        off_entity_id: "event.shed_outdoor_light_switch_off_pressed"
+
         <<: *all_outdoor_on_off
