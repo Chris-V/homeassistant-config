@@ -124,3 +124,20 @@ automation:
           - service: "light.turn_off"
             data:
               entity_id: "light.master_bedroom_lights"
+
+  - id: "0a607c5b-9dc1-4e86-b46c-f5dd6ebcc542"
+    alias: "master_bedroom_closet_dimmer_scenes"
+    use_blueprint:
+      path: "zwave/paddle_scenes.yaml"
+      input:
+        on_entity_id: "event.master_bedroom_closet_light_switch_off_pressed"
+        off_entity_id: "event.master_bedroom_closet_light_switch_on_pressed"
+
+        tap_on_2x:
+          - service: "light.turn_on"
+            data:
+              entity_id: "light.master_bedroom_lights"
+        tap_off_2x:
+          - service: "light.turn_off"
+            data:
+              entity_id: "light.master_bedroom_lights"
