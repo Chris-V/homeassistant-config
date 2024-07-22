@@ -12,6 +12,7 @@ group:
     name: "Z-Wave nodes"
     icon: "mdi:z-wave"
     entities: &zwave_nodes
+      - "sensor.backyard_outlet_node_status"
       - "sensor.backyard_soffit_spots_dimmer_node_status"
       - "sensor.basement_bathroom_fan_switch_node_status"
       - "sensor.basement_bathroom_light_switch_node_status"
