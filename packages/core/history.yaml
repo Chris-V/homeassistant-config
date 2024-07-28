@@ -40,8 +40,7 @@ recorder:
     entities:
       - "binary_sensor.basement_bathroom_motion"
       - "binary_sensor.basement_bathroom_presence"
-      - "binary_sensor.bolt_ev_charge_state"
-      - "binary_sensor.bolt_ev_plug_state"
+      - "binary_sensor.carbon_monoxide_detected"
       - "binary_sensor.carl_power_strip_overload"
       - "binary_sensor.carl_requires_attention"
       - "binary_sensor.guest_bedroom_window"
@@ -65,6 +64,7 @@ recorder:
       - "binary_sensor.presence_armed"
       - "binary_sensor.slinky_power_strip_overload"
       - "binary_sensor.slinky_requires_attention"
+      - "binary_sensor.smoke_detected"
       - "binary_sensor.studio_window"
       - "binary_sensor.ups_online_status"
       - "binary_sensor.washing_machine_leak"
