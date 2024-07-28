@@ -7,8 +7,6 @@ homeassistant:
       baterry_type: "AA (2)"
       battery_warning_level: 40
 
-# TODO: On TOP of EACH dashboard: Smoke detected, CO detected, Leak detected. Display nothing if all is good
-
 binary_sensor:
   - platform: "group"
     name: "Smoke detected"
