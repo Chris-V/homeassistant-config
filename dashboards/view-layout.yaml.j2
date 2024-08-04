@@ -7,12 +7,12 @@
         width: 150
       cards:
         - type: conditional
+          conditions:
+            - condition: state
+              entity: binary_sensor.intrusion_activity
+              state: "on"
           card:
             type: tile
-            conditions:
-              - condition: state
-                entity: binary_sensor.intrusion_activity
-                state: "on"
             entity: binary_sensor.intrusion_activity
             name: Intrusion
             vertical: true
