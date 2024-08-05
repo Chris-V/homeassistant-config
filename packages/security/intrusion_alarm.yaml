@@ -63,29 +63,18 @@ template:
         attributes:
           activity: >-
             {% if is_state('binary_sensor.presence_armed', 'on') -%}
-              {%
-                set devices =
-                  (state_attr('sensor.intrusion_events', 'devices') | default([], True) | list)
-                    + (state_attr('binary_sensor.intrusion_events', 'devices') | default([], True) | list)
-              -%}
-              {%
-                set entities =
-                  (state_attr('sensor.intrusion_events', 'entities') | default([], True) | list)
-                    + (state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) | list)
-              -%}
-
-              {% set ns = namespace(device_names = []) -%}
-              {% for device in devices -%}
-                {% set ns.device_names = ns.device_names + [device_attr(device, 'name')] -%}
-              {% endfor -%}
-
-              {{ (entities | map(attribute = 'name') | list + ns.device_names) | unique | sort -}}
-            {% else -%}
+              {{
+                set entities = state_attr('binary_sensor.intrusion_events', 'entities')
+                  | default([], True)
+                  | map(attribute = 'name')
+                  | unique
+                  | sort
+              }}
+            {%- else -%}
               {{ state_attr('binary_sensor.intrusion_activity', 'activity') | default([], True) -}}
             {% endif %}
-        availability: "{{ states.binary_sensor.presence_armed is not none }}"
         icon: >-
-          {%- if this.state == 'on' -%}
+          {% if this.state == 'on' -%}
             mdi:shield-alert
           {%- elif is_state('binary_sensor.presence_armed', 'on') -%}
             mdi:shield-check
@@ -96,34 +85,7 @@ template:
           {{
             is_state('binary_sensor.presence_armed', 'on')
               and is_state('binary_sensor.intrusion_events', 'on')
-              or states('sensor.intrusion_events') | int(0) > 0
           }}
-
-    sensor:
-      - unique_id: "0d5d4c9c-bcb3-4e21-b7b5-74e67b2aae6a"
-        name: "intrusion_events"
-        state: "{{ this.attributes.entities | default([], True) | length }}"
-        attributes:
-          entities: >-
-            {% set ns = namespace(entities = []) -%}
-            {% set armed = states.binary_sensor.presence_armed -%}
-            {% if armed is not none and armed.state == 'on' -%}
-              {%
-                set armed_since = [
-                  states('input_datetime.presence_armed_since') | as_datetime | as_local,
-                  armed.last_changed
-                ] | max
-              -%}
-              {%
-                set ns.entities = expand(
-                  'binary_sensor.all_windows',
-                  'binary_sensor.all_doors',
-                  'binary_sensor.all_motions',
-                ) | selectattr('last_changed', '>=', armed_since)
-              -%}
-            {%- endif -%}
-
-            {{ ns.entities | map(attribute = 'entity_id') | list }}
 
 script:
   initialize_alarm_states:
@@ -192,25 +154,94 @@ automation:
         data:
           message: "({{ states('input_text.presence_armed_id') }}) Intrusion alarm disarmed."
 
-  - id: "6edc94d0-d9f9-44eb-bad1-6873523ae9e8"
-    alias: "armed_switch_paddle_tapped"
-    description: "Detect tapped paddle switches when home is armed."
+  - id: "1bbacc2c-2ce3-428a-bfdd-6d9480be23b8"
+    alias: "detect_activity_while_armed"
+    description: "Detect activity in the house while system is armed."
     initial_state: true
-    mode: "parallel"
+    mode: "queued"
 
     trigger:
-      - platform: event
-        event_type: "zwave_js_value_notification"
-
-    variables:
-      device_id: "{{ trigger.event.data.device_id }}"
-      action_type: "{{ trigger.event.data.value | default | string }}"
+      - platform: "state"
+        entity_id:
+          - "sensor.current_door"
+          - "sensor.current_motion"
+          - "sensor.current_window"
+        variables:
+          entity_id: "{{ trigger.to_state.state }}"
+      - platform: "state"
+        entity_id:
+          - "event.hallway_spots_dimmer_on_pressed"
+          - "event.hallway_spots_dimmer_off_pressed"
+          - "event.kitchen_track_light_dimmer_off_pressed"
+          - "event.kitchen_track_light_dimmer_on_pressed"
+          - "event.backyard_soffit_spots_dimmer_off_pressed"
+          - "event.backyard_soffit_spots_dimmer_on_pressed"
+          - "event.dining_room_light_dimmer_off_pressed"
+          - "event.dining_room_light_dimmer_on_pressed"
+          - "event.side_porch_sconce_dimmer_off_pressed"
+          - "event.side_porch_sconce_dimmer_on_pressed"
+          - "event.master_bedroom_sconces_dimmer_off_pressed"
+          - "event.master_bedroom_sconces_dimmer_on_pressed"
+          - "event.master_bedroom_spots_dimmer_off_pressed"
+          - "event.master_bedroom_spots_dimmer_on_pressed"
+          - "event.kitchen_sink_light_switch_off_pressed"
+          - "event.kitchen_sink_light_switch_on_pressed"
+          - "event.front_porch_light_switch_off_pressed"
+          - "event.front_porch_light_switch_on_pressed"
+          - "event.shed_outdoor_light_switch_on_pressed"
+          - "event.shed_outdoor_light_switch_off_pressed"
+          - "event.shed_light_switch_off_pressed"
+          - "event.shed_light_switch_on_pressed"
+          - "event.master_bedroom_closet_light_switch_on_pressed"
+          - "event.basement_bathroom_fan_switch_on_pressed"
+          - "event.basement_bathroom_fan_switch_off_pressed"
+          - "event.basement_bathroom_light_switch_on_pressed"
+          - "event.basement_bathroom_light_switch_off_pressed"
+          - "event.basement_bathroom_vanity_dimmer_on_pressed"
+          - "event.basement_bathroom_vanity_dimmer_off_pressed"
+          - "event.basement_hallway_dimmer_on_pressed"
+          - "event.basement_hallway_dimmer_off_pressed"
+          - "event.downstairs_light_switch_on_pressed"
+          - "event.downstairs_light_switch_off_pressed"
+          - "event.guest_bedroom_closet_light_switch_on_pressed"
+          - "event.guest_bedroom_closet_light_switch_off_pressed"
+          - "event.guest_bedroom_spots_dimmer_off_pressed"
+          - "event.guest_bedroom_spots_dimmer_on_pressed"
+          - "event.laundry_dimmer_off_pressed"
+          - "event.laundry_dimmer_on_pressed"
+          - "event.bookshelf_light_switch_on_pressed"
+          - "event.bookshelf_light_switch_off_pressed"
+          - "event.foyer_light_switch_on_pressed"
+          - "event.foyer_light_switch_off_pressed"
+          - "event.living_room_dimmer_off_pressed"
+          - "event.living_room_dimmer_on_pressed"
+          - "event.staircase_dimmer_on_pressed"
+          - "event.staircase_dimmer_off_pressed"
+          - "event.lounge_dimmer_off_pressed"
+          - "event.lounge_dimmer_on_pressed"
+          - "event.main_bathroom_dimmer_on_pressed"
+          - "event.main_bathroom_dimmer_off_pressed"
+          - "event.main_bathroom_fan_switch_on_pressed"
+          - "event.main_bathroom_fan_switch_off_pressed"
+          - "event.main_bathroom_vanity_light_switch_on_pressed"
+          - "event.main_bathroom_vanity_light_switch_off_pressed"
+          - "event.office_spots_dimmer_off_pressed"
+          - "event.office_spots_dimmer_on_pressed"
+          - "event.studio_panel_light_switch_off_pressed"
+          - "event.studio_panel_light_switch_on_pressed"
+          - "event.studio_spots_dimmer_off_pressed"
+          - "event.studio_spots_dimmer_on_pressed"
+          - "event.workshop_light_switch_on_pressed"
+          - "event.workshop_light_switch_off_pressed"
+        variables:
+          entity_id: "{{ trigger.entity_id }}"
 
     condition:
-      - condition: state
+      - condition: "state"
         entity_id: "binary_sensor.presence_armed"
         state: "on"
-      - "{{ action_type.startswith('KeyPressed') or action_type == 'KeyReleased' }}"
+      - condition: "template"
+        value_template: "{{ entity_id != '' }}"
 
     action:
       - service: mqtt.publish
@@ -225,8 +256,8 @@ automation:
               {
                 'state': 'on',
                 'attributes': {
-                  'devices': (devices + [device_id]) | unique | list,
-                  'entities': entities,
+                  'devices': (devices + [entity_id | device_id]) | unique | sort | list,
+                  'entities': (entities + [entity_id]) | unique | sort | list,
                 }
               } | to_json
             }}
@@ -301,17 +332,17 @@ automation:
                   url: "/lovelace/security"
                   priority: true
                   tag: "{{ arming_id }}"
-                  message: >
-                    {%
+                  message: |-
+                    {% from 'strings.jinja' import nice_join %}
+                    {%-
                       set areas = state_attr('binary_sensor.intrusion_activity', 'activity')
                         | map('area_name')
                         | select('string')
-                        | sort
                         | unique
-                        | list
+                        | sort
                     %}
-                    {% set count = state_attr('binary_sensor.intrusion_activity', 'activity') | length %}
-                    {{ count }} events detected{% if areas | count > 0 %} in {{ areas[:-1] | join(', ') }}{% if areas | count > 1 %} and {% endif %}{{ areas[-1] }}{% endif %}.
+                    {%- set count = state_attr('binary_sensor.intrusion_activity', 'activity') | length %}
+                    {{ count }} events detected{% if areas | count > 0 %} in {{ nice_join(areas) }}{% endif %}.
                 title: "Intrusion detected"
                 dismissible: false
                 push_actions:

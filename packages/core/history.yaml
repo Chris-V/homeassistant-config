@@ -106,7 +106,6 @@ recorder:
       - "sensor.karine_pixel_7_wifi_connection"
       - "sensor.kitchen_door_unlock_user"
       - "sensor.kitchen_temperature"
-      - "sensor.intrusion_events"
       - "sensor.last_motion"
       - "sensor.latest_home_assistant_version"
       - "sensor.laundry_room_temperature"

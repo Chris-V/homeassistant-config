@@ -16,13 +16,18 @@ template:
         icon: "mdi:motion-sensor"
         state: >-
           {%
-            set motions = expand('binary_sensor.all_motions')
+            set last_motion = expand('binary_sensor.all_motions')
               | sort(attribute='last_changed', reverse=True)
               | map(attribute='name')
-              | list
+              | first
           %}
-          {% if motions | length == 0 %}
-          Unknown
-          {% else %}
-          {{ motions | first | replace(' motion', '') }}
-          {% endif %}
+          {%- if last_motion is defined -%}
+          {{ last_motion | replace(' motion', '') }}
+          {%- endif %}
+
+      - unique_id: "e6d941bc-0712-423b-b4e1-7d1d5e398c52"
+        name: "Current motion"
+        icon: "mdi:motion-sensor"
+        state: >-
+          {% from 'states.jinja' import current_sensor %}
+          {{ current_sensor('binary_sensor.all_motions') }}
