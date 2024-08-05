@@ -1,0 +1,11 @@
+{% macro current_sensor(entity_id) -%}
+{%
+  set entities = expand(entity_id)
+    | selectattr('state', 'eq', 'on')
+    | sort(attribute='last_changed', reverse=true)
+    | list
+%}
+{%- if entities | count > 0 and now() - entities[0].last_changed < timedelta(seconds=3) %}
+{{- entities[0].entity_id -}}
+{% endif %}
+{%- endmacro %}

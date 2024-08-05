@@ -7,3 +7,12 @@ binary_sensor:
       - binary_sensor.guest_bedroom_window
       - binary_sensor.studio_window
       - binary_sensor.lounge_window
+
+template:
+  - sensor:
+      - unique_id: "add19ecd-5341-4a06-a8b9-12683355abca"
+        name: "Current window"
+        icon: "mdi:window-closed"
+        state: >-
+          {% from 'states.jinja' import current_sensor %}
+          {{ current_sensor('binary_sensor.all_windows') }}

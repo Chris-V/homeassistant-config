@@ -32,14 +32,10 @@
     - type: "markdown"
       content: |
         {%
-          set devices =
-            state_attr('sensor.intrusion_events', 'devices') | default([], True) | list
-              + state_attr('binary_sensor.intrusion_events', 'devices') | default([], True) | list
+          set devices = state_attr('binary_sensor.intrusion_events', 'devices') | default([], True) | list
         -%}
         {%
-          set entities =
-            state_attr('sensor.intrusion_events', 'entities') | default([], True) | list
-              + state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) | list
+          set entities = state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) | list
         -%}
         {% set count = (devices + entities) | length -%}
         {% set area_names = (devices + entities) | map('area_name') | select('string') | unique | sort | list -%}
@@ -61,10 +57,9 @@
       title: "Device interactions"
       content: |
         {%
-          set device_ids = (
-            state_attr('sensor.intrusion_events', 'devices') | default([], True)
-              + state_attr('binary_sensor.intrusion_events', 'devices') | default([], True)
-          ) | unique
+          set device_ids =
+            state_attr('binary_sensor.intrusion_events', 'devices') | default([], True)
+              | unique
         -%}
         {% for device_id in device_ids -%}
         * [{{ device_attr(device_id, 'name') }}](/config/devices/device/{{ device_id }})
@@ -81,8 +76,7 @@
         template: >-
           {%
             set entity_ids = (
-              state_attr('sensor.intrusion_events', 'entities') | default([], True)
-                + state_attr('binary_sensor.intrusion_events', 'entities') | default([], True)
+              state_attr('binary_sensor.intrusion_events', 'entities') | default([], True)
             ) | sort | unique
           -%}
           {% for entity_id in entity_ids -%}

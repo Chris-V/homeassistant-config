@@ -6,3 +6,12 @@ binary_sensor:
     entities:
       - binary_sensor.kitchen_door
       - binary_sensor.living_room_door
+
+template:
+  - sensor:
+      - unique_id: "7f475229-c3a9-4c68-867e-9b5dcede552d"
+        name: "Current door"
+        icon: "mdi:door"
+        state: >-
+          {% from 'states.jinja' import current_sensor %}
+          {{ current_sensor('binary_sensor.all_doors') }}

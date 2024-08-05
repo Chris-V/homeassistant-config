@@ -1,5 +1,5 @@
-{% macro nice_join(list, separator = ', ', last_separator = ' and ') -%}
-{% for location in locations -%}
-{% if not loop.first %}{{ iif(loop.last, ' and ', ', ') }}{% endif %}{{ location }}
+{% macro nice_join(items, separator = ', ', last_separator = ' and ') -%}
+{% for item in items -%}
+{% if not loop.first %}{{ iif(loop.last, ' and ', ', ') }}{% endif %}{{ item }}
 {%- endfor %}
 {%- endmacro %}
