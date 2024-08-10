@@ -16,7 +16,6 @@ blueprint:
         entity:
           filter:
             - domain: binary_sensor
-              integration: group
     name:
       name: Name of the thing this alarm handles.
       selector:
@@ -72,15 +71,19 @@ action:
           message: &alarm_message >
             {% from 'strings.jinja' import nice_join %}
             {%
-              set locations = expand(group)
+              set locations = expand(state_attr(group, 'entity_id') | default([], True))
                 | selectattr('state', '!=', 'off')
                 | map(attribute = 'entity_id')
                 | map('area_name')
-                | sort | unique
+                | unique | sort
             %}
-            {{ name | capitalize }} detected in {{ nice_join(locations) }}.
+            {{ name | capitalize }} detected{% if locations | count > 0 %} in {{ nice_join(locations) }}{% endif %}.
 
       - repeat:
+          while:
+            - condition: state
+              entity_id: !input group
+              state: "on"
           sequence:
             - if: !input silenced
               then:
@@ -88,8 +91,3 @@ action:
                   data:
                     message: *alarm_message
             - delay: 10
-          until:
-            - condition: state
-              entity_id: !input group
-              state: "off"
-              for: 10
