@@ -19,7 +19,7 @@ binary_sensor:
 
 automation:
   - id: "106d9d0a-8a2b-4713-8c3f-3341a24cc9b9"
-    alias: "water_leak"
+    alias: "start_water_leak_alarm"
     description: "Trigger alarm notifications when water leaks are detected."
     use_blueprint:
       path: "alarm/start_alarm.yaml"

@@ -2,6 +2,13 @@ blueprint:
   name: Start an alarm
   domain: automation
   input:
+    actions:
+      name: Quick actions available with the notification.
+      description: >
+        Accepts an array of objects in the shape of `{title: string, action: string}`
+      selector:
+        object: { }
+      default: ~
     group:
       name: Sensor group.
       description: Binary sensor group that will start the alarm once it turns on.
@@ -14,14 +21,23 @@ blueprint:
       name: Name of the thing this alarm handles.
       selector:
         text: { }
+    silenced:
+      name: Silenced condition
+      description:  Optional condition to determine if the audio broadcast is silenced.
+      selector:
+        condition: { }
+      default:
+        - condition: template
+          value_template: "{{ false }}"
+    tag:
+      name: An optional tag to identify this notification.
+      default: ""
+      selector:
+        template: { }
 
 initial_state: true
 max_exceeded: "silent"
 mode: "single"
-
-trigger_variables:
-  name: !input name
-  group: !input group
 
 trigger:
   - platform: "homeassistant"
@@ -29,6 +45,11 @@ trigger:
   - platform: "state"
     entity_id: !input group
     to: "on"
+
+variables:
+  name: !input name
+  group: !input group
+  tag: !input tag
 
 condition:
   - condition: state
@@ -44,26 +65,28 @@ action:
           persistent: true
           priority: true
           push_target: "household"
-          tag: "alarm_{{ name | slugify }}"
+          push_actions: !input actions
+          tag: "alarm_{{ name | slugify }}_{{ tag | slugify }}"
           title: "{{ name | capitalize }} detected"
           url: "/lovelace/security"
           message: &alarm_message >
             {% from 'strings.jinja' import nice_join %}
             {%
               set locations = expand(group)
-                | selectattr('state', '==', 'on')
+                | selectattr('state', '!=', 'off')
                 | map(attribute = 'entity_id')
                 | map('area_name')
-                | map('lower')
                 | sort | unique
             %}
             {{ name | capitalize }} detected in {{ nice_join(locations) }}.
 
       - repeat:
           sequence:
-            - service: "script.broadcast_notification"
-              data:
-                message: *alarm_message
+            - if: !input silenced
+              then:
+                - service: "script.broadcast_notification"
+                  data:
+                    message: *alarm_message
             - delay: 10
           until:
             - condition: state
