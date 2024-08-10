@@ -2,17 +2,10 @@
 #   Keeps track of entity interactions during an armed session
 #   State is cleared when the alarm is disarmed.
 #   {entity_id} is cleared when the alarm is armed.
-# binary_sensor.intrusion_events:
+# group.intrusion_record:
 #   Keeps track of entity interactions during an armed session
 #   State is cleared when the alarm is armed.
 #   {entity_id} is cleared when the alarm is armed.
-
-homeassistant:
-  customize:
-    binary_sensor.presence_armed:
-      friendly_name: "Armed"
-    binary_sensor.intrusion_activity:
-      friendly_name: "Intrusion"
 
 # Configured in UI:
 # notify:
@@ -20,6 +13,13 @@ homeassistant:
 #     name: "intrusion_log"
 #     filename: "/config/logs/intrusion.log"
 #     timestamp: true
+
+homeassistant:
+  customize:
+    binary_sensor.presence_armed:
+      friendly_name: "Armed"
+    binary_sensor.intrusion_activity:
+      friendly_name: "Intrusion"
 
 input_boolean:
   force_presence_armed:
@@ -41,21 +41,10 @@ input_text:
     name: "Presence armed ID"
     icon: "mdi:shield-alert"
 
-mqtt:
-  binary_sensor:
-    - name: "intrusion_events"
-      device_class: "safety"
-      state_topic: &activity_events_topic "home-assistant/intrusion/events"
-      value_template: "{{ value_json.state }}"
-      payload_on: "on"
-      payload_off: "off"
-      json_attributes_topic: *activity_events_topic
-      json_attributes_template: "{{ value_json.attributes | to_json }}"
-
 template:
   - binary_sensor:
-      - unique_id: "449f4beb-83a1-43d2-a7ba-64de0a305960"
-        name: "presence_armed"
+      - name: "presence_armed"
+        unique_id: "449f4beb-83a1-43d2-a7ba-64de0a305960"
         icon: "mdi:shield-{{ iif(this.state == 'on', 'check', 'off') }}"
         state: >-
           {{
@@ -64,17 +53,28 @@ template:
               and is_state('binary_sensor.guest_mode', 'off')
           }}
 
-      - unique_id: "ccc872ad-92f9-4b3e-87a5-452292b6b118"
-        name: "intrusion_activity"
+  - trigger:
+      - platform: "state"
+        entity_id:
+          - "binary_sensor.presence_armed"
+          - "todo.intrusion_record"
+        # Delay so we have some time to clear previous record when arming.
+        # A potential improvement could be a second todo integration to store the previous session.
+        for: 3
+    action:
+      - service: "todo.get_items"
+        response_variable: "intrusion_record"
+        target:
+          entity_id: "todo.intrusion_record"
+    binary_sensor:
+      - name: "intrusion_activity"
+        unique_id: "ccc872ad-92f9-4b3e-87a5-452292b6b118"
         device_class: "safety"
-        delay_on: 15
-        delay_off: 15
-        attributes:
-          entity_id: >-
-            {{
-              state_attr('binary_sensor.intrusion_events', 'entity_id')
-                | default([], True) | unique | sort
-            }}
+        state: >-
+          {{
+            is_state('binary_sensor.presence_armed', 'on')
+              and intrusion_record['todo.intrusion_record']['items'] | count > 0
+          }}
         icon: >-
           {% if this.state == 'on' -%}
             mdi:shield-alert
@@ -83,11 +83,13 @@ template:
           {%- else -%}
             mdi:shield-off
           {%- endif %}
-        state: >-
-          {{
-            is_state('binary_sensor.presence_armed', 'on')
-              and is_state('binary_sensor.intrusion_events', 'on')
-          }}
+        attributes:
+          entity_id: >-
+            {{
+              intrusion_record['todo.intrusion_record']['items']
+                | map(attribute = 'summary')
+                | unique | sort
+            }}
 
 script:
   initialize_alarm_states:
@@ -96,26 +98,35 @@ script:
     sequence:
       - variables:
           arming_id: "{{ context.id }}"
-      - service: input_text.set_value
-        entity_id: "input_text.presence_armed_id"
+
+      - service: "input_text.set_value"
+        target:
+          entity_id: "input_text.presence_armed_id"
         data:
           value: "{{ arming_id }}"
-      - service: input_datetime.set_datetime
-        entity_id: "input_datetime.presence_armed_since"
+      - service: "input_datetime.set_datetime"
+        target:
+          entity_id: "input_datetime.presence_armed_since"
         data:
           timestamp: "{{ now().timestamp() }}"
-      - service: mqtt.publish
-        data:
-          topic: *activity_events_topic
-          qos: 1
-          retain: true
-          payload_template: >-
-            {
-              "state": "off",
-              "attributes": { "entity_id": [] }
-            }
-      - service: input_boolean.turn_off
-        entity_id: "input_boolean.silence_intrusion_alarm"
+
+      - service: "todo.get_items"
+        response_variable: "intrusion_record"
+        target:
+          entity_id: "todo.intrusion_record"
+      - repeat:
+          for_each: "{{ intrusion_record['todo.intrusion_record']['items'] }}"
+          sequence:
+            - service: "todo.remove_item"
+              target:
+                entity_id: "todo.intrusion_record"
+              data:
+                item: "{{ repeat.item.summary }}"
+
+      - service: "input_boolean.turn_off"
+        target:
+          entity_id: "input_boolean.silence_intrusion_alarm"
+
       - service: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
@@ -176,9 +187,9 @@ automation:
         data:
           message: "({{ states('input_text.presence_armed_id') }}) Presence alarm disarmed."
 
-  - alias: "detect_activity_while_armed"
+  - alias: "record_activity_while_armed"
     id: "1bbacc2c-2ce3-428a-bfdd-6d9480be23b8"
-    description: "Detect activity in the house while system is armed."
+    description: "Record activity in the house while system is armed."
     initial_state: true
     mode: "queued"
 
@@ -271,23 +282,12 @@ automation:
         target:
           entity_id: "notify.intrusion_log"
         data:
-          message: "({{ arming_id }}) Intrusion activity: {{ device_attr(device_id(entity_id), 'name') }} ({{ entity_id }})"
-
-      - service: mqtt.publish
+          message: "({{ states('input_text.presence_armed_id') }}) Intrusion activity: {{ device_attr(device_id(entity_id), 'name') }} ({{ entity_id }})"
+      - service: "todo.add_item"
+        target:
+          entity_id: "todo.intrusion_record"
         data:
-          topic: *activity_events_topic
-          qos: 1
-          retain: true
-          payload_template: >-
-            {% set entities = state_attr('binary_sensor.intrusion_events', 'entity_id') | default([], True) -%}
-            {{
-              {
-                'state': 'on',
-                'attributes': {
-                  'entity_id': (entities + [entity_id]) | unique | sort | list,
-                }
-              } | to_json
-            }}
+          item: "{{ entity_id }}"
 
   - alias: "start_intrusion_alarm"
     id: "6943625e-997b-4650-b608-acb10bf3ca57"

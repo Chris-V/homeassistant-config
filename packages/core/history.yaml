@@ -47,7 +47,6 @@ recorder:
       - "binary_sensor.guest_mode"
       - "binary_sensor.ground_floor_heat_pump_status"
       - "binary_sensor.intrusion_activity"
-      - "binary_sensor.intrusion_events"
       - "binary_sensor.kitchen_door"
       - "binary_sensor.kitchen_door_lock_jammed"
       - "binary_sensor.kitchen_proxy_status"
