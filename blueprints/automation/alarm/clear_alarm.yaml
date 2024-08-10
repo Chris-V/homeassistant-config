@@ -14,14 +14,15 @@ blueprint:
       name: Name of the thing this alarm handles.
       selector:
         text: { }
+    tag:
+      name: An optional tag to identify this notification.
+      default: ""
+      selector:
+        text: { }
 
 initial_state: true
 max_exceeded: "silent"
 mode: "single"
-
-trigger_variables:
-  name: !input name
-  group: !input group
 
 trigger:
   - platform: "state"
@@ -29,6 +30,10 @@ trigger:
     from: "on"
     to: "off"
     for: 10
+
+variables:
+  name: !input name
+  group: !input group
 
 action:
   - service: python_script.notify
@@ -38,6 +43,6 @@ action:
       persistent: true
       priority: false
       push_target: "household"
-      tag: "alarm_{{ name | slugify }}"
+      tag: "alarm_{{ name | slugify }}_{{ tag | slugify }}"
       title: "{{ name | capitalize }} cleared"
       url: "/lovelace/security"

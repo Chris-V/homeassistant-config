@@ -1,3 +1,12 @@
+# binary_sensor.intrusion_activity
+#   Keeps track of entity interactions during an armed session
+#   State is cleared when the alarm is disarmed.
+#   {entity_id} is cleared when the alarm is armed.
+# binary_sensor.intrusion_events:
+#   Keeps track of entity interactions during an armed session
+#   State is cleared when the alarm is armed.
+#   {entity_id} is cleared when the alarm is armed.
+
 homeassistant:
   customize:
     binary_sensor.presence_armed:
@@ -61,18 +70,11 @@ template:
         delay_on: 15
         delay_off: 15
         attributes:
-          activity: >-
-            {% if is_state('binary_sensor.presence_armed', 'on') -%}
-              {{
-                set entities = state_attr('binary_sensor.intrusion_events', 'entities')
-                  | default([], True)
-                  | map(attribute = 'name')
-                  | unique
-                  | sort
-              }}
-            {%- else -%}
-              {{ state_attr('binary_sensor.intrusion_activity', 'activity') | default([], True) -}}
-            {% endif %}
+          entity_id: >-
+            {{
+              state_attr('binary_sensor.intrusion_events', 'entity_id')
+                | default([], True) | unique | sort
+            }}
         icon: >-
           {% if this.state == 'on' -%}
             mdi:shield-alert
@@ -110,7 +112,7 @@ script:
           payload_template: >-
             {
               "state": "off",
-              "attributes": { "devices": [], "entities": [] }
+              "attributes": { "entity_id": [] }
             }
       - service: input_boolean.turn_off
         entity_id: "input_boolean.silence_intrusion_alarm"
@@ -121,8 +123,8 @@ script:
           message: "({{ arming_id }}) Intrusion alarm initialized."
 
 automation:
-  - id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
-    alias: "presence_alarm_armed"
+  - alias: "presence_alarm_armed"
+    id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
     description: "Initialize home alarm states when arming is enabled."
     initial_state: true
     trigger:
@@ -138,9 +140,29 @@ automation:
           message: "Intrusion alarm armed."
       - service: "script.initialize_alarm_states"
 
-  - id: "64ef04c6-d94c-4d70-a116-d50ab1b295a5"
-    alias: "presence_alarm_disarmed"
-    description: "Log end of home alarm arming."
+  - alias: "log_intrusion_clear"
+    id: "249f90de-0afe-4735-9b17-a59f035ec4f3"
+    description: "Log intrusion cleared events."
+    initial_state: true
+    mode: "single"
+    max_exceeded: "silent"
+
+    trigger:
+      - platform: state
+        entity_id: "binary_sensor.intrusion_activity"
+        from: "on"
+        to: "off"
+
+    action:
+      - service: "notify.send_message"
+        target:
+          entity_id: "notify.intrusion_log"
+        data:
+          message: "({{ states('input_text.presence_armed_id') }}) Intrusion cleared."
+
+  - alias: "log_presence_alarm_disarmed"
+    id: "64ef04c6-d94c-4d70-a116-d50ab1b295a5"
+    description: "Log disarming of presence alarm."
     initial_state: true
     trigger:
       - platform: state
@@ -152,10 +174,10 @@ automation:
         target:
           entity_id: "notify.intrusion_log"
         data:
-          message: "({{ states('input_text.presence_armed_id') }}) Intrusion alarm disarmed."
+          message: "({{ states('input_text.presence_armed_id') }}) Presence alarm disarmed."
 
-  - id: "1bbacc2c-2ce3-428a-bfdd-6d9480be23b8"
-    alias: "detect_activity_while_armed"
+  - alias: "detect_activity_while_armed"
+    id: "1bbacc2c-2ce3-428a-bfdd-6d9480be23b8"
     description: "Detect activity in the house while system is armed."
     initial_state: true
     mode: "queued"
@@ -192,6 +214,7 @@ automation:
           - "event.shed_outdoor_light_switch_off_pressed"
           - "event.shed_light_switch_off_pressed"
           - "event.shed_light_switch_on_pressed"
+          - "event.master_bedroom_closet_light_switch_off_pressed"
           - "event.master_bedroom_closet_light_switch_on_pressed"
           - "event.basement_bathroom_fan_switch_on_pressed"
           - "event.basement_bathroom_fan_switch_off_pressed"
@@ -244,140 +267,57 @@ automation:
         value_template: "{{ entity_id != '' }}"
 
     action:
+      - service: "notify.send_message"
+        target:
+          entity_id: "notify.intrusion_log"
+        data:
+          message: "({{ arming_id }}) Intrusion activity: {{ device_attr(device_id(entity_id), 'name') }} ({{ entity_id }})"
+
       - service: mqtt.publish
         data:
           topic: *activity_events_topic
           qos: 1
           retain: true
           payload_template: >-
-            {% set devices = state_attr('binary_sensor.intrusion_events', 'devices') | default([], True) -%}
-            {% set entities = state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) -%}
+            {% set entities = state_attr('binary_sensor.intrusion_events', 'entity_id') | default([], True) -%}
             {{
               {
                 'state': 'on',
                 'attributes': {
-                  'devices': (devices + [entity_id | device_id]) | unique | sort | list,
-                  'entities': (entities + [entity_id]) | unique | sort | list,
+                  'entity_id': (entities + [entity_id]) | unique | sort | list,
                 }
               } | to_json
             }}
 
-  - id: "2b123148-0e89-4722-8a31-8547d7876033"
-    alias: "sound_intrusion_alarm"
-    description: "Play the intrusion alarm audio while the intrusion is active."
-    initial_state: true
-    mode: "single"
-    max_exceeded: "silent"
+  - alias: "start_intrusion_alarm"
+    id: "6943625e-997b-4650-b608-acb10bf3ca57"
+    description: "Trigger alarm notifications when an intrusion is detected."
+    use_blueprint:
+      path: "alarm/start_alarm.yaml"
+      input:
+        <<: &alarm_input
+          name: "Intrusion"
+          group: "binary_sensor.intrusion_activity"
+          tag: "{{ states('input_text.presence_armed_id') }}"
+        actions:
+          - action: "silence_{{ states('input_text.presence_armed_id') }}"
+            title: "Silence"
+          - action: "reset_{{ states('input_text.presence_armed_id') }}"
+            title: "Reset"
+        silenced:
+          - condition: state
+            entity_id: "input_boolean.silence_intrusion_alarm"
+            state: "off"
 
-    trigger:
-      - platform: homeassistant
-        event: "start"
-      - platform: state
-        entity_id: "binary_sensor.intrusion_activity"
-        to: "on"
+  - alias: "clear_intrusion_alarm"
+    id: "8e77137f-af56-48bd-b82c-7e5bb0ab4ff8"
+    description: "Clear alarm notifications when an intrusion is no longer active."
+    use_blueprint:
+      path: "alarm/start_alarm.yaml"
+      input: *alarm_input
 
-    condition:
-      - condition: state
-        entity_id: "binary_sensor.intrusion_activity"
-        state: "on"
-
-    action:
-      - repeat:
-          sequence:
-            - if:
-                - condition: state
-                  entity_id: "input_boolean.silence_intrusion_alarm"
-                  state: "off"
-              then:
-                - service: script.broadcast_notification
-                  data:
-                    message: "Intrusion detected. Authorities have been notified."
-            - delay: 10
-          until:
-            - condition: state
-              entity_id: "binary_sensor.intrusion_activity"
-              state: "off"
-
-  - id: "b0045b02-1756-4635-bc2c-4344de74d0b6"
-    alias: "notify_intrusion_alarm"
-    description: "Send and update the intrusion notification to owners."
-    initial_state: true
-    mode: "single"
-    max_exceeded: "silent"
-
-    trigger:
-      - platform: homeassistant
-        event: "start"
-      - platform: state
-        entity_id: "binary_sensor.intrusion_activity"
-        to: "on"
-
-    condition:
-      - condition: state
-        entity_id: "binary_sensor.intrusion_activity"
-        state: "on"
-
-    action:
-      - variables:
-          arming_id: "{{ states('input_text.presence_armed_id') }}"
-
-      - repeat:
-          sequence:
-            - service: python_script.notify
-              data:
-                <<: &alarm_notification
-                  audio: false
-                  persistent: true
-                  push_target: "household"
-                  url: "/lovelace/security"
-                  priority: true
-                  tag: "{{ arming_id }}"
-                  message: |-
-                    {% from 'strings.jinja' import nice_join %}
-                    {%-
-                      set areas = state_attr('binary_sensor.intrusion_activity', 'activity')
-                        | map('area_name')
-                        | select('string')
-                        | unique
-                        | sort
-                    %}
-                    {%- set count = state_attr('binary_sensor.intrusion_activity', 'activity') | length %}
-                    {{ count }} events detected{% if areas | count > 0 %} in {{ nice_join(areas) }}{% endif %}.
-                title: "Intrusion detected"
-                dismissible: false
-                push_actions:
-                  - action: "silence_{{ arming_id }}"
-                    title: "Silence"
-                  - action: "reset_{{ arming_id }}"
-                    title: "Reset"
-
-            - service: "notify.send_message"
-              target:
-                entity_id: "notify.intrusion_log"
-              data:
-                message: "({{ arming_id }}) Intrusion activity: `{{ state_attr('binary_sensor.intrusion_activity', 'activity') | to_json }}`"
-
-            - wait_for_trigger:
-                - platform: "state"
-                  entity_id: "binary_sensor.intrusion_activity"
-          until:
-            - condition: state
-              entity_id: "binary_sensor.intrusion_activity"
-              state: "off"
-
-      - service: python_script.notify
-        data:
-          <<: *alarm_notification
-          title: "Intrusion cleared"
-          dismissible: true
-      - service: "notify.send_message"
-        target:
-          entity_id: "notify.intrusion_log"
-        data:
-          message: "({{ arming_id }}) Intrusion cleared."
-
-  - id: "65383759-a03c-4c81-9965-7154e83626fd"
-    alias: "silence_intrusion_alarm"
+  - alias: "silence_intrusion_alarm"
+    id: "65383759-a03c-4c81-9965-7154e83626fd"
     description: "Silence the home alarm audio when requested."
     initial_state: true
     mode: "single"
@@ -408,8 +348,8 @@ automation:
         data:
           message: "({{ arming_id }}) Intrusion alarm silenced."
 
-  - id: "f1d67201-6a81-4214-a528-8a5afff919c0"
-    alias: "reset_intrusion_alarm"
+  - alias: "reset_intrusion_alarm"
+    id: "f1d67201-6a81-4214-a528-8a5afff919c0"
     description: "Reinitialize the home alarm when requested."
     initial_state: true
     mode: "single"
@@ -435,5 +375,5 @@ automation:
         target:
           entity_id: "notify.intrusion_log"
         data:
-          message: "({{ arming_id }}) Intrusion alarm cleared."
+          message: "({{ arming_id }}) Intrusion alarm cleared manually."
       - service: "script.initialize_alarm_states"

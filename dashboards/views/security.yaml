@@ -32,13 +32,11 @@
     - type: "markdown"
       content: |
         {%
-          set devices = state_attr('binary_sensor.intrusion_events', 'devices') | default([], True) | list
+          set entities = state_attr('binary_sensor.intrusion_activity', 'entity_id')
+            | default([], True) | list
         -%}
-        {%
-          set entities = state_attr('binary_sensor.intrusion_events', 'entities') | default([], True) | list
-        -%}
-        {% set count = (devices + entities) | length -%}
-        {% set area_names = (devices + entities) | map('area_name') | select('string') | unique | sort | list -%}
+        {% set count = entities | length -%}
+        {% set area_names = entities | map('area_name') | select('string') | unique | sort -%}
 
         <ha-icon icon="mdi:identifier"></ha-icon> {{ states('input_text.presence_armed_id') }}
 
@@ -53,35 +51,16 @@
         {% endfor %}
         {%- endif %}
 
-    - type: "markdown"
-      title: "Device interactions"
-      content: |
-        {%
-          set device_ids =
-            state_attr('binary_sensor.intrusion_events', 'devices') | default([], True)
-              | unique
-        -%}
-        {% for device_id in device_ids -%}
-        * [{{ device_attr(device_id, 'name') }}](/config/devices/device/{{ device_id }})
-        {% endfor %}
-
     - type: "custom:auto-entities"
       card:
         type: "entities"
-        title: "Entity interactions"
+        title: "Interactions"
         show_header_toggle: false
       sort:
         method: "name"
       filter:
-        template: >-
-          {%
-            set entity_ids = (
-              state_attr('binary_sensor.intrusion_events', 'entities') | default([], True)
-            ) | sort | unique
-          -%}
-          {% for entity_id in entity_ids -%}
-          * {{ entity_id }} {% if states[entity_id] %}({{ states[entity_id].name }}){% endif %}
-          {% endfor %}
+        include:
+          - group: binary_sensor.intrusion_activity
 
 - type: "vertical-stack"
   title: "Devices"
