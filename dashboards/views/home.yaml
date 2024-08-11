@@ -33,5 +33,5 @@
     - type: weather-forecast
       entity: weather.quebec
       show_forecast: true
-      secondary_info_attribute: humidity
+      secondary_info_attribute: precipitation
     - !include ../cards/climate-overview.yaml
