@@ -59,6 +59,12 @@ template:
         attributes:
           heating: "{{ is_state_attr('climate.basement_hallway_thermostat', 'hvac_action', 'heating') }}"
 
+timer:
+  basement_hallway_thermostat_manual_mode_reset:
+    name: "Reset basement hallway to auto manual mode"
+    duration: "01:00:00"
+    restore: true
+
 automation:
   - id: "a2df600b-4450-4a6f-8c3d-ad3f4ea5773c"
     alias: "basement_hallway_light_dimmer_zwave_scenes"

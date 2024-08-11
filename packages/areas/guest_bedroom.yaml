@@ -64,3 +64,9 @@ template:
         availability: "{{ not is_state('sensor.guest_bedroom_thermostat_temperature', 'unavailable') }}"
         attributes:
           heating: "{{ is_state_attr('climate.guest_bedroom_thermostat', 'hvac_action', 'heating') }}"
+
+timer:
+  guest_bedroom_thermostat_manual_mode_reset:
+    name: "Reset guest bedroom to auto manual mode"
+    duration: "01:00:00"
+    restore: true

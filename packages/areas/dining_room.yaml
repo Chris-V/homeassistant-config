@@ -57,6 +57,12 @@ template:
         attributes:
           heating: "{{ is_state_attr('climate.dining_room_thermostat', 'hvac_action', 'heating') }}"
 
+timer:
+  dining_room_thermostat_manual_mode_reset:
+    name: "Reset dining room to auto manual mode"
+    duration: "01:00:00"
+    restore: true
+
 automation:
   - id: "c531a467-eef3-484d-9b4e-b5fc90414bf4"
     alias: "dining_room_dimmer_zwave_scenes"

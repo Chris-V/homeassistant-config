@@ -74,6 +74,13 @@ group:
       - "input_number.office_thermostat_comfort_setpoint"
       - "input_number.studio_thermostat_comfort_setpoint"
 
+input_datetime:
+  climate_manual_mode_timer:
+    name: Climate manual mode timer
+    icon: mdi:thermometer-auto
+    has_date: false
+    has_time: true
+
 template:
   - sensor:
       - unique_id: "sensor.manual_thermostats_count"
@@ -91,7 +98,8 @@ template:
 
 script:
   restore_climate_auto_mode:
-    alias: "Restore auto mode on all climate entities"
+    alias: "restore_climate_auto_mode"
+    description: "Restore auto mode on all climate entities"
     icon: "mdi:thermometer-alert"
     mode: "queued"
     max_exceeded: "silent"
@@ -102,20 +110,8 @@ script:
           option: "Auto"
 
 automation:
-  - id: "5c387ec4-b18b-4ec6-9174-8d844e7e88e9"
-    alias: "revert_manual_climate_mode"
-    description: "Return climate entity to auto (managed) mode after it has been on manual for some time."
-    mode: "parallel"
-    max: 9
-    use_blueprint:
-      path: "reset_input_select.yaml"
-      input:
-        default_option: "Auto"
-        delay: 3600
-        entity_id: *managed_climate_modes
-
-  - id: "a8b031db-937a-4b34-bd64-a30f51900ed0"
-    alias: "select_manual_climate_mode"
+  - alias: "select_manual_climate_mode"
+    id: "a8b031db-937a-4b34-bd64-a30f51900ed0"
     description: "Flag climate entity to manual mode when the managed temperature differs from the actual temperature."
     initial_state: true
     mode: "parallel"
@@ -151,8 +147,8 @@ automation:
           entity_id: "input_select.{{ name }}_mode"
           option: "Manual"
 
-  - id: "0954c8e4-8429-4777-a8ba-4a1c99853ea2"
-    alias: "update_climate_setpoint"
+  - alias: "update_climate_setpoint"
+    id: "0954c8e4-8429-4777-a8ba-4a1c99853ea2"
     description: "Update climate setpoint"
     initial_state: true
     mode: "queued"
@@ -185,3 +181,73 @@ automation:
         data:
           entity_id: "climate.{{ name }}"
           temperature: "{{ target_setpoint }}"
+
+  - alias: "start_manual_climate_reset_timer"
+    id: "330d72c1-954a-4d1e-a3e1-47412d134dc5"
+    description: "Start the timer to reset climate modes to auto (managed) after it has been on manual for some time."
+    mode: "parallel"
+    max: 15
+    trigger:
+      - platform: "state"
+        entity_id: *managed_climate_modes
+        not_to: "Auto"
+    action:
+      - service: timer.start
+        target:
+          entity_id: "timer.{{ trigger.to_state.object_id | replace('_mode', '_manual_mode_reset') }}"
+        data:
+          duration: "{{ states('input_datetime.climate_manual_mode_timer') }}"
+
+  - alias: "revert_manual_climate_mode"
+    id: "5c387ec4-b18b-4ec6-9174-8d844e7e88e9"
+    description: "Reset climate mode to auto (managed) when the timer for manual time is elapsed."
+    mode: "parallel"
+    max: 15
+    trigger:
+      - platform: "state"
+        entity_id: &all_manual_reset_timers
+          - "timer.heat_pump_manual_mode_reset"
+          - "timer.basement_hallway_thermostat_manual_mode_reset"
+          - "timer.dining_room_thermostat_manual_mode_reset"
+          - "timer.guest_bedroom_thermostat_manual_mode_reset"
+          - "timer.living_room_thermostat_manual_mode_reset"
+          - "timer.lounge_thermostat_manual_mode_reset"
+          - "timer.master_bedroom_thermostat_manual_mode_reset"
+          - "timer.office_thermostat_manual_mode_reset"
+          - "timer.studio_thermostat_manual_mode_reset"
+        from: "active"
+        to: "idle"
+    condition:
+      - condition: "state"
+        entity_id: "input_boolean.climate_scheduling_enabled"
+        state: "on"
+    action:
+      - service: "input_select.select_option"
+        data:
+          entity_id: "input_select.{{ trigger.to_state.object_id | replace('_manual_mode_reset', '_mode') }}"
+          option: "Auto"
+
+  - alias: "revert_all_expired_manual_climate_mode"
+    id: "2e58b9fa-1838-4c38-8b4a-d38b43c76105"
+    description: "Reset climate mode to auto (managed) when the timer for manual time is elapsed."
+    mode: "single"
+    trigger:
+      - platform: "homeassistant"
+        event: "start"
+      - platform: "state"
+        entity_id: "input_boolean.climate_scheduling_enabled"
+        from: "off"
+        to: "on"
+    action:
+      repeat:
+        for_each: *all_manual_reset_timers
+        sequence:
+          - if: "{{ is_state(repeat.item, 'idle') }}"
+            then:
+              - service: "input_select.select_option"
+                target:
+                  entity_id: "input_select.{{ states[repeat.item].object_id | replace('_manual_mode_reset', '_mode') }}"
+                data:
+                  option: "Auto"
+
+

@@ -72,6 +72,12 @@ template:
         attributes:
           heating: "{{ is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') }}"
 
+timer:
+  master_bedroom_thermostat_manual_mode_reset:
+    name: "Reset master bedroom to auto manual mode"
+    duration: "01:00:00"
+    restore: true
+
 automation:
   - id: "650fdbf6-2f22-4bd0-b430-c8a1c29d3217"
     alias: "master_bedroom_spots_dimmer_scenes"

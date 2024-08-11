@@ -86,6 +86,12 @@ template:
         attributes:
           heating: "{{ is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') }}"
 
+timer:
+  living_room_thermostat_manual_mode_reset:
+    name: "Reset living room to auto manual mode"
+    duration: "01:00:00"
+    restore: true
+
 automation:
   - id: "automation.living_room_remote"
     alias: "living_room_remote_zwave_scenes"
