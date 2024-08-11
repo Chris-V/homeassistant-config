@@ -58,3 +58,9 @@ template:
         availability: "{{ not is_state('sensor.studio_thermostat_temperature', 'unavailable') }}"
         attributes:
           heating: "{{ is_state_attr('climate.studio_thermostat', 'hvac_action', 'heating') }}"
+
+timer:
+  studio_thermostat_manual_mode_reset:
+    name: "Reset studio thermostat to auto mode"
+    duration: "01:00:00"
+    restore: true

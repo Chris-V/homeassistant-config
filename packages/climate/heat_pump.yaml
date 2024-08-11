@@ -39,6 +39,12 @@ sensor:
       - "sensor.master_bedroom_temperature"
       - "sensor.office_temperature"
 
+timer:
+  heat_pump_manual_mode_reset:
+    name: "Reset heat pump to auto mode"
+    duration: "01:00:00"
+    restore: true
+
 automation:
   - id: "77087f1e-f617-4fa6-8520-22793f3c1bfb"
     alias: "Use internal heat pump temperature probe"

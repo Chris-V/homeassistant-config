@@ -62,6 +62,12 @@ template:
         attributes:
           heating: "{{ is_state_attr('climate.lounge_thermostat', 'hvac_action', 'heating') }}"
 
+timer:
+  lounge_thermostat_manual_mode_reset:
+    name: "Reset lounge thermostat to auto mode"
+    duration: "01:00:00"
+    restore: true
+
 automation:
   - id: "75e713fa-34ef-400f-afb0-1f88c6811aa8"
     alias: "lounge_light_dimmer_zwave_scenes"

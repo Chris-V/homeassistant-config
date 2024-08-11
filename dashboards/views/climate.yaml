@@ -3,6 +3,14 @@
   cards:
     - !include ../cards/climate-overview.yaml
 
+    - type: "entities"
+      title: "Settings"
+      entities:
+        - entity: "input_boolean.climate_scheduling_enabled"
+          name: "Scheduling"
+        - entity: "input_datetime.climate_manual_mode_timer"
+          name: "Manual mode reset"
+
     - type: "conditional"
       conditions:
         - entity: "binary_sensor.winter_credit_enabled"
@@ -16,47 +24,6 @@
           - entity: "sensor.winter_credit_baseline_climate_preset"
             name: "Baseline manipulation"
 
-    - type: "horizontal-stack"
-      cards:
-        - type: "gauge"
-          name: "CO2"
-          entity: "sensor.lounge_airthings_co2"
-          needle: true
-          max: 1500
-          severity:
-            green: 0
-            yellow: 800
-            red: 1000
-        - type: "gauge"
-          name: "VOC"
-          entity: "sensor.lounge_airthings_voc"
-          needle: true
-          max: 2500
-          severity:
-            green: 0
-            yellow: 250
-            red: 2000
-
-    - type: "custom:mini-graph-card"
-      entities:
-        - entity: "sensor.lounge_airthings_radon_1_day_average"
-          name: "1 day"
-        - entity: "sensor.lounge_airthings_radon_longterm_average"
-          name: "Long term"
-      name: "Radon"
-      icon: "mdi:radioactive"
-      hours_to_show: 672
-      points_per_hour: 0.0625
-      show:
-        labels: true
-      color_thresholds:
-        - value: 0
-          color: "#05a34a"
-        - value: 100
-          color: "#ffcc00"
-        - value: 150
-          color: "#be0000"
-
 - type: "vertical-stack"
   title: "Heat pump"
   cards:
@@ -69,6 +36,7 @@
             padding-bottom: 6px
           }
     - type: "entities"
+      title: "Settings"
       show_header_toggle: false
       card_mod:
         style: !template
@@ -149,7 +117,44 @@
       entity: weather.quebec
       show_forecast: true
       secondary_info_attribute: precipitation
-    - type: picture-entity
-      entity: camera.quebec_radar
-      show_name: false
-      show_state: false
+
+    - type: "horizontal-stack"
+      cards:
+        - type: "gauge"
+          name: "CO2"
+          entity: "sensor.lounge_airthings_co2"
+          needle: true
+          max: 1500
+          severity:
+            green: 0
+            yellow: 800
+            red: 1000
+        - type: "gauge"
+          name: "VOC"
+          entity: "sensor.lounge_airthings_voc"
+          needle: true
+          max: 2500
+          severity:
+            green: 0
+            yellow: 250
+            red: 2000
+
+    - type: "custom:mini-graph-card"
+      entities:
+        - entity: "sensor.lounge_airthings_radon_1_day_average"
+          name: "1 day"
+        - entity: "sensor.lounge_airthings_radon_longterm_average"
+          name: "Long term"
+      name: "Radon"
+      icon: "mdi:radioactive"
+      hours_to_show: 672
+      points_per_hour: 0.0625
+      show:
+        labels: true
+      color_thresholds:
+        - value: 0
+          color: "#05a34a"
+        - value: 100
+          color: "#ffcc00"
+        - value: 150
+          color: "#be0000"

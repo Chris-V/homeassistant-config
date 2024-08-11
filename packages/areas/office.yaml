@@ -41,6 +41,10 @@ light:
       - "light.office_spots"
       - "light.office_lamp"
 
+sonos:
+  media_player:
+    advertise_addr: !secret automate_ip
+
 template:
   - sensor:
       - unique_id: "sensor.office_temperature"
@@ -52,9 +56,11 @@ template:
         attributes:
           heating: "{{ is_state_attr('climate.office_thermostat', 'hvac_action', 'heating') }}"
 
-sonos:
-  media_player:
-    advertise_addr: !secret automate_ip
+timer:
+  office_thermostat_manual_mode_reset:
+    name: "Reset office thermostat to auto mode"
+    duration: "01:00:00"
+    restore: true
 
 automation:
   - id: "dc1be8a1-ce4b-4f5e-89d1-1a84ad2ee47b"

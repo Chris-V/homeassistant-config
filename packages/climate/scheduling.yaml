@@ -3,6 +3,11 @@ homeassistant:
     sensor.scheduled_climate_preset:
       friendly_name: "Scheduled climate preset"
 
+input_boolean:
+  climate_scheduling_enabled:
+    name: "Enable climate scheduling"
+    icon: "mdi:thermometer-auto"
+
 template:
   - sensor:
       - unique_id: "sensor.scheduled_climate_preset"
@@ -45,7 +50,8 @@ template:
 
 script:
   assign_climate_auto_mode:
-    alias: "Assign auto climate mode"
+    alias: "assign_climate_auto_mode"
+    description: ""
     mode: "restart"
     fields:
       mode:
@@ -68,7 +74,8 @@ script:
             {{ "{{\n{}\n}}".format(ns.entries | join(',\n')) | from_json }}
 
   apply_scheduled_climate_preset:
-    alias: "Set auto climate modes based on schedule"
+    alias: "apply_scheduled_climate_preset"
+    description: "Set auto climate modes based on the pre-configured schedule"
     icon: "mdi:thermometer-lines"
     mode: "restart"
     variables:
@@ -145,8 +152,16 @@ automation:
     initial_state: true
     mode: "restart"
     trigger:
-      - platform: state
+      - platform: "state"
         entity_id: "sensor.scheduled_climate_preset"
         to: ~
+      - platform: "state"
+        entity_id: "input_boolean.climate_scheduling_enabled"
+        to: "on"
+    condition:
+      - condition: "state"
+        entity_id: "input_boolean.climate_scheduling_enabled"
+        state: "on"
+      - "{{ has_value('sensor.scheduled_climate_preset') }}"
     action:
-      - service: script.apply_scheduled_climate_preset
+      - service: "script.apply_scheduled_climate_preset"
