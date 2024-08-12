@@ -9,6 +9,7 @@ homeassistant:
   external_url: !secret http_public_host
   internal_url: !secret http_public_host
   allowlist_external_dirs:
+    - "/config/custom_templates"
     - "/config/logs"
     - "/tmp"
   auth_providers:

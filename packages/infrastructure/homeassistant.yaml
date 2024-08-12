@@ -70,3 +70,13 @@ automation:
           message: "Home-Assistant has {{ action }}."
           data:
             tag: "homeassistant-status"
+
+  - alias: "Reload jinja2 templates"
+    id: "c7929657-8241-478e-9a89-d2562c720120"
+    mode: "single"
+    max_exceeded: "silent"
+    trigger:
+      - platform: "state"
+        entity_id: "event.jinja2_custom_templates_updated"
+    action:
+      - service: "homeassistant.reload_custom_templates"
