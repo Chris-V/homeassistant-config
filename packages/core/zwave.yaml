@@ -34,7 +34,7 @@ group:
       - "sensor.hallway_spots_dimmer_node_status"
       - "sensor.kitchen_door_lock_node_status"
       - "sensor.kitchen_door_sensor_node_status"
-      - "sensor.kitchen_light_sink_switch_node_status"
+      - "sensor.kitchen_sink_light_switch_node_status"
       - "sensor.kitchen_track_light_dimmer_node_status"
       - "sensor.kitchen_sink_leak_sensor_node_status"
       - "sensor.laundry_dimmer_node_status"
