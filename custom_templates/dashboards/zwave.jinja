@@ -2,9 +2,14 @@
 {% set ns = namespace(rows = []) %}
 {%- for entity in expand(group_entity_id) %}
   {%- if (states | length == 0 or entity.state in states) and not entity.state in states_not  %}
+    {%- set last_seen_sensor = entity.entity_id | replace('_node_status', '_last_seen') %}
     {%- set ns.rows = ns.rows + [{
+      'type': 'custom:template-entity-row',
       'entity': entity.entity_id,
       'name': entity.name | title | replace(': Node Status', ''),
+      'state': '{{ state_translated(config.entity) }}',
+      'secondary': "{% if has_value('" + last_seen_sensor + "') %}{{ states('" + last_seen_sensor + "') | as_datetime | time_since(2) }}{% endif %}",
+      'color': "{{ iif(has_value('" + last_seen_sensor + "'), 'var(--state-inactive-color)', 'var(--state-active-color)') }}",
     }] %}
   {%- endif %}
 {%- endfor %}
