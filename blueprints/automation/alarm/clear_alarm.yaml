@@ -13,12 +13,12 @@ blueprint:
     name:
       name: Name of the thing this alarm handles.
       selector:
-        text: { }
+        text: {}
     tag:
       name: An optional tag to identify this notification.
       default: ""
       selector:
-        text: { }
+        text: {}
 
 initial_state: true
 max_exceeded: "silent"

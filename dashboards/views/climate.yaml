@@ -30,11 +30,77 @@
     - type: "thermostat"
       entity: "climate.heat_pump"
       name: " "
-      card_mod:
-        style: |
-          #info {
-            padding-bottom: 6px
-          }
+      show_current_as_primary: false
+      features:
+        - style: "icons"
+          hvac_modes:
+            - "off"
+            - "cool"
+            - "heat"
+            - "fan_only"
+            - "dry"
+          type: "climate-hvac-modes"
+        - style: "dropdown"
+          fan_modes:
+            - "auto"
+            - "low"
+            - "medium"
+            - "high"
+          type: "climate-fan-modes"
+        - type: "custom:service-call"
+          entries:
+            - type: "selector"
+              entity_id: "select.ground_floor_heat_pump_horizontal_vane"
+              options:
+                - option: "auto"
+                  icon: "mdi:refresh-auto"
+                - option: "swing"
+                  icon: "mdi:unfold-more-vertical"
+            - type: "selector"
+              entity_id: "select.ground_floor_heat_pump_horizontal_vane"
+              styles: |
+                :host {
+                  flex-basis: 250%;
+                }
+              options:
+                - option: "left"
+                  icon: "mdi:chevron-double-left"
+                - option: "left_center"
+                  icon: "mdi:chevron-left"
+                - option: "center"
+                  icon: "mdi:format-horizontal-align-center"
+                - option: "right_center"
+                  icon: "mdi:chevron-right"
+                - option: "right"
+                  icon: "mdi:chevron-double-left"
+        - type: "custom:service-call"
+          entries:
+            - type: "selector"
+              entity_id: "select.ground_floor_heat_pump_vertical_vane"
+              options:
+                - option: "auto"
+                  icon: "mdi:refresh-auto"
+                - option: "swing"
+                  icon: "mdi:unfold-more-horizontal"
+            - type: "selector"
+              entity_id: "select.ground_floor_heat_pump_vertical_vane"
+              styles: |
+                :host {
+                  flex-basis: 250%;
+                }
+              options:
+                - option: "up"
+                  icon: "mdi:chevron-double-up"
+                - option: "up_center"
+                  icon: "mdi:chevron-up"
+                - option: "center"
+                  icon: "mdi:format-vertical-align-center"
+                - option: "down_center"
+                  icon: "mdi:chevron-down"
+                - option: "down"
+                  icon: "mdi:chevron-double-down"
+
+
     - type: "entities"
       title: "Settings"
       show_header_toggle: false

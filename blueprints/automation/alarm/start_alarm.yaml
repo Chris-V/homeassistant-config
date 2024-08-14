@@ -7,7 +7,7 @@ blueprint:
       description: >
         Accepts an array of objects in the shape of `{title: string, action: string}`
       selector:
-        object: { }
+        object: {}
       default: ~
     group:
       name: Sensor group.
@@ -19,12 +19,12 @@ blueprint:
     name:
       name: Name of the thing this alarm handles.
       selector:
-        text: { }
+        text: {}
     silenced:
       name: Silenced condition
-      description:  Optional condition to determine if the audio broadcast is silenced.
+      description: Optional condition to determine if the audio broadcast is silenced.
       selector:
-        condition: { }
+        condition: {}
       default:
         - condition: template
           value_template: "{{ false }}"
@@ -32,7 +32,7 @@ blueprint:
       name: An optional tag to identify this notification.
       default: ""
       selector:
-        template: { }
+        template: {}
 
 initial_state: true
 max_exceeded: "silent"
