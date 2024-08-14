@@ -45,7 +45,9 @@ lovelace:
     - { type: "module", url: "/hacsfiles/lovelace-template-entity-row/template-entity-row.js" }
     - { type: "module", url: "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js" }
     - { type: "module", url: "/hacsfiles/restriction-card/restriction-card.js" }
+    - { type: "module", url: "/hacsfiles/service-call-tile-feature/custom-features-row.min.js" }
     - { type: "module", url: "/hacsfiles/simple-thermostat/simple-thermostat.js" }
     - { type: "module", url: "/hacsfiles/text-element/text-element.js" }
+
 
 mobile_app: {}

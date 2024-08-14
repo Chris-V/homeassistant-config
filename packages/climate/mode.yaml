@@ -223,8 +223,9 @@ automation:
         state: "on"
     action:
       - service: "input_select.select_option"
-        data:
+        target:
           entity_id: "input_select.{{ trigger.to_state.object_id | replace('_manual_mode_reset', '_mode') }}"
+        data:
           option: "Auto"
 
   - alias: "revert_all_expired_manual_climate_mode"
@@ -249,5 +250,3 @@ automation:
                   entity_id: "input_select.{{ states[repeat.item].object_id | replace('_manual_mode_reset', '_mode') }}"
                 data:
                   option: "Auto"
-
-
