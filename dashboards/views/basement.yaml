@@ -1,147 +1,127 @@
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Common
-    icon: mdi:stairs
-    color: 73, 73, 73
-    sensors:
-      - entity_id: sensor.basement_hallway_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.basement_hallway
-        name: Hallway
-      - entity_id: light.downstairs
-        name: Downstairs
-        icon: mdi:wall-sconce
-      - entity_id: light.staircase
-        name: Staircase
-    climate:
-      room_key: basement_hallway
+- type: custom:area-card
+  area: afb9a344548342b2ac08a098cf8c8a01
+  color: "#494949"
+  climate:
+    room_key: basement_hallway
+  badges:
+    - entity: sensor.basement_hallway_temperature
+      name: Temperature
+  controls:
+    - entity: light.basement_hallway
+      name: Hallway
+    - entity: light.downstairs
+      name: Downstairs
+      icon: mdi:wall-sconce
+    - entity: light.staircase
+      name: Staircase
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Lounge
-    icon: mdi:sofa
-    color: 160, 0, 0
-    sensors:
-      - entity_id: binary_sensor.lounge_window
-        name: Window
-      - entity_id: sensor.lounge_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.lounge
-        name: Spots
-      - entity_id: light.lounge_ambiance
-        name: Ambiance
-        icon: mdi:floor-lamp
-      - entity_id: media_player.lounge_chromecast
-        name: Chromecast
-        icon: mdi:television-play
-      - entity_id: media_player.lounge_google_home
-        name: Google Home
-        icon: mdi:speaker
-    climate:
-      room_key: lounge
+- type: custom:area-card
+  area: 4b787c89eb674e329a2c5826888a95b4
+  color: "#A00000"
+  climate:
+    room_key: lounge
+  badges:
+    - entity: binary_sensor.lounge_window
+      name: Window
+    - entity: sensor.lounge_temperature
+      name: Temperature
+  controls:
+    - entity: light.lounge
+      name: Spots
+    - entity: light.lounge_ambiance
+      name: Ambiance
+      icon: mdi:floor-lamp
+    - entity: media_player.lounge_chromecast
+      name: Chromecast
+      icon: mdi:television-play
+    - entity: media_player.lounge_google_home
+      name: Google Home
+      icon: mdi:speaker
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Bathroom
-    icon: mdi:toilet
-    color: 0, 34, 123
-    sensors:
-      - entity_id: binary_sensor.basement_bathroom_motion
-        name: Motion
-      - entity_id: sensor.basement_bathroom_humidity
-        name: Humidity
-      - entity_id: sensor.basement_bathroom_temperature
-        name: Temperature
-        icon: mdi:thermometer
-    switches:
-      - entity_id: light.basement_bathroom
-        name: Spots
-      - entity_id: light.basement_bathroom_vanity
-        name: Vanity
-      - entity_id: fan.basement_bathroom
-        name: Fan
+- type: custom:area-card
+  area: 312738663dca4024a78d2971b15d34ed
+  color: "#00600F"
+  badges:
+    - entity: binary_sensor.basement_bathroom_motion
+      name: Motion
+    - entity: sensor.basement_bathroom_humidity
+      name: Humidity
+    - entity: sensor.basement_bathroom_temperature
+      name: Temperature
+      icon: mdi:thermometer
+  controls:
+    - entity: light.basement_bathroom
+      name: Spots
+    - entity: light.basement_bathroom_vanity
+      name: Vanity
+    - entity: fan.basement_bathroom
+      name: Fan
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Guest's bedroom
-    icon: mdi:bed
-    color: 0, 96, 15
-    sensors:
-      - entity_id: binary_sensor.guest_bedroom_window
-        name: Window
-      - entity_id: sensor.guest_bedroom_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.guest_bedroom_spots
-        name: Spots
-      - entity_id: light.guest_bedroom_closet
-        name: Closet light
-        icon: mdi:wardrobe
-    climate:
-      room_key: guest_bedroom
+- type: custom:area-card
+  area: d946b61f1b7244df93c09e566e4c1c4b
+  color: "#00600F"
+  climate:
+    room_key: guest_bedroom
+  badges:
+    - entity: binary_sensor.guest_bedroom_window
+      name: Window
+    - entity: sensor.guest_bedroom_temperature
+      name: Temperature
+  controls:
+    - entity: light.guest_bedroom_spots
+      name: Spots
+    - entity: light.guest_bedroom_closet
+      name: Closet light
+      icon: mdi:wardrobe
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Studio
-    icon: mdi:lightning-bolt-circle
-    color: 0, 54, 58
-    sensors:
-      - entity_id: binary_sensor.studio_window
-        name: Window
-      - entity_id: sensor.studio_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.studio_spots
-        name: Spots
-      - entity_id: light.studio_panel
-        name: Panel
-    climate:
-      room_key: studio
+- type: custom:area-card
+  area: e53d60d56f67459a9dda2358feec224d
+  color: "#00363A"
+  climate:
+    room_key: studio
+  badges:
+    - entity: binary_sensor.studio_window
+      name: Window
+    - entity: sensor.studio_temperature
+      name: Temperature
+  controls:
+    - entity: light.studio_spots
+      name: Spots
+    - entity: light.studio_panel
+      name: Panel
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Laundry room
-    icon: mdi:washing-machine
-    color: 0, 122, 193
-    sensors:
-      - entity_id: binary_sensor.washing_machine_leak
-        name: Washing machine leak
-        alert_if_on: true
-      - entity_id: binary_sensor.laundry_room_motion
-        name: Motion
-      - entity_id: sensor.laundry_room_temperature
-        name: Temperature
-        icon: mdi:thermometer
-    switches:
-      - entity_id: light.laundry_room
-        name: Spots
-      - entity_id: media_player.laundry_room_google_home
-        name: Google Home
-        icon: mdi:speaker
+- type: custom:area-card
+  area: 1755269961e24216b58b44cb68ea0d2a
+  color: "#0095A9"
+  badges:
+    - entity: binary_sensor.washing_machine_leak
+      name: Washing machine leak
+      alert_if_on: true
+    - entity: binary_sensor.laundry_room_motion
+      name: Motion
+    - entity: sensor.laundry_room_temperature
+      name: Temperature
+      icon: mdi:thermometer
+  controls:
+    - entity: light.laundry_room
+      name: Spots
+    - entity: media_player.laundry_room_google_home
+      name: Google Home
+      icon: mdi:speaker
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Workshop
-    icon: mdi:hammer
-    color: 95, 67, 57
-    sensors:
-      - entity_id: binary_sensor.water_heater_leak
-        name: Water hearer leak
-        alert_if_on: true
-      - entity_id: binary_sensor.workshop_motion
-        name: Motion
-    switches:
-      - entity_id: light.workshop
-        name: Light
-      - entity_id: valve.main_water_shut_off
-        name: Main water shut-off
-        tap_action: more-info  # Prevents accidental toggles
+- type: custom:area-card
+  area: 03ad962100404880902b09d1446efae5
+  color: "#5F4339"
+  badges:
+    - entity: binary_sensor.water_heater_leak
+      name: Water hearer leak
+      alert_if_on: true
+    - entity: binary_sensor.workshop_motion
+      name: Motion
+  controls:
+    - entity: light.workshop
+      name: Light
+    - entity: valve.main_water_shut_off
+      name: Main water shut-off
+      tap_action:
+        action: more-info

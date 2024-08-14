@@ -1,188 +1,171 @@
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Outdoor
-    icon_entity_id: sensor.weather_summary
-    color: 73, 73, 73
-    sensors:
-      - entity_id: sensor.outdoor_humidity
-        name: Humidity
-      - entity_id: sensor.outdoor_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.side_porch_sconce
-        name: Side porch
-        icon: mdi:outdoor-lamp
-        icon_tag: mdi:fridge
-      - entity_id: light.front_porch
-        name: Front porch
-        icon: mdi:outdoor-lamp
-        icon_tag: mdi:sofa
-      - entity_id: light.backyard_soffit_spots
-        name: Soffits
-      - entity_id: light.backyard_string
-        name: String lights
-      - entity_id: light.shed_outdoor
-        name: Shed door
-        icon: mdi:outdoor-lamp
-        icon_tag: mdi:garage
-      - entity_id: light.shed
-        name: Shed
-        icon: mdi:garage
+- type: custom:area-card
+  area: 5345422354ff4506a2dbb90aaf1c426e
+  color: "#494949"
+  entity: sensor.weather_summary
+  badges:
+    - entity: sensor.outdoor_humidity
+      name: Humidity
+    - entity: sensor.outdoor_temperature
+      name: Temperature
+  controls:
+    - entity: light.side_porch_sconce
+      name: Side porch
+      icon: mdi:outdoor-lamp
+      tag: mdi:fridge
+    - entity: light.front_porch
+      name: Front porch
+      icon: mdi:outdoor-lamp
+      tag: mdi:sofa
+    - entity: light.backyard_soffit_spots
+      name: Soffits
+    - entity: light.backyard_string
+      name: String lights
+    - entity: light.shed_outdoor
+      name: Shed door
+      icon: mdi:outdoor-lamp
+      tag: mdi:garage
+    - entity: light.shed
+      name: Shed
+      icon: mdi:garage
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Living room
-    icon: mdi:sofa
-    color: 160, 0, 0
-    sensors:
-      - entity_id: binary_sensor.living_room_door
-        name: Door
-        alert_if_on: true
-      - entity_id: sensor.living_room_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.living_room
-        name: Spots
-      - entity_id: light.foyer
-        name: Foyer
-        icon: mdi:door
-      - entity_id: light.bookshelf
-        name: Bookshelf
-        icon: mdi:bookshelf
-      - entity_id: light.living_room_ambiance
-        name: Ambiance
-        icon: mdi:floor-lamp-dual
-      - entity_id: light.staircase
-        name: Staircase
-      - entity_id: media_player.living_room_tv
-        name: TV
-        icon: mdi:television
-        tap_action:
-          action: call-service
-          service: remote.toggle
-          service_data:
-            entity_id: remote.living_room_tv
-      - entity_id: media_player.living_room_google_home
-        name: Google Home
-        icon: mdi:speaker
-    climate:
-      room_key: living_room
+- type: custom:area-card
+  area: b62d96336d3f4e1f94a1f3f6f579f311
+  color: "#A00000"
+  climate:
+    room_key: living_room
+  badges:
+    - entity: binary_sensor.living_room_door
+      name: Door
+    - entity: sensor.living_room_temperature
+      name: Temperature
+  controls:
+    - entity: light.living_room
+      name: Spots
+    - entity: light.foyer
+      name: Foyer
+      icon: mdi:door
+    - entity: light.bookshelf
+      name: Bookshelf
+      icon: mdi:bookshelf
+    - entity: light.living_room_ambiance
+      name: Ambiance
+      icon: mdi:floor-lamp-dual
+    - entity: light.staircase
+      name: Staircase
+    - entity: media_player.living_room_tv
+      name: TV
+      icon: mdi:television
+      tap_action:
+        action: perform-action
+        perform_action: remote.toggle
+        target:
+          entity_id: remote.living_room_tv
+    - entity: media_player.living_room_google_home
+      name: Google Home
+      icon: mdi:speaker
+      tap_action:
+        action: more-info
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Kitchen
-    icon: mdi:fridge
-    color: 187, 77, 0
-    sensors:
-      - entity_id: binary_sensor.kitchen_sink_leak
-        name: Sink leak
-        alert_if_on: true
-      - entity_id: binary_sensor.kitchen_door
-        name: Door
-        alert_if_on: true
-      - entity_id: binary_sensor.kitchen_door_lock_jammed
-        name: Door lock jammed
-        alert_if_on: true
-      - entity_id: sensor.kitchen_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.kitchen_track
-        name: Track
-      - entity_id: light.kitchen_sink
-        name: Sink
-      - entity_id: lock.kitchen_door
-        name: Door lock
-    climate:  # (same as living_room)
-      room_key: living_room
+- type: custom:area-card
+  area: e91b990f7ea74eec85a1bb160d3e0e48
+  color: "#BB4D00"
+  climate:
+    room_key: living_room
+  badges:
+    - entity: binary_sensor.kitchen_sink_leak
+      name: Sink leak
+    - entity: binary_sensor.kitchen_door
+      name: Door
+    - entity: binary_sensor.kitchen_door_lock_jammed
+      name: Door lock jammed
+    - entity: sensor.kitchen_temperature
+      name: Temperature
+  controls:
+    - entity: light.kitchen_track
+      name: Track
+    - entity: light.kitchen_sink
+      name: Sink
+    - entity: lock.kitchen_door
+      name: Door lock
+      tap_action:
+        action: more-info
+      hold_action:
+        action: toggle
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Dining room
-    icon: mdi:silverware-fork-knife
-    color: 95, 67, 57
-    sensors:
-      - entity_id: sensor.dining_room_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.dining_room
-        name: Table
-        icon: mdi:table-furniture
-      - entity_id: light.hallway_spots
-        name: Hallway
-    climate:
-      room_key: dining_room
+- type: custom:area-card
+  area: c36d63a9edbb4e18993906ff6569dd6a
+  color: "#5F4339"
+  climate:
+    room_key: dining_room
+  badges:
+    - entity: sensor.dining_room_temperature
+      name: Temperature
+  controls:
+    - entity: light.dining_room
+      name: Table
+    - entity: light.hallway_spots
+      name: Hallway
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Bathroom
-    icon: mdi:shower
-    color: 0, 34, 123
-    sensors:
-      - entity_id: binary_sensor.main_bathroom_motion
-        name: Motion
-      - entity_id: sensor.main_bathroom_humidity
-        name: Humidity
-      - entity_id: sensor.main_bathroom_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.main_bathroom_spots
-        name: Spots
-      - entity_id: light.main_bathroom_vanity
-        name: Vanity
-      - entity_id: fan.main_bathroom
-        name: Fan
+- type: custom:area-card
+  area: 4da92885683346fdb6657dea65b0b060
+  color: "#00227B"
+  badges:
+    - entity: binary_sensor.main_bathroom_motion
+      name: Motion
+    - entity: sensor.main_bathroom_humidity
+      name: Humidity
+    - entity: sensor.main_bathroom_temperature
+      name: Temperature
+  controls:
+    - entity: light.main_bathroom_spots
+      name: Spots
+    - entity: light.main_bathroom_vanity
+      name: Vanity
+    - entity: fan.main_bathroom
+      name: Fan
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Bedroom
-    icon: mdi:bed-king
-    color: 0, 96, 15
-    sensors:
-      - entity_id: sensor.master_bedroom_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.master_bedroom_spots
-        name: Spots
-      - entity_id: light.master_bedroom_sconces
-        name: Sconces
-        icon: mdi:wall-sconce
-      - entity_id: light.bedside_chris
-        name: Chris' lamp
-        icon: mdi:lamp
-      - entity_id: light.bedside_karine
-        name: Karine's lamp
-        icon: mdi:lava-lamp
-      - entity_id: light.master_bedroom_closet
-        name: Closet
-      - entity_id: media_player.master_bedroom_google_home
-        name: Google Home
-        icon: mdi:speaker
-    climate:
-      room_key: master_bedroom
+- type: custom:area-card
+  area: f47ce8d5f2a242afb41d21835201794a
+  color: "#00600F"
+  climate:
+    room_key: master_bedroom
+  badges:
+    - entity: sensor.master_bedroom_temperature
+      name: Temperature
+  controls:
+    - entity: light.master_bedroom_spots
+      name: Spots
+    - entity: light.master_bedroom_sconces
+      name: Sconces
+      icon: mdi:wall-sconce
+    - entity: light.bedside_chris
+      name: Chris' lamp
+      icon: mdi:lamp
+    - entity: light.bedside_karine
+      name: Karine's lamp
+      icon: mdi:lava-lamp
+    - entity: light.master_bedroom_closet
+      name: Closet
+    - entity: media_player.master_bedroom_google_home
+      name: Google Home
+      icon: mdi:speaker
+      tap_action:
+        action: more-info
 
-- !template
-  file: ../cards/area.yaml.j2
-  variables:
-    name: Office
-    color: 0, 54, 58
-    icon: mdi:desk
-    image: /local/rooms/office.jpg
-    sensors:
-      - entity_id: sensor.office_temperature
-        name: Temperature
-    switches:
-      - entity_id: light.office_spots
-        name: Spots
-      - entity_id: light.office_lamp
-        name: Lamp
-      - entity_id: media_player.office_sonos
-        name: Sonos
-        icon: mdi:speaker
-    climate:
-      room_key: office
+- type: custom:area-card
+  area: b057e91ef3b945edb4b7704a2e2639f5
+  color: "#00363A"
+  climate:
+    room_key: office
+  badges:
+    - entity: sensor.office_temperature
+      name: Temperature
+  controls:
+    - entity: light.office_spots
+      name: Spots
+    - entity: light.office_lamp
+      name: Lamp
+    - entity: media_player.office_sonos
+      name: Sonos
+      tap_action:
+        action: more-info
