@@ -28,7 +28,7 @@ entities:
       filter:
         template: >
           {% set rows = namespace(low = [], others = []) %}
-          {%- for entity in expand('group.all_batteries') %}
+          {%- for entity in expand('sensor.all_batteries') %}
             {% set level = entity.state | int(None) %}
             {% set battery_type = entity.attributes.battery_type | default %}
             {% set warning_level = entity.attributes.battery_warning_level | default | int(25) %}
@@ -63,7 +63,7 @@ entities:
     filter:
       template: >
         {% set rows = namespace(low = [], others = []) %}
-        {%- for entity in expand('group.all_batteries') %}
+        {%- for entity in expand('sensor.all_batteries') %}
           {% set level = entity.state | int(None) %}
           {% set battery_type = entity.attributes.battery_type | default %}
           {% set warning_level = entity.attributes.battery_warning_level | default | int(25) %}

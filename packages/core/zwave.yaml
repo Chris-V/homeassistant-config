@@ -4,7 +4,7 @@
 #     | select('match', '.+_node_status')
 #     | sort
 #     | list -%}
-# - {{ e }}
+# - "{{ e }}"
 # {% endfor %}
 
 group:
