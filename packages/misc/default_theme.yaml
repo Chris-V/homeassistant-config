@@ -16,7 +16,7 @@ template:
               or is_state('binary_sensor.intrusion_activity', 'on')
               or is_state('binary_sensor.kitchen_door_lock_jammed', 'on')
               or is_state('binary_sensor.smoke_detected', 'on')
-              or is_state('binary_sensor.co_detected', 'on')
+              or is_state('binary_sensor.carbon_monoxide_detected', 'on')
               or is_state('valve.main_water_shut_off', 'off')
           }}
       - unique_id: "db252c59-897b-4bd9-94a8-d5d17f48ed68"

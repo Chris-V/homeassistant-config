@@ -19,8 +19,8 @@ binary_sensor:
     name: "Carbon monoxide detected"
     device_class: "carbon_monoxide"
     entities:
-      - "binary_sensor.basement_smoke_co_detector_co_detected"
-      - "binary_sensor.living_room_smoke_co_detector_co_detected"
+      - "binary_sensor.basement_smoke_co_detector_carbon_monoxide_detected"
+      - "binary_sensor.living_room_smoke_co_detector_carbon_monoxide_detected"
 
 automation:
   - id: "2d13be6f-27f6-412f-b9de-2dc7f9f8b7fc"
