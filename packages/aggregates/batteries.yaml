@@ -1,11 +1,14 @@
 homeassistant:
   customize:
     binary_sensor.all_batteries:
-      friendly_name: "All batteries"
+      friendly_name: "Batteries"
+    sensor.all_batteries:
+      friendly_name: "Batteries"
 
-group:
-  all_batteries:
-    name: "Batteries"
+sensor:
+  - platform: "group"
+    unique_id: "00d83082-4e15-4a4c-a25f-5cb7d00a3114"
+    name: "all_batteries"
     icon: "mdi:battery"
     entities: &battery_entities
       - "sensor.basement_bathroom_multisensor_battery"
@@ -43,7 +46,7 @@ template:
           entity_id: >-
             {% set ns = namespace(entities = []) %}
 
-            {% for entity in expand('group.all_batteries') %}
+            {% for entity in expand('sensor.all_batteries') %}
               {% set state = entity.state | int(0) %}
               {% set warning_level = state_attr(entity.entity_id, 'battery_warning_level') | int(25) %}
               {% if state <= warning_level %}
