@@ -30,12 +30,6 @@ light:
     entities:
       - light.kitchen_track
       - light.kitchen_sink
-  - platform: switch
-    name: kitchen
-    entity_id: "switch.kitchen_light"
-  - platform: switch
-    name: kitchen_sink
-    entity_id: "switch.kitchen_sink_light"
 
 template:
   - sensor:
