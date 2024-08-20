@@ -9,6 +9,7 @@ homeassistant:
 
 binary_sensor:
   - platform: "group"
+    unique_id: "c0cd076b-4591-4f66-9b27-6aa21ad4720b"
     name: "Smoke detected"
     device_class: "smoke"
     entities:
@@ -16,6 +17,7 @@ binary_sensor:
       - "binary_sensor.living_room_smoke_co_detector_smoke_detected"
 
   - platform: "group"
+    unique_id: "cbb27a79-84ba-44c5-94c7-8fc4ea8c8264"
     name: "Carbon monoxide detected"
     device_class: "carbon_monoxide"
     entities:
