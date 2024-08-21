@@ -313,7 +313,7 @@ automation:
     id: "8e77137f-af56-48bd-b82c-7e5bb0ab4ff8"
     description: "Clear alarm notifications when an intrusion is no longer active."
     use_blueprint:
-      path: "alarm/start_alarm.yaml"
+      path: "alarm/clear_alarm.yaml"
       input: *alarm_input
 
   - alias: "silence_intrusion_alarm"
