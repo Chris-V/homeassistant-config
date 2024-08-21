@@ -34,6 +34,7 @@ trigger:
 variables:
   name: !input name
   group: !input group
+  tag: !input tag
 
 action:
   - action: python_script.notify
