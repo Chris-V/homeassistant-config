@@ -76,12 +76,12 @@ automation:
 
         <<: &basement_on_off
           tap_on_3x:
-            - service: light.turn_on
-              data:
+            - action: light.turn_on
+              target:
                 entity_id: "light.basement_lights"
           tap_off_3x:
-            - service: light.turn_off
-              data:
+            - action: light.turn_off
+              target:
                 entity_id: "light.basement_lights"
 
   - id: "f0425412-92de-4251-9265-f9901c8b0a4e"

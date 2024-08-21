@@ -62,18 +62,21 @@ condition:
     state: "on"
 
 action:
-  - service: switch.turn_on
-    entity_id: !input heater_switch
+  - action: switch.turn_on
+    target:
+      entity_id: !input heater_switch
 
   - if:
       - condition: time
         after: !input day_time_entity
         before: !input night_time_entity
     then:
-      - service: switch.turn_on
-        entity_id: !input uv_light_switch
+      - action: switch.turn_on
+        target:
+          entity_id: !input uv_light_switch
     else:
-      - service: switch.turn_off
-        entity_id:
-          - !input heat_bulb_switch
-          - !input uv_light_switch
+      - action: switch.turn_off
+        target:
+          entity_id:
+            - !input heat_bulb_switch
+            - !input uv_light_switch

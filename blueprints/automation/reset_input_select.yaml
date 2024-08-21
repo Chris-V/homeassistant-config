@@ -45,7 +45,8 @@ condition:
   - "{{ trigger.to_state.state != default_option }}"
 
 action:
-  - service: "input_select.select_option"
-    data:
+  - action: "input_select.select_option"
+    target:
       entity_id: "{{ entity_id }}"
+    data:
       option: "{{ default_option }}"

@@ -57,7 +57,7 @@ condition:
 
 action:
   - parallel:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           audio: false
           dismissible: false
@@ -87,7 +87,7 @@ action:
           sequence:
             - if: !input silenced
               then:
-                - service: "script.broadcast_notification"
+                - action: "script.broadcast_notification"
                   data:
                     message: *alarm_message
             - delay: 10

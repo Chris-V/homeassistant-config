@@ -99,7 +99,7 @@ automation:
           or is_state_attr('sensor.guests_home', 'count', '1')
       }}
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           persistent: true
           push_target: "household"
@@ -120,7 +120,7 @@ automation:
         entity_id: input_boolean.notify_household_changes
         state: "on"
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           push_target: "admin"
           tag: "presence_{{ trigger.to_state.object_id }}"
@@ -140,7 +140,7 @@ automation:
         entity_id: input_boolean.notify_household_changes
         state: "on"
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           push_target: "admin"
           tag: "presence_{{ trigger.to_state.object_id }}"

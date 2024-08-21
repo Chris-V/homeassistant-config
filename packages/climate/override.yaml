@@ -52,8 +52,8 @@ script:
         } }}
 
     sequence:
-      - service: "{{ iif(mode == 'Manual', 'climate.set_temperature', 'input_number.set_value') }}"
-        data:
+      - action: "{{ iif(mode == 'Manual', 'climate.set_temperature', 'input_number.set_value') }}"
+        target:
           entity_id: >
             {% set ns = namespace(selection = [], entities = []) %}
             {% set mode_config = mode_configs[mode] %}
@@ -69,4 +69,5 @@ script:
             {% endfor %}
 
             {{ ns.entities }}
+        data:
           "{{ iif(mode == 'Manual', 'temperature', 'value') }}": "{{ temperature }}"

@@ -72,10 +72,10 @@ automation:
         off_entity_id: "event.office_spots_dimmer_off_pressed"
 
         tap_on_2x:
-          - service: "light.turn_on"
-            data:
+          - action: "light.turn_on"
+            target:
               entity_id: "light.office_lamp"
         tap_off_2x:
-          - service: "light.turn_off"
-            data:
+          - action: "light.turn_off"
+            target:
               entity_id: "light.office_lamp"

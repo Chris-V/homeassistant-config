@@ -74,17 +74,17 @@ automation:
         favorite_entity_id: "event.dining_room_light_dimmer_favorite_pressed"
 
         tap_favorite:
-          - service: "light.toggle"
+          - action: "light.toggle"
             target:
               entity_id: "light.hallway_spots"
 
         tap_on_2x:
-          - service: "light.turn_on"
-            data:
+          - action: "light.turn_on"
+            target:
               entity_id: "light.dining_room_lights"
         tap_off_2x:
-          - service: "light.turn_off"
-            data:
+          - action: "light.turn_off"
+            target:
               entity_id: "light.dining_room_lights"
 
   - id: "7a81bc8a-fc13-426e-b324-e2c76c1142d7"
@@ -96,10 +96,10 @@ automation:
         off_entity_id: "event.hallway_spots_dimmer_off_pressed"
 
         tap_on_2x:
-          - service: "light.turn_on"
-            data:
+          - action: "light.turn_on"
+            target:
               entity_id: "light.kitchen_track"
         tap_off_2x:
-          - service: "light.turn_off"
-            data:
+          - action: "light.turn_off"
+            target:
               entity_id: "light.kitchen_track"

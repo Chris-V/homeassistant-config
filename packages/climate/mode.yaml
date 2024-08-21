@@ -104,9 +104,10 @@ script:
     mode: "queued"
     max_exceeded: "silent"
     sequence:
-      - service: input_select.select_option
-        data:
+      - action: input_select.select_option
+        target:
           entity_id: "{{ expand('group.managed_climate_modes') | map(attribute = 'entity_id') | list }}"
+        data:
           option: "Auto"
 
 automation:
@@ -142,9 +143,10 @@ automation:
     condition: "{{ trigger.to_state.attributes.preset_mode | default('none') != 'none' or target_setpoint != current_setpoint }}"
 
     action:
-      - service: "input_select.select_option"
-        data:
+      - action: "input_select.select_option"
+        target:
           entity_id: "input_select.{{ name }}_mode"
+        data:
           option: "Manual"
 
   - alias: "update_climate_setpoint"
@@ -177,9 +179,10 @@ automation:
     condition: "{{ mode == 'Auto' and target_setpoint != current_setpoint }}"
 
     action:
-      - service: "climate.set_temperature"
-        data:
+      - action: "climate.set_temperature"
+        target:
           entity_id: "climate.{{ name }}"
+        data:
           temperature: "{{ target_setpoint }}"
 
   - alias: "start_manual_climate_reset_timer"
@@ -192,7 +195,7 @@ automation:
         entity_id: *managed_climate_modes
         not_to: "Auto"
     action:
-      - service: timer.start
+      - action: timer.start
         target:
           entity_id: "timer.{{ trigger.to_state.object_id | replace('_mode', '_manual_mode_reset') }}"
         data:
@@ -222,7 +225,7 @@ automation:
         entity_id: "input_boolean.climate_scheduling_enabled"
         state: "on"
     action:
-      - service: "input_select.select_option"
+      - action: "input_select.select_option"
         target:
           entity_id: "input_select.{{ trigger.to_state.object_id | replace('_manual_mode_reset', '_mode') }}"
         data:
@@ -245,7 +248,7 @@ automation:
         sequence:
           - if: "{{ is_state(repeat.item, 'idle') }}"
             then:
-              - service: "input_select.select_option"
+              - action: "input_select.select_option"
                 target:
                   entity_id: "input_select.{{ states[repeat.item].object_id | replace('_manual_mode_reset', '_mode') }}"
                 data:

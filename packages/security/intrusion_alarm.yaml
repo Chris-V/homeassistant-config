@@ -62,7 +62,7 @@ template:
         # A potential improvement could be a second todo integration to store the previous session.
         for: 3
     action:
-      - service: "todo.get_items"
+      - action: "todo.get_items"
         response_variable: "intrusion_record"
         target:
           entity_id: "todo.intrusion_record"
@@ -99,35 +99,35 @@ script:
       - variables:
           arming_id: "{{ context.id }}"
 
-      - service: "input_text.set_value"
+      - action: "input_text.set_value"
         target:
           entity_id: "input_text.presence_armed_id"
         data:
           value: "{{ arming_id }}"
-      - service: "input_datetime.set_datetime"
+      - action: "input_datetime.set_datetime"
         target:
           entity_id: "input_datetime.presence_armed_since"
         data:
           timestamp: "{{ now().timestamp() }}"
 
-      - service: "todo.get_items"
+      - action: "todo.get_items"
         response_variable: "intrusion_record"
         target:
           entity_id: "todo.intrusion_record"
       - repeat:
           for_each: "{{ intrusion_record['todo.intrusion_record']['items'] }}"
           sequence:
-            - service: "todo.remove_item"
+            - action: "todo.remove_item"
               target:
                 entity_id: "todo.intrusion_record"
               data:
                 item: "{{ repeat.item.summary }}"
 
-      - service: "input_boolean.turn_off"
+      - action: "input_boolean.turn_off"
         target:
           entity_id: "input_boolean.silence_intrusion_alarm"
 
-      - service: "notify.send_message"
+      - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
         data:
@@ -144,12 +144,12 @@ automation:
         from: "off"
         to: "on"
     action:
-      - service: "notify.send_message"
+      - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
         data:
           message: "Intrusion alarm armed."
-      - service: "script.initialize_alarm_states"
+      - action: "script.initialize_alarm_states"
 
   - alias: "log_intrusion_clear"
     id: "249f90de-0afe-4735-9b17-a59f035ec4f3"
@@ -165,7 +165,7 @@ automation:
         to: "off"
 
     action:
-      - service: "notify.send_message"
+      - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
         data:
@@ -181,7 +181,7 @@ automation:
         from: "on"
         to: "off"
     action:
-      - service: "notify.send_message"
+      - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
         data:
@@ -278,12 +278,12 @@ automation:
         value_template: "{{ entity_id != '' }}"
 
     action:
-      - service: "notify.send_message"
+      - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
         data:
           message: "({{ states('input_text.presence_armed_id') }}) Intrusion activity: {{ device_attr(device_id(entity_id), 'name') }} ({{ entity_id }})"
-      - service: "todo.add_item"
+      - action: "todo.add_item"
         target:
           entity_id: "todo.intrusion_record"
         data:
@@ -339,10 +339,10 @@ automation:
       - "{{ trigger.event.data.action == 'silence_' ~ arming_id }}"
 
     action:
-      - service: input_boolean.turn_on
-        data:
+      - action: input_boolean.turn_on
+        target:
           entity_id: "input_boolean.silence_intrusion_alarm"
-      - service: "notify.send_message"
+      - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
         data:
@@ -371,9 +371,9 @@ automation:
       - "{{ trigger.event.data.action == 'reset_' ~ arming_id }}"
 
     action:
-      - service: "notify.send_message"
+      - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
         data:
           message: "({{ arming_id }}) Intrusion alarm cleared manually."
-      - service: "script.initialize_alarm_states"
+      - action: "script.initialize_alarm_states"

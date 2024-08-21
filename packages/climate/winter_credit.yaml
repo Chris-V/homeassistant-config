@@ -113,7 +113,7 @@ automation:
 
       - if: "{{ count == 0 or count != events | length / 3 }}"
         then:
-          - service: "persistent_notification.create"
+          - action: "persistent_notification.create"
             data:
               title: "Failed to parse peak event notification"
               message: |
@@ -124,7 +124,7 @@ automation:
           - repeat:
               for_each: "{{ events }}"
               sequence:
-                - service: "calendar.create_event"
+                - action: "calendar.create_event"
                   target:
                     entity_id: "calendar.climate_exceptions"
                   data:

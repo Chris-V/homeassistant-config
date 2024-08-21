@@ -6,7 +6,7 @@ script:
     variables:
       vin: !secret bolt_ev_vin
     sequence:
-      - service: "mqtt.publish"
+      - action: "mqtt.publish"
         data:
           topic: homeassistant/{{ vin }}/command
           payload: >
@@ -19,7 +19,7 @@ script:
     variables:
       vin: !secret bolt_ev_vin
     sequence:
-      - service: "mqtt.publish"
+      - action: "mqtt.publish"
         data:
           topic: homeassistant/{{ vin }}/command
           payload: >
@@ -32,7 +32,7 @@ script:
     variables:
       vin: !secret bolt_ev_vin
     sequence:
-      - service: "mqtt.publish"
+      - action: "mqtt.publish"
         data:
           topic: homeassistant/{{ vin }}/command
           payload: >
@@ -45,7 +45,7 @@ script:
     variables:
       vin: !secret bolt_ev_vin
     sequence:
-      - service: "mqtt.publish"
+      - action: "mqtt.publish"
         data:
           topic: homeassistant/{{ vin }}/command
           payload: >

@@ -17,7 +17,7 @@ automation:
     action:
       - if: "{{ is_jammed == 'on' }}"
         then:
-          - service: python_script.notify
+          - action: python_script.notify
             data:
               title: "The kitchen door lock is jammed."
               <<: &notification_options
@@ -27,7 +27,7 @@ automation:
                 push_target: "household"
                 priority: true
         else:
-          - service: python_script.notify
+          - action: python_script.notify
             data:
               dismiss: true
               <<: *notification_options

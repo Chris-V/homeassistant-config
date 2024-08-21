@@ -83,8 +83,8 @@ action:
             for:
               minutes: !input runtime
         sequence:
-          - service: fan.turn_on
-            data:
+          - action: fan.turn_on
+            target:
               entity_id: !input fan_entity
 
       - conditions:
@@ -97,6 +97,6 @@ action:
             for:
               minutes: !input runtime
         sequence:
-          - service: fan.turn_off
-            data:
+          - action: fan.turn_off
+            target:
               entity_id: !input fan_entity

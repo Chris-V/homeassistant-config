@@ -36,7 +36,7 @@ variables:
   group: !input group
 
 action:
-  - service: python_script.notify
+  - action: python_script.notify
     data:
       audio: false
       dismissible: true

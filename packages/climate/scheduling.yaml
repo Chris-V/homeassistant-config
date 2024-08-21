@@ -61,7 +61,7 @@ script:
         description: "Dictionary of room IDs with their setpoint mode that differ from the default mode."
         example: "{\"office_thermostat\": \"Eco\"}"
     sequence:
-      - service: scene.apply
+      - action: scene.apply
         data:
           entities: >
             {% set ns = namespace(entries = []) %}
@@ -84,7 +84,7 @@ script:
       - choose:
           - conditions: "{{ preset == 'active' }}"
             sequence:
-              - service: script.assign_climate_auto_mode
+              - action: script.assign_climate_auto_mode
                 data:
                   mode: "Comfort"
                   exceptions:
@@ -94,14 +94,14 @@ script:
                     office_thermostat: "Eco"
           - conditions: "{{ preset == 'away' }}"
             sequence:
-              - service: script.assign_climate_auto_mode
+              - action: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"
                   exceptions:
                     studio_thermostat: "Comfort"
           - conditions: "{{ preset == 'bedtime' }}"
             sequence:
-              - service: script.assign_climate_auto_mode
+              - action: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"
                   exceptions:
@@ -110,12 +110,12 @@ script:
                     studio_thermostat: "Comfort"
           - conditions: "{{ preset == 'boost' }}"
             sequence:
-              - service: script.assign_climate_auto_mode
+              - action: script.assign_climate_auto_mode
                 data:
                   mode: "Comfort"
           - conditions: "{{ preset == 'sleep' }}"
             sequence:
-              - service: script.assign_climate_auto_mode
+              - action: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"
                   exceptions:
@@ -124,24 +124,24 @@ script:
           # Winter Credit presets
           - conditions: "{{ preset == 'winter credit: cool' }}"
             sequence:
-              - service: script.assign_climate_auto_mode
+              - action: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"  # TODO: heat_pump=OFF
           - conditions: "{{ preset == 'winter credit: heat' }}"
             sequence:
-              - service: script.assign_climate_auto_mode
+              - action: script.assign_climate_auto_mode
                 data:
                   mode: "Comfort"
                   exceptions:
                     heat_pump: "Eco"
           - conditions: "{{ preset == 'winter credit: peak event' }}"
             sequence:
-              - service: script.assign_climate_auto_mode
+              - action: script.assign_climate_auto_mode
                 data:
                   mode: "Eco"  # TODO: heat_pump=OFF
 
         default:
-          - service: "system_log.write"
+          - action: "system_log.write"
             data:
               level: "warning"
               message: "Invalid scheduled climate preset: '{{ preset }}'."
@@ -164,4 +164,4 @@ automation:
         state: "on"
       - "{{ has_value('sensor.scheduled_climate_preset') }}"
     action:
-      - service: "script.apply_scheduled_climate_preset"
+      - action: "script.apply_scheduled_climate_preset"

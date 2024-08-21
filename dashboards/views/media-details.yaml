@@ -67,8 +67,8 @@
             - entity: script.broadcast_manual_message
               name: Send
               tap_action:
-                action: call-service
-                service: script.turn_on
+                action: perform-action
+                perform-action: script.turn_on
                 service_data:
                   entity_id: script.broadcast_manual_message
 

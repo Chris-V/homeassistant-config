@@ -46,9 +46,10 @@ automation:
       - platform: state
         entity_id: "input_select.chris_remote_color"
     action:
-      - service: light.turn_on
-        data:
+      - action: light.turn_on
+        target:
           entity_id: "{{ states('input_select.chris_remote_entity') }}"
+        data:
           rgb_color: "{{ trigger.to_state.state }}"
 
   - id: "abf7b09f-0e7b-4b0c-b6ef-85631f25c63e"

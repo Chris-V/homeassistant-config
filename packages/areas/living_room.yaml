@@ -102,12 +102,12 @@ automation:
         off_entity_id: "event.living_room_remote_bottom_pressed"
 
         tap_on_1x:
-          - service: light.toggle
-            data:
+          - action: light.toggle
+            target:
               entity_id: "light.living_room_ambiance"
         tap_on_2x:
-          - service: light.turn_off
-            data:
+          - action: light.turn_off
+            target:
               entity_id:
                 - "light.bookshelf"
                 - "light.foyer"
@@ -116,18 +116,20 @@ automation:
                 - "light.kitchen_lights"
 
         tap_off_1x:
-          - service: remote.toggle
-            data:
+          - action: remote.toggle
+            target:
               entity_id: "remote.living_room_tv"
         tap_off_2x:
-          - service: media_player.select_source
-            data:
+          - action: media_player.select_source
+            target:
               entity_id: "media_player.living_room_tv"
+            data:
               source: "Jellyfin"
         tap_off_3x:
-          - service: media_player.select_source
-            data:
+          - action: media_player.select_source
+            target:
               entity_id: "media_player.living_room_tv"
+            data:
               source: "Nintendo Switch"
 
   - id: "00a013b0-caf0-4046-b701-21975ffbfe3f"
@@ -139,12 +141,12 @@ automation:
         off_entity_id: "event.bookshelf_light_switch_off_pressed"
 
         tap_on_2x:
-          - service: light.turn_on
-            data:
+          - action: light.turn_on
+            target:
               entity_id: "light.living_room_ambiance"
         tap_off_2x:
-          - service: light.turn_off
-            data:
+          - action: light.turn_off
+            target:
               entity_id: "light.living_room_ambiance"
 
   - id: "38d50352-7c79-4dd5-aad7-c334af4bfd9f"
@@ -157,24 +159,24 @@ automation:
         favorite_entity_id: "event.staircase_dimmer_favorite_pressed"
 
         tap_favorite:
-          - service: light.toggle
-            data:
+          - action: light.toggle
+            target:
               entity_id: "light.living_room_ambiance"
 
         tap_on_2x:
-          - service: light.turn_on
-            data:
+          - action: light.turn_on
+            target:
               entity_id: "light.downstairs"
         tap_off_2x:
-          - service: light.turn_off
-            data:
+          - action: light.turn_off
+            target:
               entity_id: "light.downstairs"
 
         tap_on_4x:
-          - service: light.turn_on
-            data:
+          - action: light.turn_on
+            target:
               entity_id: "light.basement_lights"
         tap_off_4x:
-          - service: light.turn_off
-            data:
+          - action: light.turn_off
+            target:
               entity_id: "light.basement_lights"
