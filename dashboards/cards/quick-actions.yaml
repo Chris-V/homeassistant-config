@@ -31,8 +31,8 @@ cards:
     entity: script.evening_ambiance
     name: Ambiance
     tap_action:
-      action: call-service
-      service: script.turn_on
+      action: perform-action
+      perform-action: script.turn_on
       service_data:
         entity_id: script.evening_ambiance
     hold_action:
@@ -40,8 +40,8 @@ cards:
   - type: entity-button
     entity: script.bedtime
     tap_action:
-      action: call-service
-      service: script.turn_on
+      action: perform-action
+      perform-action: script.turn_on
       service_data:
         entity_id: script.bedtime
     hold_action:
@@ -49,8 +49,8 @@ cards:
   - type: entity-button
     entity: script.everything_off
     tap_action:
-      action: call-service
-      service: script.turn_on
+      action: perform-action
+      perform-action: script.turn_on
       service_data:
         entity_id: script.everything_off
     hold_action:

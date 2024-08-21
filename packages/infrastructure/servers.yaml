@@ -30,12 +30,12 @@ switch:
         value_template: "{{ is_state('binary_sensor.avatar_media', 'on') }}"
         icon_template: "mdi:server-network{% if not is_state('binary_sensor.avatar_media', 'on') %}-off{% endif %}"
         turn_on:
-          service: "shell_command.wake_on_lan"
+          action: "shell_command.wake_on_lan"
           data:
             broadcast: !secret network_broadcast
             mac: !secret media_mac
         turn_off:
-          service: "shell_command.turn_off_server"
+          action: "shell_command.turn_off_server"
           data:
             server_key: "media"
 
@@ -48,7 +48,7 @@ automation:
       - platform: event
         event_type: "device_tracker_new_device"
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           push_target: "admin"
           persistent: true
@@ -78,7 +78,7 @@ automation:
         state: "on"
 
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           push_target: "admin"
           tag: "server_{{ trigger.to_state.object_id }}"
@@ -103,8 +103,8 @@ automation:
         event_data:
           action: "power_on_server"
     action:
-      - service: switch.turn_on
-        data:
+      - action: switch.turn_on
+        target:
           entity_id: "{{ trigger.event.data.data.entity_id }}"
 
   - id: "c4358eec-8328-4049-ba29-25438eb44fa6"
@@ -119,6 +119,6 @@ automation:
         event_data:
           action: "power_off_server"
     action:
-      - service: switch.turn_off
-        data:
+      - action: switch.turn_off
+        target:
           entity_id: "{{ trigger.event.data.data.entity_id }}"

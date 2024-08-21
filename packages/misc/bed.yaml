@@ -16,9 +16,10 @@ script:
     max_exceeded: "silent"
     sequence:
       parallel:
-        - service: tts.google_cloud_say
-          data:
+        - action: tts.google_cloud_say
+          target:
             entity_id: "media_player.master_bedroom_google_home"
+          data:
             message: >-
               {{ [
                     "Sweet dreams!",
@@ -27,18 +28,19 @@ script:
                     "Don\'t let the bed bugs bite!",
                   ] | random }}
 
-        - service: light.turn_on
-          data:
+        - action: light.turn_on
+          target:
             entity_id: "light.master_bedroom_bedsides"
+          data:
             brightness_pct: 5
             kelvin: 2200
 
-        - service: lock.lock
-          data:
+        - action: lock.lock
+          target:
             entity_id: "lock.kitchen_door"
 
-        - service: light.turn_off
-          data:
+        - action: light.turn_off
+          target:
             entity_id:
               - "light.master_bedroom_sconces"
               - "light.master_bedroom_spots"
@@ -55,8 +57,8 @@ script:
                   entity_id: "media_player.living_room_tv"
                   state: "on"  # on => a source other than home is on display
           then:
-            - service: homeassistant.turn_off
-              data:
+            - action: homeassistant.turn_off
+              target:
                 entity_id:
                   - "light.living_room_ambiance"
                   - "media_player.living_room_tv"
@@ -66,8 +68,8 @@ script:
               entity_id: "binary_sensor.basement_bathroom_motion"
               state: "off"
           then:
-            - service: light.turn_off
-              data:
+            - action: light.turn_off
+              target:
                 entity_id: "light.basement_bathroom_lights"
 
         - if:
@@ -75,9 +77,10 @@ script:
               entity_id: "light.dining_room"
               state: "on"
           then:
-            - service: light.turn_on
-              data:
+            - action: light.turn_on
+              target:
                 entity_id: "light.dining_room"
+              data:
                 brightness_pct: 10
 
         - if:
@@ -85,8 +88,8 @@ script:
               entity_id: "binary_sensor.laundry_room_motion"
               state: "off"
           then:
-            - service: light.turn_off
-              data:
+            - action: light.turn_off
+              target:
                 entity_id: "light.laundry_room_lights"
 
         - if:
@@ -94,8 +97,8 @@ script:
               entity_id: "media_player.living_room_tv"
               state: "home"
           then:
-            - service: remote.turn_off
-              data:
+            - action: remote.turn_off
+              target:
                 entity_id: "remote.living_room_tv"
 
         - if:
@@ -103,8 +106,8 @@ script:
               entity_id: "binary_sensor.main_bathroom_motion"
               state: "off"
           then:
-            - service: light.turn_off
-              data:
+            - action: light.turn_off
+              target:
                 entity_id: "light.main_bathroom_lights"
 
         - if:
@@ -112,6 +115,6 @@ script:
               entity_id: "binary_sensor.workshop_motion"
               state: "off"
           then:
-            - service: light.turn_off
-              data:
+            - action: light.turn_off
+              target:
                 entity_id: "light.workshop_lights"

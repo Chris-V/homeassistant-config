@@ -96,12 +96,12 @@ automation:
 
         <<: &all_on_off
           tap_on_3x:
-            - service: light.turn_on
-              data:
+            - action: light.turn_on
+              target:
                 entity_id: "light.main_bathroom_lights"
           tap_off_3x:
-            - service: light.turn_off
-              data:
+            - action: light.turn_off
+              target:
                 entity_id: "light.main_bathroom_lights"
 
   - id: "2078788e-2376-431a-9d53-b6fe0c3badb7"

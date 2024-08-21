@@ -44,9 +44,10 @@ automation:
       - platform: state
         entity_id: "input_select.karine_remote_color"
     action:
-      - service: light.turn_on
-        data:
+      - action: light.turn_on
+        target:
           entity_id: "{{ states('input_select.karine_remote_entity') }}"
+        data:
           rgb_color: "{{ trigger.to_state.state }}"
 
   - id: "b214c9a3-937d-4391-9915-98185b7cb152"

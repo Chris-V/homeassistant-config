@@ -14,9 +14,10 @@ script:
       - repeat:
           count: "{{ count | default(1) | int | default(1, True) * 2 }}"
           sequence:
-            - service: light.toggle
-              data:
+            - action: light.toggle
+              target:
                 entity_id: "{{ entity_id }}"
+              data:
                 transition: 0
             - if: "{{ not repeat.last }}"
               then:

@@ -72,7 +72,7 @@ automation:
           {%- endif %}
         below: 0
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           persistent: true
           push_target: "household"

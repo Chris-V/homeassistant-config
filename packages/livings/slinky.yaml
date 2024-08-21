@@ -91,7 +91,7 @@ automation:
         entity_id: "switch.slinky_uv_light"
         power_sensor: "sensor.slinky_uv_light_power"
         action:
-          - service: python_script.notify
+          - action: python_script.notify
             data:
               <<: &power_notification_data
                 audio: true
@@ -111,7 +111,7 @@ automation:
         entity_id: "switch.slinky_heat_bulb"
         power_sensor: "sensor.slinky_heat_bulb_power"
         action:
-          - service: python_script.notify
+          - action: python_script.notify
             data:
               <<: *power_notification_data
               tag: "slinky_heat_bulb_burned_out"
@@ -127,7 +127,7 @@ automation:
         entity_id: "switch.slinky_heater"
         power_sensor: "sensor.slinky_heater_power"
         action:
-          - service: python_script.notify
+          - action: python_script.notify
             data:
               <<: *power_notification_data
               tag: "slinky_heater_burned_out"

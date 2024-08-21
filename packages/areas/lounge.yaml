@@ -79,6 +79,6 @@ automation:
         favorite_entity_id: "event.lounge_dimmer_favorite_pressed"
 
         tap_favorite:
-          - service: light.toggle
-            data:
+          - action: light.toggle
+            target:
               entity_id: "light.lounge_ambiance"

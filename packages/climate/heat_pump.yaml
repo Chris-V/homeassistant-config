@@ -55,7 +55,7 @@ automation:
         entity_id: "input_boolean.use_heat_pump_virtual_probe"
         to: "off"
     action:
-      - service: "esphome.ground_floor_heat_pump_use_internal_temperature"
+      - action: "esphome.ground_floor_heat_pump_use_internal_temperature"
 
   - id: "4c8cf214-db8a-4d0e-b039-f502dc5e21ed"
     alias: "Sync virtual heat pump temperature probe"
@@ -80,6 +80,6 @@ automation:
             entity_id: "sensor.heat_pump_virtual_probe"
             state: "unavailable"
     action:
-      - service: "esphome.ground_floor_heat_pump_set_remote_temperature"
+      - action: "esphome.ground_floor_heat_pump_set_remote_temperature"
         data:
           temperature: "{{ states('sensor.heat_pump_virtual_probe') | round(precision = 0) }}"

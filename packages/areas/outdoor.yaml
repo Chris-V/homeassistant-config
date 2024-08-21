@@ -71,11 +71,11 @@ automation:
 
         <<: &all_outdoor_on_off
           tap_on_3x:
-            - service: "light.turn_on"
+            - action: "light.turn_on"
               data:
                 entity_id: "light.outdoor_lights"
           tap_off_3x:
-            - service: "light.turn_off"
+            - action: "light.turn_off"
               data:
                 entity_id: "light.outdoor_lights"
 
@@ -91,11 +91,11 @@ automation:
         <<: *all_outdoor_on_off
 
         tap_on_2x:
-          - service: "light.turn_on"
+          - action: "light.turn_on"
             target:
               entity_id: "light.shed_outdoor"
         tap_off_2x:
-          - service: "light.turn_off"
+          - action: "light.turn_off"
             target:
               entity_id: "light.shed_outdoor"
 
@@ -111,11 +111,11 @@ automation:
         <<: *all_outdoor_on_off
 
         tap_on_2x:
-          - service: "light.turn_on"
+          - action: "light.turn_on"
             target:
               entity_id: "light.backyard_string"
         tap_off_2x:
-          - service: "light.turn_off"
+          - action: "light.turn_off"
             target:
               entity_id: "light.backyard_string"
 

@@ -14,8 +14,8 @@ script:
     description: "Turn off all devices in the house"
     icon: "mdi:close-circle-outline"
     sequence:
-      - service: homeassistant.turn_off
-        data:
+      - action: homeassistant.turn_off
+        target:
           entity_id:
             - "light.basement_lights"
             - "light.ground_floor_lights"
@@ -37,7 +37,7 @@ automation:
         entity_id: "binary_sensor.guest_mode"
         state: "off"
     action:
-      - service: script.everything_off
-      - service: lock.lock
-        data:
+      - action: script.everything_off
+      - action: lock.lock
+        target:
           entity_id: "lock.kitchen_door"

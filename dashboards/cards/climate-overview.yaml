@@ -25,8 +25,8 @@ cards:
           [[[ return states['sensor.scheduled_climate_preset'].state; ]]]
         label: Climate Preset
         tap_action:
-          action: call-service
-          service: script.apply_scheduled_climate_preset
+          action: perform-action
+          perform-action: script.apply_scheduled_climate_preset
 
       - <<: *climate_button_card_defaults
         entity: sensor.manual_climates_count
@@ -34,8 +34,8 @@ cards:
         label: >
           [[[ return states['sensor.manual_climates_count'].state + ' in manual mode'; ]]]
         tap_action:
-          action: call-service
-          service: script.restore_climate_auto_mode
+          action: perform-action
+          perform-action: script.restore_climate_auto_mode
 
   - type: entities
     card_mod:
@@ -60,5 +60,5 @@ cards:
         name:
           - place-self: center start
       tap_action:
-        action: call-service
-        service: script.apply_climate_override
+        action: perform-action
+        perform-action: script.apply_climate_override

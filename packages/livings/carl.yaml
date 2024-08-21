@@ -92,7 +92,7 @@ automation:
         entity_id: "switch.carl_uv_light"
         power_sensor: "sensor.carl_uv_light_power"
         action:
-          - service: python_script.notify
+          - action: python_script.notify
             data:
               <<: &power_notification_data
                 audio: true
@@ -112,7 +112,7 @@ automation:
         entity_id: "switch.carl_heat_bulb"
         power_sensor: "sensor.carl_heat_bulb_power"
         action:
-          - service: python_script.notify
+          - action: python_script.notify
             data:
               <<: *power_notification_data
               tag: "carl_heat_bulb_burned_out"
@@ -128,7 +128,7 @@ automation:
         entity_id: "switch.carl_heater"
         power_sensor: "sensor.carl_heater_power"
         action:
-          - service: python_script.notify
+          - action: python_script.notify
             data:
               <<: *power_notification_data
               tag: "carl_heater_burned_out"

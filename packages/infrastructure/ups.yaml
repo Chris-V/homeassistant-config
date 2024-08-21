@@ -42,7 +42,7 @@ automation:
       shutdown_minutes: 2
 
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           <<: &outage_notification_options
             persistent: true
@@ -100,9 +100,10 @@ automation:
               )
           }}
 
-      - service: switch.turn_off
-        entity_id: "switch.network_media"
-      - service: python_script.notify
+      - action: switch.turn_off
+        target:
+          entity_id: "switch.network_media"
+      - action: python_script.notify
         data:
           <<: *outage_notification_options
           message: "A power outage is ongoing at home. Auxiliary servers have been shutdown."
@@ -132,7 +133,7 @@ automation:
         for: 60
 
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           persistent: true
           push_target: "household"
@@ -182,5 +183,6 @@ automation:
               and is_state('input_boolean.power_outage_manage_devices', 'on')
           }}
 
-      - service: switch.turn_on
-        entity_id: "switch.network_media"
+      - action: switch.turn_on
+        target:
+          entity_id: "switch.network_media"

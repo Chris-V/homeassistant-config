@@ -48,7 +48,7 @@ script:
     icon: "mdi:broadcast"
     mode: "queued"
     sequence:
-      - service: "script.broadcast_notification"
+      - action: "script.broadcast_notification"
         data:
           message: "{{ states('input_text.broadcast_message') }}"
 
@@ -83,9 +83,9 @@ script:
             }}
           volume_level: "{{ volume_level | default(0.8, True) }}"
 
-      - service: media_player.turn_on
+      - action: media_player.turn_on
         continue_on_error: true
-        data:
+        target:
           # Technically filter by supported_features, but we know the result so less jinja hassle
           # state_attr('...', 'supported_features') | bitwise_and(128) != 0
           entity_id: >
@@ -100,20 +100,22 @@ script:
         timeout: 3
         continue_on_timeout: true
 
-      - service: scene.create
+      - action: scene.create
         data:
           scene_id: "volume_before_broadcast"
           snapshot_entities: "{{ media_players }}"
 
-      - service: media_player.volume_set
-        data:
+      - action: media_player.volume_set
+        target:
           entity_id: "{{ media_players }}"
+        data:
           volume_level: "{{ volume_level }}"
       - delay: 0.75
 
-      - service: tts.google_cloud_say
-        data:
+      - action: tts.google_cloud_say
+        target:
           entity_id: "{{ media_players }}"
+        data:
           message: "{{ message }}"
 
       - delay: 2.5
@@ -121,8 +123,8 @@ script:
           {{ expand(media_players) | selectattr('state', '==', 'playing') | first is undefined }}
         timeout: 60
 
-      - service: scene.turn_on
-        data:
+      - action: scene.turn_on
+        target:
           entity_id: "scene.volume_before_broadcast"
 
   manage_broadcast_queue:
@@ -167,7 +169,7 @@ script:
       - choose:
           - conditions: "{{ action == 'add' }}"
             sequence:
-              - service: "todo.get_items"
+              - action: "todo.get_items"
                 response_variable: "broadcast_items"
                 target:
                   entity_id: "todo.audio_broadcast"
@@ -176,7 +178,7 @@ script:
                     - needs_action
               - if: "{{ broadcast_items['todo.audio_broadcast']['items'] | selectattr('summary', '==', tag) | list | length != 0 }}"
                 then:
-                  - service: "todo.update_item"
+                  - action: "todo.update_item"
                     target:
                       entity_id: "todo.audio_broadcast"
                     data:
@@ -185,7 +187,7 @@ script:
                       status: "needs_action"
 
                 else:
-                  - service: "todo.add_item"
+                  - action: "todo.add_item"
                     target:
                       entity_id: "todo.audio_broadcast"
                     data:
@@ -194,13 +196,13 @@ script:
 
           - conditions: "{{ action == 'pop' }}"
             sequence:
-              - service: "todo.remove_item"
+              - action: "todo.remove_item"
                 target:
                   entity_id: "todo.audio_broadcast"
                 data:
                   item: "{{ tag }}"
 
-      - service: "todo.remove_completed_items"
+      - action: "todo.remove_completed_items"
         target:
           entity_id: "todo.audio_broadcast"
 
@@ -259,7 +261,7 @@ automation:
               - sun
 
     action:
-      - service: "todo.get_items"
+      - action: "todo.get_items"
         response_variable: "broadcast_items"
         target:
           entity_id: "todo.audio_broadcast"
@@ -270,13 +272,13 @@ automation:
       - variables:
           broadcast_item: "{{ broadcast_items['todo.audio_broadcast']['items'][0] }}"
 
-      - service: script.broadcast_notification
+      - action: script.broadcast_notification
         data:
           message: "{{ broadcast_item['description'] | default(broadcast_item['summary'], true) }}"
 
       - wait_template: "{{ is_state('script.broadcast_notification', 'off') }}"
 
-      - service: script.manage_broadcast_queue
+      - action: script.manage_broadcast_queue
         data:
           action: "pop"
           tag: "{{ broadcast_item['summary'] }}"

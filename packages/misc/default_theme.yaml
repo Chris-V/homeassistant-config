@@ -64,7 +64,7 @@ automation:
           - "binary_sensor.winter_credit_peak_event"
         to: ~
     action:
-      - service: frontend.set_theme
+      - action: frontend.set_theme
         data:
           name: >-
             {%
@@ -99,9 +99,10 @@ automation:
         entity_id: "input_boolean.automatic_night_theme"
         state: "on"
     action:
-      - service: input_select.select_option
-        data:
+      - action: input_select.select_option
+        target:
           entity_id: "input_select.default_theme"
+        data:
           option: >-
             {{
               states(

@@ -29,7 +29,7 @@ automation:
         entity_id: "input_boolean.notify_minecraft_status"
         state: "on"
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           push_target: "admin"
           tag: "minecraft-status"
@@ -52,7 +52,7 @@ automation:
         state: "on"
       - "{{ trigger.to_state.state > states('sensor.minecraft_server_version') | version }}"
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           persistent: true
           push_target: "admin"
@@ -76,7 +76,7 @@ automation:
         entity_id: "input_boolean.notify_minecraft_player_changes"
         state: "on"
     action:
-      - service: python_script.notify
+      - action: python_script.notify
         data:
           push_target: "admin"
           tag: "minecraft-players"

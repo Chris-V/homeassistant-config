@@ -110,7 +110,7 @@ automation:
           dismiss: true
 
     action:
-      - service: "python_script.notify"
+      - action: "python_script.notify"
         data:
           push_target: "admin"
           persistent: true
