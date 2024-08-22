@@ -1,0 +1,46 @@
+- type: entity
+  entity: binary_sensor.intrusion_activity
+  visibility:
+    - condition: state
+      entity: binary_sensor.intrusion_activity
+      state: "on"
+
+- type: entity
+  entity: binary_sensor.smoke_detected
+  visibility:
+    - condition: state
+      entity: binary_sensor.smoke_detected
+      state: "on"
+
+- type: entity
+  entity: binary_sensor.carbon_monoxide_detected
+  visibility:
+    - condition: state
+      entity: binary_sensor.carbon_monoxide_detected
+      state: "on"
+
+- type: entity
+  entity: binary_sensor.kitchen_door_lock_jammed
+  visibility:
+    - condition: state
+      entity: binary_sensor.kitchen_door_lock_jammed
+      state: "on"
+
+- type: entity
+  entity: binary_sensor.all_leaks
+  visibility:
+    - condition: state
+      entity: binary_sensor.all_leaks
+      state: "on"
+
+- type: entity
+  entity: valve.main_water_shut_off
+  visibility:
+    - condition: or
+      conditions:
+        - condition: state
+          entity: binary_sensor.all_leaks
+          state: "on"
+        - condition: state
+          entity: valve.main_water_shut_off
+          state: "closed"

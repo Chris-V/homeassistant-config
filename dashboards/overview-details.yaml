@@ -4,35 +4,23 @@ views:
   - title: Sensors
     path: sensors
     icon: mdi:eye
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/sensor-details.yaml
+    badges: !include badges.yaml
+    cards: !include views/sensor-details.yaml
 
   - title: Media
     path: media
     icon: mdi:play-pause
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/media-details.yaml
+    badges: !include badges.yaml
+    cards: !include views/media-details.yaml
 
   - title: Z-Wave
     path: zwave
     icon: mdi:z-wave
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/zwave-details.yaml
+    badges: !include badges.yaml
+    cards: !include views/zwave-details.yaml
 
   - title: Settings
     path: settings
     icon: mdi:cog
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/general-settings.yaml
+    badges: !include badges.yaml
+    cards: !include views/general-settings.yaml
