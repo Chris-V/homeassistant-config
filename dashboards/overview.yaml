@@ -4,47 +4,32 @@ views:
   - title: Home
     path: home
     icon: mdi:home
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/home.yaml
+    badges: !include badges.yaml
+    cards: !include views/home.yaml
 
   - title: Home Security
     path: security
     icon: mdi:shield-home
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/security.yaml
+    badges: !include badges.yaml
+    cards: !include views/security.yaml
 
   - title: Climate
     path: climate
     icon: mdi:home-thermometer
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/climate.yaml
+    badges: !include badges.yaml
+    cards: !include views/climate.yaml
 
   - title: Ground Floor
     path: ground
     icon: mdi:home-floor-g
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/ground-floor.yaml
+    badges: !include badges.yaml
+    cards: !include views/ground-floor.yaml
 
   - title: Basement
     path: basement
     icon: mdi:home-floor-b
-    type: panel
-    cards: !template
-      file: view-layout.yaml.j2
-      variables:
-        cards: !include views/basement.yaml
+    badges: !include badges.yaml
+    cards: !include views/basement.yaml
 
   - title: Bolt EV
     path: boltev
