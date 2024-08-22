@@ -9,7 +9,7 @@ sensor:
   - platform: "group"
     unique_id: "00d83082-4e15-4a4c-a25f-5cb7d00a3114"
     name: "all_batteries"
-    icon: "mdi:battery"
+    type: "min"
     entities: &battery_entities
       - "sensor.basement_bathroom_multisensor_battery"
       - "sensor.basement_smoke_co_detector_battery"
