@@ -32,7 +32,7 @@ cards:
     name: Ambiance
     tap_action:
       action: perform-action
-      perform-action: script.turn_on
+      perform_action: script.turn_on
       service_data:
         entity_id: script.evening_ambiance
     hold_action:
@@ -41,7 +41,7 @@ cards:
     entity: script.bedtime
     tap_action:
       action: perform-action
-      perform-action: script.turn_on
+      perform_action: script.turn_on
       service_data:
         entity_id: script.bedtime
     hold_action:
@@ -50,7 +50,7 @@ cards:
     entity: script.everything_off
     tap_action:
       action: perform-action
-      perform-action: script.turn_on
+      perform_action: script.turn_on
       service_data:
         entity_id: script.everything_off
     hold_action:
