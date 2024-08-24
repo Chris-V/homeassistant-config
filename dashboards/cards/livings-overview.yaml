@@ -13,7 +13,7 @@ elements:
       state_filter:
         "on": sepia() saturate(350%) hue-rotate(-50deg)
         "off": inherit
-    entity: binary_sensor.slinky_requires_attention
+    entity: binary_sensor.lydia_requires_attention
     image: /local/animals/slinky_tile.jpg
     double_tap_action:
       action: navigate

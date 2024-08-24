@@ -1,97 +1,63 @@
-- !template
-  file: ../cards/terrarium.yaml.j2
-  variables:
-    image: /local/animals/carl_card.jpg
-    problems_entity_id: binary_sensor.carl_requires_attention
-    switches:
-      - entity_id: input_boolean.carl_scheduled_lights
-        name: Scheduling
-        lock: true
-      - entity_id: switch.carl_power_strip
-        name: Master
-        has_power_metrics: true
-        lock: true
-      - entity_id: switch.carl_outlet_5
-        name: Controller
-        has_power_metrics: true
-        lock: true
-      - entity_id: switch.carl_uv_light
-        name: UV light
-        problem_key: uv_light
-        has_power_metrics: true
-        show_in_footer: true
-      - entity_id: switch.carl_heater
-        name: Heater
-        problem_key: heater
-        has_power_metrics: true
-        show_in_footer: true
-      - entity_id: switch.carl_heat_bulb
-        name: Heat bulb
-        problem_key: heat_bulb
-        has_power_metrics: true
-        show_in_footer: true
-      - entity_id: switch.carl_outlet_4
-        name: Mister
-        problem_key: mister
-        has_power_metrics: true
-        show_in_footer: true
-    sensors:
-      - entity_id: sensor.carl_temperature
-        name: Temperature
-      - entity_id: sensor.carl_basking_temperature
-        name: Basking temperature
-      - entity_id: sensor.carl_humidity
-        name: Humidity
-    settings:
-      - entity_id: input_datetime.carl_day_time
-        name: Day starts at
-      - entity_id: input_datetime.carl_night_time
-        name: Night starts at
+- type: custom:terrarium-card
+  area: carl_s_terrarium
+  problems: binary_sensor.carl_requires_attention
+  controls:
+    - entity: input_boolean.carl_scheduled_lights
+      name: Scheduling
+    - entity: switch.carl_power_strip
+      name: Master
+    - entity: switch.carl_uv_light
+      name: UV light
+      footer: true
+    - entity: switch.carl_heater
+      name: Heater
+      footer: true
+    - entity: switch.carl_outlet_3
+      name: Outlet 3
+  settings:
+    - entity: input_datetime.carl_day_time
+      name: Day starts at
+    - entity: input_datetime.carl_night_time
+      name: Night starts at
 
-- !template
-  file: ../cards/terrarium.yaml.j2
-  variables:
-    image: /local/animals/slinky_card.jpg
-    problems_entity_id: binary_sensor.slinky_requires_attention
-    switches:
-      - entity_id: input_boolean.slinky_scheduled_lights
-        name: Scheduling
-        lock: true
-      - entity_id: switch.slinky_power_strip
-        name: Master
-        has_power_metrics: true
-        lock: true
-      - entity_id: switch.slinky_outlet_5
-        name: Controller
-        has_power_metrics: true
-        lock: true
-      - entity_id: switch.slinky_uv_light
-        name: UV light
-        problem_key: uv_light
-        has_power_metrics: true
-        show_in_footer: true
-      - entity_id: switch.slinky_heater
-        name: Heater
-        problem_key: heater
-        has_power_metrics: true
-        show_in_footer: true
-      - entity_id: switch.slinky_heat_bulb
-        name: Heat bulb
-        problem_key: heat_bulb
-        has_power_metrics: true
-        show_in_footer: true
-      - entity_id: switch.slinky_outlet_4
-        name: Outlet 4
-        has_power_metrics: true
-    sensors:
-      - entity_id: sensor.slinky_temperature
-        name: Temperature
-      - entity_id: sensor.slinky_basking_temperature
-        name: Basking temperature
-      - entity_id: sensor.slinky_humidity
-        name: Humidity
-    settings:
-      - entity_id: input_datetime.slinky_day_time
-        name: Day starts at
-      - entity_id: input_datetime.slinky_night_time
-        name: Night starts at
+- type: custom:terrarium-card
+  area: slinky_s_terrarium
+  problems: binary_sensor.lydia_requires_attention
+  controls:
+    - entity: input_boolean.lydia_scheduled_lights
+      name: Scheduling
+    - entity: switch.lydia_power_strip
+      energy_entity: sensor.lydia_power_strip_energy
+      power_entity: sensor.lydia_power_strip_power
+      name: Master
+    - entity: switch.lydia_uv_light
+      energy_entity: sensor.lydia_uv_light_energy
+      power_entity: sensor.lydia_uv_light_power
+      name: UV light
+      problem_key: uv_light
+      footer: true
+    - entity: switch.lydia_heater
+      energy_entity: sensor.lydia_heater_energy
+      power_entity: sensor.lydia_heater_power
+      name: Heater
+      problem_key: heater
+      footer: true
+    - entity: switch.lydia_heat_bulb
+      energy_entity: sensor.lydia_heat_bulb_energy
+      power_entity: sensor.lydia_heat_bulb_power
+      name: Heat bulb
+      problem_key: heat_bulb
+      footer: true
+    - entity: switch.lydia_outlet_4
+      energy_entity: sensor.lydia_outlet_4_energy
+      power_entity: sensor.lydia_outlet_4_power
+      name: Outlet 4
+    - entity: switch.lydia_outlet_5
+      energy_entity: sensor.lydia_outlet_5_energy
+      power_entity: sensor.lydia_outlet_5_power
+      name: Outlet 5
+  settings:
+    - entity: input_datetime.lydia_day_time
+      name: Day starts at
+    - entity: input_datetime.lydia_night_time
+      name: Night starts at
