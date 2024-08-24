@@ -1,0 +1,106 @@
+homeassistant:
+  customize:
+    binary_sensor.lydia_requires_attention:
+      friendly_name: "Lydia requires attention"
+    switch.lydia_heat_bulb:
+      icon: "mdi:spotlight-beam"
+    switch.lydia_heater:
+      icon: "mdi:radiator"
+    switch.lydia_uv_light:
+      icon: "mdi:weather-sunny"
+
+input_boolean:
+  lydia_scheduled_lights:
+    name: "Automate Lydia's terrarium"
+    icon: "mdi:home-automation"
+
+input_datetime:
+  lydia_day_time:
+    name: Time at which Lydia's terrarium lights turn on
+    has_date: false
+    has_time: true
+  lydia_night_time:
+    name: Time at which Lydia's terrarium lights turn off
+    has_date: false
+    has_time: true
+
+template:
+  - binary_sensor:
+      - unique_id: "cca4e02a-aadf-42f1-93d6-468e78d44877"
+        name: "lydia_requires_attention"
+        device_class: "problem"
+        picture: "/local/animals/slinky_avatar.jpg"
+        attributes:
+          scheduling: "{{ is_state('input_boolean.lydia_scheduled_lights', 'on') }}"
+          heat_bulb: "{{ is_state('switch.lydia_heat_bulb', 'off') or states('sensor.lydia_heat_bulb_power') | float(0) > 1 }}"
+          heater: "{{ is_state('switch.lydia_heater', 'off') or states('sensor.lydia_heater_power') | float(0) > 1 }}"
+          uv_light: "{{ is_state('switch.lydia_uv_light', 'off') or states('sensor.lydia_uv_light_power') | float(0) > 1 }}"
+        state: >-
+          {{ not this.attributes.scheduling | default(True)
+              or not this.attributes.heat_bulb | default(True)
+              or not this.attributes.heater | default(True)
+              or not this.attributes.uv_light | default(True)
+          }}
+
+automation:
+  - id: "ca115276-80d4-4a82-bd6e-b575f6483b64"
+    alias: lydia_scheduling
+    use_blueprint:
+      path: "terrarium_scheduling.yaml"
+      input:
+        scheduling_entity: "input_boolean.lydia_scheduled_lights"
+        day_time_entity: "input_datetime.lydia_day_time"
+        night_time_entity: "input_datetime.lydia_night_time"
+        heat_bulb_switch: "switch.lydia_heat_bulb"
+        heater_switch: "switch.lydia_heater"
+        uv_light_switch: "switch.lydia_uv_light"
+
+  - id: "bb248f37-e829-45dc-99f3-f21bf86dea5c"
+    alias: lydia_uv_monitoring
+    use_blueprint:
+      path: "device_stopped_consuming.yaml"
+      input:
+        delay: &power_delay 310  # Wattage report rate is 5 minutes
+        entity_id: "switch.lydia_uv_light"
+        power_sensor: "sensor.lydia_uv_light_power"
+        action:
+          - action: python_script.notify
+            data:
+              <<: &power_notification_data
+                audio: true
+                persistent: true
+                push_target: "household"
+                title: "Check Aunt Lydia"
+                url: "/lovelace/livings"
+              tag: "lydia_uv_monitoring"
+              message: "Aunt Lydia's UV light has burned out."
+
+  - id: "99bb793a-f44c-4f8a-99e4-079c59056d51"
+    alias: lydia_heat_bulb_monitoring
+    use_blueprint:
+      path: "device_stopped_consuming.yaml"
+      input:
+        delay: *power_delay
+        entity_id: "switch.lydia_heat_bulb"
+        power_sensor: "sensor.lydia_heat_bulb_power"
+        action:
+          - action: python_script.notify
+            data:
+              <<: *power_notification_data
+              tag: "lydia_heat_bulb_monitoring"
+              message: "Aunt Lydia's heat bulb has burned out."
+
+  - id: "97c82da0-9eed-462c-a2d5-46da5209ffb3"
+    alias: lydia_heater_monitoring
+    use_blueprint:
+      path: "device_stopped_consuming.yaml"
+      input:
+        delay: *power_delay
+        entity_id: "switch.lydia_heater"
+        power_sensor: "sensor.lydia_heater_power"
+        action:
+          - action: python_script.notify
+            data:
+              <<: *power_notification_data
+              tag: "lydia_heater_monitoring"
+              message: "Aunt Lydia's ceramic heater has burned out."

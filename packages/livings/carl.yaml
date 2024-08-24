@@ -2,22 +2,10 @@ homeassistant:
   customize:
     binary_sensor.carl_requires_attention:
       friendly_name: "Carl requires attention"
-    sensor.carl_basking_temperature:
-      friendly_name: "Carl's basking spot temperature"
-    sensor.carl_temperature:
-      friendly_name: "Carl's terrarium temperature"
-    sensor.carl_humidity:
-      friendly_name: "Carl's terrarium humidity"
-    switch.carl_heat_bulb:
-      icon: "mdi:spotlight-beam"
     switch.carl_heater:
       icon: "mdi:radiator"
     switch.carl_uv_light:
       icon: "mdi:weather-sunny"
-    switch.carl_outlet_4:
-      icon: "mdi:weather-fog"
-    switch.carl_outlet_5:
-      icon: "mdi:chip"
 
 input_boolean:
   carl_scheduled_lights:
@@ -42,33 +30,10 @@ template:
         picture: "/local/animals/carl_avatar.jpg"
         attributes:
           scheduling: "{{ is_state('input_boolean.carl_scheduled_lights', 'on') }}"
-          heat_bulb: "{{ is_state('switch.carl_heat_bulb', 'off') or states('sensor.carl_heat_bulb_power') | float(0) > 1 }}"
-          heater: "{{ is_state('switch.carl_heater', 'off') or states('sensor.carl_heater_power') | float(0) > 1 }}"
-          uv_light: "{{ is_state('switch.carl_uv_light', 'off') or states('sensor.carl_uv_light_power') | float(0) > 1 }}"
         state: >-
           {{
             not this.attributes.scheduling | default(True)
-              or not this.attributes.heat_bulb | default(True)
-              or not this.attributes.heater | default(True)
-              or not this.attributes.uv_light | default(True)
           }}
-
-    sensor:  # Fake sensors until everything is ready
-      - unique_id: "sensor.carl_basking_temperature"
-        name: "carl_basking_temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        state: "0.0"
-      - unique_id: "sensor.carl_temperature"
-        name: "carl_temperature"
-        device_class: "temperature"
-        unit_of_measurement: "°C"
-        state: "0.0"
-      - unique_id: "sensor.carl_humidity"
-        name: "carl_humidity"
-        device_class: "humidity"
-        unit_of_measurement: "%"
-        state: "0.0"
 
 automation:
   - id: "b61cbb0c-2aa9-4094-959e-a5eb20037f52"
@@ -79,58 +44,5 @@ automation:
         scheduling_entity: "input_boolean.carl_scheduled_lights"
         day_time_entity: "input_datetime.carl_day_time"
         night_time_entity: "input_datetime.carl_night_time"
-        heat_bulb_switch: "switch.carl_heat_bulb"
         heater_switch: "switch.carl_heater"
         uv_light_switch: "switch.carl_uv_light"
-
-  - id: "c43cd149-6639-4204-9c02-700970076d35"
-    alias: carl_uv_burned_out
-    use_blueprint:
-      path: "device_stopped_consuming.yaml"
-      input:
-        delay: &power_delay 310  # Wattage report rate is 5 minutes
-        entity_id: "switch.carl_uv_light"
-        power_sensor: "sensor.carl_uv_light_power"
-        action:
-          - action: python_script.notify
-            data:
-              <<: &power_notification_data
-                audio: true
-                persistent: true
-                push_target: "household"
-                url: "/lovelace/livings"
-              tag: "carl_uv_burned_out"
-              title: "Check Carl's UV Light"
-              message: "It appears that Carl's UV light has burned out."
-
-  - id: "4769e5aa-adfe-4c64-a411-e9e219386dae"
-    alias: carl_heat_bulb_burned_out
-    use_blueprint:
-      path: "device_stopped_consuming.yaml"
-      input:
-        delay: *power_delay
-        entity_id: "switch.carl_heat_bulb"
-        power_sensor: "sensor.carl_heat_bulb_power"
-        action:
-          - action: python_script.notify
-            data:
-              <<: *power_notification_data
-              tag: "carl_heat_bulb_burned_out"
-              title: "Check Carl's Heat Bulb"
-              message: "It appears that Carl's heat bulb has burned out."
-
-  - id: "f033f9a3-9d6c-4bd8-8392-fbf2eeb33e9c"
-    alias: carl_heater_burned_out
-    use_blueprint:
-      path: "device_stopped_consuming.yaml"
-      input:
-        delay: *power_delay
-        entity_id: "switch.carl_heater"
-        power_sensor: "sensor.carl_heater_power"
-        action:
-          - action: python_script.notify
-            data:
-              <<: *power_notification_data
-              tag: "carl_heater_burned_out"
-              title: "Check Carl's Ceramic Heater"
-              message: "It appears that Carl's ceramic heater has burned out."

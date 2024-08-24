@@ -27,7 +27,8 @@ blueprint:
       description: This light will turn on when presence is detected.
       selector:
         entity:
-          domain: light
+          filter:
+            - domain: light
     light_off_entity:
       name: Light
       description: >
@@ -36,15 +37,17 @@ blueprint:
         Defaults to `light_entity`.
       selector:
         entity:
-          domain: light
+          filter:
+            - domain: light
       default: ""
     presence_entity:
       name: Presence entity
       description: The presence sensor that will be used as a trigger.
       selector:
         entity:
-          domain: binary_sensor
-          device_class: presence
+          filter:
+            - domain: binary_sensor
+              device_class: presence
 
 initial_state: true
 max_exceeded: silent
