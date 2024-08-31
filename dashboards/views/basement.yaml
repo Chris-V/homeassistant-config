@@ -31,9 +31,9 @@
     - entity: light.lounge_ambiance
       name: Ambiance
       icon: mdi:floor-lamp
-    - entity: media_player.lounge_chromecast
-      name: Chromecast
-      icon: mdi:television-play
+    - entity: media_player.lounge_tv
+      name: TV
+      icon: mdi:television
     - entity: media_player.lounge_google_home
       name: Google Home
       icon: mdi:speaker

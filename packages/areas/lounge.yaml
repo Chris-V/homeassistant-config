@@ -8,14 +8,11 @@ homeassistant:
       battery_warning_level: 20
     sensor.lounge_temperature:
       friendly_name: "Lounge temperature"
-    switch.lounge_tv:
-      friendly_name: "Lounge TV"
 
 cloud:
   google_actions:
     filter:
       include_entities:
-        - "switch.lounge_tv"
         - "light.lounge"
         - "light.lounge_ambiance"
 
@@ -50,6 +47,37 @@ light:
     entities:
       - light.lounge
       - light.lounge_ambiance
+
+media_player:
+  - platform: "universal"
+    name: "lounge_tv"
+    unique_id: "b1da387a-6fa4-4bb2-8c9d-b5c8766bd521"
+    browse_media_entity: "media_player.lounge_tv_cast"
+    children:
+      - "media_player.lounge_tv_cast"
+      - "media_player.lounge_tv_remote"
+    device_class: "tv"
+    commands:
+      turn_off:
+        action: "media_player.turn_off"
+        data:
+          entity_id: "media_player.lounge_tv_remote"
+      turn_on:
+        action: "media_player.turn_on"
+        data:
+          entity_id: "media_player.lounge_tv_remote"
+      volume_mute:
+        action: "media_player.volume_mute"
+        data:
+          entity_id: "media_player.lounge_tv_remote"
+      volume_up:
+        action: "media_player.volume_up"
+        data:
+          entity_id: "media_player.lounge_tv_remote"
+      volume_down:
+        action: "media_player.volume_down"
+        data:
+          entity_id: "media_player.lounge_tv_remote"
 
 template:
   - sensor:
