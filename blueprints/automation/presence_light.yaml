@@ -53,8 +53,8 @@ initial_state: true
 max_exceeded: silent
 mode: "restart"
 
-trigger:
-  - platform: state
+triggers:
+  - trigger: state
     entity_id: !input presence_entity
     from: "off"
     to: "on"
@@ -73,7 +73,7 @@ variables:
   light_off_entity: "{{ optional_light_off_entity or light_entity }}"
   presence_entity: !input presence_entity
 
-action:
+actions:
   - if: "{{ is_state(presence_entity, 'on') and is_state(light_off_entity, 'off') }}"
     then:
       - action: light.turn_on
@@ -83,7 +83,7 @@ action:
           brightness_pct: "{{ brightness_pct }}"
 
   - wait_for_trigger:
-      - platform: state
+      - trigger: state
         entity_id: !input presence_entity
         to: "off"
         for: !input delay_off

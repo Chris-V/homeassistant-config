@@ -213,21 +213,21 @@ automation:
     mode: "queued"
     max: 25
 
-    trigger:
-      - platform: "homeassistant"
+    triggers:
+      - trigger: "homeassistant"
         event: "start"
-      - platform: "state"
+      - trigger: "state"
         entity_id: "todo.audio_broadcast"
-      - platform: "state"
+      - trigger: "state"
         entity_id: "group.household"
         to: "home"
         for: 120
-      - platform: "time"
+      - trigger: "time"
         at:
           - "input_datetime.broadcast_weekday_start"
           - "input_datetime.broadcast_weekend_start"
 
-    condition:
+    conditions:
       - condition: "numeric_state"
         entity_id: "todo.audio_broadcast"
         above: 0
@@ -260,7 +260,7 @@ automation:
             weekday:
               - sun
 
-    action:
+    actions:
       - action: "todo.get_items"
         response_variable: "broadcast_items"
         target:

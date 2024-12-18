@@ -50,28 +50,28 @@ automation:
     alias: "Use internal heat pump temperature probe"
     description: "Switch to the internal heat pump temperature probe"
     mode: "restart"
-    trigger:
-      - platform: "state"
+    triggers:
+      - trigger: "state"
         entity_id: "input_boolean.use_heat_pump_virtual_probe"
         to: "off"
-    action:
+    actions:
       - action: "esphome.ground_floor_heat_pump_use_internal_temperature"
 
   - id: "4c8cf214-db8a-4d0e-b039-f502dc5e21ed"
     alias: "Sync virtual heat pump temperature probe"
     description: "Keep the heat pump's external temperature prope in sync with thermostat readings"
     mode: "restart"
-    trigger:
-      - platform: "homeassistant"
+    triggers:
+      - trigger: "homeassistant"
         event: "start"
-      - platform: "state"
+      - trigger: "state"
         entity_id: "input_boolean.use_heat_pump_virtual_probe"
         to: "on"
-      - platform: "state"
+      - trigger: "state"
         entity_id: "sensor.heat_pump_virtual_probe"
         for: 5
         not_to: "unavailable"
-    condition:
+    conditions:
       - condition: "state"
         entity_id: "input_boolean.use_heat_pump_virtual_probe"
         state: "on"
@@ -79,7 +79,7 @@ automation:
           - condition: "state"
             entity_id: "sensor.heat_pump_virtual_probe"
             state: "unavailable"
-    action:
+    actions:
       - action: "esphome.ground_floor_heat_pump_set_remote_temperature"
         data:
           temperature: "{{ states('sensor.heat_pump_virtual_probe') | round(precision = 0) }}"

@@ -54,7 +54,7 @@ template:
           }}
 
   - trigger:
-      - platform: "state"
+      - trigger: "state"
         entity_id:
           - "binary_sensor.presence_armed"
           - "todo.intrusion_record"
@@ -138,12 +138,12 @@ automation:
     id: "2c7d9807-9f19-4b55-b944-17005a27e6c0"
     description: "Initialize home alarm states when arming is enabled."
     initial_state: true
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "binary_sensor.presence_armed"
         from: "off"
         to: "on"
-    action:
+    actions:
       - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
@@ -158,13 +158,13 @@ automation:
     mode: "single"
     max_exceeded: "silent"
 
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "binary_sensor.intrusion_activity"
         from: "on"
         to: "off"
 
-    action:
+    actions:
       - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
@@ -175,12 +175,12 @@ automation:
     id: "64ef04c6-d94c-4d70-a116-d50ab1b295a5"
     description: "Log disarming of presence alarm."
     initial_state: true
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "binary_sensor.presence_armed"
         from: "on"
         to: "off"
-    action:
+    actions:
       - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
@@ -193,15 +193,15 @@ automation:
     initial_state: true
     mode: "queued"
 
-    trigger:
-      - platform: "state"
+    triggers:
+      - trigger: "state"
         entity_id:
           - "sensor.current_door"
           - "sensor.current_motion"
           - "sensor.current_window"
         variables:
           entity_id: "{{ trigger.to_state.state }}"
-      - platform: "state"
+      - trigger: "state"
         entity_id:
           - "event.hallway_spots_dimmer_on_pressed"
           - "event.hallway_spots_dimmer_off_pressed"
@@ -270,14 +270,14 @@ automation:
         variables:
           entity_id: "{{ trigger.entity_id }}"
 
-    condition:
+    conditions:
       - condition: "state"
         entity_id: "binary_sensor.presence_armed"
         state: "on"
       - condition: "template"
         value_template: "{{ entity_id != '' }}"
 
-    action:
+    actions:
       - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"
@@ -323,8 +323,8 @@ automation:
     mode: "single"
     max_exceeded: "silent"
 
-    trigger:
-      - platform: event
+    triggers:
+      - trigger: event
         event_type:
           - "html5_notification.clicked"
           - "mobile_app_notification_action"
@@ -332,13 +332,13 @@ automation:
     variables:
       arming_id: "{{ states('input_text.presence_armed_id') }}"
 
-    condition:
+    conditions:
       - condition: state
         entity_id: "binary_sensor.intrusion_activity"
         state: "on"
       - "{{ trigger.event.data.action == 'silence_' ~ arming_id }}"
 
-    action:
+    actions:
       - action: input_boolean.turn_on
         target:
           entity_id: "input_boolean.silence_intrusion_alarm"
@@ -355,8 +355,8 @@ automation:
     mode: "single"
     max_exceeded: "silent"
 
-    trigger:
-      - platform: event
+    triggers:
+      - trigger: event
         event_type:
           - "html5_notification.clicked"
           - "mobile_app_notification_action"
@@ -364,13 +364,13 @@ automation:
     variables:
       arming_id: "{{ states('input_text.presence_armed_id') }}"
 
-    condition:
+    conditions:
       - condition: state
         entity_id: "binary_sensor.intrusion_activity"
         state: "on"
       - "{{ trigger.event.data.action == 'reset_' ~ arming_id }}"
 
-    action:
+    actions:
       - action: "notify.send_message"
         target:
           entity_id: "notify.intrusion_log"

@@ -63,15 +63,15 @@ initial_state: true
 max_exceeded: silent
 mode: "restart"
 
-trigger:
-  - platform: state
+triggers:
+  - trigger: state
     entity_id: !input humidity_entity
-  - platform: state
+  - trigger: state
     entity_id: !input fan_entity
     for:
       minutes: !input runtime
 
-action:
+actions:
   - choose:
       - conditions:
           - condition: numeric_state

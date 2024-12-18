@@ -44,10 +44,10 @@ automation:
     alias: notify_new_network_device
     initial_state: true
     mode: "parallel"
-    trigger:
-      - platform: event
+    triggers:
+      - trigger: event
         event_type: "device_tracker_new_device"
-    action:
+    actions:
       - action: python_script.notify
         data:
           push_target: "admin"
@@ -60,8 +60,8 @@ automation:
     initial_state: true
     mode: "parallel"
 
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - switch.network_media
         to: ~
@@ -72,12 +72,12 @@ automation:
       state: "{% if trigger.to_state.state == 'on' %}on{% else %}off{% endif %}"
       state_action: "{% if state == 'on' %}off{% else %}on{% endif %}"
 
-    condition:
+    conditions:
       - condition: state
         entity_id: "input_boolean.notify_server_outages"
         state: "on"
 
-    action:
+    actions:
       - action: python_script.notify
         data:
           push_target: "admin"
@@ -95,14 +95,14 @@ automation:
     alias: power_on_server
     initial_state: true
     mode: "parallel"
-    trigger:
-      - platform: event
+    triggers:
+      - trigger: event
         event_type:
           - "html5_notification.clicked"
           - "mobile_app_notification_action"
         event_data:
           action: "power_on_server"
-    action:
+    actions:
       - action: switch.turn_on
         target:
           entity_id: "{{ trigger.event.data.data.entity_id }}"
@@ -111,14 +111,14 @@ automation:
     alias: power_off_server
     initial_state: true
     mode: "parallel"
-    trigger:
-      - platform: event
+    triggers:
+      - trigger: event
         event_type:
           - "html5_notification.clicked"
           - "mobile_app_notification_action"
         event_data:
           action: "power_off_server"
-    action:
+    actions:
       - action: switch.turn_off
         target:
           entity_id: "{{ trigger.event.data.data.entity_id }}"

@@ -38,10 +38,10 @@ initial_state: true
 max_exceeded: "silent"
 mode: "single"
 
-trigger:
-  - platform: "homeassistant"
+triggers:
+  - trigger: "homeassistant"
     event: "start"
-  - platform: "state"
+  - trigger: "state"
     entity_id: !input group
     to: "on"
 
@@ -50,12 +50,12 @@ variables:
   group: !input group
   tag: !input tag
 
-condition:
+conditions:
   - condition: state
     entity_id: !input group
     state: "on"
 
-action:
+actions:
   - parallel:
       - action: python_script.notify
         data:

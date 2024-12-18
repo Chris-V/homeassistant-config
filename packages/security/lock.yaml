@@ -4,8 +4,8 @@ automation:
     initial_state: true
     mode: "parallel"
 
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "binary_sensor.kitchen_door_lock_jammed"
         to:
           - "on"
@@ -14,7 +14,7 @@ automation:
     variables:
       is_jammed: "{{ trigger.to_state.state }}"
 
-    action:
+    actions:
       - if: "{{ is_jammed == 'on' }}"
         then:
           - action: python_script.notify
@@ -35,7 +35,7 @@ automation:
 template:
   - unique_id: "kitchen_door_unlock"
     trigger:
-      - platform: event
+      - trigger: event
         event_type: "zwave_js_notification"
         event_data:
           node_id: 57

@@ -151,17 +151,17 @@ automation:
     alias: "apply_scheduled_climate_preset"
     initial_state: true
     mode: "restart"
-    trigger:
-      - platform: "state"
+    triggers:
+      - trigger: "state"
         entity_id: "sensor.scheduled_climate_preset"
         to: ~
-      - platform: "state"
+      - trigger: "state"
         entity_id: "input_boolean.climate_scheduling_enabled"
         to: "on"
-    condition:
+    conditions:
       - condition: "state"
         entity_id: "input_boolean.climate_scheduling_enabled"
         state: "on"
       - "{{ has_value('sensor.scheduled_climate_preset') }}"
-    action:
+    actions:
       - action: "script.apply_scheduled_climate_preset"

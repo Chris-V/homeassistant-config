@@ -61,8 +61,8 @@ automation:
     alias: "Notify low batteries"
     initial_state: true
     mode: "parallel"
-    trigger:
-      - platform: numeric_state
+    triggers:
+      - trigger: numeric_state
         entity_id: *battery_entities
         value_template: >-
           {% if state.state in ['unknown', 'unavailable'] -%}
@@ -71,7 +71,7 @@ automation:
             {{ state.state | int - state.attributes.battery_warning_level | default | int(25) - 1 }}
           {%- endif %}
         below: 0
-    action:
+    actions:
       - action: python_script.notify
         data:
           persistent: true

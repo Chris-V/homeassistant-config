@@ -118,8 +118,8 @@ automation:
     mode: "parallel"
     max: 9
 
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: *managed_climates
         attribute: "temperature"
         not_to: "unavailable"
@@ -140,9 +140,9 @@ automation:
         target_setpoint: "{{ states('input_number.{}_{}_setpoint'.format(name, auto_mode | lower)) | default | float(0) }}"
       current_setpoint: "{{ trigger.to_state.attributes.temperature | default | float(0) }}"
 
-    condition: "{{ trigger.to_state.attributes.preset_mode | default('none') != 'none' or target_setpoint != current_setpoint }}"
+    conditions: "{{ trigger.to_state.attributes.preset_mode | default('none') != 'none' or target_setpoint != current_setpoint }}"
 
-    action:
+    actions:
       - action: "input_select.select_option"
         target:
           entity_id: "input_select.{{ name }}_mode"
@@ -156,18 +156,18 @@ automation:
     mode: "queued"
     max: 10
 
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: *managed_climate_modes
         to: "Auto"
-      - platform: state
+      - trigger: state
         entity_id: *managed_climate_auto_modes
         to: ~
-      - platform: state
+      - trigger: state
         entity_id: *managed_climate_comfort_setpoints
         to: ~
         for: 5
-      - platform: state
+      - trigger: state
         entity_id: *managed_climate_eco_setpoints
         to: ~
         for: 5
@@ -176,9 +176,9 @@ automation:
       <<: *climate_variables
       current_setpoint: "{{ state_attr('climate.{}'.format(name), 'temperature') | default | float(0) }}"
 
-    condition: "{{ mode == 'Auto' and target_setpoint != current_setpoint }}"
+    conditions: "{{ mode == 'Auto' and target_setpoint != current_setpoint }}"
 
-    action:
+    actions:
       - action: "climate.set_temperature"
         target:
           entity_id: "climate.{{ name }}"
@@ -190,11 +190,11 @@ automation:
     description: "Start the timer to reset climate modes to auto (managed) after it has been on manual for some time."
     mode: "parallel"
     max: 15
-    trigger:
-      - platform: "state"
+    triggers:
+      - trigger: "state"
         entity_id: *managed_climate_modes
         not_to: "Auto"
-    action:
+    actions:
       - action: timer.start
         target:
           entity_id: "timer.{{ trigger.to_state.object_id | replace('_mode', '_manual_mode_reset') }}"
@@ -206,8 +206,8 @@ automation:
     description: "Reset climate mode to auto (managed) when the timer for manual time is elapsed."
     mode: "parallel"
     max: 15
-    trigger:
-      - platform: "state"
+    triggers:
+      - trigger: "state"
         entity_id: &all_manual_reset_timers
           - "timer.heat_pump_manual_mode_reset"
           - "timer.basement_hallway_thermostat_manual_mode_reset"
@@ -220,11 +220,11 @@ automation:
           - "timer.studio_thermostat_manual_mode_reset"
         from: "active"
         to: "idle"
-    condition:
+    conditions:
       - condition: "state"
         entity_id: "input_boolean.climate_scheduling_enabled"
         state: "on"
-    action:
+    actions:
       - action: "input_select.select_option"
         target:
           entity_id: "input_select.{{ trigger.to_state.object_id | replace('_manual_mode_reset', '_mode') }}"
@@ -235,14 +235,14 @@ automation:
     id: "2e58b9fa-1838-4c38-8b4a-d38b43c76105"
     description: "Reset climate mode to auto (managed) when the timer for manual time is elapsed."
     mode: "single"
-    trigger:
-      - platform: "homeassistant"
+    triggers:
+      - trigger: "homeassistant"
         event: "start"
-      - platform: "state"
+      - trigger: "state"
         entity_id: "input_boolean.climate_scheduling_enabled"
         from: "off"
         to: "on"
-    action:
+    actions:
       repeat:
         for_each: *all_manual_reset_timers
         sequence:

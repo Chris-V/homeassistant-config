@@ -17,14 +17,16 @@ blueprint:
       name: Monitored switch
       selector:
         entity:
-          domain: switch
+          filter:
+            - domain: switch
     power_sensor:
       name: Power sensor
       description: The sensor that reports power consumption for the switch.
       selector:
         entity:
-          domain: sensor
-          device_class: power
+          filter:
+            - domain: sensor
+              device_class: power
     action:
       name: Actions
       description: Actions to perform when consumption stops.
@@ -34,18 +36,18 @@ blueprint:
 initial_state: true
 mode: "restart"
 
-trigger:
-  - platform: state
+triggers:
+  - trigger: state
     entity_id: !input entity_id
     from: "off"
     to: "on"
     for: !input delay
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id: !input power_sensor
     below: 1
     for: !input delay
 
-condition:
+conditions:
   - condition: state
     entity_id: !input entity_id
     state: "on"
@@ -54,4 +56,4 @@ condition:
     entity_id: !input power_sensor
     below: 1
 
-action: !input action
+actions: !input action

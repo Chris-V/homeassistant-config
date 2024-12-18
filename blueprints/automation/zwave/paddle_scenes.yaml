@@ -140,22 +140,22 @@ trigger_variables:
   off_entity_id: !input off_entity_id
   favorite_entity_id: !input favorite_entity_id
 
-trigger:
-  - platform: state
+triggers:
+  - trigger: state
     enabled: "{{ on_entity_id != 'event.dummy' }}"
     entity_id: !input on_entity_id
     variables:
       on_pressed: true
       off_pressed: false
       favorite_pressed: false
-  - platform: state
+  - trigger: state
     enabled: "{{ off_entity_id != 'event.dummy' }}"
     entity_id: !input off_entity_id
     variables:
       on_pressed: false
       off_pressed: true
       favorite_pressed: false
-  - platform: state
+  - trigger: state
     enabled: "{{ favorite_entity_id != 'event.dummy' }}"
     entity_id: !input favorite_entity_id
     variables:
@@ -166,7 +166,7 @@ trigger:
 variables:
   event_type: "{{ trigger.to_state.attributes.event_type }}"
 
-action:
+actions:
   - choose:
       # Tap 1x
       - conditions: "{{ event_type == 'KeyPressed' }}"

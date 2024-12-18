@@ -49,20 +49,20 @@ blueprint:
 initial_state: true
 mode: "restart"
 
-trigger:
-  - platform: time
+triggers:
+  - trigger: time
     at:
       - !input day_time_entity
       - !input night_time_entity
-  - platform: state
+  - trigger: state
     entity_id:
       - !input day_time_entity
       - !input night_time_entity
-  - platform: state
+  - trigger: state
     entity_id: !input scheduling_entity
     from: "off"
     to: "on"
-  - platform: homeassistant
+  - trigger: homeassistant
     event: start
 
 variables:
@@ -70,12 +70,12 @@ variables:
   heater_switch: !input heater_switch
   uv_light_switch: !input uv_light_switch
 
-condition:
+conditions:
   - condition: state
     entity_id: !input scheduling_entity
     state: "on"
 
-action:
+actions:
   - action: switch.turn_on
     enabled: "{{ heater_switch != 'switch.dummy' }}"
     target:

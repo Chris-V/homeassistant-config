@@ -55,15 +55,15 @@ automation:
     alias: night_ambiance
     initial_state: true
     mode: restart
-    trigger:
-      - platform: numeric_state
+    triggers:
+      - trigger: numeric_state
         entity_id: "sun.sun"
         attribute: "elevation"
         below: &sun_elevation -3.0
-      - platform: state
+      - trigger: state
         entity_id: "group.household"
         to: "home"
-    condition:
+    conditions:
       - condition: time
         before: "input_datetime.evening_ambiance_end"
       - condition: numeric_state
@@ -73,7 +73,7 @@ automation:
       - condition: state
         entity_id: "group.household"
         state: "home"
-    action:
+    actions:
       - parallel:
           - action: script.evening_ambiance
           - action: light.turn_on
@@ -88,19 +88,19 @@ automation:
     alias: "arrival_lights"
     initial_state: true
     mode: "restart"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - "person.chris"
           - "person.karine"
           - "group.guests"
         to: "home"
-    condition:
+    conditions:
       - condition: numeric_state
         entity_id: "sun.sun"
         attribute: "elevation"
         below: *sun_elevation
-    action:
+    actions:
       - action: light.turn_on
         target:
           entity_id:
@@ -111,17 +111,17 @@ automation:
     alias: turn_off_outdoor
     initial_state: true
     mode: restart
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "light.outdoor_lights"
         to: "on"
         for: &min_outdoor_on_time 300
-      - platform: time
+      - trigger: time
         at: "input_datetime.evening_ambiance_end"
-      - platform: state
+      - trigger: state
         entity_id: "binary_sensor.guest_mode"
         to: "off"
-    condition:
+    conditions:
       - condition: state
         entity_id: "binary_sensor.guest_mode"
         state: "off"
@@ -132,7 +132,7 @@ automation:
       - condition: time
         after: "input_datetime.evening_ambiance_end"
         before: "15:00:00"
-    action:
+    actions:
       - action: light.turn_off
         target:
           entity_id: "light.outdoor_lights"

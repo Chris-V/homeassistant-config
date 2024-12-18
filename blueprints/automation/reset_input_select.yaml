@@ -29,8 +29,8 @@ blueprint:
 initial_state: true
 mode: "single"
 
-trigger:
-  - platform: state
+triggers:
+  - trigger: state
     entity_id: !input entity_id
     for: !input delay
 
@@ -41,10 +41,10 @@ variables:
     {% set options = state_attr(entity_id, 'options') %}
     {{ optional_default_option if optional_default_option in options else options[0] }}
 
-condition:
+conditions:
   - "{{ trigger.to_state.state != default_option }}"
 
-action:
+actions:
   - action: "input_select.select_option"
     target:
       entity_id: "{{ entity_id }}"

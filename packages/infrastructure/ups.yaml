@@ -32,8 +32,8 @@ automation:
     initial_state: true
     mode: "restart"
 
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "binary_sensor.ups_online_status"
         to: "off"
         for: 30
@@ -41,7 +41,7 @@ automation:
     variables:
       shutdown_minutes: 2
 
-    action:
+    actions:
       - action: python_script.notify
         data:
           <<: &outage_notification_options
@@ -71,16 +71,16 @@ automation:
         state: "on"
 
       - wait_for_trigger:
-          - platform: state
+          - trigger: state
             entity_id: "binary_sensor.ups_online_status"
             to: "on"
-          - platform: event
+          - trigger: event
             event_type:
               - "html5_notification.clicked"
               - "mobile_app_notification_action"
             event_data:
               action: "power_outage_shutdown"
-          - platform: event
+          - trigger: event
             event_type:
               - "html5_notification.clicked"
               - "mobile_app_notification_action"
@@ -113,26 +113,26 @@ automation:
     initial_state: true
     mode: "restart"
 
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "binary_sensor.ups_online_status"
         to: "on"
         for: 60
       # It's possible Automate has shut down if the outage outlasted the UPS.
       # This shutdown is handled by a local daemon.
-      - platform: homeassistant
+      - trigger: homeassistant
         event: "start"
 
     variables:
       power_on_minutes: 2
 
-    condition:
+    conditions:
       - condition: state
         entity_id: "binary_sensor.ups_online_status"
         state: "on"
         for: 60
 
-    action:
+    actions:
       - action: python_script.notify
         data:
           persistent: true
@@ -162,10 +162,10 @@ automation:
             state: "on"
 
       - wait_for_trigger:
-          - platform: state
+          - trigger: state
             entity_id: "binary_sensor.ups_online_status"
             to: "off"
-          - platform: event
+          - trigger: event
             event_type:
               - "html5_notification.clicked"
               - "mobile_app_notification_action"

@@ -89,16 +89,16 @@ automation:
     alias: notify_guest_arrives
     initial_state: true
     mode: "parallel"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: *guest_entities
         to: "home"
-    condition: >-
+    conditions: >-
       {{
         is_state('input_boolean.notify_individual_guest_arrivals', 'on')
           or is_state_attr('sensor.guests_home', 'count', '1')
       }}
-    action:
+    actions:
       - action: python_script.notify
         data:
           persistent: true
@@ -111,15 +111,15 @@ automation:
     alias: notify_household_person_arrives
     initial_state: true
     mode: "parallel"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: *household_entities
         to: "home"
-    condition:
+    conditions:
       - condition: state
         entity_id: input_boolean.notify_household_changes
         state: "on"
-    action:
+    actions:
       - action: python_script.notify
         data:
           push_target: "admin"
@@ -131,15 +131,15 @@ automation:
     alias: notify_household_person_leaves
     initial_state: true
     mode: "parallel"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: *household_entities
         from: "home"
-    condition:
+    conditions:
       - condition: state
         entity_id: input_boolean.notify_household_changes
         state: "on"
-    action:
+    actions:
       - action: python_script.notify
         data:
           push_target: "admin"

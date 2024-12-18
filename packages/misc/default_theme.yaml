@@ -56,14 +56,14 @@ automation:
     alias: update_backend_theme
     initial_state: true
     mode: "queued"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - "input_select.default_theme"
           - "binary_sensor.use_alarm_theme"
           - "binary_sensor.winter_credit_peak_event"
         to: ~
-    action:
+    actions:
       - action: frontend.set_theme
         data:
           name: >-
@@ -84,21 +84,21 @@ automation:
     alias: update_default_theme
     initial_state: true
     mode: "restart"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - "binary_sensor.use_dark_theme"
           - "input_boolean.automatic_night_theme"
           - "input_select.day_theme"
           - "input_select.night_theme"
         to: ~
-      - platform: homeassistant
+      - trigger: homeassistant
         event: "start"
-    condition:
+    conditions:
       - condition: state
         entity_id: "input_boolean.automatic_night_theme"
         state: "on"
-    action:
+    actions:
       - action: input_select.select_option
         target:
           entity_id: "input_select.default_theme"

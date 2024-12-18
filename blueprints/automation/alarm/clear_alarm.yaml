@@ -24,8 +24,8 @@ initial_state: true
 max_exceeded: "silent"
 mode: "single"
 
-trigger:
-  - platform: "state"
+triggers:
+  - trigger: "state"
     entity_id: !input group
     from: "on"
     to: "off"
@@ -36,7 +36,7 @@ variables:
   group: !input group
   tag: !input tag
 
-action:
+actions:
   - action: python_script.notify
     data:
       audio: false
