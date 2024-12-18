@@ -10,7 +10,8 @@ blueprint:
       description: The input_select pointing the desired lamps color.
       selector:
         entity:
-          domain: input_select
+          filter:
+            - domain: input_select
     device_ieee:
       name: Device IEEE
     entity_input_select:
@@ -18,14 +19,15 @@ blueprint:
       description: The input_select pointing the lamp to control.
       selector:
         entity:
-          domain: input_select
+          filter:
+            - domain: input_select
 
 initial_state: true
 max_exceeded: silent
 mode: "queued"
 
-trigger:
-  - platform: event
+triggers:
+  - trigger: event
     event_type: "zha_event"
     event_data:
       device_ieee: !input device_ieee
@@ -34,7 +36,7 @@ trigger:
 variables:
   entity_input_select: !input entity_input_select
 
-action:
+actions:
   choose:
     - alias: Tap power button
       conditions: >-

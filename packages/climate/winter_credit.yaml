@@ -53,21 +53,21 @@ automation:
     initial_state: true
     mode: "parallel"
 
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "sensor.chris_pixel_6_last_notification"
         to: ~
 
     variables:
       text: "{{ trigger.to_state.attributes['android.text'] | default('') }}"
 
-    condition:
+    conditions:
       - "{{ is_state('binary_sensor.winter_credit_enabled', 'on') }}"
       - "{{ trigger.to_state.attributes['package'] | default('') == 'com.hydroquebec.mf_android' }}"
       - "{{ 'Winter Credit Option:' in text }}"
       - "{{ 'Reminder.' not in text }}"
 
-    action:
+    actions:
       - variables:
           text: "{{ text | replace('a.m.', 'AM') | replace('p.m.', 'PM') }}"
           # yamllint disable-line rule:quoted-strings

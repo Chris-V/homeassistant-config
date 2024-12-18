@@ -40,8 +40,8 @@ automation:
     alias: notify_plant_problems
     initial_state: true
     mode: "parallel"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         attribute: "problem"
         entity_id:
           - "plant.drake"
@@ -67,7 +67,7 @@ automation:
             | sort
         }}
 
-    action:
+    actions:
       - if: "{{ issues | length == 0 }}"
         then:
           - action: python_script.notify

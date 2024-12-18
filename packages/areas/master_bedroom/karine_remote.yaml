@@ -40,10 +40,10 @@ automation:
     alias: karine_remote_apply_color_change
     description: "Turn on and change the color on Karine's remote entity"
     mode: "queued"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "input_select.karine_remote_color"
-    action:
+    actions:
       - action: light.turn_on
         target:
           entity_id: "{{ states('input_select.karine_remote_entity') }}"

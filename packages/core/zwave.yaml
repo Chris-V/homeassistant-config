@@ -92,8 +92,8 @@ automation:
     alias: "detect_dead_zwave_nodes"
     initial_state: true
 
-    trigger:
-      - platform: "state"
+    triggers:
+      - trigger: "state"
         entity_id: *zwave_nodes
         from: "alive"
         to: "dead"
@@ -101,14 +101,14 @@ automation:
         variables:
           dismiss: false
 
-      - platform: "state"
+      - trigger: "state"
         entity_id: *zwave_nodes
         from: "dead"
         to: "alive"
         variables:
           dismiss: true
 
-    action:
+    actions:
       - action: "python_script.notify"
         data:
           push_target: "admin"

@@ -27,16 +27,16 @@ automation:
   - id: "54655af9-ddc7-491d-9200-41aaaddbb21a"
     alias: empty_house
     initial_state: true
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: "group.household"
         from: "home"
         for: 30
-    condition:
+    conditions:
       - condition: state
         entity_id: "binary_sensor.guest_mode"
         state: "off"
-    action:
+    actions:
       - action: script.everything_off
       - action: lock.lock
         target:
