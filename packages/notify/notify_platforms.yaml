@@ -1,10 +1,4 @@
 notify:
-  - platform: html5
-    name: "html5"
-    vapid_email: !secret notifier_vapid_email
-    vapid_pub_key: !secret notifier_vapid_public_key
-    vapid_prv_key: !secret notifier_vapid_private_key
-
   - platform: group
     name: "admin"
     services:
