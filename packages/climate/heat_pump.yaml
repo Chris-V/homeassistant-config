@@ -35,7 +35,6 @@ sensor:
     round_digits: 1
     entity_ids:
       - "sensor.living_room_temperature"
-      - "sensor.main_bathroom_temperature"
       - "sensor.master_bedroom_temperature"
       - "sensor.office_temperature"
 
