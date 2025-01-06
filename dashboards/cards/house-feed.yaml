@@ -1,50 +1,53 @@
-type: custom:auto-entities
-card:
-  type: logbook
-  title: House feed
-  hours_to_show: 24
-  card_mod:
-    style: !template
-      file: ../styles/inset-icon.css.j2
-      variables:
-        background_size: "contain"
-        svg_path: "M6.18,15.64A2.18,2.18 0 0,1 8.36,17.82C8.36,19 7.38,20 6.18,20C5,20 4,19 4,17.82A2.18,2.18 0 0,1 6.18,15.64M4,4.44A15.56,15.56 0 0,1 19.56,20H16.73A12.73,12.73 0 0,0 4,7.27V4.44M4,10.1A9.9,9.9 0 0,1 13.9,20H11.07A7.07,7.07 0 0,0 4,12.93V10.1Z"
-        css: ".content ha-logbook { height: 330px; }"
-filter:
-  template: >-
-    {# Using a custom expand because the built-in expand only works on `group.*` #}
-    {% macro expand_ids(entity_id, include_groups = False) %}
-      {%- set ns = namespace(entity_ids = []) %}
-      {%- set entity = states[entity_id] %}
-      {%- if entity %}
-        {%- set children = entity.attributes.entity_id | default %}
-        {%- if children %}
-          {%- for entity_id in children -%}
-            {% set ns.entity_ids = ns.entity_ids + [expand_ids(entity_id, include_groups)] %}
-          {%- endfor %}
-          {%- if include_groups %}
-            {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
-          {%- endif %}
-        {%- else %}
-          {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
-        {%- endif -%}
-        {{ ns.entity_ids | join(',') }}
-      {%- endif %}
-    {%- endmacro %}
+type: "logbook"
+title: "House feed"
+hours_to_show: 24
+target:
+  entity:
+    - domain: "person"
+  label_id:
+    - "house_feed"
+card_mod:
+  style: !template
+    file: ../styles/inset-icon.css.j2
+    variables:
+      background_size: "contain"
+      svg_path: "M6.18,15.64A2.18,2.18 0 0,1 8.36,17.82C8.36,19 7.38,20 6.18,20C5,20 4,19 4,17.82A2.18,2.18 0 0,1 6.18,15.64M4,4.44A15.56,15.56 0 0,1 19.56,20H16.73A12.73,12.73 0 0,0 4,7.27V4.44M4,10.1A9.9,9.9 0 0,1 13.9,20H11.07A7.07,7.07 0 0,0 4,12.93V10.1Z"
+      css: ".content ha-logbook { height: 330px; }"
 
-    {{ ([
-          'binary_sensor.intrusion_activity',
-          'binary_sensor.presence_armed',
-          'fan.basement_bathroom',
-          'fan.main_bathroom',
-        ] + expand_ids('light.basement_lights').split(',')
-          + expand_ids('light.ground_floor_lights').split(',')
-          + expand_ids('binary_sensor.all_doors').split(',')
-          + expand_ids('binary_sensor.all_leaks').split(',')
-          + expand_ids('binary_sensor.all_motions').split(',')
-          + expand_ids('binary_sensor.all_windows').split(',')
-          + expand_ids('group.household').split(',')
-          + expand_ids('group.guests').split(',')
-        ) | reject('eq', '')
-          | sort
-    }}
+# Template to list entities that should be labeled with house_feed
+# {# Using a custom expand because the built-in expand only works on `group.*` #}
+# {% macro expand_ids(entity_id, include_groups = False) %}
+#   {%- set ns = namespace(entity_ids = []) %}
+#   {%- set entity = states[entity_id] %}
+#   {%- if entity %}
+#     {%- set children = entity.attributes.entity_id | default %}
+#     {%- if children %}
+#       {%- for entity_id in children -%}
+#         {% set ns.entity_ids = ns.entity_ids + [expand_ids(entity_id, include_groups)] %}
+#       {%- endfor %}
+#       {%- if include_groups %}
+#         {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+#       {%- endif %}
+#     {%- else %}
+#       {%- set ns.entity_ids = ns.entity_ids + [entity.entity_id] %}
+#     {%- endif -%}
+#     {{ ns.entity_ids | join(',') }}
+#   {%- endif %}
+# {%- endmacro %}
+
+# {{ ([
+#       'binary_sensor.intrusion_activity',
+#       'binary_sensor.presence_armed',
+#       'fan.basement_bathroom',
+#       'fan.main_bathroom',
+#     ] + expand_ids('light.basement_lights').split(',')
+#       + expand_ids('light.ground_floor_lights').split(',')
+#       + expand_ids('binary_sensor.all_doors').split(',')
+#       + expand_ids('binary_sensor.all_leaks').split(',')
+#       + expand_ids('binary_sensor.all_motions').split(',')
+#       + expand_ids('binary_sensor.all_windows').split(',')
+#       + expand_ids('group.household').split(',')
+#       + expand_ids('group.guests').split(',')
+#     ) | reject('eq', '')
+#       | sort
+# }}
