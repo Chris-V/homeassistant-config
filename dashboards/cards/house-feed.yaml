@@ -1,8 +1,10 @@
-type: custom:auto-entities
+type: "custom:auto-entities"
 card:
-  type: logbook
-  title: House feed
+  type: "logbook"
+  title: "House feed"
   hours_to_show: 24
+  target:
+    label_id: "house_feed"
   card_mod:
     style: !template
       file: ../styles/inset-icon.css.j2
