@@ -1,6 +1,9 @@
 - type: "vertical-stack"
-  title: "House"
   cards:
+    - type: "heading"
+      heading: "House"
+      icon: "mdi:home"
+
     - !include ../cards/climate-overview.yaml
 
     - type: "entities"
@@ -25,8 +28,11 @@
             name: "Baseline manipulation"
 
 - type: "vertical-stack"
-  title: "Heat pump"
   cards:
+    - type: "heading"
+      heading: "Heat pump"
+      icon: "mdi:heat-pump"
+
     - type: "thermostat"
       entity: "climate.heat_pump"
       name: " "
@@ -123,8 +129,11 @@
           name: "Comfort"
 
 - type: "vertical-stack"
-  title: "Thermostats"
   cards:
+    - type: "heading"
+      heading: "Thermostats"
+      icon: "mdi:thermostat"
+
     - type: "entities"
       title: "Ground floor"
       show_header_toggle: false
@@ -177,8 +186,11 @@
           icon: "mdi:lightning-bolt-circle"
 
 - type: "vertical-stack"
-  title: "Weather"
   cards:
+    - type: "heading"
+      heading: "Air quality"
+      icon: "mdi:air-filter"
+
     - type: weather-forecast
       entity: weather.quebec
       show_forecast: true

@@ -1,6 +1,9 @@
 - type: "vertical-stack"
-  title: Controls
   cards:
+    - type: "heading"
+      heading: "Controls"
+      icon: "mdi:shield"
+
     - !include ../cards/alarm.yaml
 
     - type: "entities"
@@ -27,8 +30,11 @@
             action_name: "Clear current activity"
 
 - type: "vertical-stack"
-  title: "Last arming"
   cards:
+    - type: "heading"
+      heading: "Last arming"
+      icon: "mdi:calendar"
+
     - type: "markdown"
       content: |
         {%
@@ -63,8 +69,11 @@
           - group: binary_sensor.intrusion_activity
 
 - type: "vertical-stack"
-  title: "Devices"
   cards:
+    - type: "heading"
+      heading: "Devices"
+      icon: "mdi:devices"
+
     - type: glance
       title: Leaks
       entities:

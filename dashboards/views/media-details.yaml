@@ -1,6 +1,8 @@
 - type: vertical-stack
-  title: Speakers
   cards:
+    - type: "heading"
+      heading: "Speakers"
+      icon: "mdi:speaker"
     - type: media-control
       entity: media_player.laundry_room_google_home
       name: Laundry
@@ -18,18 +20,22 @@
       name: Office
 
 - type: vertical-stack
-  title: TVs
   cards:
+    - type: "heading"
+      heading: "TVs"
+      icon: "mdi:television"
     - type: media-control
       entity: media_player.living_room_tv
       name: Living room
     - type: media-control
-      entity: media_player.lounge_chromecast
+      entity: media_player.lounge_tv_cast
       name: Lounge
 
 - type: vertical-stack
-  title: Groups
   cards:
+    - type: "heading"
+      heading: "Groups"
+      icon: "mdi:speaker-multiple"
     - type: media-control
       entity: media_player.cast_basement
       name: Basement
@@ -38,8 +44,10 @@
       name: Whole house
 
 - type: vertical-stack
-  title: Broadcast
   cards:
+    - type: "heading"
+      heading: "Broadcast"
+      icon: "mdi:broadcast"
     - type: entities
       entities:
         - type: custom:lovelace-multiline-text-input-card
@@ -74,4 +82,3 @@
 
     - type: "todo-list"
       entity: "todo.audio_broadcast"
-      title: "Queued broadcasts"
