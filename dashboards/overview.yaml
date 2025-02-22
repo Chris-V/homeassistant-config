@@ -19,17 +19,29 @@ views:
     badges: !include badges.yaml
     cards: !include views/climate.yaml
 
-  - title: Ground Floor
+  - type: sections
+    title: Ground Floor
     path: ground
     icon: mdi:home-floor-g
     badges: !include badges.yaml
-    cards: !include views/ground-floor.yaml
+    max_columns: 10
+    dense_section_placement: true
+    sections:
+      - type: grid
+        column_span: 10
+        cards: !include views/ground-floor.yaml
 
-  - title: Basement
+  - type: sections
+    title: Basement
     path: basement
     icon: mdi:home-floor-b
     badges: !include badges.yaml
-    cards: !include views/basement.yaml
+    max_columns: 10
+    dense_section_placement: true
+    sections:
+      - type: grid
+        column_span: 10
+        cards: !include views/basement.yaml
 
   - title: Bolt EV
     path: boltev

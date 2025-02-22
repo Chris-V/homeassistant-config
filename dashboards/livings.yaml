@@ -6,7 +6,13 @@ views:
     icon: mdi:flower
     cards: !include views/plants.yaml
 
-  - title: Terrariums
+  - type: sections
+    title: Terrariums
     path: terrariums
     icon: mdi:snake
-    cards: !include views/terrariums.yaml
+    max_columns: 10
+    dense_section_placement: true
+    sections:
+      - type: grid
+        column_span: 10
+        cards: !include views/terrariums.yaml
