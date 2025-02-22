@@ -16,6 +16,7 @@
 /.secrets
 /.cloud
 /.google.token
+/backups
 /image
 /logs
 /tts
