@@ -7,8 +7,10 @@ cards:
     variables:
       battery_entity: sensor.chris_pixel_6_battery_level
       person_entity: person.chris
+      bed_entity: binary_sensor.master_bed_occupied_chris
   - !template
     file: person.yaml.j2
     variables:
       battery_entity: sensor.karine_pixel_7_battery_level
       person_entity: person.karine
+      bed_entity: binary_sensor.master_bed_occupied_karine
