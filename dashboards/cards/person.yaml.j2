@@ -21,7 +21,7 @@ elements:
       "--paper-item-icon-color": "#DADADB"
       "--secondary-text-color": "#DADADB"
       "--primary-text-color": "#DADADB"
-      "--mdc-icon-size": 30px
+      "--mdc-icon-size": 24px
     elements:
       - type: custom:container-element
         style:
@@ -38,11 +38,13 @@ elements:
         elements:
           - type: state-icon
             entity: "{{ battery_entity }}"
+            title:
+
+          - type: state-icon
+            entity: "{{ bed_entity }}"
+            title:
 
           - type: state-label
             entity: "{{ person_entity }}"
             style:
               text-transform: uppercase
-
-          - type: state-icon
-            entity: "{{ bed_entity }}"
