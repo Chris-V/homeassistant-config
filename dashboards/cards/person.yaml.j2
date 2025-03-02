@@ -21,62 +21,31 @@ elements:
       "--paper-item-icon-color": "#DADADB"
       "--secondary-text-color": "#DADADB"
       "--primary-text-color": "#DADADB"
-      "--mdc-icon-size": 40pxh
+      "--mdc-icon-size": 24px
     elements:
       - type: custom:container-element
         style:
-          height: 40px
           overflow: hidden
           display: flex
           flex-grow: 0
           flex-shrink: 0
           align-items: center
-          justify-content: space-between
-          padding: 0 5px
           background-color: rgba(0, 0, 0, 0.45)
           color: "#D3D3D3"
         elements:
-          - type: custom:container-element  # Battery
+          - type: state-icon
+            entity: "{{ battery_entity }}"
+            title:
             style:
-              height: 100%
-              margin-left: 5px
-              display: flex
-              flex-direction: column
-              align-items: center
-              justify-content: center
-            elements:
-              - type: state-icon
-                entity: "{{ battery_entity }}"
-                title:
-                style:
-                  margin: -16px -12px -12px -12px
-                  "--mdc-icon-size": 16px
-              - type: state-label
-                entity: "{{ battery_entity }}"
-                title:
-                style:
-                  margin: 2px -8px -8px -8px
-                  line-height: 0
-                  font-size: 0.9rem
+              margin: "calc(-1 * (40px - var(--mdc-icon-size)) / 2)"
+          - type: state-icon
+            entity: "{{ bed_entity }}"
+            title:
+            style:
+              margin: "calc(-1 * (40px - var(--mdc-icon-size)) / 2)"
 
           - type: state-label
             entity: "{{ person_entity }}"
             style:
               text-transform: uppercase
-
-          - type: custom:hui-element
-            card_type: markdown
-            entity_id: "{{ person_entity }}"
-            content: "{{ "{{" }} time_since(states['{{ person_entity }}'].last_changed, 1) {{ "}}" }}"
-            theme: blank
-            card_mod:
-              style: |
-                :host {
-                  border: 0;
-                }
-
-                ha-markdown.markdown.no-header {
-                  padding: 0;
-                  font-size: 0.9rem;
-                  color: #D3D3D3;
-                }
+              margin-left: auto
