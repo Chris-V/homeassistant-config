@@ -11,10 +11,10 @@ cloud:
 script:
   everything_off:
     alias: "All off"
-    description: "Turn off all devices in the house"
+    description: "Turn off all lights in the house"
     icon: "mdi:close-circle-outline"
     sequence:
-      - action: homeassistant.turn_off
+      - action: "homeassistant.turn_off"
         target:
           entity_id:
             - "light.basement_lights"
@@ -25,19 +25,19 @@ script:
 
 automation:
   - id: "54655af9-ddc7-491d-9200-41aaaddbb21a"
-    alias: empty_house
+    alias: "empty_house"
     initial_state: true
     triggers:
-      - trigger: state
+      - trigger: "state"
         entity_id: "group.household"
         from: "home"
         for: 30
     conditions:
-      - condition: state
+      - condition: "state"
         entity_id: "binary_sensor.guest_mode"
         state: "off"
     actions:
-      - action: script.everything_off
-      - action: lock.lock
+      - action: "script.everything_off"
+      - action: "lock.lock"
         target:
           entity_id: "lock.kitchen_door"

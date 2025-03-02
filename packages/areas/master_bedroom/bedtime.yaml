@@ -1,0 +1,137 @@
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - "script.bedtime"
+
+script:
+  bedtime:
+    alias: "Bedtime"
+    icon: "mdi:weather-night"
+    mode: "single"
+    max_exceeded: "silent"
+    sequence:
+      parallel:
+        - action: "lock.lock"
+          target:
+            entity_id: "lock.kitchen_door"
+
+        - if:
+            - condition: "state"
+              entity_id: "light.master_bedroom_bedsides"
+              state: "on"
+          then:
+            - action: "light.turn_on"
+              target:
+                entity_id: "light.master_bedroom_bedsides"
+              data:
+                brightness_pct: 5
+                kelvin: 2200
+
+        - action: "light.turn_off"
+          target:
+            entity_id:
+              - "light.bookshelf"
+              - "light.common_basement_lights"
+              - "light.foyer"
+              - "light.hallway_spots"
+              - "light.kitchen_lights"
+              - "light.living_room"
+              - "light.lounge_lights"
+              - "light.master_bedroom_closet"
+              - "light.master_bedroom_sconces"
+              - "light.master_bedroom_spots"
+              - "light.office_spots"
+        
+        - if:
+            - condition: "state"
+              entity_id: "binary_sensor.master_bed_occupied_karine"
+              state: "on"
+          then:
+            - action: "light.turn_off"
+              target:
+                entity_id:
+                  - "light.studio_lights"
+                  - "light.guest_bedroom_lights"
+                  - "light.dining_room"
+          else:
+            - if:
+                - condition: "state"
+                  entity_id: "light.dining_room"
+                  state: "on"
+              then:
+                - action: "light.turn_on"
+                  target:
+                    entity_id: "light.dining_room"
+                  data:
+                    brightness_pct: 10
+        
+        - if:
+            - condition: "state"
+              entity_id: "binary_sensor.master_bed_occupied_chris"
+              state: "on"
+          then:
+            - action: "light.turn_off"
+              target:
+                entity_id:
+                  - "light.office_lamp"
+          else:
+            - if:
+                - condition: "state"
+                  entity_id: "light.office_lamp"
+                  state: "on"
+              then:
+                - action: "light.turn_on"
+                  target:
+                    entity_id: "light.office_lamp"
+                  data:
+                    brightness_pct: 10
+
+        - if:
+            - alias: "TV is off or showing the home screen"
+              not:
+                - condition: state
+                  entity_id: "media_player.living_room_tv"
+                  state: "on"  # on => a source other than home is on display
+          then:
+            - action: "homeassistant.turn_off"
+              target:
+                entity_id:
+                  - "light.living_room_ambiance"
+                  - "media_player.living_room_tv"
+
+        - if:
+            - condition: "state"
+              entity_id: "binary_sensor.basement_bathroom_motion"
+              state: "off"
+          then:
+            - action: "light.turn_off"
+              target:
+                entity_id: "light.basement_bathroom_lights"
+
+        - if:
+            - condition: "state"
+              entity_id: "binary_sensor.laundry_room_motion"
+              state: "off"
+          then:
+            - action: "light.turn_off"
+              target:
+                entity_id: "light.laundry_room_lights"
+
+        - if:
+            - condition: "state"
+              entity_id: "binary_sensor.main_bathroom_motion"
+              state: "off"
+          then:
+            - action: "light.turn_off"
+              target:
+                entity_id: "light.main_bathroom_lights"
+
+        - if:
+            - condition: "state"
+              entity_id: "binary_sensor.workshop_motion"
+              state: "off"
+          then:
+            - action: "light.turn_off"
+              target:
+                entity_id: "light.workshop_lights"
