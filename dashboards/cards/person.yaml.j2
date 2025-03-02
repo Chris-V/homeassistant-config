@@ -6,6 +6,10 @@ card_mod:
       position: relative;
       transform: none;
     }
+    state-badge {
+      width: auto;
+      height: auto;
+    }
 elements:
   - type: custom:container-element
     style:
@@ -39,6 +43,8 @@ elements:
           - type: state-icon
             entity: "{{ battery_entity }}"
             title:
+            style:
+
 
           - type: state-icon
             entity: "{{ bed_entity }}"
