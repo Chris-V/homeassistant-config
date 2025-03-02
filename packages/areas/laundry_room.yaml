@@ -14,7 +14,7 @@ light:
     unique_id: "laundry_lights"
     name: "Laundry lights"
     entities:
-      - light.laundry_room
+      - "light.laundry_room"
 
 template:
   - sensor:
