@@ -1,18 +1,11 @@
 type: picture-elements
 image_entity: "{{ person_entity }}"
 card_mod:
-  style:
-    .: |
-      .element[class~=element] {
-        position: relative;
-        transform: none;
-      }
-    "hui-state-icon-element$state-badge$": |
-      :host {
-        width: var(--mdc-icon-size);
-        height: var(--mdc-icon-size);
-        line-height: var(--mdc-icon-size);
-      }
+  style: |
+    .element[class~=element] {
+      position: relative;
+      transform: none;
+    }
 elements:
   - type: custom:container-element
     style:
@@ -38,7 +31,6 @@ elements:
           flex-grow: 0
           flex-shrink: 0
           align-items: center
-          justify-content: space-between
           padding: 5px
           background-color: rgba(0, 0, 0, 0.45)
           color: "#D3D3D3"
@@ -47,10 +39,12 @@ elements:
             entity: "{{ battery_entity }}"
             title:
             style:
-
+              margin: "calc(-1 * (40px - var(--mdc-icon-size)) / 2)"
           - type: state-icon
             entity: "{{ bed_entity }}"
             title:
+            style:
+              margin: "calc(-1 * (40px - var(--mdc-icon-size)) / 2)"
 
           - type: state-label
             entity: "{{ person_entity }}"
