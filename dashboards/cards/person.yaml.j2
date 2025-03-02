@@ -1,15 +1,18 @@
 type: picture-elements
 image_entity: "{{ person_entity }}"
 card_mod:
-  style: |
-    .element[class~=element] {
-      position: relative;
-      transform: none;
-    }
-    state-badge {
-      width: auto;
-      height: auto;
-    }
+  style:
+    .: |
+      .element[class~=element] {
+        position: relative;
+        transform: none;
+      }
+    "state-badge$": |
+      state-badge {
+        width: var(--mdc-icon-size);
+        height: var(--mdc-icon-size);
+        line-height: var(--mdc-icon-size);
+      }
 elements:
   - type: custom:container-element
     style:
