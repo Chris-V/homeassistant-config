@@ -164,7 +164,7 @@ triggers:
       favorite_pressed: true
 
 variables:
-  event_type: "{{ trigger.to_state.attributes.event_type }}"
+  event_type: "{{ trigger.to_state.attributes.event_type if 'event_type' in trigger.to_state.attributes else '' }}"
 
 actions:
   - choose:
