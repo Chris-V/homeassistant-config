@@ -23,7 +23,3 @@
       name: Household changes
     - entity: input_boolean.notify_server_outages
       name: Server outages
-    - entity: input_boolean.notify_minecraft_status
-      name: Minecraft status
-    - entity: input_boolean.notify_minecraft_player_changes
-      name: Minecraft player changes
