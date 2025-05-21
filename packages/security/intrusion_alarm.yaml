@@ -282,7 +282,7 @@ automation:
         target:
           entity_id: "notify.intrusion_log"
         data:
-          message: "({{ states('input_text.presence_armed_id') }}) Intrusion activity: {{ device_attr(device_id(entity_id), 'name') }} ({{ entity_id }})"
+          message: "({{ states('input_text.presence_armed_id') }}) Intrusion activity: {{ entity_id | device_name }} ({{ entity_id }})"
       - action: "todo.add_item"
         target:
           entity_id: "todo.intrusion_record"

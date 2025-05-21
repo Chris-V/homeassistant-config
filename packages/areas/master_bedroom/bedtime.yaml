@@ -42,7 +42,7 @@ script:
               - "light.master_bedroom_sconces"
               - "light.master_bedroom_spots"
               - "light.office_spots"
-        
+
         - if:
             - condition: "state"
               entity_id: "binary_sensor.master_bed_occupied_karine"
@@ -65,7 +65,7 @@ script:
                     entity_id: "light.dining_room"
                   data:
                     brightness_pct: 10
-        
+
         - if:
             - condition: "state"
               entity_id: "binary_sensor.master_bed_occupied_chris"
