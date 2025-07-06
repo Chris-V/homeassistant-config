@@ -2,20 +2,34 @@ cloud:
   google_actions:
     filter:
       include_entities:
-        - "script.bedtime"
+        - "script.everything_off"
+    entity_config:
+      script.everything_off:
+        aliases:
+          - "Everything off"
 
 script:
-  bedtime:
-    alias: "Bedtime"
-    icon: "mdi:weather-night"
-    mode: "single"
+  everything_off:
+    alias: "All off"
+    description: "Turn off all lights in the house"
+    icon: "mdi:close-circle-outline"
+    sequence:
+      - action: "homeassistant.turn_off"
+        target:
+          entity_id:
+            - "light.basement_lights"
+            - "light.ground_floor_lights"
+            - "light.outdoor_lights"
+            - "light.shed"
+            - "remote.living_room_tv"
+
+  turn_off_unused:
+    alias: "Turn off unused"
+    icon: "mdi:close-circle-outline"
+    mode: "restart"
     max_exceeded: "silent"
     sequence:
       parallel:
-        - action: "lock.lock"
-          target:
-            entity_id: "lock.kitchen_door"
-
         - if:
             - condition: "state"
               entity_id: "light.master_bedroom_bedsides"
@@ -26,7 +40,7 @@ script:
                 entity_id: "light.master_bedroom_bedsides"
               data:
                 brightness_pct: 5
-                kelvin: 2200
+                color_temp_kelvin: 2200
 
         - action: "light.turn_off"
           target:
@@ -135,3 +149,22 @@ script:
             - action: "light.turn_off"
               target:
                 entity_id: "light.workshop_lights"
+
+automation:
+  - id: "54655af9-ddc7-491d-9200-41aaaddbb21a"
+    alias: "empty_house"
+    initial_state: true
+    triggers:
+      - trigger: "state"
+        entity_id: "group.household"
+        from: "home"
+        for: 30
+    conditions:
+      - condition: "state"
+        entity_id: "binary_sensor.guest_mode"
+        state: "off"
+    actions:
+      - action: "lock.lock"
+        target:
+          entity_id: "lock.kitchen_door"
+      - action: "script.everything_off"

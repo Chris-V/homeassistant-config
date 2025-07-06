@@ -108,7 +108,7 @@ actions:
       conditions: >-
         {{ {'command': 'hold', 'cluster_id': 5, 'args': [3329, 0]}.items() <= trigger.event.data.items() }}
       sequence:
-        - action: script.bedtime
+        - action: script.everything_off
 
     - alias: Tap right button
       conditions: >-

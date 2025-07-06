@@ -22,3 +22,5 @@ homeassistant:
 backup: {}
 
 cloud: {}
+
+my: {}
