@@ -32,6 +32,7 @@ recorder:
       - "sensor.*_battery"
       - "sensor.*_battery_level"
       - "sensor.*_last_seen"
+      - "sensor.*_node_status"
       - "sensor.drake_*"
       - "sensor.maitre_doyle_*"
       - "sensor.snicket_*"
