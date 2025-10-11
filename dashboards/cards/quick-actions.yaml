@@ -38,12 +38,12 @@ cards:
     hold_action:
       action: none
   - type: entity-button
-    entity: script.bedtime
+    entity: script.turn_off_unused
     tap_action:
       action: perform-action
       perform_action: script.turn_on
       service_data:
-        entity_id: script.bedtime
+        entity_id: script.turn_off_unused
     hold_action:
       action: none
   - type: entity-button

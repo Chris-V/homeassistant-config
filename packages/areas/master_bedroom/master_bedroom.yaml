@@ -62,6 +62,19 @@ light:
       - "light.bedside_karine"
 
 template:
+  - binary_sensor:
+      - unique_id: "d242d93d-9005-4318-a377-ddd8c1cec242"
+        name: "Master bed full"
+        device_class: "occupancy"
+        state: |
+          {{
+            is_state('binary_sensor.master_bed_occupied_both', 'on')
+              or (
+                is_state('binary_sensor.master_bed_occupied', 'on')
+                and (not is_state('person.chris', 'home') or not is_state('person.karine', 'home'))
+              )
+          }}
+
   - sensor:
       - unique_id: "sensor.master_bedroom_temperature"
         name: "master_bedroom_temperature"
@@ -79,31 +92,85 @@ timer:
     restore: true
 
 automation:
-  - id: "f614d09a-6589-4e21-9f86-205edea10917"
-    alias: "master_bed_occupied"
+  - id: "056a609b-bbbc-4969-884e-d5b74c18c32d"
+    alias: "master_bed_occupied_day"
+    mode: "single"
+    max_exceeded: "silent"
     triggers:
       - trigger: "state"
         entity_id:
-          - "binary_sensor.master_bed_occupied_chris"
-          - "binary_sensor.master_bed_occupied_karine"
+          - "binary_sensor.master_bed_occupied"
+          - "binary_sensor.master_bed_full"
+        from: "off"
         to: "on"
-    action:
-      if:
-        - condition: "state"
-          entity_id: "binary_sensor.master_bed_occupied_both"
-          state: "off"
-        - condition: "state"
+        for:
+          seconds: 120
+    conditions:
+      - condition: "time"
+        after: "6:00:00"
+        before: "21:00:00"
+    actions:
+      - if:
+          - condition: "state"
+            entity_id: "binary_sensor.master_bed_full"
+            state: "on"
+        then:
+          - action: "lock.lock"
+            target:
+              entity_id: "lock.kitchen_door"
+          - action: "script.everything_off"
+        else:
+          - action: "light.turn_off"
+            target:
+              entity_id: "light.master_bedroom_lights"
+
+  - id: "0197e1c3-9845-713e-aacf-0213e975babc"
+    alias: "master_bed_occupied_night"
+    mode: "single"
+    max_exceeded: "silent"
+    triggers:
+      - trigger: "state"
+        entity_id:
+          - "binary_sensor.master_bed_occupied"
+          - "binary_sensor.master_bed_full"
+        to: "on"
+        for:
+          seconds: 20
+    conditions:
+      - condition: "time"
+        after: "21:00:00"
+        before: "6:00:00"
+    actions:
+      - action: "lock.lock"
+        target:
+          entity_id: "lock.kitchen_door"
+      - action: "light.turn_off"
+        target:
           entity_id:
-            - "person.karine"
-            - "person.chris"
-          state: "home"
-      then:
-        - action: "script.bedtime"
-      else:
-        - action: "lock.lock"
-          target:
-            entity_id: "lock.kitchen_door"
-        - action: "script.everything_off"
+            - "light.master_bedroom_closet"
+            - "light.master_bedroom_sconces"
+            - "light.master_bedroom_spots"
+
+      - timeout:
+          seconds: 150
+        continue_on_timeout: false
+        wait_for_trigger:
+          - trigger: "state"
+            entity_id:
+              - "binary_sensor.master_bed_occupied"
+              - "binary_sensor.master_bed_full"
+            to: "on"
+            for:
+              seconds: 120
+
+      - if:
+          - condition: "state"
+            entity_id: "binary_sensor.master_bed_full"
+            state: "on"
+        then:
+          - action: "script.everything_off"
+        else:
+          - action: "script.turn_off_unused"
 
   - id: "650fdbf6-2f22-4bd0-b430-c8a1c29d3217"
     alias: "master_bedroom_spots_dimmer_scenes"
