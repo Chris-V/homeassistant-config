@@ -55,7 +55,7 @@ automation:
 
     triggers:
       - trigger: state
-        entity_id: "sensor.chris_pixel_6_last_notification"
+        entity_id: "sensor.chris_pixel_10_last_notification"
         to: ~
 
     variables:
