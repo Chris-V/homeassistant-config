@@ -21,7 +21,8 @@ cloud:
 template:
   - binary_sensor:
       - unique_id: "binary_sensor.basement_bathroom_presence"
-        name: "basement_bathroom_presence"
+        default_entity_id: "binary_sensor.basement_bathroom_presence"
+        name: "Basement bathroom presence"
         device_class: "presence"
         state: >-
           {{
@@ -31,14 +32,16 @@ template:
 
     sensor:
       - unique_id: "sensor.basement_bathroom_humidity"
-        name: "basement_bathroom_humidity"
+        default_entity_id: "sensor.basement_bathroom_humidity"
+        name: "Basement bathroom humidity"
         device_class: "humidity"
         unit_of_measurement: "%"
         state: "{{ states('sensor.basement_bathroom_multisensor_relative_humidity') | int(0) | round }}"
         availability: "{{ not is_state('sensor.basement_bathroom_multisensor_relative_humidity', 'unavailable') }}"
 
       - unique_id: "sensor.basement_bathroom_temperature"
-        name: "basement_bathroom_temperature"
+        default_entity_id: "sensor.basement_bathroom_temperature"
+        name: "Basement bathroom temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         state: "{{ states('sensor.basement_bathroom_multisensor_temperature') | int(0) | round(1) }}"

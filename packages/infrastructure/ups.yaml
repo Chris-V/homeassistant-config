@@ -17,7 +17,8 @@ switch:
 template:
   - sensor:
       - unique_id: "sensor.ups_battery_status"
-        name: "ups_battery_status"
+        default_entity_id: "sensor.ups_battery_status"
+        name: "UPS battery status"
         device_class: "battery"
         unit_of_measurement: "%"
         state: "{{ iif('REPLACEBATT' in states('sensor.ups_status'), 0, 100) }}"

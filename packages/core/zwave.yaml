@@ -75,6 +75,7 @@ group:
 template:
   - sensor:
       - unique_id: "sensor.dead_zwave_nodes"
+        default_entity_id: "sensor.dead_zwave_nodes"
         name: "Dead Z-Wave Nodes"
         icon: "mdi:robot-dead"
         state: "{{ this.attributes.entity_id | default([]) | length }}"

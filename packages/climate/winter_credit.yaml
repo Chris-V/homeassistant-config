@@ -11,14 +11,16 @@ homeassistant:
 template:
   - binary_sensor:
       - unique_id: "4ff23e99-f31f-4b96-9cb8-dd53b3796354"
-        name: "winter_credit_enabled"
+        default_entity_id: "binary_sensor.winter_credit_enabled"
+        name: "Winter credit enabled"
         state: >-
           {% set date = states('sensor.date') | as_datetime -%}
           {{
             date is not none and (date.month <= 3 or date.month == 12)
           }}
       - unique_id: "42ce95f4-91ce-41dd-8d33-61fba466e7f6"
-        name: "winter_credit_peak_event"
+        default_entity_id: "binary_sensor.winter_credit_peak_event"
+        name: "Winter credit: Peak event"
         icon: "mdi:snowflake-alert"
         state: >-
           {% set special_schedule = state_attr('calendar.climate_exceptions', 'message') | default('', True) -%}
@@ -26,7 +28,8 @@ template:
 
     sensor:
       - unique_id: "sensor.winter_credit_baseline_climate_preset"
-        name: "winter_credit_baseline_climate_preset"
+        default_entity_id: "sensor.winter_credit_baseline_climate_preset"
+        name: "Winter credit: Baseline climate preset"
         icon: "mdi:snowflake-thermometer"
         state: >-
           {% set cooling_delta = 3 %}

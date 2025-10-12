@@ -49,7 +49,8 @@ light:
 template:
   - sensor:
       - unique_id: "sensor.dining_room_temperature"
-        name: "dining_room_temperature"
+        default_entity_id: "sensor.dining_room_temperature"
+        name: "Dining room temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         state: "{{ states('sensor.dining_room_thermostat_temperature') | float(0) | round(1) }}"

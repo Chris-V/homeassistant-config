@@ -11,7 +11,8 @@ input_boolean:
 template:
   - sensor:
       - unique_id: "sensor.scheduled_climate_preset"
-        name: "scheduled_climate_preset"
+        default_entity_id: "sensor.scheduled_climate_preset"
+        name: "Scheduled climate preset"
         icon: "mdi:thermometer-lines"
         state: >-
           {% set supported_presets = [

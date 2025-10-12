@@ -8,7 +8,8 @@ homeassistant:
 template:
   - binary_sensor:
       - unique_id: "d15e4446-af81-4000-aed1-98a0fe3c8702"
-        name: "use_alarm_theme"
+        default_entity_id: "binary_sensor.use_alarm_theme"
+        name: "Use alarm theme"
         icon: "mdi:alarm-light"
         state: >-
           {{
@@ -20,7 +21,8 @@ template:
               or is_state('valve.main_water_shut_off', 'off')
           }}
       - unique_id: "db252c59-897b-4bd9-94a8-d5d17f48ed68"
-        name: "use_dark_theme"
+        default_entity_id: "binary_sensor.use_dark_theme"
+        name: "Use dark theme"
         icon: "mdi:theme-light-dark"
         state: "{{ state_attr('sun.sun', 'elevation') | float < -3 }}"
 

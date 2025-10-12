@@ -44,6 +44,7 @@ template:
           event: 6
     sensor:
       - unique_id: "user"
+        default_entity_id: "sensor.kitchen_door_unlocks"
         name: "Kitchen door unlocks"
         state: >-
           {% set user_id = trigger.event.data.parameters.userId | int(-1) %}
