@@ -10,6 +10,7 @@ binary_sensor:
 template:
   - sensor:
       - unique_id: "7f475229-c3a9-4c68-867e-9b5dcede552d"
+        default_entity_id: "sensor.current_door"
         name: "Current door"
         icon: "mdi:door"
         state: >-

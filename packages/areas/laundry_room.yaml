@@ -19,7 +19,8 @@ light:
 template:
   - sensor:
       - unique_id: "sensor.laundry_room_temperature"
-        name: "laundry_room_temperature"
+        default_entity_id: "sensor.laundry_room_temperature"
+        name: "Laundry room temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         state: >

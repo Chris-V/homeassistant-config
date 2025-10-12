@@ -12,6 +12,7 @@ binary_sensor:
 template:
   - sensor:
       - unique_id: "sensor.last_motion"
+        default_entity_id: "sensor.last_motion"
         name: "Last motion"
         icon: "mdi:motion-sensor"
         state: >-
@@ -26,6 +27,7 @@ template:
           {%- endif %}
 
       - unique_id: "e6d941bc-0712-423b-b4e1-7d1d5e398c52"
+        default_entity_id: "sensor.current_motion"
         name: "Current motion"
         icon: "mdi:motion-sensor"
         state: >-

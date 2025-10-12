@@ -27,7 +27,8 @@ input_datetime:
 template:
   - binary_sensor:
       - unique_id: "cca4e02a-aadf-42f1-93d6-468e78d44877"
-        name: "lydia_requires_attention"
+        default_entity_id: "binary_sensor.lydia_requires_attention"
+        name: "Lydia requires attention"
         device_class: "problem"
         picture: "/local/animals/slinky_avatar.jpg"
         attributes:

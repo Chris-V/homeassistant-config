@@ -25,7 +25,8 @@ input_datetime:
 template:
   - binary_sensor:
       - unique_id: "binary_sensor.carl_requires_attention"
-        name: "carl_requires_attention"
+        default_entity_id: "binary_sensor.carl_requires_attention"
+        name: "Carl requires attention"
         device_class: "problem"
         picture: "/local/animals/carl_avatar.jpg"
         attributes:

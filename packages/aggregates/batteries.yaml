@@ -39,7 +39,8 @@ sensor:
 template:
   - binary_sensor:
       - unique_id: "binary_sensor.all_batteries"
-        name: "all_batteries"
+        default_entity_id: "binary_sensor.all_batteries"
+        name: "All Batteries"
         device_class: "battery"
         state: "{{ this.attributes.entity_id | default([]) | length }}"
         attributes:

@@ -37,19 +37,22 @@ light:
 template:
   - sensor:
       - unique_id: "sensor.outdoor_humidity"
-        name: "outdoor_humidity"
+        default_entity_id: "sensor.outdoor_humidity"
+        name: "Outdoor humidity"
         device_class: "humidity"
         unit_of_measurement: "%"
         state: "{{ states('sensor.weather_quebec_humidity') }}"
         availability: "{{ not is_state('sensor.weather_quebec_humidity', 'unavailable') }}"
       - unique_id: "sensor.outdoor_temperature"
-        name: "outdoor_temperature"
+        default_entity_id: "sensor.outdoor_temperature"
+        name: "Outdoor temperature"
         device_class: "temperature"
         unit_of_measurement: "°C"
         state: "{{ states('sensor.weather_quebec_temperature') }}"
         availability: "{{ not is_state('sensor.weather_quebec_temperature', 'unavailable') }}"
       - unique_id: "sensor.weather_summary"
-        name: "weather_summary"
+        default_entity_id: "sensor.weather_summary"
+        name: "Weather summary"
         state: "{{ states('sensor.weather_quebec_forecast') }}"
         icon: >
           {% set state_icon = states('weather.quebec')

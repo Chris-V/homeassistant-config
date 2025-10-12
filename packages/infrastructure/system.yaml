@@ -31,6 +31,7 @@ sensor:
 template:
   - sensor:
       - unique_id: "sensor.hour"
-        name: "hour"
+        default_entity_id: "sensor.hour"
+        name: "Hour"
         icon: "mdi:clock"
         state: "{{ states.sensor.time.last_changed.hour }}"

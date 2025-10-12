@@ -21,14 +21,13 @@ shell_command:
   wake_on_lan: >-
     /usr/bin/ssh -F /config/.secrets/ssh_config router "/usr/sbin/wol -p 9 -i '{{ broadcast }}' '{{ mac }}'"
 
-switch:
-  - platform: template
-    switches:
-      network_media:
-        unique_id: "switch.network_media"
-        friendly_name: "Media"
-        value_template: "{{ is_state('binary_sensor.avatar_media', 'on') }}"
-        icon_template: "mdi:server-network{% if not is_state('binary_sensor.avatar_media', 'on') %}-off{% endif %}"
+template:
+  - switch:
+      - unique_id: "switch.network_media"
+        default_entity_id: "switch.network_media"
+        name: "Media"
+        state: "{{ is_state('binary_sensor.avatar_media', 'on') }}"
+        icon: "mdi:server-network{% if not is_state('binary_sensor.avatar_media', 'on') %}-off{% endif %}"
         turn_on:
           action: "shell_command.wake_on_lan"
           data:

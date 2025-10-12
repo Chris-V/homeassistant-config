@@ -84,7 +84,8 @@ input_datetime:
 template:
   - sensor:
       - unique_id: "sensor.manual_thermostats_count"
-        name: "manual_climates_count"
+        default_entity_id: "sensor.manual_thermostats_count"
+        name: "Manual climates count"
         icon: "mdi:thermometer-alert"
         state: "{{ this.attributes.entity_id | default([]) | length }}"
         attributes:

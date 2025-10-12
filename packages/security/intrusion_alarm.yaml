@@ -43,8 +43,9 @@ input_text:
 
 template:
   - binary_sensor:
-      - name: "presence_armed"
-        unique_id: "449f4beb-83a1-43d2-a7ba-64de0a305960"
+      - unique_id: "449f4beb-83a1-43d2-a7ba-64de0a305960"
+        default_entity_id: "binary_sensor.presence_armed"
+        name: "Presence armed"
         icon: "mdi:shield-{{ iif(this.state == 'on', 'check', 'off') }}"
         state: >-
           {{
@@ -67,8 +68,9 @@ template:
         target:
           entity_id: "todo.intrusion_record"
     binary_sensor:
-      - name: "intrusion_activity"
-        unique_id: "ccc872ad-92f9-4b3e-87a5-452292b6b118"
+      - unique_id: "ccc872ad-92f9-4b3e-87a5-452292b6b118"
+        default_entity_id: "binary_sensor.intrusion_activity"
+        name: "Intrusion activity"
         device_class: "safety"
         state: >-
           {{
