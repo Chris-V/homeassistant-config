@@ -19,7 +19,7 @@ shell_command:
   turn_off_server: >-
     /usr/bin/ssh -F /config/.secrets/ssh_config {{ server_key }} "sudo poweroff"
   wake_on_lan: >-
-    /usr/bin/ssh -F /config/.secrets/ssh_config router "/usr/sbin/wol -p 9 -i '{{ broadcast }}' '{{ mac }}'"
+    /usr/bin/ssh -F /config/.secrets/ssh_config router "/usr/bin/etherwake -b -i br-lan {{ mac }}"
 
 template:
   - switch:
