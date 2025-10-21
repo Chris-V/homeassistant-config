@@ -15,9 +15,9 @@ elements:
         "off": inherit
     entity: binary_sensor.lydia_requires_attention
     image: /local/animals/slinky_tile.jpg
-    double_tap_action:
+    tap_action:
       action: navigate
-      navigation_path: /living-details/terrariums
+      navigation_path: /lovelace/lydia
     style:
       <<: &sensor_image_element_style
         transform: none
@@ -28,9 +28,9 @@ elements:
   - <<: *sensor_image_element_config
     entity: binary_sensor.carl_requires_attention
     image: /local/animals/carl_tile.jpg
-    double_tap_action:
+    tap_action:
       action: navigate
-      navigation_path: /living-details/terrariums
+      navigation_path: /lovelace/carl
     style:
       <<: *sensor_image_element_style
       left: 50%
@@ -38,9 +38,9 @@ elements:
   - <<: *sensor_image_element_config
     entity: binary_sensor.all_plants
     image: /local/plants/plant_tile.jpg
-    double_tap_action:
+    tap_action:
       action: navigate
-      navigation_path: /living-details/plants
+      navigation_path: /lovelace/plants
     style:
       transform: none
       height: 50%

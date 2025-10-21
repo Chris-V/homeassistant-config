@@ -1,0 +1,76 @@
+title: {{ title }}
+path: {{ path }}
+icon: {{ icon }}
+subview: true
+type: sections
+dense_section_placement: true
+top_margin: true
+max_columns: 2
+header:
+  layout: center
+  badges_position: top
+  badges_wrap: wrap
+  card:
+    type: markdown
+    content: '# {{ title }}'
+    text_only: true
+background:
+  opacity: 30
+  alignment: top right
+  size: contain
+  repeat: no-repeat
+  attachment: scroll
+  image: {{ background }}
+sections:
+  - type: grid
+    cards:
+      - type: entities
+        state_color: true
+        entities:
+{%- for switch in [
+{ 'key': 'power_strip', 'name': 'Power strip' },
+{ 'key': 'heat_bulb', 'name': 'Heat bulb' },
+{ 'key': 'heater', 'name': 'Heater' },
+{ 'key': 'uv_light', 'name': 'UV' },
+] + switches | default([]) %}
+          - type: custom:template-entity-row
+            toggle: true
+            entity: switch.{{ entity_prefix }}_{{ switch.key }}
+            name: {{ switch.name }}
+{%- if power_monitoring %}
+            secondary: >-
+              {{ '{{' }}
+              states('sensor.{{ entity_prefix }}_{{ switch.key }}_power', rounded=True, with_unit=True)
+              {{ '}}' }}
+              ⁓
+              {{ '{{' }}
+              states('sensor.{{ entity_prefix }}_{{ switch.key }}_energy', rounded=True, with_unit=True)
+              {{ '}}' }}
+{%- endif %}
+            color: >-
+              {{ '{%' }}
+              if is_state_attr('binary_sensor.{{ entity_prefix }}_requires_attention', '{{ switch.key }}', True)
+              {{ '%}' }}
+              var(--error-color)
+{%- raw %}
+              {% elif is_state(config.entity, 'on') %}
+              var(--state-active-color)
+              {% endif %}
+{%- endraw %}
+{%- endfor %}
+
+  - type: grid
+    cards:
+      - type: entities
+        state_color: true
+        entities:
+          - entity: input_boolean.{{ entity_prefix }}_scheduled_heat_bulb
+            name: Schedule heat bulb
+          - entity: input_boolean.{{ entity_prefix }}_scheduled_heater
+            name: Schedule heater
+          - entity: input_boolean.{{ entity_prefix }}_scheduled_uv
+            name: Schedule UV
+          - entity: input_datetime.{{ entity_prefix }}_day_time
+            name: Start
+          - entity: input_datetime.{{ entity_prefix }}_night_time
+            name: End

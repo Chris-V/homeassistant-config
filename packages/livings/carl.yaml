@@ -10,21 +10,50 @@ homeassistant:
       icon: "mdi:weather-sunny"
 
 input_boolean:
-  carl_scheduled_lights:
-    name: "Automate Carl's terrarium"
-    icon: "mdi:home-automation"
+  carl_scheduled_heat_bulb:
+    name: "Schedule Carl's heat bulb"
+    icon: "mdi:spotlight-beam"
+  carl_scheduled_heater:
+    name: "Schedule Carl's heater"
+    icon: "mdi:radiator"
+  carl_scheduled_uv:
+    name: "Schedule Carl's UV"
+    icon: "mdi:weather-sunny"
 
 input_datetime:
   carl_day_time:
-    name: Time at which Carl's terrarium lights turn on
+    name: "When Carl's terrarium lights turn on"
+    icon: "mdi:clock-start"
     has_date: false
     has_time: true
   carl_night_time:
-    name: Time at which Carl's terrarium lights turn off
+    name: "When Carl's terrarium lights turn off"
+    icon: "mdi:clock-end"
     has_date: false
     has_time: true
 
 template:
+  - trigger:
+      - platform: "time"
+        at:
+          - "input_datetime.carl_day_time"
+          - "input_datetime.carl_night_time"
+      - platform: "state"
+        entity_id:
+          - "input_datetime.carl_day_time"
+          - "input_datetime.carl_night_time"
+        to: ~
+      - trigger: "homeassistant"
+        event: "start"
+    binary_sensor:
+      - unique_id: "7c1c6afb-aaba-4417-8f7e-d83f9a3b6281"
+        default_entity_id: "binary_sensor.carl_scheduling_active"
+        name: "Carl scheduling is active"
+        state: >-
+          {{
+            now() >= states('input_datetime.carl_day_time') | today_at
+              and now() <= states('input_datetime.carl_night_time') | today_at
+          }}
   - binary_sensor:
       - unique_id: "binary_sensor.carl_requires_attention"
         default_entity_id: "binary_sensor.carl_requires_attention"
@@ -32,10 +61,29 @@ template:
         device_class: "problem"
         picture: "/local/animals/carl_avatar.jpg"
         attributes:
-          scheduling: "{{ is_state('input_boolean.carl_scheduled_lights', 'on') }}"
+          heat_bulb: >-
+            {{
+              is_state('input_boolean.carl_scheduled_heat_bulb', 'on')
+                and is_state('binary_sensor.carl_scheduling_active', 'on')
+                and is_state('switch.carl_heat_bulb', 'off')
+            }}
+          heater: >-
+            {{
+              is_state('input_boolean.carl_scheduled_heater', 'on')
+                and is_state('binary_sensor.carl_scheduling_active', 'on')
+                and is_state('switch.carl_heater', 'off')
+            }}
+          uv_light: >-
+            {{
+              is_state('input_boolean.carl_scheduled_uv', 'on')
+                and is_state('binary_sensor.carl_scheduling_active', 'on')
+                and is_state('switch.carl_uv_light', 'off')
+            }}
         state: >-
           {{
-            not this.attributes.scheduling | default(True)
+            this.attributes.heat_bulb | default(True)
+              or this.attributes.heater | default(True)
+              or this.attributes.uv_light | default(True)
           }}
 
 automation:
@@ -44,8 +92,11 @@ automation:
     use_blueprint:
       path: "terrarium_scheduling.yaml"
       input:
-        scheduling_entity: "input_boolean.carl_scheduled_lights"
+        schedule_heat_bulb: "input_boolean.carl_scheduled_heat_bulb"
+        schedule_heater: "input_boolean.carl_scheduled_heater"
+        schedule_uv_light: "input_boolean.carl_scheduled_uv"
         day_time_entity: "input_datetime.carl_day_time"
         night_time_entity: "input_datetime.carl_night_time"
         heat_bulb_switch: "switch.carl_heat_bulb"
+        heater_switch: "switch.carl_heater"
         uv_light_switch: "switch.carl_uv_light"

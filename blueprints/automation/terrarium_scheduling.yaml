@@ -3,13 +3,6 @@ blueprint:
   description: Manage a terarrium's lights and heaters.
   domain: automation
   input:
-    scheduling_entity:
-      name: Scheduling control entity
-      description: A boolean input that enables/disables scheduling altogether.
-      selector:
-        entity:
-          filter:
-            - domain: input_boolean
     day_time_entity:
       name: Day time input entity
       description: The entity representing when day time starts for this terrarium.
@@ -24,6 +17,13 @@ blueprint:
         entity:
           filter:
             - domain: input_datetime
+    schedule_heat_bulb:
+      name: Enable heat bulb scheduling
+      default:
+      selector:
+        entity:
+          filter:
+            - domain: input_boolean
     heat_bulb_switch:
       name: Heat bulb
       default:
@@ -31,6 +31,13 @@ blueprint:
         entity:
           filter:
             - domain: switch
+    schedule_heater:
+      name: Enable heater scheduling
+      default:
+      selector:
+        entity:
+          filter:
+            - domain: input_boolean
     heater_switch:
       name: Heater
       default:
@@ -38,6 +45,13 @@ blueprint:
         entity:
           filter:
             - domain: switch
+    schedule_uv_light:
+      name: Enable UV scheduling
+      default:
+      selector:
+        entity:
+          filter:
+            - domain: input_boolean
     uv_light_switch:
       name: UV light
       default:
@@ -50,6 +64,9 @@ initial_state: true
 mode: "restart"
 
 trigger_variables:
+  schedule_heat_bulb: !input schedule_heat_bulb
+  schedule_heater: !input schedule_heater
+  schedule_uv_light: !input schedule_uv_light
   heat_bulb_switch: !input heat_bulb_switch
   heater_switch: !input heater_switch
   uv_light_switch: !input uv_light_switch
@@ -64,42 +81,50 @@ triggers:
       - !input day_time_entity
       - !input night_time_entity
   - trigger: state
-    entity_id: !input scheduling_entity
+    entity_id:
+      - !input schedule_heat_bulb
+      - !input schedule_heater
+      - !input schedule_uv_light
     from: "off"
     to: "on"
-  - trigger: homeassistant
-    event: start
-
-conditions:
-  - condition: state
-    entity_id: !input scheduling_entity
-    state: "on"
+  - trigger: "homeassistant"
+    event: "start"
 
 actions:
-  - action: switch.turn_on
-    enabled: "{{ heater_switch != '' }}"
-    target:
-      entity_id: !input heater_switch
+  - if: "{{ is_state(schedule_heater, 'on') }}"
+    then:
+      - action: "switch.turn_on"
+        enabled: "{{ heater_switch != '' }}"
+        target:
+          entity_id: !input heater_switch
 
   - if:
       - condition: time
         after: !input day_time_entity
         before: !input night_time_entity
     then:
-      - action: switch.turn_on
-        enabled: "{{ heat_bulb_switch != '' }}"
-        target:
-          entity_id: !input heat_bulb_switch
-      - action: switch.turn_on
-        enabled: "{{ uv_light_switch != '' }}"
-        target:
-          entity_id: !input uv_light_switch
+      - if: "{{ is_state(schedule_heat_bulb, 'on') }}"
+        then:
+          - action: "switch.turn_on"
+            enabled: "{{ heat_bulb_switch != '' }}"
+            target:
+              entity_id: !input heat_bulb_switch
+      - if: "{{ is_state(schedule_uv_light, 'on') }}"
+        then:
+          - action: "switch.turn_on"
+            enabled: "{{ uv_light_switch != '' }}"
+            target:
+              entity_id: !input uv_light_switch
     else:
-      - action: switch.turn_off
-        enabled: "{{ heat_bulb_switch != '' }}"
-        target:
-          entity_id: !input heat_bulb_switch
-      - action: switch.turn_off
-        enabled: "{{ uv_light_switch != '' }}"
-        target:
-          entity_id: !input uv_light_switch
+      - if: "{{ is_state(schedule_heat_bulb, 'on') }}"
+        then:
+          - action: "switch.turn_off"
+            enabled: "{{ heat_bulb_switch != '' }}"
+            target:
+              entity_id: !input heat_bulb_switch
+      - if: "{{ is_state(schedule_uv_light, 'on') }}"
+        then:
+          - action: "switch.turn_off"
+            enabled: "{{ uv_light_switch != '' }}"
+            target:
+              entity_id: !input uv_light_switch
