@@ -26,21 +26,21 @@ blueprint:
             - domain: input_datetime
     heat_bulb_switch:
       name: Heat bulb
-      default: switch.dummy
+      default:
       selector:
         entity:
           filter:
             - domain: switch
     heater_switch:
       name: Heater
-      default: switch.dummy
+      default:
       selector:
         entity:
           filter:
             - domain: switch
     uv_light_switch:
       name: UV light
-      default: switch.dummy
+      default:
       selector:
         entity:
           filter:
@@ -48,6 +48,11 @@ blueprint:
 
 initial_state: true
 mode: "restart"
+
+trigger_variables:
+  heat_bulb_switch: !input heat_bulb_switch
+  heater_switch: !input heater_switch
+  uv_light_switch: !input uv_light_switch
 
 triggers:
   - trigger: time
@@ -65,11 +70,6 @@ triggers:
   - trigger: homeassistant
     event: start
 
-variables:
-  heat_bulb_switch: !input heat_bulb_switch
-  heater_switch: !input heater_switch
-  uv_light_switch: !input uv_light_switch
-
 conditions:
   - condition: state
     entity_id: !input scheduling_entity
@@ -77,7 +77,7 @@ conditions:
 
 actions:
   - action: switch.turn_on
-    enabled: "{{ heater_switch != 'switch.dummy' }}"
+    enabled: "{{ heater_switch != '' }}"
     target:
       entity_id: !input heater_switch
 
@@ -87,19 +87,19 @@ actions:
         before: !input night_time_entity
     then:
       - action: switch.turn_on
-        enabled: "{{ heat_bulb_switch != 'switch.dummy' }}"
+        enabled: "{{ heat_bulb_switch != '' }}"
         target:
           entity_id: !input heat_bulb_switch
       - action: switch.turn_on
-        enabled: "{{ uv_light_switch != 'switch.dummy' }}"
+        enabled: "{{ uv_light_switch != '' }}"
         target:
           entity_id: !input uv_light_switch
     else:
       - action: switch.turn_off
-        enabled: "{{ heat_bulb_switch != 'switch.dummy' }}"
+        enabled: "{{ heat_bulb_switch != '' }}"
         target:
           entity_id: !input heat_bulb_switch
       - action: switch.turn_off
-        enabled: "{{ uv_light_switch != 'switch.dummy' }}"
+        enabled: "{{ uv_light_switch != '' }}"
         target:
           entity_id: !input uv_light_switch
