@@ -20,23 +20,13 @@ input_text:
     initial: ""
 
 input_datetime:
-  broadcast_weekday_start:
-    name: "Weekday broadcast start time"
+  broadcast_not_before:
+    name: "Don't broadcast before"
     icon: "mdi:clock-start"
     has_date: false
     has_time: true
-  broadcast_weekday_end:
-    name: "Weekday broadcast end time"
-    icon: "mdi:clock-end"
-    has_date: false
-    has_time: true
-  broadcast_weekend_start:
-    name: "Weekend broadcast start time"
-    icon: "mdi:clock-start"
-    has_date: false
-    has_time: true
-  broadcast_weekend_end:
-    name: "Weekend broadcast end time"
+  broadcast_not_after:
+    name: "Don't broadcast after"
     icon: "mdi:clock-end"
     has_date: false
     has_time: true
@@ -222,10 +212,13 @@ automation:
         entity_id: "group.household"
         to: "home"
         for: 120
+      - trigger: "state"
+        entity_id: "binary_sensor.master_bed_occupied"
+        from: "on"
+        to: "off"
+        for: 60
       - trigger: "time"
-        at:
-          - "input_datetime.broadcast_weekday_start"
-          - "input_datetime.broadcast_weekend_start"
+        at: "input_datetime.broadcast_not_before"
 
     conditions:
       - condition: "numeric_state"
@@ -235,30 +228,12 @@ automation:
         entity_id: "group.household"
         state: "home"
         for: 120
-      - or:
-          - condition: "time"
-            after: "input_datetime.broadcast_weekday_start"
-            before: "input_datetime.broadcast_weekday_end"
-            weekday:
-              - mon
-              - tue
-              - wed
-              - thu
-          - condition: "time"
-            after: "input_datetime.broadcast_weekday_start"
-            before: "input_datetime.broadcast_weekend_end"
-            weekday:
-              - fri
-          - condition: "time"
-            after: "input_datetime.broadcast_weekend_start"
-            before: "input_datetime.broadcast_weekend_end"
-            weekday:
-              - sat
-          - condition: "time"
-            after: "input_datetime.broadcast_weekend_start"
-            before: "input_datetime.broadcast_weekday_end"
-            weekday:
-              - sun
+      - condition: "state"
+        entity_id: "binary_sensor.master_bed_occupied"
+        state: "off"
+      - condition: "time"
+        after: "input_datetime.broadcast_not_before"
+        before: "input_datetime.broadcast_not_after"
 
     actions:
       - action: "todo.get_items"
@@ -267,18 +242,18 @@ automation:
           entity_id: "todo.audio_broadcast"
         data:
           status:
-            - needs_action
+            - "needs_action"
 
       - variables:
           broadcast_item: "{{ broadcast_items['todo.audio_broadcast']['items'][0] }}"
 
-      - action: script.broadcast_notification
+      - action: "script.broadcast_notification"
         data:
           message: "{{ broadcast_item['description'] | default(broadcast_item['summary'], true) }}"
 
       - wait_template: "{{ is_state('script.broadcast_notification', 'off') }}"
 
-      - action: script.manage_broadcast_queue
+      - action: "script.manage_broadcast_queue"
         data:
           action: "pop"
           tag: "{{ broadcast_item['summary'] }}"
