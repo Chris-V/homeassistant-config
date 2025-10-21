@@ -2,6 +2,8 @@ homeassistant:
   customize:
     binary_sensor.carl_requires_attention:
       friendly_name: "Carl requires attention"
+    switch.carl_heat_bulb:
+      icon: "mdi:spotlight-beam"
     switch.carl_heater:
       icon: "mdi:radiator"
     switch.carl_uv_light:
