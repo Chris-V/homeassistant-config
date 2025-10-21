@@ -45,5 +45,5 @@ automation:
         scheduling_entity: "input_boolean.carl_scheduled_lights"
         day_time_entity: "input_datetime.carl_day_time"
         night_time_entity: "input_datetime.carl_night_time"
-        heater_switch: "switch.carl_heater"
+        heat_bulb_switch: "switch.carl_heat_bulb"
         uv_light_switch: "switch.carl_uv_light"
