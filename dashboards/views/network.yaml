@@ -1,7 +1,11 @@
 - type: vertical-stack
   cards:
+    - type: "heading"
+      heading: "Automate Server"
+      icon: "mdi:network-pos"
+
     - type: entities
-      title: Automate
+      title: Monitor
       show_header_toggle: false
       card_mod:
         style: !template
@@ -9,9 +13,14 @@
           variables:
             svg_path: "M12,3L2,12H5V20H19V12H22L12,3M12,8.5C14.34,8.5 16.46,9.43 18,10.94L16.8,12.12C15.58,10.91 13.88,10.17 12,10.17C10.12,10.17 8.42,10.91 7.2,12.12L6,10.94C7.54,9.43 9.66,8.5 12,8.5M12,11.83C13.4,11.83 14.67,12.39 15.6,13.3L14.4,14.47C13.79,13.87 12.94,13.5 12,13.5C11.06,13.5 10.21,13.87 9.6,14.47L8.4,13.3C9.33,12.39 10.6,11.83 12,11.83M12,15.17C12.94,15.17 13.7,15.91 13.7,16.83C13.7,17.75 12.94,18.5 12,18.5C11.06,18.5 10.3,17.75 10.3,16.83C10.3,15.91 11.06,15.17 12,15.17Z"
       entities:
-        - sensor.processor_use
-        - sensor.processor_temperature
-        - sensor.memory_use_percent
+        - entity: sensor.automate_server_uptime
+          name: Uptime
+        - entity: sensor.automate_server_cpu_usage
+          name: CPU usage
+        - entity: sensor.automate_server_cpu_temperature
+          name: CPU temperature
+        - entity: sensor.automate_server_memory_usage
+          name: Memory usage
 
     - type: entities
       title: Home Assistant
@@ -26,59 +35,96 @@
         - entity: sensor.current_home_assistant_version
         - entity: sensor.latest_home_assistant_version
 
-- type: entities
-  title: Devices
-  show_header_toggle: false
-  card_mod:
-    style: !template
-      file: ../styles/inset-icon.css.j2
-      variables:
-        svg_path: "M22,9V7H20V5A2,2 0 0,0 18,3H4A2,2 0 0,0 2,5V19A2,2 0 0,0 4,21H18A2,2 0 0,0 20,19V17H22V15H20V13H22V11H20V9H22M18,19H4V5H18V19M6,13H11V17H6V13M12,7H16V10H12V7M6,7H11V12H6V7M12,11H16V17H12V11Z"
-  entities:
-    - type: "custom:template-entity-row"
-      entity: "binary_sensor.ground_floor_heat_pump_status"
-      secondary: "{{ states('sensor.ground_floor_heat_pump_uptime') | as_datetime | time_since(2) }}"
-      active: "{{ is_state(config.entity, 'on') }}"
-      state: "{{ state_translated(config.entity) }}"
-    - type: "custom:template-entity-row"
-      entity: "binary_sensor.master_bed_presence_status"
-      secondary: "{{ states('sensor.master_bed_presence_uptime') | as_datetime | time_since(2) }}"
-      active: "{{ is_state(config.entity, 'on') }}"
-      state: "{{ state_translated(config.entity) }}"
-    - type: "custom:template-entity-row"
-      entity: "binary_sensor.kitchen_proxy_status"
-      secondary: "{{ states('sensor.kitchen_proxy_uptime') | as_datetime | time_since(2) }}"
-      active: "{{ is_state(config.entity, 'on') }}"
-      state: "{{ state_translated(config.entity) }}"
-    - type: "custom:template-entity-row"
-      entity: "binary_sensor.lounge_proxy_status"
-      secondary: "{{ states('sensor.lounge_proxy_uptime') | as_datetime | time_since(2) }}"
-      active: "{{ is_state(config.entity, 'on') }}"
-      state: "{{ state_translated(config.entity) }}"
-    - type: "custom:template-entity-row"
-      entity: "binary_sensor.office_proxy_status"
-      secondary: "{{ states('sensor.office_proxy_uptime') | as_datetime | time_since(2) }}"
-      active: "{{ is_state(config.entity, 'on') }}"
-      state: "{{ state_translated(config.entity) }}"
+- type: vertical-stack
+  cards:
+    - type: "heading"
+      heading: "Media Server"
+      icon: "mdi:play-network"
 
-- type: entities
-  show_header_toggle: false
-  title: Server UPS
-  card_mod:
-    style: !template
-      file: ../styles/inset-icon.css.j2
-      variables:
-        svg_path: "M11 15H6L13 1V9H18L11 23V15Z"
-  entities:
-    - entity: sensor.ups_status
-      name: Status
-    - entity: sensor.ups_load
-      name: Load
-    - entity: sensor.ups_battery
-      name: Battery
-    - entity: sensor.ups_input_voltage
-      name: Input voltage
-    - entity: sensor.ups_time_left
-      name: Time left
-    - entity: sensor.ups_time_on_battery
-      name: Time on battery
+    - type: entities
+      title: Monitor
+      show_header_toggle: false
+      card_mod:
+        style: !template
+          file: ../styles/inset-icon.css.j2
+          variables:
+            svg_path: "M12,3L2,12H5V20H19V12H22L12,3M12,8.5C14.34,8.5 16.46,9.43 18,10.94L16.8,12.12C15.58,10.91 13.88,10.17 12,10.17C10.12,10.17 8.42,10.91 7.2,12.12L6,10.94C7.54,9.43 9.66,8.5 12,8.5M12,11.83C13.4,11.83 14.67,12.39 15.6,13.3L14.4,14.47C13.79,13.87 12.94,13.5 12,13.5C11.06,13.5 10.21,13.87 9.6,14.47L8.4,13.3C9.33,12.39 10.6,11.83 12,11.83M12,15.17C12.94,15.17 13.7,15.91 13.7,16.83C13.7,17.75 12.94,18.5 12,18.5C11.06,18.5 10.3,17.75 10.3,16.83C10.3,15.91 11.06,15.17 12,15.17Z"
+      entities:
+        - entity: sensor.media_server_uptime
+          name: Uptime
+        - entity: sensor.media_server_cpu_usage
+          name: CPU usage
+        - entity: sensor.media_server_cpu_temperature
+          name: CPU temperature
+        - entity: sensor.media_server_memory_usage
+          name: Memory usage
+
+- type: vertical-stack
+  cards:
+    - type: "heading"
+      heading: "IOT"
+      icon: "mdi:chip"
+
+    - type: entities
+      title: ESP Devices
+      show_header_toggle: false
+      card_mod:
+        style: !template
+          file: ../styles/inset-icon.css.j2
+          variables:
+            svg_path: "M22,9V7H20V5A2,2 0 0,0 18,3H4A2,2 0 0,0 2,5V19A2,2 0 0,0 4,21H18A2,2 0 0,0 20,19V17H22V15H20V13H22V11H20V9H22M18,19H4V5H18V19M6,13H11V17H6V13M12,7H16V10H12V7M6,7H11V12H6V7M12,11H16V17H12V11Z"
+      entities:
+        - type: "custom:template-entity-row"
+          entity: "binary_sensor.ground_floor_heat_pump_status"
+          secondary: "{{ states('sensor.ground_floor_heat_pump_uptime') | as_datetime | time_since(2) }}"
+          active: "{{ is_state(config.entity, 'on') }}"
+          state: "{{ state_translated(config.entity) }}"
+        - type: "custom:template-entity-row"
+          entity: "binary_sensor.master_bed_presence_status"
+          secondary: "{{ states('sensor.master_bed_presence_uptime') | as_datetime | time_since(2) }}"
+          active: "{{ is_state(config.entity, 'on') }}"
+          state: "{{ state_translated(config.entity) }}"
+        - type: "custom:template-entity-row"
+          entity: "binary_sensor.kitchen_proxy_status"
+          secondary: "{{ states('sensor.kitchen_proxy_uptime') | as_datetime | time_since(2) }}"
+          active: "{{ is_state(config.entity, 'on') }}"
+          state: "{{ state_translated(config.entity) }}"
+        - type: "custom:template-entity-row"
+          entity: "binary_sensor.lounge_proxy_status"
+          secondary: "{{ states('sensor.lounge_proxy_uptime') | as_datetime | time_since(2) }}"
+          active: "{{ is_state(config.entity, 'on') }}"
+          state: "{{ state_translated(config.entity) }}"
+        - type: "custom:template-entity-row"
+          entity: "binary_sensor.office_proxy_status"
+          secondary: "{{ states('sensor.office_proxy_uptime') | as_datetime | time_since(2) }}"
+          active: "{{ is_state(config.entity, 'on') }}"
+          state: "{{ state_translated(config.entity) }}"
+
+
+- type: vertical-stack
+  cards:
+    - type: "heading"
+      heading: "Power"
+      icon: "mdi:lightning-bolt"
+
+    - type: entities
+      show_header_toggle: false
+      title: Server UPS
+      card_mod:
+        style: !template
+          file: ../styles/inset-icon.css.j2
+          variables:
+            svg_path: "M11 15H6L13 1V9H18L11 23V15Z"
+      entities:
+        - entity: sensor.ups_status
+          name: Status
+        - entity: sensor.ups_load
+          name: Load
+        - entity: sensor.ups_battery
+          name: Battery
+        - entity: sensor.ups_input_voltage
+          name: Input voltage
+        - entity: sensor.ups_time_left
+          name: Time left
+        - entity: sensor.ups_time_on_battery
+          name: Time on battery

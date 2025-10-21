@@ -1,15 +1,3 @@
-homeassistant:
-  customize:
-    sensor.media_cpu_used:
-      friendly_name: "Media's CPU use"
-      icon: "mdi:chip"
-    sensor.media_cpu_temperature:
-      friendly_name: "Media's CPU temperature"
-      icon: "mdi:fire"
-    sensor.media_ram_used_percent:
-      friendly_name: "Media's memory use"
-      icon: "mdi:memory"
-
 input_boolean:
   notify_server_outages:
     name: "Notify server outages"

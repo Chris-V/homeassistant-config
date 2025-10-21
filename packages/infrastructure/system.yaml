@@ -1,27 +1,3 @@
-homeassistant:
-  customize:
-    sensor.processor_temperature:
-      friendly_name: "Processor temperature"
-      icon: "mdi:fire"
-    sensor.processor_use:
-      friendly_name: "Processor use"
-      icon: "mdi:chip"
-    sensor.memory_use_percent:
-      friendly_name: "Memory use"
-      icon: "mdi:memory"
-    sensor.hour:
-      friendly_name: "Hour"
-
-command_line:
-  - sensor:
-      unique_id: "automate_processor_temperature"
-      name: "processor_temperature"
-      command: "cat /sys/class/thermal/thermal_zone0/temp"
-      device_class: "temperature"
-      state_class: "measurement"
-      unit_of_measurement: "°C"
-      value_template: "{{ value | multiply(0.001) | round(1) }}"
-
 sensor:
   - platform: time_date
     display_options:
