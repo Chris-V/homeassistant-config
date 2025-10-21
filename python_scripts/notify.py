@@ -11,12 +11,16 @@ ATTR_TAG = 'tag'
 ATTR_TITLE = 'title'
 ATTR_URL = 'url'
 
-ATTR_ADMIN_TARGET = 'admin'
-ATTR_HOUSEHOLD_TARGET = 'household'
-
 PUSH_GROUPS = {
-    ATTR_ADMIN_TARGET: 'admin',
-    ATTR_HOUSEHOLD_TARGET: 'household',
+    'admin': [
+        'html5_chris_desktop',
+        'mobile_app_chris_pixel_10',
+    ],
+    'household': [
+        'html5_chris_desktop',
+        'mobile_app_chris_pixel_10',
+        'mobile_app_karine_pixel_7',
+    ]
 }
 
 HTML_PARAGRAPH_FORMAT = '<p>{}</p>'
@@ -86,7 +90,9 @@ else:
         for k, v in push_data.items():
             payload['data'][k] = v
 
-        hass.services.call('notify', PUSH_GROUPS[push_target], payload)
+        for target in PUSH_GROUPS[push_target]:
+            if not 'html5_' in target or not dismiss:
+                hass.services.call('notify', target, payload)
 
     if persistent:
         if dismiss:

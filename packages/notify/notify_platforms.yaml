@@ -8,7 +8,8 @@ notify:
   - platform: group
     name: "household"
     services:
-      - service: admin
+      - service: html5_chris_desktop
+      - service: mobile_app_chris_pixel_10
       - service: mobile_app_karine_pixel_7
 
 tts:

@@ -15,6 +15,7 @@ template:
         default_entity_id: "switch.network_media"
         name: "Media"
         state: "{{ is_state('binary_sensor.avatar_media', 'on') }}"
+        availability: "{{ has_value('binary_sensor.avatar_media') }}"
         icon: "mdi:server-network{% if not is_state('binary_sensor.avatar_media', 'on') %}-off{% endif %}"
         turn_on:
           action: "shell_command.wake_on_lan"
@@ -48,11 +49,16 @@ automation:
     mode: "parallel"
 
     triggers:
-      - trigger: state
+      - trigger: "state"
         entity_id:
-          - switch.network_media
-        to: ~
-        for: &server_outage_leeway 45
+          - "switch.network_media"
+        from:
+          - "off"
+          - "on"
+        to:
+          - "off"
+          - "on"
+        for: 45
 
     variables:
       # Normalize state to only on/off
@@ -60,12 +66,12 @@ automation:
       state_action: "{% if state == 'on' %}off{% else %}on{% endif %}"
 
     conditions:
-      - condition: state
+      - condition: "state"
         entity_id: "input_boolean.notify_server_outages"
         state: "on"
 
     actions:
-      - action: python_script.notify
+      - action: "python_script.notify"
         data:
           push_target: "admin"
           tag: "server_{{ trigger.to_state.object_id }}"
@@ -79,33 +85,33 @@ automation:
               icon: "/local/icons/power-plug-{{ state_action }}.png"
 
   - id: "ed45f4fc-3c90-456d-b499-516f568adf4e"
-    alias: power_on_server
+    alias: "power_on_server"
     initial_state: true
     mode: "parallel"
     triggers:
-      - trigger: event
+      - trigger: "event"
         event_type:
           - "html5_notification.clicked"
           - "mobile_app_notification_action"
         event_data:
           action: "power_on_server"
     actions:
-      - action: switch.turn_on
+      - action: "switch.turn_on"
         target:
           entity_id: "{{ trigger.event.data.data.entity_id }}"
 
   - id: "c4358eec-8328-4049-ba29-25438eb44fa6"
-    alias: power_off_server
+    alias: "power_off_server"
     initial_state: true
     mode: "parallel"
     triggers:
-      - trigger: event
+      - trigger: "event"
         event_type:
           - "html5_notification.clicked"
           - "mobile_app_notification_action"
         event_data:
           action: "power_off_server"
     actions:
-      - action: switch.turn_off
+      - action: "switch.turn_off"
         target:
           entity_id: "{{ trigger.event.data.data.entity_id }}"

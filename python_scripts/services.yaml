@@ -1,0 +1,29 @@
+notify:
+  name: Notify
+  description: Manage notifications across all platforms.
+  fields:
+    audio:
+      description: Broadcast this notification across the house speakers. Defaults to False.
+    dismiss:
+      description: Dismiss this notification. `tag` is required.
+      example:
+    dismissible:
+      description: Allow this notification to be dismissed by the recipient. Defaults to True.
+    message:
+      description: The notification message. Required.
+    persistent:
+      description: Show this notification in the Home-Assistant sidebar. Defaults to False.
+    priority:
+      description: If this notification bypasses Do Not Disturb (push) or broadcast schedule (audio).
+    push_actions:
+      description: Optional actions that can be be performed from the push notification.
+    push_data:
+      description: Optional data to send along the push notification.
+    push_target:
+      description: "Who will receive the push notification. One of: household, admin"
+    tag:
+      description: A unique tag for this notification. Only one notification with a specific tag can exist at a single time.
+    title:
+      description: The notification title. Will be ignored on platforms that don't support a title. Required.
+    url:
+      description: A URL to send the user to when the notification is clicked.
