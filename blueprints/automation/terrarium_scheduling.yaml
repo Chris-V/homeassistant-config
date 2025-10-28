@@ -19,42 +19,42 @@ blueprint:
             - domain: input_datetime
     schedule_heat_bulb:
       name: Enable heat bulb scheduling
-      default:
+      default: ~
       selector:
         entity:
           filter:
             - domain: input_boolean
     heat_bulb_switch:
       name: Heat bulb
-      default:
+      default: ~
       selector:
         entity:
           filter:
             - domain: switch
     schedule_heater:
       name: Enable heater scheduling
-      default:
+      default: ~
       selector:
         entity:
           filter:
             - domain: input_boolean
     heater_switch:
       name: Heater
-      default:
+      default: ~
       selector:
         entity:
           filter:
             - domain: switch
     schedule_uv_light:
       name: Enable UV scheduling
-      default:
+      default: ~
       selector:
         entity:
           filter:
             - domain: input_boolean
     uv_light_switch:
       name: UV light
-      default:
+      default: ~
       selector:
         entity:
           filter:

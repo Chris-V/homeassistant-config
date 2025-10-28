@@ -1,11 +1,12 @@
 title: {{ title }}
 path: {{ path }}
-icon: {{ icon }}
 subview: true
+icon: {{ icon }}
 type: sections
 dense_section_placement: true
 top_margin: true
 max_columns: 2
+
 header:
   layout: center
   badges_position: top
@@ -14,6 +15,7 @@ header:
     type: markdown
     content: '# {{ title }}'
     text_only: true
+
 background:
   opacity: 30
   alignment: top right
@@ -21,6 +23,7 @@ background:
   repeat: no-repeat
   attachment: scroll
   image: {{ background }}
+
 sections:
   - type: grid
     cards:

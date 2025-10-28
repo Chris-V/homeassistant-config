@@ -1,0 +1,30 @@
+title: Chris
+path: chris
+subview: true
+icon: mdi:human-male
+type: sections
+dense_section_placement: true
+top_margin: false
+max_columns: 2
+
+header:
+  layout: center
+  badges_position: top
+  badges_wrap: wrap
+  card:
+    type: markdown
+    content: "# Chris"
+    text_only: true
+
+sections:
+  - type: grid
+    cards:
+      - type: entities
+        title: Phone
+        entities: []
+      - type: entities
+        title: Bed
+        entities: []
+      - type: entities
+        title: Map
+        entities: []
