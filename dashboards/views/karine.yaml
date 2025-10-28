@@ -1,0 +1,21 @@
+title: Karine
+path: karine
+subview: true
+icon: mdi:human-female
+type: sections
+dense_section_placement: true
+top_margin: false
+max_columns: 2
+
+header:
+  layout: center
+  badges_position: top
+  badges_wrap: wrap
+  card:
+    type: markdown
+    content: "# Karine"
+    text_only: true
+
+sections:
+  - type: grid
+    cards: []

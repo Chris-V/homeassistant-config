@@ -43,6 +43,9 @@ views:
         column_span: 10
         cards: !include views/basement.yaml
 
+  - !include views/chris.yaml
+  - !include views/karine.yaml
+
   - title: Bolt EV
     path: boltev
     subview: true
@@ -56,26 +59,26 @@ views:
     cards: !include views/plants.yaml
 
   - !template
-      file: views/terrarium.yaml.j2
-      variables:
-        title: Aunt Lydia
-        path: lydia
-        icon: mdi:snake
-        background: /local/animals/lydia.jpg
-        entity_prefix: lydia
-        power_monitoring: true
-        switches:
-          - key: outlet_4
-            name: Outlet 4
-          - key: outlet_5
-            name: Outlet 5
+    file: views/terrarium.yaml.j2
+    variables:
+      title: Aunt Lydia
+      path: lydia
+      icon: mdi:snake
+      background: /local/animals/lydia.jpg
+      entity_prefix: lydia
+      power_monitoring: true
+      switches:
+        - key: outlet_4
+          name: Outlet 4
+        - key: outlet_5
+          name: Outlet 5
 
   - !template
-      file: views/terrarium.yaml.j2
-      variables:
-        title: Carl
-        path: carl
-        icon: mdi:snake
-        background: /local/animals/carl.jpg
-        entity_prefix: carl
-        power_monitoring: false
+    file: views/terrarium.yaml.j2
+    variables:
+      title: Carl
+      path: carl
+      icon: mdi:snake
+      background: /local/animals/carl.jpg
+      entity_prefix: carl
+      power_monitoring: false

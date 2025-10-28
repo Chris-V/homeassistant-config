@@ -6,7 +6,7 @@ notify:
       description: Broadcast this notification across the house speakers. Defaults to False.
     dismiss:
       description: Dismiss this notification. `tag` is required.
-      example:
+      example: ""
     dismissible:
       description: Allow this notification to be dismissed by the recipient. Defaults to True.
     message:
