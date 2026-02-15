@@ -19,9 +19,27 @@ script:
   evening_ambiance:
     alias: "Evening ambiance"
     icon: "mdi:lamp"
-    mode: restart
+    mode: "restart"
     sequence:
       parallel:
+        - action: "cover.close_cover"
+          target:
+            entity_id:
+              - "cover.living_room_blinds"
+              - "cover.kitchen_sink_blinds"
+        - action: "cover.set_cover_position"
+          target:
+            entity_id:
+              - "cover.kitchen_counter_blinds"
+          data:
+            position: 10
+        - action: "cover.set_cover_position"
+          target:
+            entity_id:
+              - "cover.dining_room_blinds"
+          data:
+            position: 9
+
         - action: "light.turn_on"
           target:
             entity_id:
