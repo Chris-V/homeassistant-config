@@ -29,7 +29,7 @@
     - entity: light.lounge
       name: Spots
     - entity: light.lounge_ambiance
-      name: Ambiance
+      name: Ambiance lamp
       icon: mdi:floor-lamp
     - entity: media_player.lounge_tv_cast
       name: Chromecast
@@ -51,9 +51,9 @@
       icon: mdi:thermometer
   controls:
     - entity: light.basement_bathroom
-      name: Spots
+      name: Shower light
     - entity: light.basement_bathroom_vanity
-      name: Vanity
+      name: Vanity spots
     - entity: fan.basement_bathroom
       name: Fan
 
