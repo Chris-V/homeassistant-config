@@ -1,7 +1,5 @@
 homeassistant:
   customize:
-    binary_sensor.main_bathroom_presence:
-      friendly_name: "Main bathroom presence"
     sensor.main_bathroom_multisensor_battery:
       battery_type: "CR123A"
       battery_warning_level: 40
@@ -31,18 +29,7 @@ cloud:
           - "Bathroom fan"
 
 template:
-  - binary_sensor:
-      - unique_id: "binary_sensor.main_bathroom_presence"
-        default_entity_id: "binary_sensor.main_bathroom_presence"
-        name: "Main bathroom presence"
-        device_class: "presence"
-        state: >-
-          {{
-            is_state('binary_sensor.main_bathroom_motion', 'on')
-          }}
-        delay_off: 15
-
-    sensor:
+  - sensor:
       - unique_id: "sensor.main_bathroom_humidity"
         default_entity_id: "sensor.main_bathroom_humidity"
         name: "Main bathroom humidity"
@@ -62,12 +49,20 @@ template:
           heating: false
 
 light:
-  - platform: group
+  - platform: "group"
     unique_id: "main_bathroom_lights"
     name: "Main bathroom lights"
     entities:
-      - light.main_bathroom_spots
-      - light.main_bathroom_vanity
+      - "light.main_bathroom_spots"
+      - "light.main_bathroom_vanity"
+
+binary_sensor:
+  - platform: "group"
+    unique_id: "82073d0c-c49d-4525-b4b1-36c2c33732d0"
+    name: "Main bathroom motion"
+    device_class: "motion"
+    entities:
+      - "binary_sensor.main_bathroom_spots_dimmer_motion"
 
 automation:
   - id: "8a017369-65d4-4e9b-87dc-0f172fc44594"
@@ -79,50 +74,60 @@ automation:
         humidity_entity: "sensor.main_bathroom_humidity"
 
   - id: "5bfe8db2-3329-4320-a8b8-7f07cd12430e"
-    alias: "main_bathroom_auto_lights"
-    initial_state: false
+    alias: "main_bathroom_motion_lights"
     use_blueprint:
       path: "presence_light.yaml"
       input:
         light_entity: "light.main_bathroom_spots"
         light_off_entity: "light.main_bathroom_lights"
-        presence_entity: "binary_sensor.main_bathroom_presence"
+        presence_entity: "binary_sensor.main_bathroom_motion"
         brightness_based_on_time: true
 
-  - id: "3285fa23-169e-43ff-94e7-29a79d1223d4"
-    alias: "main_bathroom_fan_switch_zwave_scenes"
-    use_blueprint:
-      path: "zwave/paddle_scenes.yaml"
-      input:
-        on_entity_id: "event.main_bathroom_fan_switch_on_pressed"
-        off_entity_id: "event.main_bathroom_fan_switch_on_pressed"
+  - id: "b5437d3b-e443-4de5-9b47-a0f296d94395"
+    alias: "main_bathroom_motion_lights_toggle"
+    initial_state: true
+    triggers:
+      - id: "toggle"
+        trigger: "state"
+        entity_id: "event.main_bathroom_spots_dimmer_favorite_pressed"
+        not_from: "unavailable"
+      - id: "turn_on"
+        trigger: "time"
+        at: "03:00:00"
+    actions:
+      - action: "automation.{{ trigger.id }}"
+        target:
+          entity_id: "automation.main_bathroom_motion_lights"
 
-        <<: &all_on_off
-          tap_on_3x:
-            - action: light.turn_on
-              target:
-                entity_id: "light.main_bathroom_lights"
-          tap_off_3x:
-            - action: light.turn_off
-              target:
-                entity_id: "light.main_bathroom_lights"
-
-  - id: "2078788e-2376-431a-9d53-b6fe0c3badb7"
-    alias: "main_bathroom_vanity_light_switch_zwave_scenes"
-    use_blueprint:
-      path: "zwave/paddle_scenes.yaml"
-      input:
-        on_entity_id: "event.main_bathroom_vanity_light_switch_on_pressed"
-        off_entity_id: "event.main_bathroom_vanity_light_switch_off_pressed"
-
-        <<: *all_on_off
-
-  - id: "39927953-3f47-4286-8ef4-4cbad509d510"
-    alias: "main_bathroom_light_dimmer_zwave_scenes"
-    use_blueprint:
-      path: "zwave/paddle_scenes.yaml"
-      input:
-        on_entity_id: "event.main_bathroom_dimmer_on_pressed"
-        off_entity_id: "event.main_bathroom_dimmer_off_pressed"
-
-        <<: *all_on_off
+  - id: "bdcb209a-0966-4017-a700-f715d24ec6f4"
+    alias: "main_bathroom_spots_dimmer_led"
+    initial_state: true
+    mode: "queued"
+    triggers:
+      - id: "motion_lights_disabled"
+        trigger: "state"
+        entity_id: "automation.main_bathroom_motion_lights"
+        from: "on"
+        to: "off"
+        variables:
+          duration: 142
+          level: 25
+      - id: "motion_lights_enabled"
+        trigger: "state"
+        entity_id: "automation.main_bathroom_motion_lights"
+        from: "off"
+        to: "on"
+        variables:
+          duration: 0
+          level: 0
+    actions:
+      - action: "zwave_js.bulk_set_partial_config_parameters"
+        target:
+          entity_id: "light.main_bathroom_spots"
+        data:
+          parameter: 94
+          value:
+            0xFF: "{{ duration }}"
+            0xFF00: "{{ level }}"
+            0xFF0000: 0
+            0xFF000000: "Solid"

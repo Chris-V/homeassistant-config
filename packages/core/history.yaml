@@ -58,7 +58,6 @@ recorder:
       - "binary_sensor.lounge_proxy_status"
       - "binary_sensor.lounge_window"
       - "binary_sensor.main_bathroom_motion"
-      - "binary_sensor.main_bathroom_presence"
       - "binary_sensor.master_bed_full"
       - "binary_sensor.master_bed_occupied"
       - "binary_sensor.master_bed_occupied_both"

@@ -11,11 +11,12 @@
         - entity: binary_sensor.all_motions
         - entity: sensor.last_motion
         - entity: todo.audio_broadcast
-    - !include ../cards/alarm.yaml
+    - !include ../cards/climate-overview.yaml
 
 - type: vertical-stack
   cards:
     - !include ../cards/household.yaml
+    - !include ../cards/alarm.yaml
     - !include ../cards/guests.yaml
 
 - type: vertical-stack
@@ -34,4 +35,3 @@
       entity: weather.quebec
       show_forecast: true
       secondary_info_attribute: precipitation
-    - !include ../cards/climate-overview.yaml

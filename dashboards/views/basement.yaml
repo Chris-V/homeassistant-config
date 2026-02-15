@@ -50,7 +50,7 @@
       name: Temperature
       icon: mdi:thermometer
   controls:
-    - entity: light.basement_bathroom
+    - entity: light.basement_bathroom_shower
       name: Shower light
     - entity: light.basement_bathroom_vanity
       name: Vanity spots

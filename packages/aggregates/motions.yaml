@@ -4,10 +4,10 @@ binary_sensor:
     device_class: "motion"
     name: "All motions"
     entities:
-      - binary_sensor.basement_bathroom_motion
-      - binary_sensor.laundry_room_motion
-      - binary_sensor.main_bathroom_motion
-      - binary_sensor.workshop_motion
+      - "binary_sensor.basement_bathroom_motion"
+      - "binary_sensor.laundry_room_motion"
+      - "binary_sensor.main_bathroom_motion"
+      - "binary_sensor.workshop_motion"
 
 template:
   - sensor:

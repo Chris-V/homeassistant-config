@@ -1,64 +1,36 @@
-type: vertical-stack
+type: grid
+square: false
+columns: 2
 cards:
-  - type: grid
-    square: false
-    columns: 2
-    cards:
-      - <<: &climate_button_card_defaults
-          type: custom:button-card
-          show_label: true
-          layout: icon_name_state2nd
-          styles:
-            grid:
-              - grid-template-columns: 20% 1fr
-            card:
-              - height: 64px
-            label:
-              - font-size: 1rem
-              - color: var(--secondary-text-color)
-            icon:
-              - width: 75%
-          hold_action:
-            action: more-info
-        entity: sensor.scheduled_climate_preset
-        name: >
-          [[[ return states['sensor.scheduled_climate_preset'].state; ]]]
-        label: Climate Preset
-        tap_action:
-          action: perform-action
-          perform_action: script.apply_scheduled_climate_preset
-
-      - <<: *climate_button_card_defaults
-        entity: sensor.manual_climates_count
-        name: Restore to auto
-        label: >
-          [[[ return states['sensor.manual_climates_count'].state + ' in manual mode'; ]]]
-        tap_action:
-          action: perform-action
-          perform_action: script.restore_climate_auto_mode
-
-  - type: entities
-    card_mod:
-      style: !template
-        file: ../styles/inset-icon.css.j2
-        variables:
-          svg_path: "M12 3L2 12H5V20H19V12H22L12 3M12 8A1 1 0 0 1 13 9V14.27A2 2 0 0 1 14 16A2 2 0 0 1 12 18A2 2 0 0 1 10 16A2 2 0 0 1 11 14.27V9A1 1 0 0 1 12 8Z"
-    entities:
-      - input_number.climate_override_temperature
-      - input_select.climate_override_location
-      - input_select.climate_override_mode
-    footer:
+  - <<: &climate_button_card_defaults
       type: custom:button-card
-      layout: icon_name
-      entity: script.apply_climate_override
+      show_label: true
+      layout: icon_name_state2nd
       styles:
+        grid:
+          - grid-template-columns: 20% 1fr
         card:
-          - height: 48px
-          - padding: 1% 0
-          - border: "0"
-          - box-shadow: none
-        name:
-          - place-self: center start
-      tap_action:
-        action: perform-action
-        perform_action: script.apply_climate_override
+          - height: 64px
+        label:
+          - font-size: 1rem
+          - color: var(--secondary-text-color)
+        icon:
+          - width: 75%
+      hold_action:
+        action: more-info
+    entity: sensor.scheduled_climate_preset
+    name: >
+      [[[ return states['sensor.scheduled_climate_preset'].state; ]]]
+    label: Climate Preset
+    tap_action:
+      action: perform-action
+      perform_action: script.apply_scheduled_climate_preset
+
+  - <<: *climate_button_card_defaults
+    entity: sensor.manual_climates_count
+    name: Restore to auto
+    label: >
+      [[[ return states['sensor.manual_climates_count'].state + ' in manual mode'; ]]]
+    tap_action:
+      action: perform-action
+      perform_action: script.restore_climate_auto_mode

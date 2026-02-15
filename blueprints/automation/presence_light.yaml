@@ -1,18 +1,17 @@
 blueprint:
-  name: Presence-activated light
-  description: Toggle a light based on presence
-  domain: automation
+  name: "Presence-activated light"
+  description: "Toggle a light based on presence"
+  domain: "automation"
   input:
     brightness_based_on_time:
-      name: Brightness based on the time of day.
-      description: |
-        Lights will be dimmed late at night and stronger during day.
+      name: "Brightness based on the time of day."
+      description: "Lights will be dimmed late at night and stronger during day."
       default: false
       selector:
         boolean: ~
 
     delay_off:
-      name: Delay off
+      name: "Delay off"
       description: >
         Wait that many seconds for the light to turn off after presence is no
         longer detected.
@@ -20,17 +19,19 @@ blueprint:
         number:
           min: 0
           max: 3600
-          unit_of_measurement: seconds
+          unit_of_measurement: "seconds"
       default: 120
+
     light_entity:
-      name: Light
+      name: "Light"
       description: This light will turn on when presence is detected.
       selector:
         entity:
           filter:
-            - domain: light
+            - domain: "light"
+
     light_off_entity:
-      name: Light
+      name: "Light"
       description: >
         Optional. If this light is on, then `light_entity` will not turn on.
         This light will turn off when presence is no longer detected.
@@ -38,56 +39,59 @@ blueprint:
       selector:
         entity:
           filter:
-            - domain: light
+            - domain: "light"
       default: ""
+
     presence_entity:
-      name: Presence entity
-      description: The presence sensor that will be used as a trigger.
+      name: "Presence entity"
+      description: "The presence sensor that will be used as a trigger."
       selector:
         entity:
           filter:
-            - domain: binary_sensor
-              device_class: presence
+            - domain: "binary_sensor"
+              device_class:
+                - "motion"
+                - "presence"
 
 initial_state: true
-max_exceeded: silent
-mode: "restart"
+max_exceeded: "silent"
+mode: "queued"
+
+trigger_variables:
+  brightness_based_on_time: !input brightness_based_on_time
+  delay_off: !input delay_off
+  light_entity: !input light_entity
+  light_off_entity: !input light_off_entity
 
 triggers:
-  - trigger: state
+  - id: "turn_on"
+    trigger: "state"
     entity_id: !input presence_entity
     from: "off"
     to: "on"
-
-variables:
-  brightness_based_on_time: !input brightness_based_on_time
-  brightness_pct: >
-    {% set time = now().strftime('%H%M') | int %}
-    {%- if brightness_based_on_time -%} 1
-    {%- elif time <= 600 -%} 1
-    {%- elif time >= 900 and time <= 1800 -%} 85
-    {%- else -%} 50
-    {%- endif -%}
-  light_entity: !input light_entity
-  optional_light_off_entity: !input light_off_entity
-  light_off_entity: "{{ optional_light_off_entity or light_entity }}"
-  presence_entity: !input presence_entity
+  - id: "turn_off"
+    trigger: "state"
+    entity_id: !input presence_entity
+    from: "on"
+    to: "off"
+    for:
+      seconds: "{{ delay_off }}"
 
 actions:
-  - if: "{{ is_state(presence_entity, 'on') and is_state(light_off_entity, 'off') }}"
+  - if: "{{ trigger.id == 'turn_on' }}"
     then:
-      - action: light.turn_on
+      - action: "light.turn_on"
         target:
-          entity_id: !input light_entity
+          entity_id: "{{ light_entity }}"
         data:
-          brightness_pct: "{{ brightness_pct }}"
-
-  - wait_for_trigger:
-      - trigger: state
-        entity_id: !input presence_entity
-        to: "off"
-        for: !input delay_off
-
-  - action: light.turn_off
-    target:
-      entity_id: "{{ light_off_entity }}"
+          brightness_pct: >-
+            {% set time = now().strftime('%H%M') | int %}
+            {%- if not brightness_based_on_time -%} 100
+            {%- elif time < 700 -%} 10
+            {%- elif time >= 2300 -%} 50
+            {%- else -%} 100
+            {%- endif -%}
+    else:
+      - action: "light.turn_off"
+        target:
+          entity_id: "{{ light_off_entity or light_entity }}"
