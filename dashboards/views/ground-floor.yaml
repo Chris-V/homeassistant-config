@@ -60,6 +60,8 @@
         perform_action: remote.toggle
         target:
           entity_id: remote.living_room_tv
+    - entity: cover.living_room_blinds
+      name: Blinds
     - entity: media_player.living_room_google_home
       name: Google Home
       icon: mdi:speaker
@@ -85,6 +87,14 @@
       name: Track
     - entity: light.kitchen_sink
       name: Sink
+    - entity: cover.kitchen_sink_blinds
+      name: Sink blinds
+      tag: mdi:faucet
+    - entity: cover.kitchen_counter_blinds
+      name: Counter blinds
+      tag: mdi:countertop
+      tap_action:
+        action: more-info
     - entity: lock.kitchen_door
       name: Door lock
       tap_action:
@@ -105,6 +115,10 @@
       name: Table
     - entity: light.hallway_spots
       name: Hallway
+    - entity: cover.dining_room_blinds
+      name: Blinds
+      tap_action:
+        action: more-info
 
 - type: custom:area-card
   area: 4da92885683346fdb6657dea65b0b060
