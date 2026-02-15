@@ -35,6 +35,19 @@ light:
       - "light.side_porch_sconce"
 
 template:
+  - trigger:  # TODO: Use luminance
+      - id: "bright"
+        trigger: "time"
+        at: "06:00:00"
+      - id: "dark"
+        trigger: "time"
+        at: "21:00:00"
+    binary_sensor:
+      - default_entity_id: "binary_sensor.dark_outside"
+        unique_id: "d71cc36d-9bc4-46d8-a6fa-c750fd5aa423"
+        name: "Dark outside"
+        state: "{{ trigger.id == 'dark' }}"
+
   - sensor:
       - unique_id: "sensor.outdoor_humidity"
         default_entity_id: "sensor.outdoor_humidity"

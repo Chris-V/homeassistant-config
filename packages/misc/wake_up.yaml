@@ -1,0 +1,13 @@
+script:
+  wake_up_routine:
+    alias: "Wake up routine"
+    description: "Adjust the house devices for the new day"
+    icon: "mdi:sleep-off"
+    sequence:
+      - action: "cover.open_cover"
+        target:
+          entity_id:
+            - "cover.dining_room_blinds"
+            - "cover.kitchen_counter_blinds"
+            - "cover.kitchen_sink_blinds"
+            - "cover.living_room_blinds"

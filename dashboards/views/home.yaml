@@ -19,19 +19,15 @@
     - !include ../cards/alarm.yaml
     - !include ../cards/guests.yaml
 
-- type: vertical-stack
+- type: grid
+  square: false
+  columns: 2
   cards:
-    - type: grid
-      square: false
-      columns: 2
-      cards:
-        - !include ../cards/bolt-ev.yaml
-        - !include ../cards/livings-overview.yaml
-    - !include ../cards/house-feed.yaml
+    - !include ../cards/bolt-ev.yaml
+    - !include ../cards/livings-overview.yaml
+- !include ../cards/house-feed.yaml
 
-- type: vertical-stack
-  cards:
-    - type: weather-forecast
-      entity: weather.quebec
-      show_forecast: true
-      secondary_info_attribute: precipitation
+- type: weather-forecast
+  entity: weather.quebec
+  show_forecast: true
+  secondary_info_attribute: precipitation
