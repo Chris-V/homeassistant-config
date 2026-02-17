@@ -1,8 +1,3 @@
-homeassistant:
-  customize:
-    sensor.manual_climates_count:
-      friendly_name: "Climate entities in manual mode"
-
 group:
   managed_climates:
     name: "Managed climate entities"
@@ -84,8 +79,8 @@ input_datetime:
 template:
   - sensor:
       - unique_id: "sensor.manual_thermostats_count"
-        default_entity_id: "sensor.manual_thermostats_count"
-        name: "Manual climates count"
+        default_entity_id: "sensor.manual_thermostats"
+        name: "Manual thermostats"
         icon: "mdi:thermometer-alert"
         state: "{{ this.attributes.entity_id | default([]) | length }}"
         attributes:

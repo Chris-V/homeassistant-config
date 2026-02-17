@@ -37,6 +37,7 @@ sensor:
       - "sensor.living_room_temperature"
       - "sensor.master_bedroom_temperature"
       - "sensor.office_temperature"
+      - "sensor.drake_temperature"
 
 timer:
   heat_pump_manual_mode_reset:

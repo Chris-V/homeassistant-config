@@ -109,7 +109,7 @@ recorder:
       - "sensor.lounge_thermostat_temperature"
       - "sensor.main_bathroom_humidity"
       - "sensor.main_bathroom_temperature"
-      - "sensor.manual_climates_count"
+      - "sensor.manual_thermostats"
       - "sensor.master_bedroom_temperature"
       - "sensor.master_bedroom_thermostat_temperature"
       - "sensor.office_temperature"
