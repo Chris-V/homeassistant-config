@@ -18,18 +18,11 @@ binary_sensor:
       - "binary_sensor.water_heater_leak"
 
 automation:
-  - id: "106d9d0a-8a2b-4713-8c3f-3341a24cc9b9"
-    alias: "start_water_leak_alarm"
+  - id: "fe3960bb-6e97-4799-9a1f-5fea762e8e65"
+    alias: "water_leak_alarm"
     description: "Trigger alarm notifications when water leaks are detected."
     use_blueprint:
-      path: "alarm/start_alarm.yaml"
-      input: &alarm_input
+      path: "alarm.yaml"
+      input:
         name: "Water leak"
-        group: "binary_sensor.all_leaks"
-
-  - id: "e4eeecc6-146e-4518-a8fd-f4bce43c2574"
-    alias: "clear_water_leak_notification"
-    description: "Clear alarm notifications when water leaks are cleared."
-    use_blueprint:
-      path: "alarm/clear_alarm.yaml"
-      input: *alarm_input
+        sensor: "binary_sensor.all_leaks"

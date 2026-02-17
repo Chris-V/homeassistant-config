@@ -117,16 +117,14 @@ automation:
     initial_state: true
     mode: "queued"
     triggers:
-      - id: "motion_lights_disabled"
-        trigger: "state"
+      - trigger: "state"
         entity_id: "automation.basement_bathroom_motion_lights"
         from: "on"
         to: "off"
         variables:
           duration: 142
           level: 25
-      - id: "motion_lights_enabled"
-        trigger: "state"
+      - trigger: "state"
         entity_id: "automation.basement_bathroom_motion_lights"
         from: "off"
         to: "on"

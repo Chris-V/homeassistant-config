@@ -291,16 +291,15 @@ automation:
         data:
           item: "{{ entity_id }}"
 
-  - alias: "start_intrusion_alarm"
-    id: "6943625e-997b-4650-b608-acb10bf3ca57"
+  - alias: "intrusion_alarm"
+    id: "110c7ae8-a989-46c9-a762-2730b3aa6c6a"
     description: "Trigger alarm notifications when an intrusion is detected."
     use_blueprint:
-      path: "alarm/start_alarm.yaml"
+      path: "alarm.yaml"
       input:
-        <<: &alarm_input
-          name: "Intrusion"
-          group: "binary_sensor.intrusion_activity"
-          tag: "{{ states('input_text.presence_armed_id') }}"
+        name: "Intrusion"
+        sensor: "binary_sensor.intrusion_activity"
+        tag: "{{ states('input_text.presence_armed_id') }}"
         actions:
           - action: "silence_{{ states('input_text.presence_armed_id') }}"
             title: "Silence"
@@ -310,13 +309,6 @@ automation:
           - condition: state
             entity_id: "input_boolean.silence_intrusion_alarm"
             state: "off"
-
-  - alias: "clear_intrusion_alarm"
-    id: "8e77137f-af56-48bd-b82c-7e5bb0ab4ff8"
-    description: "Clear alarm notifications when an intrusion is no longer active."
-    use_blueprint:
-      path: "alarm/clear_alarm.yaml"
-      input: *alarm_input
 
   - alias: "silence_intrusion_alarm"
     id: "65383759-a03c-4c81-9965-7154e83626fd"

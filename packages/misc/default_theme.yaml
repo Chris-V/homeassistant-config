@@ -24,7 +24,7 @@ template:
         default_entity_id: "binary_sensor.use_dark_theme"
         name: "Use dark theme"
         icon: "mdi:theme-light-dark"
-        state: "{{ state_attr('sun.sun', 'elevation') | float < -3 }}"
+        state: "{{ is_state('binary_sensor.dark_outside', 'on') }}"
 
 input_boolean:
   automatic_night_theme:
