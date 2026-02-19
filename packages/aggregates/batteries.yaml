@@ -13,6 +13,7 @@ sensor:
     entities: &battery_entities
       - "sensor.basement_bathroom_multisensor_battery"
       - "sensor.basement_smoke_co_detector_battery"
+      - "sensor.blinds_remote_battery"
       - "sensor.chris_bedside_remote_battery"
       - "sensor.dining_room_blinds_battery"
       - "sensor.guest_bedroom_window_sensor_battery"

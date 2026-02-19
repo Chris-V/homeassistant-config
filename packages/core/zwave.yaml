@@ -21,6 +21,7 @@ group:
       - "sensor.basement_hallway_dimmer_node_status"
       - "sensor.basement_hallway_thermostat_node_status"
       - "sensor.basement_smoke_co_detector_node_status"
+      - "sensor.blinds_remote_node_status"
       - "sensor.bookshelf_light_switch_node_status"
       - "sensor.dining_room_blinds_node_status"
       - "sensor.dining_room_light_dimmer_node_status"
