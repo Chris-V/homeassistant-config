@@ -258,11 +258,9 @@ automation:
                   entity_id: "{{ entity_id }}"
           - conditions: "{{ action == 'alternate' }}"
             sequence:
-              - action: "cover.set_cover_position"
-                target:
-                  entity_id: "{{ entity_id }}"
+              - action: "script.alternate_cover"
                 data:
-                  position: "{{ state_attr(entity_id, 'alternate_pct') }}"
+                  entity_id: "{{ entity_id }}"
         default:
           - action: "script.close_cover"
             data:
