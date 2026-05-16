@@ -71,7 +71,7 @@ cards:
       action: none
   - type: entity-button
     entity: cover.all_blinds
-    name: Alternate Blinds
+    name: Alternate
     icon: mdi:blinds
     tap_action:
       action: perform-action
@@ -81,7 +81,7 @@ cards:
   - type: entity-button
     entity: cover.all_blinds
     name: Close Blinds
-    icon: mdi:blinds-closed
+    icon: mdi:roller-shade-closed
     tap_action:
       action: perform-action
       perform_action: script.close_all_blinds
