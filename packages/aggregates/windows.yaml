@@ -1,10 +1,10 @@
 homeassistant:
   customize:
     cover.dining_room_blinds:
-      alternate_pct: 17
+      alternate_pct: 16
       closed_pct: 9
     cover.kitchen_counter_blinds:
-      alternate_pct: 18
+      alternate_pct: 17
       closed_pct: 10
     cover.kitchen_sink_blinds:
       alternate_pct: 11
