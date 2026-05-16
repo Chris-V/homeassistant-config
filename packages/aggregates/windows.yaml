@@ -1,15 +1,15 @@
 homeassistant:
   customize:
     cover.dining_room_blinds:
-      alternate_pct: 20
+      alternate_pct: 17
       closed_pct: 9
     cover.kitchen_counter_blinds:
-      alternate_pct: 20
+      alternate_pct: 18
       closed_pct: 10
     cover.kitchen_sink_blinds:
-      alternate_pct: 20
+      alternate_pct: 11
     cover.living_room_blinds:
-      alternate_pct: 20
+      alternate_pct: 7
 
 binary_sensor:
   - platform: "group"
