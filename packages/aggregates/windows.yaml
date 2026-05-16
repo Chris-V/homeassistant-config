@@ -166,6 +166,12 @@ automation:
         variables:
           entity_id: "cover.all_blinds"
           action: "open"
+      - trigger: "state"
+        entity_id: "event.blinds_remote_channel1_home_pressed"
+        not_from: "unavailable"
+        variables:
+          entity_id: "cover.all_blinds"
+          action: "alternate"
 
       - trigger: "state"
         entity_id: "event.blinds_remote_channel2_down_pressed"
@@ -179,6 +185,12 @@ automation:
         variables:
           entity_id: "cover.dining_room_blinds"
           action: "open"
+      - trigger: "state"
+        entity_id: "event.blinds_remote_channel2_home_pressed"
+        not_from: "unavailable"
+        variables:
+          entity_id: "cover.dining_room_blinds"
+          action: "alternate"
 
       - trigger: "state"
         entity_id: "event.blinds_remote_channel3_down_pressed"
@@ -192,6 +204,12 @@ automation:
         variables:
           entity_id: "cover.kitchen_counter_blinds"
           action: "open"
+      - trigger: "state"
+        entity_id: "event.blinds_remote_channel3_home_pressed"
+        not_from: "unavailable"
+        variables:
+          entity_id: "cover.kitchen_counter_blinds"
+          action: "alternate"
 
       - trigger: "state"
         entity_id: "event.blinds_remote_channel4_down_pressed"
@@ -205,6 +223,12 @@ automation:
         variables:
           entity_id: "cover.kitchen_sink_blinds"
           action: "open"
+      - trigger: "state"
+        entity_id: "event.blinds_remote_channel4_home_pressed"
+        not_from: "unavailable"
+        variables:
+          entity_id: "cover.kitchen_sink_blinds"
+          action: "alternate"
 
       - trigger: "state"
         entity_id: "event.blinds_remote_channel5_down_pressed"
@@ -218,6 +242,12 @@ automation:
         variables:
           entity_id: "cover.living_room_blinds"
           action: "open"
+      - trigger: "state"
+        entity_id: "event.blinds_remote_channel5_home_pressed"
+        not_from: "unavailable"
+        variables:
+          entity_id: "cover.living_room_blinds"
+          action: "alternate"
 
     actions:
       - choose:
@@ -226,7 +256,7 @@ automation:
               - action: "cover.open_cover"
                 target:
                   entity_id: "{{ entity_id }}"
-          - conditions: "{{ action == 'alternated' }}"
+          - conditions: "{{ action == 'alternate' }}"
             sequence:
               - action: "cover.set_cover_position"
                 target:
