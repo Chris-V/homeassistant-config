@@ -39,6 +39,7 @@ cards:
       action: none
   - type: entity-button
     entity: script.turn_off_unused
+    name: Unused
     tap_action:
       action: perform-action
       perform_action: script.turn_on
@@ -48,10 +49,41 @@ cards:
       action: none
   - type: entity-button
     entity: script.everything_off
+    name: "Off"
     tap_action:
       action: perform-action
       perform_action: script.turn_on
       service_data:
         entity_id: script.everything_off
+    hold_action:
+      action: none
+
+  - type: entity-button
+    entity: cover.all_blinds
+    name: Open Blinds
+    icon: mdi:blinds-open
+    tap_action:
+      action: perform-action
+      perform_action: cover.open_cover
+      service_data:
+        entity_id: cover.all_blinds
+    hold_action:
+      action: none
+  - type: entity-button
+    entity: cover.all_blinds
+    name: Alternate Blinds
+    icon: mdi:blinds
+    tap_action:
+      action: perform-action
+      perform_action: script.alternate_all_blinds
+    hold_action:
+      action: none
+  - type: entity-button
+    entity: cover.all_blinds
+    name: Close Blinds
+    icon: mdi:blinds-closed
+    tap_action:
+      action: perform-action
+      perform_action: script.close_all_blinds
     hold_action:
       action: none

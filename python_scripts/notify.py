@@ -91,7 +91,7 @@ else:
             payload['data'][k] = v
 
         for target in PUSH_GROUPS[push_target]:
-            if not 'html5_' in target or not dismiss:
+            if 'html5_' not in target or not dismiss:
                 hass.services.call('notify', target, payload)
 
     if persistent:
