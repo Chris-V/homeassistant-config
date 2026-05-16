@@ -12,15 +12,11 @@ blueprint:
 
     delay_off:
       name: "Delay off"
-      description: >
-        Wait that many seconds for the light to turn off after presence is no
-        longer detected.
+      description: "How long the lights take to turn off after presence is no longer detected."
       selector:
-        number:
-          min: 0
-          max: 3600
-          unit_of_measurement: "seconds"
-      default: 120
+        duration: ~
+      default:
+        minutes: 5
 
     light_entity:
       name: "Light"
@@ -59,7 +55,6 @@ mode: "queued"
 
 trigger_variables:
   brightness_based_on_time: !input brightness_based_on_time
-  delay_off: !input delay_off
   light_entity: !input light_entity
   light_off_entity: !input light_off_entity
 
@@ -74,8 +69,16 @@ triggers:
     entity_id: !input presence_entity
     from: "on"
     to: "off"
-    for:
-      seconds: "{{ delay_off }}"
+    for: !input delay_off
+
+conditions:
+  - condition: "state"
+    entity_id: "{{ light_entity }}"
+    state: "off"
+  - condition: "state"
+    enabled: "{{ light_off_entity is not none }}"
+    entity_id: "{{ light_off_entity }}"
+    state: "off"
 
 actions:
   - if: "{{ trigger.id == 'turn_on' }}"
