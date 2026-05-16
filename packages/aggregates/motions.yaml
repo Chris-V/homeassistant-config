@@ -4,10 +4,10 @@ binary_sensor:
     device_class: "motion"
     name: "All motions"
     entities:
-      - binary_sensor.basement_bathroom_motion
-      - binary_sensor.laundry_room_motion
-      - binary_sensor.main_bathroom_motion
-      - binary_sensor.workshop_motion
+      - "binary_sensor.basement_bathroom_motion"
+      - "binary_sensor.laundry_room_motion"
+      - "binary_sensor.main_bathroom_motion"
+      - "binary_sensor.workshop_motion"
 
 template:
   - sensor:
@@ -19,11 +19,12 @@ template:
           {%
             set last_motion = expand('binary_sensor.all_motions')
               | sort(attribute='last_changed', reverse=True)
-              | map(attribute='name')
+              | map(attribute='entity_id')
               | first
+              | area_name
           %}
           {%- if last_motion is defined -%}
-          {{ last_motion | replace(' motion', '') }}
+          {{ last_motion }}
           {%- endif %}
 
       - unique_id: "e6d941bc-0712-423b-b4e1-7d1d5e398c52"

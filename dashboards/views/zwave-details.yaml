@@ -19,7 +19,7 @@
 - type: custom:auto-entities
   card:
     type: entities
-    title: Sleeping nodes
+    title: Battery nodes
     show_header_toggle: false
     card_mod:
       style: !template
@@ -32,7 +32,7 @@
   filter:
     template: >
       {% from 'dashboards/zwave.jinja' import select_node_status_rows %}
-      {{ select_node_status_rows(states=['asleep']) }}
+      {{ select_node_status_rows(states=['asleep', 'awake']) }}
 
 - type: custom:auto-entities
   card:
@@ -68,4 +68,4 @@
   filter:
     template: >
       {% from 'dashboards/zwave.jinja' import select_node_status_rows %}
-      {{ select_node_status_rows(states_not=['alive', 'asleep', 'dead']) }}
+      {{ select_node_status_rows(states_not=['alive', 'asleep', 'awake', 'dead']) }}

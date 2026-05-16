@@ -35,6 +35,25 @@ light:
       - "light.side_porch_sconce"
 
 template:
+  - trigger:  # TODO: Use actual lux value
+      - trigger: "numeric_state"
+        entity_id: "sun.sun"
+        attribute: "elevation"
+        below: -3.0
+        variables:
+          is_dark: true
+      - trigger: "numeric_state"
+        entity_id: "sun.sun"
+        attribute: "elevation"
+        above: -3.0
+        variables:
+          is_dark: false
+    binary_sensor:
+      - default_entity_id: "binary_sensor.dark_outside"
+        unique_id: "d71cc36d-9bc4-46d8-a6fa-c750fd5aa423"
+        name: "Dark outside"
+        state: "{{ is_dark }}"
+
   - sensor:
       - unique_id: "sensor.outdoor_humidity"
         default_entity_id: "sensor.outdoor_humidity"

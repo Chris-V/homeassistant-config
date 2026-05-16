@@ -61,7 +61,7 @@ template:
           {{
             is_state('input_boolean.force_guest_mode', 'on')
               or is_state('group.household', 'home')
-              and state_attr('sensor.guests_home', 'count') | int(0) > 0
+              and states('sensor.guests_home') | int(0) > 0
           }}
 
     sensor:
@@ -69,14 +69,7 @@ template:
         default_entity_id: "sensor.guests_home"
         name: "Guests home"
         icon: "mdi:account-star"
-        state: >-
-          {{
-            expand(this.attributes.entity_id | default([]))
-              | map('attr', 'name')
-              | sort
-              | join(', ')
-              | default('Nobody', true)
-          }}
+        state: "{{ this.attributes.entity_id | default([]) | count }}"
         attributes:
           entity_id: >-
             {{
@@ -84,7 +77,6 @@ template:
                 | selectattr('state', 'eq', 'home')
                 | list
             }}
-          count: "{{ this.attributes.entity_id | default([]) | count }}"
 
 automation:
   - id: "91bb52da-440a-4082-a6f3-4e58253a51c8"
@@ -98,7 +90,7 @@ automation:
     conditions: >-
       {{
         is_state('input_boolean.notify_individual_guest_arrivals', 'on')
-          or is_state_attr('sensor.guests_home', 'count', '1')
+          or is_state('sensor.guests_home', '1')
       }}
     actions:
       - action: python_script.notify
@@ -107,7 +99,7 @@ automation:
           push_target: "household"
           tag: "presence_{{ trigger.to_state.object_id }}"
           title: "{{ trigger.to_state.name }} is here"
-          message: "{{ state_attr('sensor.guests_home', 'count') }} guests are home."
+          message: "{{ states('sensor.guests_home') }} guests are home."
 
   - id: "33ae901e-24b8-4576-b876-4d2a87a7bd3b"
     alias: notify_household_person_arrives

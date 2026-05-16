@@ -1,12 +1,14 @@
 notify:
   - platform: group
     name: "admin"
+    unique_id: "4fe1f1df-6da4-45ed-944d-1e48985e4056"
     services:
       - service: mobile_app_chris_pixel_10
       - service: html5_chris_desktop
 
   - platform: group
     name: "household"
+    unique_id: "c69c03c3-4616-48de-ac1d-9d8c71efe84e"
     services:
       - service: html5_chris_desktop
       - service: mobile_app_chris_pixel_10

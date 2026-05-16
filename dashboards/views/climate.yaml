@@ -6,6 +6,32 @@
 
     - !include ../cards/climate-overview.yaml
 
+    - type: entities
+      card_mod:
+        style: !template
+          file: ../styles/inset-icon.css.j2
+          variables:
+            svg_path: "M12 3L2 12H5V20H19V12H22L12 3M12 8A1 1 0 0 1 13 9V14.27A2 2 0 0 1 14 16A2 2 0 0 1 12 18A2 2 0 0 1 10 16A2 2 0 0 1 11 14.27V9A1 1 0 0 1 12 8Z"
+      entities:
+        - input_number.climate_override_temperature
+        - input_select.climate_override_location
+        - input_select.climate_override_mode
+      footer:
+        type: custom:button-card
+        layout: icon_name
+        entity: script.apply_climate_override
+        styles:
+          card:
+            - height: 48px
+            - padding: 1% 0
+            - border: "0"
+            - box-shadow: none
+          name:
+            - place-self: center start
+        tap_action:
+          action: perform-action
+          perform_action: script.apply_climate_override
+
     - type: "entities"
       title: "Settings"
       entities:

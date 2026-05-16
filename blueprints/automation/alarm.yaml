@@ -1,0 +1,117 @@
+blueprint:
+  name: Start an alarm
+  domain: automation
+  input:
+    actions:
+      name: Quick actions available with the notification.
+      description: >
+        Accepts an array of objects in the shape of `{title: string, action: string}`
+      selector:
+        object: {}
+      default: ~
+    sensor:
+      name: Sensor
+      description: Binary sensor that will start the alarm once it turns on.
+      selector:
+        entity:
+          filter:
+            - domain: binary_sensor
+    name:
+      name: Name of the thing this alarm handles.
+      selector:
+        text: {}
+    silenced:
+      name: Silenced condition
+      description: Optional condition to determine if the audio broadcast is silenced.
+      selector:
+        condition: {}
+      default:
+        - condition: template
+          value_template: "{{ false }}"
+    tag:
+      name: An optional tag to identify this notification.
+      default: ""
+      selector:
+        template: {}
+
+initial_state: true
+max_exceeded: "silent"
+mode: "queued"
+
+triggers:
+  - trigger: "homeassistant"
+    event: "start"
+  - trigger: "state"
+    entity_id: !input sensor
+    to: "on"
+  - id: "alarm_cleared"
+    trigger: "state"
+    entity_id: !input sensor
+    from: "on"
+    to: "off"
+    for: 10
+
+variables:
+  name: !input name
+  sensor: !input sensor
+  tag: !input tag
+  url: "/lovelace/security"
+
+actions:
+  - choose:
+      - conditions:
+          - condition: "state"
+            entity_id: !input sensor
+            state: "on"
+        sequence:
+          - variables:
+              message: >-
+                {% from 'strings.jinja' import nice_join %}
+                {%
+                  set locations = expand(state_attr(sensor, 'entity_id') | default([], True))
+                    | selectattr('state', '!=', 'off')
+                    | map(attribute = 'entity_id')
+                    | map('area_name')
+                    | unique | sort
+                %}
+                {{ name | capitalize }} detected{% if locations | count > 0 %} in {{ nice_join(locations) }}{% endif %}.
+
+          - parallel:
+              - action: "python_script.notify"
+                data:
+                  audio: false
+                  dismissible: false
+                  persistent: true
+                  priority: true
+                  push_target: "household"
+                  push_actions: !input actions
+                  tag: "alarm_{{ name | slugify }}_{{ tag | slugify }}"
+                  title: "{{ name | capitalize }} detected"
+                  url: "{{ url }}"
+                  message: "{{ message }}"
+
+              - repeat:
+                  while:
+                    - condition: state
+                      entity_id: !input sensor
+                      state: "on"
+                  sequence:
+                    - if: !input silenced
+                      then:
+                        - action: "script.broadcast_notification"
+                          data:
+                            message: "{{ message }}"
+                    - delay: 10
+
+      - conditions: "{{ trigger.id == 'alarm_cleared' }}"
+        sequence:
+          - action: "python_script.notify"
+            data:
+              audio: false
+              dismissible: true
+              persistent: true
+              priority: false
+              push_target: "household"
+              tag: "alarm_{{ name | slugify }}_{{ tag | slugify }}"
+              title: "{{ name | capitalize }} cleared"
+              url: "{{ url }}"

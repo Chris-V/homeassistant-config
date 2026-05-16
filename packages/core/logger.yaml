@@ -3,6 +3,7 @@ logger:
   logs:
     homeassistant.bootstrap: "info"
     homeassistant.setup: "info"
+    env_canada.ec_map: "error"
   filters:
     # yamllint disable rule:quoted-strings
     # Google Homes & groups seem to change their IPs and create a lot of log pollution

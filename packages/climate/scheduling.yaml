@@ -25,29 +25,35 @@ template:
             'Winter Credit: Heat',
             'Winter Credit: Peak Event',
           ] -%}
-          {% macro parse_calendar_preset(entity_id, default) -%}
+          {% macro parse_calendar_preset(entity_id) -%}
             {% if is_state(entity_id, 'on') -%}
-              {% set scheduled_preset = state_attr(entity_id, 'message').split('#')[0] | trim -%}
-              {{ scheduled_preset if scheduled_preset in supported_presets else default }}
-            {% else -%}
-              {{ default }}
+              {% set result = state_attr(entity_id, 'message') | trim -%}
+              {{ result if result in supported_presets -}}
             {% endif -%}
-          {% endmacro %}
+          {% endmacro -%}
 
-          {% set self = 'sensor.scheduled_climate_preset' -%}
-          {% set preset = 'Away' -%}
+          {% set exception_preset = parse_calendar_preset('calendar.climate_exceptions') -%}
           {% set winter_credit_baseline_preset = states('sensor.winter_credit_baseline_climate_preset') -%}
 
-          {% if winter_credit_baseline_preset in supported_presets %}
-            {% set preset = winter_credit_baseline_preset %}
-          {% elif is_state('group.household', 'home') -%}
-            {% set preset = parse_calendar_preset(
-                'calendar.climate',
-                (states[self].state if states[self] else 'Active')
-              ) -%}
-          {% endif -%}
+          {% if exception_preset -%}
+            {{ exception_preset -}}
+          {% elif winter_credit_baseline_preset in supported_presets -%}
+            {{ winter_credit_baseline_preset -}}
+          {% elif is_state('group.household', 'home') or is_state('binary_sensor.guest_mode', 'on') -%}
+            {% set activity_preset = '' -%}
 
-          {{ parse_calendar_preset('calendar.climate_exceptions', preset) }}
+            {% if is_state('binary_sensor.dark_outside', 'on') -%}
+              {% if is_state('binary_sensor.master_bed_full', 'on') -%}
+                {% set activity_preset = 'Sleep' -%}
+              {% elif is_state('binary_sensor.master_bed_occupied', 'on') -%}
+                {% set activity_preset = 'Bedtime' -%}
+              {% endif -%}
+            {% endif -%}
+
+            {{ activity_preset or parse_calendar_preset('calendar.climate') or 'Active' -}}
+          {% else -%}
+              {{ 'Away' -}}
+          {% endif -%}
 
 script:
   assign_climate_auto_mode:
@@ -89,10 +95,7 @@ script:
                 data:
                   mode: "Comfort"
                   exceptions:
-                    dining_room_thermostat: "Eco"
-                    living_room_thermostat: "Eco"
                     master_bedroom_thermostat: "Eco"
-                    office_thermostat: "Eco"
           - conditions: "{{ preset == 'away' }}"
             sequence:
               - action: script.assign_climate_auto_mode
@@ -100,6 +103,11 @@ script:
                   mode: "Eco"
                   exceptions:
                     studio_thermostat: "Comfort"
+          - conditions: "{{ preset == 'boost' }}"
+            sequence:
+              - action: script.assign_climate_auto_mode
+                data:
+                  mode: "Comfort"
           - conditions: "{{ preset == 'bedtime' }}"
             sequence:
               - action: script.assign_climate_auto_mode
@@ -107,13 +115,9 @@ script:
                   mode: "Eco"
                   exceptions:
                     heat_pump: "Comfort"
+                    master_bedroom_thermostat: "Comfort"
                     guest_bedroom_thermostat: "Comfort"
                     studio_thermostat: "Comfort"
-          - conditions: "{{ preset == 'boost' }}"
-            sequence:
-              - action: script.assign_climate_auto_mode
-                data:
-                  mode: "Comfort"
           - conditions: "{{ preset == 'sleep' }}"
             sequence:
               - action: script.assign_climate_auto_mode

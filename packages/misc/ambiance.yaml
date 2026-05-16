@@ -19,9 +19,11 @@ script:
   evening_ambiance:
     alias: "Evening ambiance"
     icon: "mdi:lamp"
-    mode: restart
+    mode: "restart"
     sequence:
       parallel:
+        - action: "script.close_all_blinds"
+
         - action: "light.turn_on"
           target:
             entity_id:
@@ -65,26 +67,25 @@ automation:
     initial_state: true
     mode: "restart"
     triggers:
-      - trigger: "numeric_state"
-        entity_id: "sun.sun"
-        attribute: "elevation"
-        below: &sun_elevation -3.0
+      - trigger: "state"
+        entity_id: "binary_sensor.dark_outside"
+        from: "off"
+        to: "on"
       - trigger: "state"
         entity_id: "group.household"
         to: "home"
     conditions:
       - condition: "time"
         before: "input_datetime.evening_ambiance_end"
-      - condition: "numeric_state"
-        entity_id: "sun.sun"
-        attribute: "elevation"
-        below: *sun_elevation
+      - condition: "state"
+        entity_id: "binary_sensor.master_bed_occupied"
+        state: "off"
+      - condition: "state"
+        entity_id: "binary_sensor.dark_outside"
+        state: "on"
       - condition: "state"
         entity_id: "group.household"
         state: "home"
-      - condition: "state"
-        entity_id: "binary_sensor.master_bed_full"
-        state: "off"
     actions:
       - action: "script.evening_ambiance"
 
@@ -100,23 +101,15 @@ automation:
           - "group.guests"
         to: "home"
     conditions:
-      - condition: "time"
-        after: "input_datetime.evening_ambiance_end"
-        before: "6:00:00"
+      - condition: "state"
+        entity_id: "binary_sensor.dark_outside"
+        state: "on"
     actions:
       - action: "light.turn_on"
         target:
           entity_id:
             - "light.front_porch"
             - "light.side_porch_sconce"
-
-      - action: "light.turn_on"
-        target:
-          entity_id:
-            - "light.main_bathroom_spots"
-            - "light.staircase"
-        data:
-          brightness_pct: 10
 
       - if:
           - condition: "state"
@@ -129,33 +122,32 @@ automation:
             data:
               brightness_pct: 5
               color_temp_kelvin: 2200
+        else:
+          - action: "light.turn_on"
+            target:
+              entity_id:
+                - "light.main_bathroom_spots"
+                - "light.staircase"
+            data:
+              brightness_pct: 10
+
 
   - id: "a109af89-0910-45b2-9a0e-11d3ae43ec7c"
     alias: "turn_off_outdoor"
     initial_state: true
     mode: "restart"
     triggers:
-      - trigger: state
-        entity_id: "light.outdoor_lights"
-        to: "on"
-        for: &min_outdoor_on_time 300
-      - trigger: time
-        at: "input_datetime.evening_ambiance_end"
-      - trigger: state
-        entity_id: "binary_sensor.guest_mode"
+      - trigger: "state"
+        entity_id: "binary_sensor.dark_outside"
         to: "off"
+      - trigger: "state"
+        entity_id: "binary_sensor.master_bed_full"
+        to: "on"
     conditions:
-      - condition: state
+      - condition: "state"
         entity_id: "binary_sensor.guest_mode"
         state: "off"
-      - condition: state
-        entity_id: "light.outdoor_lights"
-        state: "on"
-        for: *min_outdoor_on_time
-      - condition: time
-        after: "input_datetime.evening_ambiance_end"
-        before: "15:00:00"
     actions:
-      - action: light.turn_off
+      - action: "light.turn_off"
         target:
           entity_id: "light.outdoor_lights"

@@ -50,6 +50,7 @@ light:
     unique_id: "master_bedroom_lights"
     name: "Master bedroom lights"
     entities:
+      - "light.master_bedroom_closet"
       - "light.master_bedroom_sconces"
       - "light.master_bedroom_spots"
       - "light.bedside_chris"
@@ -94,9 +95,9 @@ timer:
     restore: true
 
 automation:
-  - id: "056a609b-bbbc-4969-884e-d5b74c18c32d"
-    alias: "master_bed_occupied_day"
-    mode: "single"
+  - alias: "master_bed_occupied_day"
+    id: "056a609b-bbbc-4969-884e-d5b74c18c32d"
+    mode: "restart"
     max_exceeded: "silent"
     triggers:
       - trigger: "state"
@@ -108,9 +109,9 @@ automation:
         for:
           seconds: 120
     conditions:
-      - condition: "time"
-        after: "6:00:00"
-        before: "21:00:00"
+      - condition: "state"
+        entity_id: "binary_sensor.dark_outside"
+        state: "off"
     actions:
       - if:
           - condition: "state"
@@ -126,8 +127,8 @@ automation:
             target:
               entity_id: "light.master_bedroom_lights"
 
-  - id: "0197e1c3-9845-713e-aacf-0213e975babc"
-    alias: "master_bed_occupied_night"
+  - alias: "master_bed_occupied_night"
+    id: "0197e1c3-9845-713e-aacf-0213e975babc"
     mode: "single"
     max_exceeded: "silent"
     triggers:
@@ -139,9 +140,9 @@ automation:
         for:
           seconds: 20
     conditions:
-      - condition: "time"
-        after: "21:00:00"
-        before: "6:00:00"
+      - condition: "state"
+        entity_id: "binary_sensor.dark_outside"
+        state: "on"
     actions:
       - action: "lock.lock"
         target:
@@ -154,7 +155,7 @@ automation:
             - "light.master_bedroom_spots"
 
       - timeout:
-          seconds: 150
+          seconds: 130
         continue_on_timeout: false
         wait_for_trigger:
           - trigger: "state"
@@ -174,8 +175,35 @@ automation:
         else:
           - action: "script.turn_off_unused"
 
-  - id: "650fdbf6-2f22-4bd0-b430-c8a1c29d3217"
-    alias: "master_bedroom_spots_dimmer_scenes"
+  - alias: "wake_up_routine"
+    id: "412ef326-7563-427c-a6b2-d61019dbf4f4"
+    mode: "restart"
+    max_exceeded: "silent"
+    triggers:
+      - trigger: "state"
+        entity_id: "binary_sensor.master_bed_occupied"
+        from: "on"
+        to: "off"
+        for:
+          minutes: 10
+      - trigger: "state"
+        entity_id: "binary_sensor.dark_outside"
+        from: "on"
+        to: "off"
+    conditions:
+      - condition: "state"
+        entity_id: "binary_sensor.master_bed_occupied"
+        state: "off"
+        for:
+          minutes: 10
+      - condition: "state"
+        entity_id: "binary_sensor.dark_outside"
+        state: "off"
+    actions:
+      - action: "script.wake_up_routine"
+
+  - alias: "master_bedroom_spots_dimmer_scenes"
+    id: "650fdbf6-2f22-4bd0-b430-c8a1c29d3217"
     use_blueprint:
       path: "zwave/paddle_scenes.yaml"
       input:
@@ -200,8 +228,8 @@ automation:
             target:
               entity_id: "light.master_bedroom_lights"
 
-  - id: "7d71c23b-929c-4553-a150-2f990fc7ff87"
-    alias: "master_bedroom_sconces_dimmer_scenes"
+  - alias: "master_bedroom_sconces_dimmer_scenes"
+    id: "7d71c23b-929c-4553-a150-2f990fc7ff87"
     use_blueprint:
       path: "zwave/paddle_scenes.yaml"
       input:
@@ -226,8 +254,8 @@ automation:
             target:
               entity_id: "light.master_bedroom_lights"
 
-  - id: "0a607c5b-9dc1-4e86-b46c-f5dd6ebcc542"
-    alias: "master_bedroom_closet_dimmer_scenes"
+  - alias: "master_bedroom_closet_dimmer_scenes"
+    id: "0a607c5b-9dc1-4e86-b46c-f5dd6ebcc542"
     use_blueprint:
       path: "zwave/paddle_scenes.yaml"
       input:
@@ -243,4 +271,6 @@ automation:
         tap_off_2x:
           - action: "light.turn_off"
             target:
-              entity_id: "light.master_bedroom_lights"
+              entity_id:
+                - "light.master_bedroom_sconces"
+                - "light.master_bedroom_spots"

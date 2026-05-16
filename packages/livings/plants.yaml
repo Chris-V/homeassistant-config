@@ -9,10 +9,7 @@ group:
     icon: "mdi:flower"
     entities:
       - "plant.drake"
-      # - "plant.maitre_doyle"
-      # - "plant.snicket"
       - "plant.spidy"
-      - "plant.viny"
 
 template:
   - binary_sensor:
@@ -46,10 +43,7 @@ automation:
         attribute: "problem"
         entity_id:
           - "plant.drake"
-          # - "plant.maitre_doyle"
-          # - "plant.snicket"
           - "plant.spidy"
-          - "plant.viny"
 
     variables:
       name: "{{ trigger.to_state.name }}"
